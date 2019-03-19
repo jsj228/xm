@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+
+<div style="margin:100px auto 30px auto;height: 100px;width:1000px">
+    <div>
+        KEY:<input style="height: 30px;width:200px;" id="key">
+        文字:<input style="height: 30px;width:400px;" id="text">
+        <button style="height: 30px;width: 50px" id="translate">翻译</button>
+    </div>
+</div>
+
+
+
+<table id="translate_txt" border="1" ellspacing="0px" style="border-collapse:collapse;width: 100%;margin-bottom: 100px;display: none" bordercolor="#ccc">
+    <tr>
+        <th>键</th>
+        <th>中文</th>
+        <th>英文</th>
+        <th>日文</th>
+        <th>韩文</th>
+        <th>操作</th>
+    </tr>
+
+    <tr>
+        <td id="keys"></td>
+        <td id="cn"></td>
+        <td id="en"></td>
+        <td id="ja"></td>
+        <td id="ko"></td>
+        <td style="width:100px"><button style="height: 30px;width: 60px" id="add">添加</button></td>
+    </tr>
+
+</table>
+
+<script>
+    
+    //添加
+    $("#add").click(function () {
+        var key = $("#keys").html();
+        var cn = $("#cn").html();
+        var en = $("#en").html();
+        var ja = $("#ja").html();
+        var ko = $("#ko").html();
+
+        var data = {'key':key,'cn':cn,'en':en,'ja':ja,'ko':ko}
+        $("#add").attr("disabled", true);
+        $.post("/test/add",data,function(res){
+
+            if(res.status){
+                alert(res.msg);
+                window.location.reload();
+            }
+            $("#add").attr("disabled", false);
+        },'json');
+
+
+
+
+
+    });
+
+
+    //翻译
+    $("#translate").click(function () {
+        var key = $("#key").val();
+        var text = $("#text").val();
+
+        if(!key){
+            alert('请填入KEY');
+            return false;
+        }
+        if(!text){
+            alert('请填入TEXT');
+            return false;
+        }
+
+        $(this).attr("disabled", true);
+        $.post("/test/translate",{'key':key,'text':text},function(res){
+            if(res.status){
+
+                $("#keys").html(res.data['key']);
+                $("#cn").html(res.data['cn']);
+                $("#en").html(res.data['en']);
+                $("#ja").html(res.data['ja']);
+                $("#ko").html(res.data['ko']);
+                $("#translate_txt").show();
+
+                alert(res.msg);
+            }
+            $("#translate").attr("disabled", false);
+        },'json');
+    })
+
+</script>
+
+
+
+<table border="1" ellspacing="0px" style="border-collapse:collapse" bordercolor="#ccc">
+    <tr>
+        <th>键</th>
+        <th>中文</th>
+        <th>英文</th>
+        <th>日文</th>
+        <th>韩文</th>
+    </tr>
+
+    <?php foreach ($data as $k => $v) { ?>
+        <tr>
+            <?php foreach ($v as $vv) { ?>
+            <td><?php echo $vv;?></td>
+            <?php } ?>
+        </tr>
+    <?php } ?>
+
+</table>
+
+</body>
+</html>

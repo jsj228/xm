@@ -1,0 +1,124 @@
+@import "./init.scss";
+
+html, body {
+  min-width: 1280px;
+  overflow: auto;
+}
+.activit_container {
+  height: 3600px;
+  min-width: 1280px;
+  background: #07070c;
+  // background: #07070c url(~/imgs/read-bg.jpg) no-repeat;
+}
+.img_contain {
+  width: 100%;
+  overflow-x: hidden;
+
+  img {
+    width: 1920px;
+    min-width: 1920px;
+  }
+}
+.activity_content {
+  position: absolute;
+  top: 880px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1202px;
+  height: 2534px;
+  background: url(~/imgs/activity-content-bg-chage.png?vss=123456aaa) no-repeat center center;
+}
+.tab_tit {
+  position: absolute;
+  top: 713px;
+  left: 97px;
+  font-size: 24px;
+  color: #77c1f4;
+}
+.ranking_list {
+  position: absolute;
+  top: 770px;
+  left: 97px;
+  width: 1000px;
+  height: 484px;
+  border: 1px solid #7fccff;
+}
+.thead, .tbody {
+  width: 100%;
+  font-size: 18px;
+
+  .tr {
+    height: 44px;
+    line-height: 44px;
+  }
+}
+.tr>span {
+  &:first-child, &:nth-child(1) {
+    text-align: center;
+  }
+}
+.thead {
+  background: linear-gradient(top, #0b264f, #0e2d5e);
+}
+.tbody {
+  height: 440px;
+  overflow-y: auto;
+
+  .tr:nth-child(odd) {
+    background: #0d2956;
+  }
+  .tr:nth-child(even) {
+    background: #0e2d5e;
+  }
+  .mo_ind {
+    text-indent: 10px;
+  }
+}
+.at_btn {
+  display: block;
+  position: absolute;
+  top: 694px;
+  right: 69px;
+  z-index: 2;
+  width: 142px;
+  height: 52px;
+  background: url(../assets/at_trade_icon.png) no-repeat center center;
+}
+.at_bs_btn {
+  box-sizing: border-box;
+  padding: 18px 0 0;
+  font-size: 18px;
+  background-image: url(../assets/at_link_bs_icon.png);
+}
+.reg_btn {
+  top: 1831px;
+  text-indent: 30px;
+}
+.reg_btn {
+  top: 1831px;
+  text-indent: 30px;
+}
+.reg_read{
+  top: 1917px;
+  text-indent: 11px;
+}
+.abort_read {
+  top: 2198px;
+  text-indent: 24px;
+}
+.get_btn, .no_data{
+  line-height: 50px;
+  background: #091e40;
+}
+.get_btn {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.footer-content {
+  display: none;
+  position: static;
+  padding: 0 0 20px;
+  background: #07070c;
+}

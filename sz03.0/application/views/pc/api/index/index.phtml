@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <title>火網開放API | DOBITRADE OpenAPI</title>
+  <link rel="stylesheet" href="/api/css/BtaEfYHtphgltgktNhDK.css">
+  <link href="/api/css/RMLtWSlYhzZYyCKAoTgq.css" rel="stylesheet">
+  
+  <link href="/api/css/bEVJXLztGUIPHtXFwmDW.css" rel="stylesheet">
+  <link href="/api/css/eTjtvRbEEqQVJyXsrXGK.css" rel="stylesheet">
+  
+
+</head>
+<body class="open-wrapper ">
+<div class="page-wrapper">
+
+<header class="header" id="header">
+  <div class="container">
+    <a class="logo" href="https://www.huocoin.com/">
+      <img src="/svg/dobi_logo.svg" alt="logo">
+    </a>
+
+    <ul class="user-menu">
+      <li class="has-submenu" style="" id="nLang">
+        <a class="menu-active" href="#">English</a>
+        <ul class="sub-menu" style="width: 159px;">
+          <li>
+            <a href="#" lang-sign='cn'>繁體中文</a>
+          </li>
+          <li>
+            <a href="#" lang-sign='en'>English</a>
+          </li>
+        </ul>
+      </li>  
+
+    </ul>
+
+    <ul class="user-menu">
+
+      <li class="has-submenu menu-login" id="nLogin">
+        <a href="https://www.huocoin.com?login&reurl=https://api.huocoin.com" class="btn-login"><?php echo $lang['LOGIN'] ?></a>
+      </li>
+
+      <li class="has-submenu" id="hLogin" style="display:none;">
+        <a class="menu-active" href="#"></a>
+        <ul class="sub-menu" style="width: 159px;">
+          <li>
+            <a href="/m"><?php echo $lang['DEVELOPER'] ?></a>
+            <a href="https://www.huocoin.com/user/logout"><?php echo $lang['LOGOUT'] ?></a>
+          </li>
+        </ul>
+      </li>  
+
+    </ul>
+
+  </div>
+</header>
+
+<div class="wrapper api-wrapper">
+  <div class="container">
+    <div class="main-wrapper">
+      
+<div class="sidebar-wrapper fixed">
+
+  <div class="sidebar" style="height: 838px;">
+      <div style="height: 50px;"></div>
+      <h3 class="sidebar-title" id="active-menu">    
+          <?php echo $lang['AUTH'] ?>
+      </h3>
+      <ul class="menu-group">
+        <li class="menu-item menu-item-1" data-api="">
+        <a class="fn-auth-link" href="https://www.huocoin.com?login&reurl=https://api.huocoin.com/m" >API <?php echo $lang['AUTH'] ?></a>
+        </li> 
+      </ul>
+
+      <h3 class="sidebar-title" id="active-menu">    
+          <?php echo $lang['TRADING'] ?> API
+      </h3>
+      <ul class="menu-group">
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_order"><?php echo $lang['ORDER'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_cancel"><?php echo $lang['CANCEL'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_myorders"><?php echo $lang['MY_ORDERS'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_rules"><?php echo $lang['TRADING_RULES'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_markets"><?php echo $lang['TRADING_MARKET'] ?></a>
+        </li>
+      </ul>
+      <h3 class="sidebar-title" id="active-menu">    
+          <?php echo $lang['QUOTES'] ?> API
+      </h3>
+      <ul class="menu-group">
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_quote"><?php echo $lang['LATEST_QUOTES'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_orderbook"><?php echo $lang['ORDERBOOK'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_trades"><?php echo $lang['TRADES'] ?></a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_kline"><?php echo $lang['KLINE'] ?></a>
+        </li> 
+      </ul>
+      <h3 class="sidebar-title" id="active-menu">    
+          <?php echo $lang['USER'] ?> API
+      </h3>
+      <ul class="menu-group">
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#api_block" id="api_block_myinfo"><?php echo $lang['MY_INFO'] ?></a>
+        </li> 
+      </ul>
+      <h3 class="sidebar-title" id="active-menu">    
+          <?php echo $lang['DEMO_DOWNLOAD'] ?>
+      </h3>
+      <ul class="menu-group" id="download_list">
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="https://api.huocoin.com/download/dobi_openAPI_demo_php.zip" target="_blank">PHP</a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="https://api.huocoin.com/download/dobi_openAPI_demo_java.zip" target="_blank">JAVA</a>
+        </li> 
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="https://api.huocoin.com/download/dobi_openAPI_demo_nodejs.zip" target="_blank">NODE.JS</a>
+        </li>
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="https://api.huocoin.com/download/dobi_openAPI_demo_python.zip" target="_blank">PYTHON</a>
+        </li>
+      </ul>
+    
+  </div>
+</div>
+
+
+      <div class="breadcrumb has-content" style="position: fixed; top: 0px; left: 331.5px; right: 691.5px;">
+        <a href="#">API</a>
+        <span class="split"> / </span>
+        <a href="javascript:;" id="nav_2">DOBI API</a>
+        <span class="split" > / </span>
+        <a href="javascript:;" id="nav_3"><?php echo $lang['COMMON_PARAM'] ?></a>
+
+<div class="breadcrumb-anchor">
+  
+</div>
+
+      </div>
+
+      <div class="main-container">
+        <div class="markdown">
+          
+
+
+
+
+
+
+<h1 id="title"><?php echo $lang['DOBI_OPEN_API'] ?></h1>
+<div id="ant-api">
+  
+
+  <p><?php echo $lang['DOBI_DESC'] ?></p>
+
+  <h2 id="s0"><?php echo $lang['COMMON_PARAM'] ?></h2>
+  <p></p>
+  
+  <h3 id="sjfio"><?php echo $lang['REQ_ADDR'] ?></h3>
+  <table>
+    <tbody><tr><th><?php echo $lang['ENVI'] ?></th><th><?php echo $lang['HTTPS_REQ_ADDR'] ?></th></tr>
+    <tr>
+      <td><?php echo $lang['OFFICIAL_ENVI'] ?></td>
+      <td>
+        https://api.huocoin.com
+      </td>
+    </tr>
+  </tbody></table>
+
+  <h3 id="sjfio">HTTP Request Headers</h3>
+  <table>
+    <tbody>
+      <tr>
+        <th><?php echo $lang['PARAM'] ?></th>
+        <th><?php echo $lang['NECESSARILY'] ?></th>
+        <th><?php echo $lang['DESC'] ?></th>
+        <th><?php echo $lang['EXAMPLE'] ?></th>
+    </tr>
+    <tr>
+      <td>Content-type</td>
+      <td><?php echo $lang['YES'] ?></td>
+      <td><?php echo $lang['FIXED_AT'] ?> : Content-Type:application/x-www-form-urlencoded; charset=UTF-8 </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Accept-Language</td>
+      <td><?php echo $lang['NO'] ?></td>
+      <td><?php echo $lang['LANGUAGE_DESC'] ?></td>
+      <td>en-US</td>
+    </tr>
+  </tbody></table>
+  
+
+  <h3 id="fbuus"><?php echo $lang['COMMON_REQ_PARAM'] ?></h3>
+  <table id="common-req-params">
+    <tbody><tr>
+      <th class="prop-name"><?php echo $lang['PARAM'] ?></th>
+      <th class="prop-type"><?php echo $lang['TYPE'] ?></th>
+      <th><?php echo $lang['NECESSARILY'] ?></th>
+      <th><?php echo $lang['MAX_LEN'] ?></th>
+      <th><?php echo $lang['DESC'] ?></th>
+      <th><?php echo $lang['EXAMPLE'] ?></th>
+    </tr>
+    
+    <tr>
+      <td>accessKey</td>
+      <td>String</td>
+      <td> <?php echo $lang['YES'] ?>  </td>
+      <td>32</td>
+         
+           
+        
+      
+      <td> API <?php echo $lang['ACCESS_KEY'] ?> </td>
+      <td> 64e744a3314033c67876846be192f64b </td>
+    </tr>
+    
+    <tr>
+      <td>timestamp</td>
+      <td>String</td>
+      <td> <?php echo $lang['YES'] ?>  </td>
+      <td>10</td>
+      <td>Unix <?php echo $lang['TIMESTAMP'] ?></td>
+      <td>1517068800</td>
+    </tr>
+    
+    <tr>
+      <td>version</td>
+      <td>String</td>
+      <td> <?php echo $lang['YES'] ?></td>
+      <td>3</td>
+      <td><?php echo $lang['INTERFACE_VER'] ?> 1.0</td>
+      <td>1.0</td>
+    </tr>
+    
+    <tr>
+      <td>sign</td>
+      <td>String</td>
+      <td> <?php echo $lang['YES'] ?>  </td>
+      <td> 32 </td>
+      <td> <?php echo $lang['REQ_SIGN_NAV'] ?> <a href="#sign"><?php echo $lang['SIGN'] ?></a> </td>
+      <td> <?php echo $lang['SEE_EXAMPLE'] ?> </td>
+    </tr>
+    
+  </tbody></table>
+
+
+  <div id="api-common-response-params" style="">
+  <h2 ><?php echo $lang['COMMON_REP_PARAM'] ?></h2>
+  <table>
+  <thead>
+  <tr>
+    <th class="prop-name"><?php echo $lang['PARAM'] ?></th>
+    <th class="prop-type"><?php echo $lang['TYPE'] ?></th>
+    <th><?php echo $lang['NECESSARILY'] ?></th>
+    <th><?php echo $lang['MAX_LEN'] ?></th>
+    <th class="prop-desc"><?php echo $lang['DESC'] ?></th>
+    <th class="prop-example"><?php echo $lang['EXAMPLE'] ?></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>status</td>
+    <td>Int</td>
+    <td><?php echo $lang['YES'] ?></td>
+    <td>-</td>
+    <td><?php echo $lang['STATUS_DESC'] ?></td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>msg</td>
+    <td>String</td>
+    <td><?php echo $lang['YES'] ?></td>
+    <td>-</td>
+    <td><?php echo $lang['REP_STATUS_DESC'] ?></td>
+    <td><?php echo $lang['OP_SUCCESS'] ?></td>
+  </tr>
+  <tr>
+    <td>data</td>
+    <td>String</td>
+    <td><?php echo $lang['YES'] ?></td>
+    <td>-</td>
+    <td><?php echo $lang['REP_DATA'] ?></td>
+    <td>{"key":"value"}</td>
+  </tr>
+  </tbody>
+</table>
+
+  </div>
+  
+
+  
+
+
+<!-- api block  ===================================================================  -->
+
+
+
+<div class="api-block" id="api_block" name="api_block" style="display:none;">
+  
+  <h2 id="s0"><?php echo $lang['PARAM'] ?></h2>
+  <h3 id="sjfio"><?php echo $lang['REQ'] ?></h3>
+  <table>
+    <tbody><tr><th><?php echo $lang['REQ_METHOD'] ?></th><th>URI</th></tr>
+    <tr>
+      <td id="req_method">
+      </td>
+      <td id="req_uri">
+      </td>
+    </tr>
+  </tbody></table>
+
+    <h3 id="fbuus"><?php echo $lang['REQ_PARAM'] ?></h3>
+  <table id="req_params_table">
+    <thead>
+    <tr>
+      <th class="prop-name" param-name="name"><?php echo $lang['PARAM'] ?></th>
+      <th class="prop-type" param-name="type"><?php echo $lang['TYPE'] ?></th>
+      <th param-name="must"><?php echo $lang['NECESSARILY'] ?></th>
+      <th param-name="maxLen"><?php echo $lang['MAX_LEN'] ?></th>
+      <th param-name="desc"><?php echo $lang['DESC'] ?></th>
+      <th param-name="example"><?php echo $lang['EXAMPLE'] ?></th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody></table>
+
+  
+  <div id="api-common-response-params" style="">
+  <h2 ><?php echo $lang['REP_PARAM'] ?></h2>
+  <table id="rep_params_table">
+  <thead>
+  <tr>
+    <th class="prop-name" param-name="name"><?php echo $lang['PARAM'] ?></th>
+    <th class="prop-type" param-name="type"><?php echo $lang['TYPE'] ?></th>
+    <th param-name="must"><?php echo $lang['NECESSARILY'] ?></th>
+    <th param-name="maxLen"><?php echo $lang['MAX_LEN'] ?></th>
+    <th class="prop-desc" param-name="desc"><?php echo $lang['DESC'] ?></th>
+    <th class="prop-example" param-name="example"><?php echo $lang['EXAMPLE'] ?></th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+  </div>
+  <h2 id="api_block_req_title"><span></span><?php echo $lang['REQ_EXAMPLE'] ?></h2>
+  <div class="demo">
+    <ul class="demo-tab">
+      <li data-id="3" class="">
+        <a class="title" href="#tab-httpCode">HTTP <?php echo $lang['REQ'] ?></a>
+      </li>
+    
+    </ul>
+    <div class="demo-tab-line"></div>
+
+    <div class="demo-list">
+
+    
+      <div class="code" id="tab-httpCode" >
+        
+        <pre><code class="http hljs"><span class="hljs-attribute" id="api_block_req_url">GET https://api.huocoin.com/market/quote?market=mcc_btc
+  </span>
+  <div class="req" id="api_block_req_param"></div>
+</code></pre>
+      </div>
+    
+    </div>
+  </div>
+  <h2 id="api_block_rep_title"><span></span><?php echo $lang['REP_EXAMPLE'] ?></h2>
+  
+  <div class="demo">
+    <ul class="demo-tab">
+    
+      <li data-id="0" class="focus">
+        <a class="title" href="javascript:;">JSON <?php echo $lang['EXAMPLE'] ?></a>
+      </li>
+    
+    </ul>
+    <div class="demo-tab-line"></div>
+
+    <div class="demo-list">
+    
+      <div id="api_block_rep_content" class="code" format='json' data-id="0">
+         {"status":1,"msg":"","data":{"close":"0.00100000","ratio":"-100%","eq":{"cny":"50.00","usd":"7.69"},"high":"123","low":"0.001","buy":"0.00100000","sell":"123.00000000"}}
+      </div>
+    
+    </div>
+  </div>
+</div>
+  
+
+  
+
+
+
+<h2 id="sign"><?php echo $lang['SIGN_FUNC'] ?></h2>
+<h3>（<?php echo $lang['COMPLETE_EXAMPLE'] ?>）</h3>
+<p><?php echo $lang['STEP1'] ?>
+<div class="code" format="json">{"accessKey":"4900201404d07078fae624c186a79bc7","market":"mcc_btc","number":"2","price":"0.032","timestamp":1525314907,"type":"buy","version":"1.0"}</div>
+</p>
+<p><?php echo $lang['STEP2'] ?>
+<pre>accessKey=4900201404d07078fae624c186a79bc7&amp;market=mcc_btc&amp;number=2&amp;price=0.032&amp;timestamp=1525314907&amp;type=buy&amp;version=1.0</pre>
+</p>
+<p><?php echo $lang['STEP3'] ?>
+<pre>c403f320a996bc2333a3d331da468fc815ac0d29</pre>
+</p>
+</div>
+
+
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div id="footer" style="position: relative; z-index: 100">
+
+
+  <div class="body-footer" id="footer-full">
+    <div>
+  
+  <style>
+
+    .api-block{
+      padding: 30px 0;
+    }
+    .footer-box-content * {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    .site-footer{
+      background-color: #232940!important;
+    }
+    .footer-box{
+      width: 100%;
+      background-color: #232940;
+    }
+    .footer-box-content{
+      width:1240px;
+      margin: 0 auto;
+      padding: 50px 0px 30px;
+    }
+    .footer-box-left{
+      float:left;
+      width:1020px;
+    }
+    .footer-box-content-li{
+      float: left;
+      width: 25%;
+      padding-right: 10px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .footer-box-content ul li:last-child{
+      margin-right: 0px;
+    }
+    .footer-box-content-item{
+      width: 208px;
+    }
+    .footer-box-content-name {
+      font-size: 22px;
+      color: #FFFFFF;
+      padding-bottom: 20px;
+    }
+    .footer-box-content-subli{
+      padding-top: 14px;
+      white-space: normal;
+      word-break: break-all;
+      overflow: hidden;
+    }
+    .footer-box-content-subli a, .footer-box-content-subli span{
+      font-size: 16px;
+      color: #FFFFFF;
+      opacity: 0.6;
+      text-decoration: none;
+    }
+    .footer-box-content-subli a:hover{
+      color: #108ee9;
+    }
+
+    .footer-box-right{
+      float: right;
+      width: 220px;
+      padding-left: 80px;
+      border-left: 1px solid rgba(151,151,151,0.4);
+    }
+    .footer-box-right-title{
+      padding-bottom:16px;
+      font-size: 22px;
+      color: #FFFFFF;
+    }
+    .footer-box-right-item{
+      padding-top:12px;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    .footer-box-right-item.footer-box-right-item-opacity{
+      opacity: 0.6;
+    }
+    .footer-box-right-item img{
+      width:97px;
+      height:97px;
+    }
+
+    .body-footer{
+      clear: both;
+    }
+
+    .site-footer{
+      padding: 16px 0 12px 0;
+      font-size: 12px;
+      clear: both;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    .site-footer .copyright{
+      text-align: center;
+      opacity: 0.8
+    }
+
+    .site-footer.complete .site-footer-links {
+      display: block;
+      padding-bottom: 2px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+
+    .site-footer-links{
+      display: none;
+      text-align: center;
+    }
+
+    .site-footer-links li {
+      display: inline-block;
+    }
+    .site-footer-links a {
+      padding: 0 4px;
+      color: #FFFFFF;
+      opacity: .8;
+      text-decoration: none;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    .site-footer-links a:hover {
+      color: #108ee9;
+    }
+
+    .site-footer-links li:after {
+      content: '｜';
+      display: inline;
+      color: #ffffff;
+    }
+
+    .site-footer-links li:last-child:after{
+      display: none;
+    }
+    .isHome, .complete{
+      box-shadow: none;
+    }
+    .isHome .copyright, .complete .copyright{
+      color: #FFFFFF;
+    }
+    .isHome .server, .complete .server{
+      color: #232940;
+    }
+  </style>
+  <div class="footer-box">
+    
+    <div class="site-footer complete">
+      <div class="copyright">
+        Copyright @2018 huocoin.com ｜ 火網
+      </div>
+    </div>
+    
+    
+  </div>
+
+  
+</div>
+</div>
+
+</div>
+
+<div id="zoom-img"></div>
+
+<link rel="stylesheet" href="/api/css/OgPAgbONDiKhITIVYmdn.css">
+
+
+  
+
+
+
+
+
+</div>
+<style type="text/css">
+  #api_block_req_param .hljs-string{color:#c82829}
+  #api_block_req_param pre{border:0}
+</style>
+
+<script type="text/javascript" src="https://api.huocoin.com/js/jquery.min.js"></script>
+  <script type="text/javascript">
+
+        //api鏈接跳轉
+        var API_GATEWAY = 'https://api.huocoin.com';
+        var API_DOC_URL = 'https://api.huocoin.com';
+        var DOMAIN = '<?php echo Tool_Url::getDomain(); ?>';
+        var YES = '<?php echo $lang['YES'] ?>';
+        var NO = '<?php echo $lang['NO'] ?>';
+        var MARKET = '<?php echo $lang['TRADING_MARKET'] ?>';
+        var REQUIRE_COMMON_PARAM = '<?php echo $lang['REQUIRE']?> <a href="#"><?php echo $lang['COMMON_PARAM']?></a>';
+        //api內容配置
+        var API_BLOCK_CONF = {
+          api_block_order:{
+            title:'<?php echo $lang['TRADING'] ?> API.<?php echo $lang['ORDER'] ?>', method:'POST', 
+            needPublicParams:true,
+            demo:{
+              reqUrl:'/trade/order', 
+              reqParam:'accessKey=6cc70c8be786626bae8a37bd75786a3c&market=mcc_btc&number=0.02&price=0.032&timestamp=1525314907&type=buy&version=1.0&sign=4b928101c8459480e7e14cfdaa533e8b4ed8028d', 
+              rep:'{"status":1,"msg":"success","data":{"id":"1023000"}}'
+            },
+            params:{
+              req:[
+                {name:'type', type:'String', must:YES, maxLen:5, desc:'<?php echo $lang['ORDER_TYPE']?>', example:'buy'},
+                {name:'price', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['PRICE'].', '.$lang['NO_MORE_THAN_8_DECIMAL']?>', example:'0.002'},
+                {name:'number', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['NUM'].', '.$lang['NO_MORE_THAN_8_DECIMAL']?>', example:'10'},
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                {name:'<?php echo $lang['COMMON_PARAM']?>', type:'', must:YES, maxLen:'', desc:REQUIRE_COMMON_PARAM, example:''},
+              ],
+              rep:[
+                {name:'id', type:'String', must:YES, maxLen:11, desc:'<?php echo $lang['ORDER_ID']?>', example:'123456'},
+              ]
+            }
+
+          },
+
+          api_block_cancel:{
+            title:'<?php echo $lang['TRADING'] ?> API.<?php echo $lang['CANCEL'] ?>', method:'POST',
+            needPublicParams:true,
+            demo:{ 
+              reqUrl:'/trade/cancel', 
+              reqParam:'accessKey=4900201404d07078fae624c186a79bc7&id=1649&market=mcc_btc&timestamp=1525247516&version=1.0&sign=e3c94352ce93576802c3a9dd2ff65d2441cec161', 
+              rep:' {"status":1,"msg":"success","data":""}'
+            },
+            params:{
+              req:[
+                {name:'id', type:'String', must:YES, maxLen:11, desc:'<?php echo $lang['ORDER_ID']?>', example:'123456'},
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                {name:'<?php echo $lang['COMMON_PARAM'] ?>', type:'', must:YES, maxLen:'', desc:REQUIRE_COMMON_PARAM, example:''},
+              ],
+              rep:null
+            }
+          },
+
+          api_block_myorders:{
+            title:'<?php echo $lang['TRADING'] ?> API.<?php echo $lang['MY_ORDERS'] ?>', method:'POST', 
+            needPublicParams:true,
+            demo:{
+              reqUrl:'/trade/myOrders', 
+              reqParam:'accessKey=4900201404d07078fae624c186a79bc7&market=mcc_btc&page=1&sortType=1&timestamp=1525247646&version=1.0&sign=82db0cc41bb1f5e795ab24f0e27aacf95c10e5d4', 
+              rep:'{"status":1,"msg":"","data":[{"flag":"buy","id":"1648","number":"2.00000000","numberdeal":"0.00000000","numberover":"2.00000000","price":"0.03200000","created":"2018-04-28 16:38:05","status":"0","market":"mcc_btc"}]}'
+            },
+            params:{
+              req:[
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                {name:'<?php echo $lang['COMMON_PARAM'] ?>', type:'', must:YES, maxLen:'', desc:REQUIRE_COMMON_PARAM, example:''},
+                {name:'page', type:'Int', must:NO, maxLen:5, desc:'<?php echo $lang['PAGE_NUM'] ?>', example:'2'},
+                {name:'sortType', type:'Int', must:NO, maxLen:1, desc:'<?php echo $lang['SORT_TYPE_DESC'] ?>', example:'1'},
+                {name: 'orderIds', type: 'String', must: NO, maxLen: 1000, desc: '<?php echo $lang['TRUST_ID_STRING'] ?>', example: '12,13,15'},
+              ],
+              rep:[
+                {name:'flag', type:'String', must:YES, maxLen:5, desc:'<?php echo $lang['FLAG_DESC'] ?>', example:'buy'},
+                {name:'id', type:'String', must:YES, maxLen:11, desc:'<?php echo $lang['ORDER_ID'] ?>', example:'123465'},
+                {name:'number', type:'String', must:YES, maxLen:5, desc:'<?php echo $lang['NUM'] ?>', example:'10'},
+                {name:'numberdeal', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['DEAL_NUM'] ?>', example:'5'},
+                {name:'numberover', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['OVER_NUM'] ?>', example:'5'},
+                {name:'price', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['PRICE'] ?>', example:'0.002'},
+                {name:'created', type:'String', must:YES, maxLen:10, desc:'<?php echo $lang['ORDER_TIME'] ?>', example:'2018-01-02 18:15:16'},
+                {name: 'status', type: 'String', must: YES, maxLen: 1, desc: '<?php echo $lang['TRUST_STATUS_EXAMPLE'] ?>', example: '2'},
+              ]
+            }
+          },
+          api_block_quote:{
+            title:'<?php echo $lang['QUOTES'] ?> API.<?php echo $lang['LATEST_QUOTES'] ?>', method:'GET',
+            demo:{
+              reqUrl:'/market/quote', 
+              reqParam:'market=mcc_btc', 
+              rep:'{"status":1,"msg":"","data":{"last":"0.00100000","ratio":"-100%","eq":{"cny":"50.00","usd":"7.69"},"high":"123","low":"0.001","buy":"0.00100000","sell":"123.00000000","volume":"6259250.6483","amount ":"27.94624875"}}'
+            },
+            params:{
+              req:[
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+              ],
+              rep:[
+                {name:'last', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['LAST_PRICE'] ?>', example:'0.001'},
+                {name:'ratio', type:'String', must:YES, maxLen:10, desc:'<?php echo $lang['RATIO'] ?>', example:'20%'},
+                {name:'eq', type:'String', must:YES, maxLen:100, desc:'<?php echo $lang['PRICE_EQ'] ?>', example:'{"cny":"50.00","usd":"7.69"}'},
+                {name:'high', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['HIGH_PRICE'] ?>', example:'0.005'},
+                {name:'low', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['LOW_PRICE'] ?>', example:'0.002'},
+                {name:'buy', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['BUY_ONE'] ?>', example:'0.001'},
+                {name:'sell', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['SELL_ONE'] ?>', example:'0.002'},
+                {name:'volume', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['VOL24H'] ?>', example:'6259250.6483'},
+                {name:'amount', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['TURNOVER'] ?>', example:'27.94624875'},
+              ]
+            }
+          },
+          api_block_myinfo:{
+            title:'<?php echo $lang['USER'] ?> API.<?php echo $lang['MY_INFO'] ?>', method:'POST',
+            demo:{
+              reqUrl:'/trade/myInfo', 
+              reqParam:'accessKey=4900201404d07078fae624c186a79bc7&timestamp=1525248088&version=1.0&sign=46755274063866776ea7cf1881029f090ee4c797', 
+              rep:'{"status":1,"msg":"","data":{"phone":"+8613712345678","assets":{"btc_over":"9985.452999","btc_lock":"20.300059826","ltc_over":"10116.801","ltc_lock":"9910","eth_over":"97.5","eth_lock":"1","eos_over":"999.98979","eos_lock":"0.01021","mcc_over":"21692.6492146376","mcc_lock":"20.0499812","fdc_over":"999.994","fdc_lock":"0","rss_over":"7939.91601938156","rss_lock":"470.02700995","hxi_over":"0","hxi_lock":"0","jjf_over":"980.958","jjf_lock":"9","npc_over":"980","npc_lock":"20","gts_over":"0","gts_lock":"0","etc_over":"0","etc_lock":"0","gthx_over":"10000","gthx_lock":"0","bcd_over":"45.007550141557513829","bcd_lock":"0","htc_over":"998","htc_lock":"2","mac_over":"18","mac_lock":"10","sbtc_over":"9.0015100255115027658","sbtc_lock":"0","ubtc_over":"4.5007550127557513829","ubtc_lock":"0","etf_over":"89.859","etf_lock":"0","obtc_over":"4.5007550127557513829","obtc_lock":"0","lbtc_over":"11.0037091055115027658","lbtc_lock":"0","bvt_over":"207","bvt_lock":"0","btno_over":"300","btno_lock":"0","nano_over":"1999104","nano_lock":"996","dcon_over":"0","dcon_lock":"102","ptoc_over":"0","ptoc_lock":"1040.9","obc_over":"0","obc_lock":"500.000005","lcc_over":"0","lcc_lock":"0","ethms_over":"0","ethms_lock":"0","xtc_over":"0","xtc_lock":"0","dob_over":"662.94","dob_lock":"11.06","mbt_over":"0","mbt_lock":"0"}}}'
+            },
+            params:{
+              req:[
+                {name:'<?php echo $lang['COMMON_PARAM'] ?>', type:'', must:YES, maxLen:'', desc:REQUIRE_COMMON_PARAM, example:''},
+                ],
+              rep:[
+                {name:'phone', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['USER_PHONE'] ?>', example:'+8613712345678'},
+                {name:'assets', type:'String', must:YES, maxLen:1000, desc:'<?php echo $lang['USER_ASSETS'] ?>', example:'"btc_over":"9985.452999","btc_lock":"20.300059826"'},
+              ]
+            }
+          },
+
+          api_block_rules:{
+            title:'<?php echo $lang['TRADING'] ?> API.<?php echo $lang['TRADING_RULES'] ?>', method:'GET',
+            demo:{
+              reqUrl:'/trade/rules', 
+              reqParam:'market=mcc_btc', 
+              rep:'{"status":1,"msg":"","data":{"market":"mcc_btc","price_decimal_limit":"8","number_decimal_limit":"8","min":"0.00001000","max":"50000.00000000","buy_rate":"0.00100","sell_rate":"0.00100"}}'
+            },
+            params:{
+              req:[
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                ],
+              rep:[
+                {name:'market', type:'String', must:YES, maxLen:20, desc:MARKET, example:'mcc_btc'},
+                {name:'price_decimal_limit', type:'String', must:YES, maxLen:2, desc:'<?php echo $lang['PRICE_DECIMAL_LIMIT'] ?>', example:'8'},
+                {name:'number_decimal_limit', type:'String', must:YES, maxLen:2, desc:'<?php echo $lang['NUMBER_DECIMAL_LIMIT'] ?>', example:'8'},
+                {name:'min', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['MIN_TRADE_NUM'] ?>', example:'0.00001000'},
+                {name:'max', type:'String', must:YES, maxLen:20, desc:'<?php echo $lang['MAX_TRADE_NUM'] ?>', example:'50000.00000000'},
+                {name:'buy_rate', type:'String', must:YES, maxLen:10, desc:'<?php echo $lang['BUY_RATE'] ?>', example:'0.00100'},
+                {name:'sell_rate', type:'String', must:YES, maxLen:10, desc:'<?php echo $lang['SELL_RATE'] ?>', example:'0.00100'},
+              ]
+            }
+          },
+
+          api_block_markets:{
+            title:'<?php echo $lang['TRADING'] ?> API.<?php echo $lang['TRADING_MARKET'] ?>', method:'GET',
+            demo:{
+              reqUrl:'/trade/markets', 
+              reqParam:'', 
+              rep:' {"status":1,"msg":"","data":["ltc_btc","mcc_btc","eth_btc","fdc_btc","eos_btc","hxi_btc","jjf_btc","gts_btc","etc_btc","htc_btc","ltc_mcc","rss_mcc","npc_mcc","etc_mcc","mac_eth","bvt_eth","nano_btc","kkc_btc","bvt_dob","eos_dob","etc_dob","eth_dob","fdc_dob","gts_dob","htc_dob","hxi_dob","jjf_dob","kkc_dob","ltc_dob","mac_dob","mcc_dob","nano_dob","npc_dob","rss_dob"]}'
+            },
+            params:{
+              req:null,
+              rep:null
+            }
+          },
+
+          api_block_orderbook:{
+            title:'<?php echo $lang['QUOTES'] ?> API.<?php echo $lang['ORDERBOOK'] ?>', method:'GET',
+            demo:{
+              reqUrl:'/market/orderbook', 
+              reqParam:'market=mcc_btc', 
+              rep:'  {"status":1,"msg":"","data":{"bids":[{"n":"1.00000000","p":"1.00000000"},{"p":"0.50000000","n":"100.09000000"},{"p":"0.10000000","n":"1.00000000"},{"n":"4.00000000","p":"0.09100000"},{"p":"0.03200000","n":"1.00000000"},{"p":"0.00100000","n":"8.00000000"}],"asks":[{"n":"10.00000000","p":"2.00000000"},{"n":"10.00000000","p":"3.00000000"},{"n":"10.00000000","p":"4.00000000"},{"n":"10.00000000","p":"5.00000000"},{"n":"10.00000000","p":"6.00000000"},{"n":"10.00000000","p":"7.00000000"},{"n":"10.00000000","p":"8.00000000"},{"n":"10.00000000","p":"9.00000000"},{"p":"10.00000000","n":"20.00000000"},{"n":"10.00000000","p":"11.00000000"},{"n":"10.00000000","p":"12.00000000"}]}}'
+            },
+            params:{
+              req:[
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                {name:'limit', type:'String', must:YES, maxLen:3, desc:'number, 1~200, default:20', example:'1'},
+                ],
+              rep:[
+                {name:'asks', type:'Array', must:YES, maxLen:20, desc:'n:Number, p:Price', example:'[{p: "0.50000000", n: "100.09000000"}]'},
+                {name:'bids', type:'Array', must:YES, maxLen:20, desc:'n:Number, p:Price', example:'[{p: "0.50000000", n: "100.09000000"}]'}
+              ]
+            }
+          },
+
+          api_block_kline:{
+            title:'<?php echo $lang['QUOTES'] ?> API.<?php echo $lang['KLINE'] ?>', method:'GET',
+            demo:{
+              reqUrl:'/market/kline', 
+              reqParam:'market=mcc_btc&type=1min', 
+              rep:'{"status":1,"msg":"","data":[[1525708800000,0.032,0.032,0.032,0.032,2],[1526313600000,0.1,0.1,0.1,0.1,10]]}'
+            },
+            params:{
+              req:[
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                {name:'type', type:'String', must:YES, maxLen:6, desc:'1week,3day,1day,12hour,6hour,4hour,2hour,1hour,30min,15min,5min,3min,1min', example:'1min'},
+                {name:'limit', type:'Int', must:NO, maxLen:4, desc:'number, 1~1000, default:1000', example:'1'},
+                {name:'timestamp', type:'String', must:NO, maxLen:13, desc:'<?php echo $lang['TIMESTAMP_DESC'] ?>', example:'1525708800000'},
+                ],
+              rep:[
+                {name:'', type:'Array', must:YES, maxLen:20, desc:'', example:'<?php echo $lang['KLINE_REP_DESC'] ?>'},
+              ]
+            }
+          },
+
+          api_block_trades:{
+            title:'<?php echo $lang['QUOTES'] ?> API.<?php echo $lang['TRADES'] ?>', method:'GET',
+            demo:{
+              reqUrl:'/market/trades', 
+              reqParam:'market=mcc_btc&limit=50', 
+              rep:'{"status":1,"msg":"","data":[{"t":"1537169548000","p":"0.00123","n":"1","s":"sell"},{"t":"1537169307000","p":"0.00023","n":"10","s":"sell"}]}'
+            },
+            params:{
+              req:[
+                {name:'market', type:'String', must:YES, maxLen:10, desc:MARKET, example:'mcc_btc'},
+                {name:'limit', type:'Int', must:NO, maxLen:4, desc:'number, 1~50, default:50', example:'50'},
+                ],
+              rep:[
+                {name:'', type:'Array', must:YES, maxLen:20, desc:'', example:'<?php echo $lang['TRADES_REP_DESC'] ?>'},
+              ]
+            }
+          },
+
+        }
+
+
+
+      $(function(){
+        //是否登錄
+        $.get('/m/userinfo?'+Math.random(),function(rep){
+          if(rep && rep.status==1)
+          {
+             var $hLogin = $('#hLogin');
+             $hLogin.find('.menu-active').text(rep.data.account);
+             $hLogin.show();
+             $('#nLogin').remove();
+
+             var $fnAuthLink = $('.fn-auth-link');
+             $fnAuthLink.attr('href', '/m');
+          }
+        })
+        //語言選擇
+        var curLang = getCookie('LANG');
+        var $nLang = $('#nLang');
+        $nLang.find('.menu-active').text(curLang=='en'?'English':'繁體中文');
+        $nLang.find('.sub-menu li a').each(function(i){
+          var $this = $(this);
+          if($this.attr('lang-sign')==curLang)
+          {
+            $this.hide();
+          }
+          else
+          {
+            $this.show();
+          }
+          $this.click(function(){
+            var curLang = $(this).attr('lang-sign')
+            document.cookie="LANG="+curLang+"; domain="+DOMAIN;
+            window.location.reload();
+          })
+        });
+
+        //格式化json code
+        codeFormat('.code[format="json"]');
+
+        $('.menu-group a[href^="#"]').click(function(){
+          var $e = $(this),
+              eid = $e.attr('id'),
+              title = $e.text(),
+              $apiBlock = $('#api_block');
+
+          //顯示API塊
+          $apiBlock.show();
+
+          //面包屑導航
+          var navs = API_BLOCK_CONF[eid].title.split('.')
+          $('#nav_2').text(navs[0])
+          $('#nav_3').text(navs[1])
+
+          //填充uri
+          $('#req_uri').text(API_BLOCK_CONF[eid].demo.reqUrl);
+          //填充method
+          $('#req_method').text(API_BLOCK_CONF[eid].method);
+
+          //填充參數表格
+          var tables = ['req','rep'];
+          for(t in tables)
+          {
+            var reqParamTableTbody = '';
+            var paramsSort = [];
+            var tableId = '#'+tables[t]+'_params_table';
+            $apiBlock.find(tableId+' th').each(function(i,e){
+              paramsSort.push($(e).attr('param-name'))
+            })
+
+            if(API_BLOCK_CONF[eid].params[tables[t]])
+            {
+              for(var i in API_BLOCK_CONF[eid].params[tables[t]])
+              {
+                reqParamTableTbody += '<tr>'
+                for(var j in paramsSort)
+                {
+                  reqParamTableTbody += '<td>'+API_BLOCK_CONF[eid].params[tables[t]][i][paramsSort[j]].toString()+'</td>';
+                } 
+                reqParamTableTbody += '</tr>'
+              }
+            }
+            else
+            {
+              reqParamTableTbody += '<tr><td style="text-align:center" colspan='+paramsSort.length+'><?php echo $lang['EMPTY'] ?></td></tr>'
+            }
+
+            $apiBlock.find(tableId + ' tbody').html(reqParamTableTbody);
+          }
+          
+
+          //請求示例
+          var reqUrlDemo = API_BLOCK_CONF[eid].method + ' ' +API_GATEWAY+API_BLOCK_CONF[eid].demo.reqUrl;
+          var reqParam = API_BLOCK_CONF[eid].demo.reqParam;
+          if(API_BLOCK_CONF[eid].method.toLowerCase()=='get' && API_BLOCK_CONF[eid].demo.reqParam)
+          {
+            reqUrlDemo +='?'+API_BLOCK_CONF[eid].demo.reqParam;
+            reqParam = '';
+          }
+          $apiBlock.find('#api_block_req_url').text(reqUrlDemo);
+          $apiBlock.find('#api_block_req_param').text(reqParam);
+          $apiBlock.find('#api_block_rep_content').text(API_BLOCK_CONF[eid].demo.rep);
+          codeFormat('#api_block [format="json"]');
+        })
+      })
+
+      function codeFormat(selector)
+      {
+        $eCode = $(selector).each(function(i,e){
+            var $e = $(e);
+            var codeObj = JSON.parse($e.text());
+            var inHtml = '<pre><code class="json hljs">{\n';
+            inHtml += codeObj2Html(codeObj);
+            inHtml += '}</code></pre>';
+            $e.html(inHtml);
+        });
+      }
+
+      function codeObj2Html(codeObj, prefix='')
+      {
+        var inHtml = '';
+        var isArray;
+        prefix += '\t';
+        if(codeObj instanceof Array)
+        {
+          for(var i in codeObj)
+          {
+            inHtml += prefix;
+            if(typeof(codeObj[i])=='object')
+            {
+              isArray = codeObj[i] instanceof Array;
+              inHtml += (isArray?'[':'{')+'\n'+codeObj2Html(codeObj[i], prefix)+prefix+(isArray?']':'}')+'\n';
+            }
+            else
+            {
+              inHtml +='<span class="hljs-string">"'+codeObj[i]+'"</span>,\n';
+            }
+          }
+        }
+        else
+        {
+          for(var i in codeObj)
+          {
+            inHtml += prefix+'<span class="hljs-attr">"'+i+'"</span>';
+            if(typeof(codeObj[i])=='object')
+            {
+              isArray = codeObj[i] instanceof Array;
+              inHtml += (isArray?'[':'{')+'\n'+codeObj2Html(codeObj[i], prefix)+prefix+(isArray?']':'}')+'\n';
+            }
+            else
+            {
+              inHtml +=': <span class="hljs-string">"'+codeObj[i]+'"</span>,\n';
+            }
+          }
+        }
+        
+        return inHtml;
+      }
+
+      function getCookie(c_name)
+      {
+        if (document.cookie.length>0)
+        {
+          c_start=document.cookie.indexOf(c_name + "=")
+          if (c_start!=-1)
+            { 
+            c_start=c_start + c_name.length+1 
+            c_end=document.cookie.indexOf(";",c_start)
+            if (c_end==-1) c_end=document.cookie.length
+            return unescape(document.cookie.substring(c_start,c_end))
+            } 
+        }
+        return ""
+      }
+
+  </script>
+</body>
+
+</html>
+

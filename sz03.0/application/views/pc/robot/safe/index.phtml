@@ -1,0 +1,20 @@
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+<div style="margin-top:50px">
+
+    备&nbsp;&nbsp;&nbsp;注：<input id="name"><br/>
+    绑定IP地址：<input id="ips"> <i>多个IP用半角逗号（,）分割</i><br/>
+
+    <hr/>
+    创建:<button id="add">创建</button>
+</div>
+
+<script>
+    $('#add').click(function () {
+        var name = $("#name").val(),
+            ips = $("#ips").val();
+
+        $.post('/robot_safe/register',{'name':name,'ips':ips},function (data) {
+            alert(data.msg)
+        })
+    })
+</script>

@@ -1,0 +1,54 @@
+@import "./fun.scss";
+@import "./theme.scss";
+@import "./config.scss";
+@import "./nav.scss";
+@import "./alert.scss";
+@import "./user.reset.scss";
+@import "./user.condition.scss";
+
+
+.cont-contain {
+  .u-condition {
+    .coin-cor {
+      .cor-rf {
+        .coin-list {
+          .sel-coin {
+            background: #ffbd09;
+            color: #fff;
+          }
+        }
+        .coin-list {
+          height: pxToRem(340);
+        }
+      }
+    }
+  }
+}
+
+.coin-in-table{
+  #tBody {
+    thead{
+      display: none;
+    }
+  }
+  #dataBody{
+    td.getCoinsTd{
+      a{
+        width: auto;
+        height: pxToRem(57);
+        line-height: pxToRem(57);
+        font-size: pxToRem(30);
+      }
+    }
+  }
+}
+.candy_tips_get{
+  font-size: pxToRem(40);
+  line-height: pxToRem(58);
+  padding:0;
+  font-size: #333333;
+}
+.candy_green{
+  line-height: pxToRem(63);
+  font-size: pxToRem(40);
+}

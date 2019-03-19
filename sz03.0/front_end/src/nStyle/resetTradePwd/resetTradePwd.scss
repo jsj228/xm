@@ -1,0 +1,214 @@
+@import "../config.scss";
+@import "../color.scss";
+@import "../init.scss";
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+.hide-dom {
+  display: none!important;
+}
+.res_contain {
+  box-sizing: border-box;
+  padding: 120px 0 0;
+  height: 90%;
+
+  .pwd_title {
+    // margin: 30px 0 0;
+    line-height: 50px;
+    font-size: 22px;
+  }
+  .tips_lable {
+    padding: 10px 0 0;
+    text-indent: 17px;
+    line-height: 14px;
+    font-size: 12px;
+  }
+  .vis_pwd {
+    display: inline-block;
+    position: absolute;
+    right: 8px;
+    top: 11px;
+    padding: 5px;
+    font-size: 23px;
+    color: $gray300;
+    transition: all .35s;
+
+    &:hover {
+      cursor: pointer;
+      color: $gray500;
+      transition: all .35s;
+    }
+  }
+  .act_vis {
+    color: $orange500;
+
+    &:hover {
+      cursor: pointer;
+      color: $orange500;
+      transition: all .35s;
+    }
+  }
+
+  .form_input {
+    box-sizing: border-box;
+    position: relative;
+    padding: 4px;
+    width: 350px;
+    line-height: 42px;
+
+
+    &>label {
+      display: inline-block;
+      width: 46px;
+      height: 43px;
+    }
+    &>input {
+      box-sizing: border-box;
+      border: none;
+      width: 296px;
+      height: 42px;
+      line-height: 40px;
+      border-bottom: 1px solid #dcdcdc;
+      transition: all .35s;
+
+
+      &:hover {
+        border-bottom: 1px solid $hoverOrange;
+        transition: all .35s;
+      }
+
+      &:focus {
+        border-bottom: 2px solid $orange500;
+        transition: all .35s;
+      }
+    }
+  }
+
+  .short_input {
+    &>input {
+      width: 200px;
+    }
+    &>img, &>button {
+      display: inline-block;
+      width: 94px;
+      height: 42px;
+    }
+    &>button {
+      white-space: nowrap;
+      border-radius: 5px;
+      border: 1px solid $orange500;
+    }
+  }
+  .chg_btn {
+    font-size: 12px;
+
+    a {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .tips_line {
+    line-height: 18px;
+    text-indent: 46px;
+    font-size: 12px;
+  }
+  .max_tip {
+    display: inline-block;
+    vertical-align:text-top;
+    width: 15px;
+    height: 17px;
+    background: url('../../assets/user/pwd_strong.svg') no-repeat left center;
+    background-size: 13px 13px;
+  }
+  .pwd_label {
+    background: url('../../assets/user/user_login_password.svg') no-repeat center center;
+    background-size: 20px 24px;
+  }
+  .trade_pwd_label {
+    background: url('../../assets/user/user_tradepwd.svg') no-repeat center center;
+    background-size: 22px 27px;
+  }
+  //圖形驗證碼
+  .img_label {
+    background: url('../../assets/user/user_captcha.svg') no-repeat center center;
+    background-size: 20px 24px;
+  }
+  .vs_code_lable {
+    background: url('../../assets/user/user_code.svg') no-repeat center center;
+    background-size: 20px 24px;
+  }
+  .form_submit {
+    padding: 25px 0 0;
+    width: 350px;
+
+    &>.submit_btn {
+      width: 100%;
+      height: 43px;
+      font-size: 18px;
+      border-radius: 3px;
+      border: none;
+
+
+    }
+    &>.disabled_btn {
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .fix_succ {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    background: rgba(0,0,0,.5);
+  }
+  .succ_win {
+    width: 438px;
+    height: 346px;
+    .close_btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 25px;
+      opacity: 0.35;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    img {
+      width: 100%;
+    }
+    .white_space {
+      padding: 0 53px;
+      height: 156px;
+
+      &>p {
+        padding: 27px 0 24px;
+        text-align: center;
+        font-size: 16px;
+      }
+      &>a {
+        display: block;
+        width: 100%;
+        height: 44px;
+        line-height: 44px;
+        border-radius: 3px;
+        text-align: center;
+        transition: all .35;
+
+        &:hover {
+          opacity: 0.8;
+          transition: all .35;
+        }
+      }
+    }
+  }
+}

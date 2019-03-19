@@ -1,0 +1,34 @@
+<div class="left-nav" id="userNav">
+  <dl class="">
+    <?php // 我的账户 ?>
+    <dt><strong><?php echo $layout['lang']['USER_NAV_TITLE'] ?></strong></dt>
+    <?php // 账户信息 ?>
+    <dd><a data-page="user" href="/user"><?php echo $layout['lang']['USER_NAV_INDEX']; ?></a></dd>
+    <?php // 实名认证 ?>
+    <dd><a data-page="realinfo" href="/user/realinfo"><?php echo $layout['lang']['USER_NAV_AUTH']; ?></a></dd>
+  </dl>
+  <dl class="">
+    <?php // 我的资产 ?>
+    <dt class="my-money"><strong><?php echo $layout['lang']['USER_NAV_MY_ASSETS'] ?></strong></dt>
+    <?php // 甜品盒 ?>
+    <dd><a data-page="candy" href="/user/candy"><?php echo $layout['lang']['USER_NAV_CANDY'] ?></a></dd>
+    <?php // 充币 ?>
+    <dd><a data-page="coinin" href="/user/coinin"><?php echo $layout['lang']['USER_NAV_COIN_IN'] ?></a></dd>
+    <?php // 提币 ?>
+    <dd><a data-page="coinout" href="/user/coinout"><?php echo $layout['lang']['USER_NAV_COIN_OUT'] ?></a></dd>
+  </dl>
+  <dl class="">
+    <?php // 我的交易 ?>
+    <dt class="my-trade"><strong><?php echo $layout['lang']['USER_NAV_MY_TRADE'] ?></strong></dt>
+    <?php // 委托管理 ?>
+    <dd><a data-page="trust" href="/user/trust"><?php echo $layout['lang']['USER_NAV_TRUST']; ?></a></dd>
+    <?php // 成交查询 ?>
+    <dd><a data-page="deal" href="/user/deal"><?php echo $layout['lang']['USER_NAV_DEAL']; ?></a></dd>
+  </dl>
+  <dl class="">
+    <?php // 我的交易 ?>
+    <dt class="my-plan"><strong><?php echo $layout['lang']['USER_NAV_MASTER_PLAN'] ?></strong></dt>
+    <?php // 委托管理 ?>
+    <dd><a data-page="mplan" href="/user/mplan">邀請有禮</a></dd>
+  </dl>
+</div>

@@ -1,0 +1,165 @@
+
+@font-face {
+  font-family: 'dobi';
+  src:  url('~/fonts/dobi.eot?v=123456');
+  src:  url('~/fonts/dobi.eot?v=123456') format('embedded-opentype'),
+    url('~/fonts/dobi.ttf?v=123456') format('truetype'),
+    url('~/fonts/dobi.woff?v=123456') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class$="_icon"], [class~="icon"], [class*='_icon'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'dobi'!important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// icon
+.dobi_logo_icon {
+  display: inline-block;
+  color: $orange500;
+
+  &:before {
+    content: "\e90c";
+  }
+}
+
+.account_icon {
+
+  &:before {
+    content: "\e909";
+  }
+}
+
+.user_icon {
+
+  &:before {
+    content: "\e91d";
+  }
+}
+
+.close_icon {
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:before {
+    content: "\e904";
+  }
+}
+
+// 下拉箭头
+.ctrl_icon {
+  position: relative;
+  &:after {
+    content: "\e900";
+    display: inline-block;
+    position: absolute;
+    top:3px;
+    // right:-3px;
+    font-size: 18px;
+    transform: scaleX(1.2);
+    color:#eee;
+  }
+}
+.link::after{top:-3px;right:-3px;}
+b.ctrl_icon{vertical-align:text-top;}
+b::after{top:2px}
+
+
+.more_icon {
+  &:after {
+    content: "\e900";
+    display: inline-block;
+    text-align: center;
+  }
+}
+
+.default_tips_icon {
+  position: relative;
+  top: 2px;
+
+  &:before {
+    content: "\e926";
+  }
+}
+
+.err_tips_icon {
+  position: relative;
+  top: 1px;
+
+  &:before {
+    content: "\e906";
+  }
+}
+.line_bar_icon {
+  position: relative;
+  top: 1px;
+
+  &:before {
+    content: "\e907";
+  }
+}
+
+.black_Bang_icon {
+  position: relative;
+  top: 1px;
+
+  &:before {
+    content: "\e905";
+  }
+}
+
+.order_ok_icon {
+
+  &:before {
+    content: "\e90e";
+  }
+}
+
+.logout_icon {
+  position: relative;
+  top: 3px;
+
+  &:before {
+    content: "\e912";
+    transform: scale3d(1,1,1.2);
+  }
+}
+
+.eye_icon {
+  &:before {
+    content: "\e927";
+  }
+}
+
+.arrowdown_icon:before {
+  content: "\e91a";
+  display: inline-block;
+  transform: rotateZ(180deg);
+}
+
+.arrowup_icon:before {
+  content: "\e91a";
+}

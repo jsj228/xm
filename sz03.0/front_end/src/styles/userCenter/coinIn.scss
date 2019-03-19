@@ -1,0 +1,65 @@
+@import "../common/theme.scss";
+@import "flatpickr/dist/flatpickr.min.css";
+@import "./coinInTable.scss";
+@import "./condition.scss";
+@import '../common/index.scss';
+@import './index.scss';
+// @import "./index.scss";
+.out-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.coin-in-table {
+  min-height: 300px;
+  height: 100%;
+}
+.container_page .pageSplie li {
+  a {
+    box-sizing: border-box;
+  }
+  &.last_page {
+    min-width: 38px;
+    width: auto;
+  }
+  .pages_text {
+
+  }
+}
+.container_page .pageSplie li  {
+
+}
+.dialog-box-contain {
+  .dialog-box-content {
+    .form-tab {
+      .coin-out-sp {
+        width:auto;
+      }
+    }
+    padding: 0 66px;
+    .shot-tab {
+      width: 331px;
+    }
+    .coin-out-form {
+      .dot-line {
+        bottom: 140px;
+      }
+    }
+  }
+}
+
+// .page-list-contain {
+// }
+#tabsPages {
+  margin: 0;
+
+  &.page-list-contain {
+    flex-shrink: 0;
+    height: 40px;
+  }
+}
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .coin-in-table {
+    margin-top: 10px;
+  }
+}

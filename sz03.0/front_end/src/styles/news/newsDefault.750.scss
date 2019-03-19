@@ -1,0 +1,108 @@
+@import "../../nStyle/config.scss";
+
+//
+@media screen and (max-width: $bigScreenMax) {
+  .news-win {
+
+    .ns-lf {
+      box-sizing: border-box;
+      width: 100%;
+
+      .content {
+        padding: 10px;
+
+        &> ul {
+
+          a {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            padding: 20px 0 0;
+            // line-height: pxToRem(116);
+            overflow-x: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            &>span {
+              width: auto;
+            }
+          }
+
+          .list-rt {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .ns-rf {
+      display: none;
+    }
+
+
+  }
+}
+
+@media screen and(min-width: $bigScreenMin) and (max-width: $bigScreenMax) {
+  .news-win {
+    top: 120px;
+
+    .ns-lf {
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .ns-rf {
+      display: none;
+    }
+
+    .con-tit {
+      min-height: pxToRem(52);
+
+      a {
+        margin-bottom: pxToRem(20);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mdScreenMax) {
+  .news-win {
+    padding: 10px 10px;
+    top: pxToRem(120);
+
+    .ns-lf .content > ul {
+      padding: 5px;
+    }
+
+    .con-tit {
+      min-height: pxToRem(52);
+      height: auto;
+
+      a {
+        margin-bottom: pxToRem(20);
+        padding: 0 10px;
+        font-size: 12px;
+      }
+    }
+
+    .page-list .page-form {
+     display: none;
+    }
+
+    .page-list {
+      height: auto;
+
+      ul {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        // justify-content: space-between;
+
+        li {
+          margin-right: pxToRem(10);
+          margin-bottom: pxToRem(10);
+        }
+      }
+    }
+
+  }
+}

@@ -1,0 +1,3933 @@
+//模板语言包
+//命名规则：{小写controller类名：{小写action名：{"cn":"中文", "en":"英文"}}}
+//也可以根据views文件夹命名：{小写文件夹名（有子目录用"_"拼接）:{小写phtml文件名:{"cn":"中文", "en":"英文"}}}
+// 若如页面某部分有分块，命名格式： [分块名称]_[內容变量名]: {}
+// 比如 有一個內容块是 交易数据表格展示，那表格 【排序】，【币名】 这两项命名可以为：
+// TRADE_DATA_TABLE_NUM: { "cn": "排序", "en": "NUM" }, TRADE_DATA_TABLE_COIN_NAME: {"cn": "币名", "en": "coin name"}
+{
+  "base": {
+    "API": {
+      "cn": "火网開放API",
+      "en": " API"
+    },
+    "NOBTC_LINK": {
+      "cn": "沒有BTC?去場外交易平台 →",
+      "en": "No BTC? Click here to enter OTC"
+    },
+    "TITLE_WORD": {
+      "cn": "比特币交易萊特币，以太坊的币币交易平台-火网交易平台",
+      "en": "DOBI Exchange - A blockchain currency trading platform!"
+    },
+    "KEY_WORDS": {
+      "cn": "比特币交易平台，比特币行情，LTC/BTC币币交易，比特币BTC交易莱特币LTC，比特币兌换以太坊ETH，比特币兌换行雲币MCC，開心粮票FDC，JJF，EOS，GTS，NPC",
+      "en": "BTC Market, BTC Trend ,LTC/BTC Trade, BTC/LTC Trade ,BTC-ETH, BTC-MCC,Happy food stamp FDC,JJF,EOS,GTS,NPC"
+    },
+    "ID_TYPE_CH":{
+      "cn": "中國大陸身份證",
+      "en": "ID Card"
+    },
+    "ID_TYPE_HZ":{
+      "cn": "護照",
+      "en": "Passport"
+    },
+    "DESCRIPTION": {
+      "cn": "火网交易平台是國際性的比特币、莱特币、以太坊等数字货币交易平台，使用多重安全防範技術打造銀行級別的比特币交易網站，火网致力於提供安全、穩定、便捷的比特币（BTC），莱特币（LTC），以太坊（ETH），行雲币（MCC）等数字货币的币币交易服務，快速轉币、实時交易，給您最好的交易體驗！",
+      "en": "DOBI Trade is an international platform for trading Bitcoin, Litecoin, Ethereum, other digital assets/currencies, and tokens, uses multiple layers of bank grade security to protect your trades, DOBI Trade is committed to provide safe, stable and convenient trading for Bitcoin (BTC), LTC, ETH, MCC and other digital currencies, fast trades, real-time trading, the best trading experience"
+    },
+    "LOGO_TITLE": {
+      "cn": "฿EXCHANGE",
+      "en": "฿EXCHANGE"
+    },
+    "NAV_SUB_TITL": {
+      "cn": "币币交易",
+      "en": "Digtal Currency Exchange"
+    },
+    "NAV_USER_TI": {
+      "cn": "個人中心",
+      "en": "Personal Center"
+    },
+    "BANNDER_ONE_TITLE": {
+      "cn": "給您最好的交易體驗！",
+      "en": "DOBI provides you with the best trading experience!"
+    },
+    "BANNDER_TWO_TITLE": {
+      "cn": "我們定會保證您的資金和冷錢包的安全！",
+      "en": "We ensure the security of your digital assets with cold (offline) wallets!"
+    },
+    "BANNDER_THREE_TITLE": {
+      "cn": "更智能、更快捷的数字資産投資平台！",
+      "en": "An intelligent, faster, digital asset investment platform!"
+    },
+    "SERVICE_TEL": {
+      "cn": "客服電話",
+      "en": "Customer Service Phone Number"
+    },
+    "MAIN_TITLE_INDEX": {
+      "cn": "火网交易平台",
+      "en": "DOBI Trade"
+    },
+    "LOGO_WORD": {
+      "cn": "火网",
+      "en": ""
+    },
+    "HOME": {
+      "cn": "首页",
+      "en": "Home"
+    },
+    "USER_CENTER": {
+      "cn": "账户中心",
+      "en": "Account Center"
+    },
+    "MY_ACCOUNT": {
+      "cn": "我的账户",
+      "en": "My Account"
+    },
+    "TRADE_CENTER": {
+      "cn": "币币交易",
+      "en": "Exchange Market"
+    },
+    "TRADE_CENTER_FABI": {
+      "cn": "法币交易",
+      "en": "Exchange Market"
+    },
+    "LANGUAGE": {
+      "cn": "语言选择",
+      "en": "language"
+    },
+    "HELP_CENTER": {
+      "cn": "帮助手冊",
+      "en": "User Guide"
+    },
+    "ACTIVITY_CENTER": {
+      "cn": "有奖活动",
+      "en": "Award programs and prizes!"
+    },
+    "REGISTER": {
+      "cn": "注册",
+      "en": "Register"
+    },
+    "LOGIN": {
+      "cn": "登陆",
+      "en": "login"
+    },
+    "TRAE_AREA": {
+      "cn": "交易區",
+      "en": ""
+    },
+    "LOGOUT": {
+      "cn": "退出",
+      "en": "Logout"
+    },
+    "LANG_CH": {
+      "cn": "繁體中文",
+      "en": "繁體中文"
+    },
+    "LANG_EN": {
+      "cn": "English",
+      "en": "English"
+    },
+    "FOOTER_TITLE": {
+      "cn": "火网币币交易平台",
+      "en": "DOBI Digital Currency Trading Platform"
+    },
+    "FOOTER_SERVICE_EMAIL": {
+      "cn": "客服邮箱",
+      "en": "Customer Service Email"
+    },
+    "FOOTER_BUSSINESS_EMAIL": {
+      "cn": "商务邮箱",
+      "en": "Business email"
+    },
+    "FOOTER_SERVICE_WECHAT": {
+      "cn": "上币申请微信号：huocoin",
+      "en": "If you want to add a new Token ,Please contact us via Wechat :huocoin"
+    },
+    "USER_NAV_TITLE": {
+      "cn": "我的账户",
+      "en": "My Account"
+    },
+    "USER_NAV_INDEX": {
+      "cn": "账户信息",
+      "en": "Account"
+    },
+    "USER_NAV_AUTH": {
+      "cn": "实名认证",
+      "en": "KYC"
+    },
+    "USER_NAV_MY_ASSETS": {
+      "cn": "我的資產",
+      "en": "My Assets"
+    },
+    "USER_NAV_CANDY": {
+      "cn": "甜品盒",
+      "en": "Candies"
+    },
+    "USER_NAV_COIN_IN": {
+      "cn": "充币",
+      "en": "Deposit"
+    },
+    "USER_NAV_COIN_OUT": {
+      "cn": "提币",
+      "en": "Withdraw"
+    },
+    "USER_NAV_MY_TRADE": {
+      "cn": "我的交易",
+      "en": "My trades"
+    },
+    "USER_NAV_TRUST": {
+      "cn": "委托管理",
+      "en": "Agent"
+    },
+    "USER_NAV_DEAL": {
+      "cn": "成交查詢",
+      "en": "Completed"
+    },
+    "USER_NAV_MPLAN": {
+      "cn": "邀请有禮",
+      "en": "Invitation Rewards"
+    },
+    "USER_NAV_MASTER_PLAN": {
+      "cn": "经理人計劃",
+      "en": "Manager plan"
+    },
+    "USER_NAV_INVATE_GIFF": {
+      "cn": "邀请賺返利",
+      "en": "Invite friends to earn rebate"
+    },
+    "USER_CONDITION_COIN_LIST": {
+      "cn": "币種分類：",
+      "en": "Currency Classification"
+    },
+    "USER_CONDITION_CHK_ADDR": {
+      "cn": "查看地址",
+      "en": "Check address"
+    },
+    "USER_CONDITION_COIN_OUT": {
+      "cn": "提币",
+      "en": "Withdraw"
+    },
+    "USER_CONDITION_COIN_OUT_A": {
+      "cn": "很抱歉，",
+      "en": "Very sorry"
+    },
+    "USER_CONDITION_COIN_OUT_B": {
+      "cn": "暫時無法轉出",
+      "en": "Temporarily unable to withdraw."
+    },
+    "USER_CONDITION_CAN_NOT_COIN_OUT": {
+      "cn": "暫時無法提币",
+      "en": "Temporarily unable to withdraw this currency."
+    },
+    "USER_CONDITION_BTN_ALL": {
+      "cn": "全部",
+      "en": "All"
+    },
+    "USER_CONDITION_BTN_TODAY": {
+      "cn": "當天",
+      "en": "Today"
+    },
+    "USER_CONDITION_BTN_30_DAY": {
+      "cn": "近30天",
+      "en": "30 Days"
+    },
+    "USER_CONDITION_TIME_START": {
+      "cn": "起止時間：從",
+      "en": "Time Period: From:"
+    },
+    "USER_CONDITION_TIME_TO": {
+      "cn": "至",
+      "en": "To:"
+    },
+    "USER_CONDITION_BTN_FILTER": {
+      "cn": "篩選",
+      "en": "Filter"
+    },
+    "USER_CHOOSE_START_TIME": {
+      "cn": "请選擇開始時間",
+      "en": "Please select the starting date"
+    },
+    "USER_CHOOSE_END_TIME": {
+      "cn": "请選擇結束時間",
+      "en": "Please select the end time"
+    },
+    "USER_CONDITION_BTN_RESET": {
+      "cn": "重置",
+      "en": "Reset"
+    },
+    "USER_CONDITION_BTN_OUTPUT": {
+      "cn": "導出明細",
+      "en": "Export Details"
+    },
+    "USER_CDTION_WALLET_ADDR": {
+      "cn": "錢包地址：",
+      "en": " Wallet Address:"
+    },
+    "USER_CDTION_COPY_WALLET_ADDR": {
+      "cn": "復制錢包地址",
+      "en": "Copy"
+    },
+    "USER_CDTION_SO_SORRY": {
+      "cn": "很抱歉,",
+      "en": "Sorry,"
+    },
+    "USER_CDTION_CAN_NOT_COIN_IN": {
+      "cn": "暫時無法轉入",
+      "en": " Temporarily unable to transfer"
+    },
+    "USER_CDTION_COIN_IN_INSTRUCTIONS": {
+      "cn": "轉入須知",
+      "en": "Deposit Instructions"
+    },
+    "USER_CDTION_TIPS_ONE": {
+      "cn": "1. 此地址是您唯一且獨自使用的轉入地址，您可以同時進行多次轉入",
+      "en": "1.This is your personal address.  You can make multiple transfers at the same time!"
+    },
+    "USER_CDTION_TIPS_TWO_A": {
+      "cn": "2. 本地址",
+      "en": "2.This Address "
+    },
+    "USER_CDTION_TIPS_TWO_B": {
+      "cn": "禁止充值除",
+      "en": "Deposit prohibited except for "
+    },
+    "USER_CDTION_TIPS_TWO_C": {
+      "cn": "之外的其他資產",
+      "en": " type assets"
+    },
+    "USER_CDTION_TIPS_TWO_D": {
+      "cn": "，任何其他資產充值將不可找回",
+      "en": ", any other asset types deposited can not be retrieved."
+    },
+    "USER_CDTION_TRADE_TYPE": {
+      "cn": "交易類型：",
+      "en": "Tranaction Type"
+    },
+    "USER_CDTION_FLAG_ALL": {
+      "cn": "所有",
+      "en": "All"
+    },
+    "USER_CDTION_FLAG_BUY": {
+      "cn": "買入",
+      "en": "Buy"
+    },
+    "USER_CDTION_FLAG_SELL": {
+      "cn": "賣出",
+      "en": "Sell"
+    },
+    "USER_CDTION_FLAG_ALL_DONE": {
+      "cn": "全部成交",
+      "en": "Completed Transactions"
+    },
+    "USER_CDTION_FLAG_SOME_DONE": {
+      "cn": "部分成交",
+      "en": "Partially Complete Transactions"
+    },
+    "USER_CDTION_FLAG_NOT_DONE": {
+      "cn": "未成交",
+      "en": "Uncompleted Transactions"
+    },
+    "USER_CDTION_FLAG_CANCEL": {
+      "cn": "已撤銷",
+      "en": "Cancelled"
+    },
+    "USER_CDTION_ALL_RICH": {
+      "cn": "總額",
+      "en": "Total"
+    },
+    "USER_CDTION_BALANCE": {
+      "cn": "餘額",
+      "en": "Balance"
+    },
+    "USER_CDTION_FREEZE": {
+      "cn": "凍結額",
+      "en": "Freeze"
+    },
+    "USER_CDTION_GIVE": {
+      "cn": "贈送",
+      "en": "Gift"
+    },
+    "T_HEADER_TXID": {
+      "cn": "txid",
+      "en": "txid"
+    },
+    "T_HEADER_ADDR_where": {
+      "cn": "錢包地址所屬",
+      "en": "Wallet Address Owner"
+    },
+    "ADDR_LOADING": {
+      "cn": "正在生成地址中...",
+      "en": "Generating Address"
+    },
+    "UP_DOWN_INDEX": {
+      "cn": "数字資產指数",
+      "en": "Digital Asset Index"
+    },
+    "USER_COIN_BUY": {
+      "cn": "使用法币買賣币",
+      "en": ""
+    },
+    "CONVENIENT_TOP": {
+      "cn": "方便",
+      "en": "Convenient"
+    },
+    "FAST_TOP": {
+      "cn": "快捷",
+      "en": "Fast"
+    },
+    "SAFE_TOP": {
+      "cn": "安全",
+      "en": "Safe"
+    },
+    "PC_DEVICE_DO": {
+      "cn": "请您使用電腦瀏覽器訪問火网交易平台。",
+      "en": "Please use your PC web browser to access DOBI Trade!"
+    },
+    "NEWS_TIME": {
+      "cn": "時間",
+      "en": "Time"
+    },
+    "NEWS_SOURCE": {
+      "cn": "來源",
+      "en": "Source"
+    },
+    "NEWS_HOT": {
+      "cn": "熱度",
+      "en": "Hot News!"
+    },
+    "FIRST": {
+      "cn": "注册即送",
+      "en": "Submit Registration"
+    },
+    "AUTONYM_SEND": {
+      "cn": "实名认证后再送",
+      "en": "Real-Name verification"
+    },
+    "CHINA": {
+      "cn": "中國",
+      "en": "China"
+    },
+    "TEL": {
+      "cn": "请输入您的手机号",
+      "en": "Please enter your phone number"
+    },
+    "TEL_NUMBER": {
+      "cn": "请输入您的常用手机号码",
+      "en": "Please input your mobile phone number"
+    },
+    "PASSWORD": {
+      "cn": "设置密码",
+      "en": "Set Password"
+    },
+    "YES_REGISTER": {
+      "cn": "请勾選注册协议",
+      "en": "I agree to Dobitrade's Terms Of Use"
+    },
+    "CONFIRM_PASSWORD": {
+      "cn": "确認密码",
+      "en": "Please confirm password"
+    },
+    "CONFIRM": {
+      "cn": "请再次输入密码",
+      "en": "Please confirm your password again"
+    },
+    "ASSEMBLAGE": {
+      "cn": "至少使用兩種字符組合",
+      "en": "at least combine 2 type of characters"
+    },
+    "INPUT_AGAIN": {
+      "cn": "请再次输入密码",
+      "en": "Please enter your password again"
+    },
+    "VERIFICATION": {
+      "cn": "图形验证码",
+      "en": "Verification code"
+    },
+    "VERIFICATION_CONFIRM": {
+      "cn": "请输入图形验证码",
+      "en": "SMS code"
+    },
+    "VAGUE": {
+      "cn": "看不清？点击图片更换验证码",
+      "en": "Not clear? Click on picture to change verification code"
+    },
+    "TEL_YZM": {
+      "cn": "手机验证码",
+      "en": "SMS verification code"
+    },
+    "PLEASE_TEL_YZM": {
+      "cn": "请输入手机验证码",
+      "en": "SMS code"
+    },
+    "YOU_TEL_YZM": {
+      "cn": "请输入您的手机验证码",
+      "en": "SMS code"
+    },
+    "ACQUIRING": {
+      "cn": "获取验证码",
+      "en": "send"
+    },
+    "CLICK_ACQUIRING": {
+      "cn": "点击获取",
+      "en": "Click to obtain code"
+    },
+    "PHOME_TICS": {
+      "cn": "语音验证码",
+      "en": "SMS code"
+    },
+    "YES": {
+      "cn": "同意",
+      "en": "Agree"
+    },
+    "USERS": {
+      "cn": "用户协议",
+      "en": "User Agreement"
+    },
+    "HAS_USER": {
+      "cn": "已经注册，去",
+      "en": "Registered,"
+    },
+    "FORGET_PWD": {
+      "cn": "忘记密码",
+      "en": "Forget password ?"
+    },
+    "LOGIN_BTN": {
+      "cn": "登陆",
+      "en": "Login"
+    },
+    "LOGIN_BTN_GO": {
+      "cn": "去登陆",
+      "en": "Please click here to login"
+    },
+    "FORGET_SUBMIT": {
+      "cn": "提交",
+      "en": "submit"
+    },
+    "REGISTER_SUCCESS": {
+      "cn": "恭喜您注册成功",
+      "en": "Congratulations! You’ve registered successfully!"
+    },
+    "FORGETPWD_SUCCESS": {
+      "cn": "恭喜您成功修改登陆密码",
+      "en": "Your password has been changed successfully!"
+    },
+    "FORGET_STEP_FRIST": {
+      "cn": "填写手机号",
+      "en": "Input your phone number"
+    },
+    "FORGET_STEP_TWO": {
+      "cn": "身份验证",
+      "en": "Verification"
+    },
+    "FORGET_STEP_THREE": {
+      "cn": "设置新密码",
+      "en": "Reset new login password"
+    },
+    "FORGET_STEP_OVER": {
+      "cn": "已填写手机号",
+      "en": "Phone number has been entered"
+    },
+    "NOW_REGISTER": {
+      "cn": "立即注册",
+      "en": "Register Now"
+    },
+    "GET_PHONECODE_AGAING": {
+      "cn": "s后重新获取",
+      "en": "S"
+    },
+    "LOGIN_TEL": {
+      "cn": "请输入您的手机号码",
+      "en": "Please input your mobile number"
+    },
+    "LOG_PASSWORD": {
+      "cn": "请输入您的登陆密码",
+      "en": "Please enter your password"
+    },
+    "IMPORT_PASSWORD": {
+      "cn": "输入密码",
+      "en": "Enter your password"
+    },
+    "REGISTER_NOW": {
+      "cn": "立即注册",
+      "en": "Register Now"
+    },
+    "REGISTER_NO_ACCOUT": {
+      "cn": "还沒火网账号?",
+      "en": ""
+    },
+    "FORGET_PASSWORD": {
+      "cn": "忘记密码",
+      "en": "Forgotten Password"
+    },
+    "CONGRATULATIONS": {
+      "cn": "恭喜您注册成功",
+      "en": "Congratulations, you have registered sucessfully"
+    },
+    "SEND_OUT": {
+      "cn": "我們已送出",
+      "en": "We have sent out"
+    },
+    "GE": {
+      "cn": "個",
+      "en": "a"
+    },
+    "ACCOUT_NUMBER": {
+      "cn": "的新人注册奖到您的账号",
+      "en": "New registration account number"
+    },
+    "REAL_NUMBER": {
+      "cn": "实名认证后再送您",
+      "en": "Real name authentication"
+    },
+    "REAL_PASSWORD": {
+      "cn": "请输入交易密码",
+      "en": "trading password"
+    },
+    "REAL_LOG_PASSWORD": {
+      "cn": "找回登陆密码",
+      "en": "forgot your password"
+    },
+    "FILL_TEL": {
+      "cn": "填写手机号",
+      "en": "Please enter your mobile number"
+    },
+    "FILL_SF": {
+      "cn": "身份验证",
+      "en": "ID number"
+    },
+    "SF_PASSWORD": {
+      "cn": "设置新密码",
+      "en": "set your new password"
+    },
+    "SZ_PASSWORD": {
+      "cn": "重置密码成功",
+      "en": "Your password has been reset sucessfully"
+    },
+    "SZ_TEL": {
+      "cn": "请输入您的登陆手机号",
+      "en": "Please enter your mobile number"
+    },
+    "XYB": {
+      "cn": "下一步",
+      "en": "Next"
+    },
+    "DETERMINE": {
+      "cn": "确定",
+      "en": "Confirm"
+    },
+    "GO_LOGIN": {
+      "cn": "去登陆",
+      "en": "login"
+    },
+    "JIANGLI": {
+      "cn": "提取奖勵",
+      "en": "Collect Reward(s)"
+    },
+    "YUEN": {
+      "cn": "可用返傭奖勵餘額",
+      "en": "Available Rebate Award Balance"
+    },
+    "KYONG_EN": {
+      "cn": "可用注册奖勵餘額",
+      "en": "Available Registration Reward Balance"
+    },
+    "KYONG_TT": {
+      "cn": "奖勵類型",
+      "en": "Coin"
+    },
+    "KYONG_TIQU": {
+      "cn": "请選擇要提取的奖勵",
+      "en": "Please select the reward you want to withdraw"
+    },
+    "YAOQING_TIQU": {
+      "cn": "邀请注册奖勵",
+      "en": "Successful Registration/Referral Rewards"
+    },
+    "JIAOYI_TIQU": {
+      "cn": "邀请交易返傭奖勵",
+      "en": "Referral trading rebate awards"
+    },
+    "JIAOYI_LEIXING": {
+      "cn": "请選擇提取類型",
+      "en": "Please select withdraw type"
+    },
+    "JIAOYI_SHUE": {
+      "cn": "提取数額",
+      "en": "Amount"
+    },
+    "JSHURU_SHUE": {
+      "cn": "请输入提取数額",
+      "en": "Please enter withdraw amount"
+    },
+    "JTI_BI": {
+      "cn": "提取",
+      "en": "extract"
+    },
+    "HAO_YOU": {
+      "cn": "邀请的好友",
+      "en": "Invite Friends"
+    },
+    "HAO_TIME": {
+      "cn": "注册時間",
+      "en": "Registration time"
+    },
+    "HAO_ZT": {
+      "cn": "好友实名狀態",
+      "en": "Real-Name authentication status of invitations"
+    },
+    "HAO_ZT_JL": {
+      "cn": "邀请注册奖勵",
+      "en": "Invitation Registration Rewards"
+    },
+    "JL_JL": {
+      "cn": "记錄",
+      "en": "Record"
+    },
+    "JL_TIME": {
+      "cn": "時間",
+      "en": "Time"
+    },
+    "SL_TIME": {
+      "cn": "数量",
+      "en": "Amount"
+    },
+    "BZ": {
+      "cn": "币種",
+      "en": "Type of coin"
+    },
+    "JY_BZ": {
+      "cn": "交易返傭",
+      "en": "trade rebate"
+    },
+    "XL_BZ": {
+      "cn": "序列",
+      "en": "sequence"
+    },
+    "XL_NAME": {
+      "cn": "用户名",
+      "en": "Username"
+    },
+    "YI_NAME": {
+      "cn": "已邀请好友",
+      "en": "Invitations Sent"
+    },
+    "JY_FANY": {
+      "cn": "交易返傭奖勵",
+      "en": "trade rebate(s)/reward(s)"
+    },
+    "MOB_DEVING": {
+      "cn": "暫未推出，请先在PC版進行操作",
+      "en": "Not available yet on mobile phone for this function! Please use PC version"
+    },
+    "MOB_GO_HOME": {
+      "cn": "返回首页",
+      "en": "Back to Home Page"
+    },
+    "ACTIVITY_MPLAN": {
+      "cn": "邀请有禮",
+      "en": "Invitation rewards"
+    },
+    "ACTIVITY_NEWS": {
+      "cn": "新聞公告",
+      "en": "Announcements"
+    },
+    "NO_RECORD_NOW": {
+      "cn": "暫無记錄",
+      "en": "No Transaction history"
+    },
+    "LOADING_RMB": {
+      "cn": "加載中...",
+      "en": "Loading"
+    },
+    "CANGET": {
+      "cn": "可以在",
+      "en": ""
+    },
+    "GET_VOICE_CODE": {
+      "cn": "s后获取语音验证码",
+      "en": "s get Audio Code."
+    },
+    "ATTENTION_CALLIMG": {
+      "cn": "请注意接聽來電",
+      "en": "Please wait for phone cal"
+    },
+    "NUMBER_UNENOUGH": {
+      "cn": "位数不正确",
+      "en": "Incorrect format"
+    },
+    "PASSWORD_LENGTH_UNENOUGH": {
+      "cn": "密码長度不能小於6位字符",
+      "en": "The password should contain at least 6 characters"
+    },
+    "AGAIG_PASSWORD_LENGTH_UNENOUGH": {
+      "cn": "重複密码長度不能小於6位字符",
+      "en": "The password should contain at least 6 characters"
+    },
+    "PASSWORD_LENGTH_DIFFERENT": {
+      "cn": "兩次密码输入不一致",
+      "en": "New password and current password do not match"
+    },
+    "PHONE_INPUT_ERROR": {
+      "cn": "手机号格式不正确",
+      "en": "Invalid phone number format"
+    },
+    "PASSWORD_WARING_FIRST": {
+      "cn": "有被盜風險，请使用字母、数字和符号兩種以上組合",
+      "en": "Your password should contain letters,numbers,symbols ."
+    },
+    "PASSWORD_WARING_TWO": {
+      "cn": "安全強度適中，可以使用三種以上的組合來提高安全性",
+      "en": "Your password is good."
+    },
+    "PASSWORD_WARING_THREE": {
+      "cn": "您的密码很安全",
+      "en": "your password is considered strong"
+    },
+    "JS_BASE_LANG": {
+      "cn": {
+        "LOADING_RMB": "加载中...",
+        "sysError": "系統錯誤，请聯系客服協助處理",
+        "timeout": "请求超時,请稍后重試",
+        "reqError": "请求超時,请稍后重試",
+        "nav": {
+          "title": "找回登陆密码",
+          "phoneTit": "中國 +86",
+          "phoneHolder": "请输入您的登陆手机号",
+          "captcha": "图形验证码",
+          "imgHolder": "请输入图形验证码",
+          "NextStep": "下一步",
+          "stepOne": "填写手机号",
+          "stepTwo": "身份验证",
+          "stepThree": "设置新密码",
+          "stepFour": "重置密码成功",
+          "loginPwd": "设置密码",
+          "surePwd": "确認密码",
+          "phoneCode": "手机验证码",
+          "loginPwdHolder": "至少使用兩種字符組合",
+          "surePwdHolder": "请再次输入密码",
+          "phoneCodeHolder": "请输入手机验证码",
+          "getPhoneCode": "获取验证码",
+          "reGetPhoneCode": "重新获取验证码",
+          "clickGetVoiceCode": "点击获取",
+          "voiceCode": "语音验证码",
+          "phoneComing": "请注意收聽來電",
+          "canGet": "可以在",
+          "canGetAfter": "后获取",
+          "getPhoneCodeAg": "s后重新获取",
+          "userPhoneTips": "已填写手机号:",
+          "userPhoneNum": "******",
+          "goLogin": "去登陆",
+          "warn": {
+            "phone": {
+              "nor": "请输入您的常用手机号码",
+              "err": "手机号格式不正确",
+              "msg": "",
+              "empty": "手机号码不能為空"
+            },
+            "captcha": {
+              "nor": "看不清？点击图片更换验证码",
+              "err": "位数不正确",
+              "msg": "",
+              "empty": "图形验证码不能為空"
+            },
+            "code": {
+              "nor": "请输入手机验证码",
+              "err": "手机验证码格式不正确",
+              "msg": "",
+              "empty": "手机验证码不能為空"
+            },
+            "password": {
+              "nor": "请输入登陆密码",
+              "err": "登陆密码格式不正确",
+              "weak": "有被盜風險，请使用字母、数字或符号兩種及以上組合",
+              "midd": "安全強度適中，可以使用三種以上的組合來提高安全性",
+              "good": "您的密码很安全",
+              "space": "登陆密码不能使用空格",
+              "noCh": "登陆密码不能使用中文",
+              "less": "登陆密码不能小於6位字符",
+              "msg": "",
+              "empty": "登陆密码不能為空"
+            },
+            "repassword": {
+              "nor": "请再次输入登陆密码",
+              "err": "兩次密码不一致",
+              "msg": "",
+              "empty": "确認密码不能為空"
+            }
+          }
+        },
+        "register": {
+          "tel_msg": "手机号格式不正确",
+          "tel_empty": "请输入手机号码",
+          "pwd_msg": "登陆密码不能小於6位字符",
+          "pwd_empty": "密码不能為空",
+          "surePwd_msg": "兩次输入的密码不一致",
+          "surePwd_empty": "确認密码不能為空",
+          "imgCode_msg":"验证码不能為空",
+          "telCode_msg": "短信验证码不能為空",
+          "captcha_empty": "请输入图形验证码",
+          "captcha_msg": "位数不正确",
+          "vcode_empty": "请输入手机验证码",
+          "vcode_msg": "位数不正确",
+          "validate_default_msg": "请完善表單",
+          "getMsgAfterTime": "s后重新获取",
+          "getVoiceAfterTime": "s后获取语音验证码",
+          "canGet": "可以在",
+          "pickUpPhone": "请注意收聽來電",
+          "reGetMsg": "重新获取验证码",
+          "clickAndGet": "点击获取",
+          "voiceCode": "语音验证码",
+          "getCode": "获取验证码",
+          "form_tel_empty": "请输入您的常用手机号码",
+          "form_pwd_less": "登陆密码不能小於6位字符",
+          "form_pwd_space": "登陆密码不能使用空格",
+          "form_pwd_empty": "请输入您的登陆密码",
+          "form_pwd_strength_good": "您的密码很安全",
+          "form_pwd_strength_midd": "安全強度適中，可以使用三種以上的組合來提高安全性",
+          "form_pwd_strength_weak": "有被盜風險，请使用字母、数字或符号兩種及以上組合",
+          "form_surepwd_msg": "请确認您的登陆密码",
+          "form_captcha_empty": "请输入图形验证码",
+          "form_captcha_refresh": "看不清此验证码?点击刷新",
+          "form_vcode_msg": "请输入手机验证码"
+        },
+        "resetPwd": {
+          "title": "找回登陆密码",
+          "phoneTit": "中國 +86",
+          "phoneHolder": "请输入您的登陆手机号",
+          "captcha": "图形验证码",
+          "imgHolder": "请输入图形验证码",
+          "NextStep": "下一步",
+          "stepOne": "填写手机号",
+          "stepTwo": "身份验证",
+          "stepThree": "设置新密码",
+          "stepFour": "重置密码成功",
+          "loginPwd": "设置密码",
+          "surePwd": "确認密码",
+          "phoneCode": "手机验证码",
+          "loginPwdHolder": "至少使用兩種字符組合",
+          "surePwdHolder": "请再次输入密码",
+          "phoneCodeHolder": "请输入手机验证码",
+          "getPhoneCode": "获取验证码",
+          "reGetPhoneCode": "重新获取验证码",
+          "clickGetVoiceCode": "点击获取",
+          "voiceCode": "语音验证码",
+          "phoneComing": "请注意收聽來電",
+          "canGet": "可以在",
+          "canGetAfter": "后获取",
+          "getPhoneCodeAg": "后重新获取",
+          "userPhoneTips": "已填写手机号:",
+          "userPhoneNum": "******",
+          "goLogin": "去登陆",
+          "warn": {
+            "phone": {
+              "nor": "请输入您的常用手机号码",
+              "err": "手机号格式不正确",
+              "msg": "",
+              "empty": "手机号码不能為空"
+            },
+            "captcha": {
+              "nor": "看不清？点击图片更换验证码",
+              "err": "位数不正确",
+              "msg": "",
+              "empty": "图形验证码不能為空"
+            },
+            "code": {
+              "nor": "请输入手机验证码",
+              "err": "手机验证码格式不正确",
+              "msg": "",
+              "empty": "手机验证码不能為空"
+            },
+            "password": {
+              "nor": "请输入登陆密码",
+              "err": "登陆密码格式不正确",
+              "weak": "有被盜風險，请使用字母、数字或符号兩種及以上組合",
+              "midd": "安全強度適中，可以使用三種以上的組合來提高安全性",
+              "good": "您的密码很安全",
+              "space": "登陆密码不能使用空格",
+              "noCh": "登陆密码不能使用中文",
+              "less": "登陆密码不能小於6位字符",
+              "msg": "",
+              "empty": "登陆密码不能為空"
+            },
+            "repassword": {
+              "nor": "请再次输入登陆密码",
+              "err": "兩次密码不一致",
+              "msg": "",
+              "empty": "确認密码不能為空"
+            }
+          }
+        }
+      },
+      "en": {
+        "LOADING_RMB": "Loading...",
+        "sysError": "System error!  Please contact customer service for help.",
+        "timeout":  "Request timed out.  Please try again later.",
+        "reqError": "Request timed out.  Please try again later.",
+        "nav": {
+          "title": "Retrieve login password",
+          "phoneTit": "China +86",
+          "phoneHolder": "Please enter the phone you registered to login.",
+          "captcha": "captcha image",
+          "imgHolder": "Please enter the code displayed in the captcha image!",
+          "NextStep": "Next",
+          "stepOne": "Phone Number",
+          "stepTwo": "Authentication",
+          "stepThree": "Set new password",
+          "stepFour": "Successfully reset password",
+          "loginPwd": "Set password",
+          "surePwd": "Confirm password",
+          "phoneCode": "SMS verification code",
+          "loginPwdHolder": "Please use at least two different types of characters",
+          "surePwdHolder": "Please retype password",
+          "phoneCodeHolder": "Please enter the SMS verification code",
+          "getPhoneCode": "Get SMS verifcation code",
+          "reGetPhoneCode": "Resend SMS verification code",
+          "clickGetVoiceCode": "Click to get voice verification code",
+          "voiceCode": "Voice verification code",
+          "phoneComing": "Please be ready to answer your phone",
+          "canGet": "obtain",
+          "canGetAfter": "obtain later",
+          "getPhoneCodeAg": "reacquire",
+          "userPhoneTips": "Please fill in your phone number:",
+          "userPhoneNum": "******",
+          "goLogin": "Go to login",
+          "warn": {
+            "phone": {
+              "nor": "Please enter your phone number.",
+              "err": "The format of the phone number is not correct!",
+              "msg": "",
+              "empty": "The phone number field cannot be empty!"
+            },
+            "captcha": {
+              "nor": "Cannot read?  Click the picture to change code.",
+              "err": "Verification code is not correct!",
+              "msg": "",
+              "empty": "Verification code field cannot be empty!"
+            },
+            "code": {
+              "nor": "SMS code",
+              "err": "The verification code is not correct!",
+              "msg": "",
+              "empty": "The SMS verification code field cannot be empty!"
+            },
+            "password": {
+              "nor": "Please enter your login password.",
+              "err": "The login password is not correct!",
+              "weak": "The security of this password is weak!  Please use a combination of Upper/Lower case letters, numbers, or symbols!",
+              "midd": "The security of this password is moderate.  Using a combination of at least one of the following: symbols, numbers, and special characters will improve the strength of the password!",
+              "good": "The security of this password is good!",
+              "space": "Please do not use ' ' space characters in the password.",
+              "noCh": "Please do not use Chinese characters in your password.",
+              "less": "The login password cannot be less than 6 characters",
+              "msg": "",
+              "empty": "The login password cannot be blank!"
+            },
+            "repassword": {
+              "nor": "Please enter the login password again!",
+              "err": "The two passwords do not match!",
+              "msg": "",
+              "empty": "The confirmation password cannot be blank!"
+            }
+          }
+        },
+        "register": {
+          "tel_msg": "The format of the phone number is not correct",
+          "tel_empty": "Please enter the phone number",
+          "pwd_msg": "The login password can not be less than 6 characters",
+          "pwd_empty": "Password can not be empty",
+          "surePwd_msg": "The two passwords do not match!",
+          "surePwd_empty": "Confirmation password cannot be blank!",
+          "imgCode_msg":"Verification code can not be empty",
+          "telCode_msg": "SMS verification code can not be empty",
+          "captcha_empty": "Please enter the graphics verification code",
+          "captcha_msg": "Code is not correct!",
+          "vcode_empty": "Please enter the phone verification code",
+          "vcode_msg": "Code is not correct!",
+          "validate_default_msg": "Please complete this form",
+          "getMsgAfterTime": "sSMS timeout",
+          "getVoiceAfterTime": "sVoice timeout",
+          "canGet": "obtain",
+          "pickUpPhone": "Please be ready to answer your phone!",
+          "reGetMsg": "Retrieve verification code",
+          "clickAndGet": "Click to get code",
+          "voiceCode": "Voice verification code",
+          "getCode": "send",
+          "form_tel_empty": "Please enter your phone number!",
+          "form_pwd_less": "The login password cannot be less than 6 characters",
+          "form_pwd_space": "The login password cannot contain ' ' space characters.",
+          "form_pwd_empty": "Please enter your login password.",
+          "form_pwd_strength_good": "The security of your password is good!",
+          "form_pwd_strength_midd": "The security of your password is moderate, to improve security use a combination of upper/lower case letters, numbers, and symbols!",
+          "form_pwd_strength_weak": "The security of this password is weak and increases the risk your account could be compromised!",
+          "form_surepwd_msg": "Please confirm your login password.",
+          "form_captcha_empty": "captcha",
+          "form_captcha_refresh": "Can't read code?  Click 'Refresh'",
+          "form_vcode_msg": "SMS code"
+        },
+        "resetPwd": {
+          "title": "Forget password ?",
+          "phoneTit": "China +86",
+          "phoneHolder": "Please input your phone number",
+          "captcha": "Captcha Code",
+          "imgHolder": "Input the Captcha Code",
+          "NextStep": "Next step",
+          "stepOne": "Input phone number",
+          "stepTwo": "Verification",
+          "stepThree": "Reset new password",
+          "stepFour": "Password has been changed successfully",
+          "loginPwd": "Set password",
+          "surePwd": "Confirm password",
+          "phoneCode": "SMS Code",
+          "loginPwdHolder": "Password must contain a combination of at least 2 of the following groups : Letters,Numbers,Symbols.",
+          "surePwdHolder": "Please input password again",
+          "phoneCodeHolder": "Please input SMS Code",
+          "getPhoneCode": "Get SMS Code",
+          "reGetPhoneCode": "Regain the SMS Code",
+          "clickGetVoiceCode": "Click here to get it",
+          "voiceCode": "Audio Code",
+          "phoneComing": "Please wait for the call",
+          "canGet": "can get",
+          "canGetAfter": "can get  after  S",
+          "getPhoneCodeAg": "get SMS Code after",
+          "userPhoneTips": "Phone number has been entered",
+          "userPhoneNum": "******",
+          "goLogin": "Click here to login",
+          "warn": {
+            "phone": {
+              "nor": "Please enter your primary phone number",
+              "err": "Invalid phone number format",
+              "msg": "",
+              "empty": "Phone number can not be empty"
+            },
+            "captcha": {
+              "nor": "Is the picture not clear ? Click the picture to change another Captcha",
+              "err": "Captcha is incorrect",
+              "msg": "",
+              "empty": "Captcha can not be empty"
+            },
+            "code": {
+              "nor": "Input SMS Code",
+              "err": "Invalid SMS Code format",
+              "msg": "",
+              "empty": "SMS Code can not be empty"
+            },
+            "password": {
+              "nor": "Input the login password",
+              "err": "Invalid login password format",
+              "weak": "Password is too week,your password should contain letters,numbers and symbols",
+              "midd": "Your password is good ,using combinations of letters,numbers,symbols will strengthen Account security",
+              "good": "Your password is considered strong",
+              "space": "No Space in your password",
+              "noCh": "No Chinese in your password",
+              "less": "Your password should not be less than 6 characters",
+              "msg": "",
+              "empty": "The password can’t be empty"
+            },
+            "repassword": {
+              "nor": "Please input your login password again",
+              "err": "New password and current password do not match.",
+              "msg": "",
+              "empty": "Password confirmation cannot be empty "
+            }
+          }
+        }
+      }
+    },
+    "BTC_OUT_TRADE": {
+      "cn": "法币交易",
+      "en": "Trade Funding"
+    }
+  },
+  "index": {
+    "index": {
+      "MAIN_TITLE": {
+        "cn": "首页",
+        "en": "HOME"
+      },
+      "CREATE_MY_ACCOUNT_BTN": {
+        "cn": "建立账户",
+        "en": "Create an account"
+      },
+      "MY_ACCOUNT_BTN": {
+        "cn": "我的账户",
+        "en": "My account"
+      },
+      "GO_TRADE_BTN": {
+        "cn": "去交易",
+        "en": "Trade"
+      },
+      "SERVICE_TEL": {
+        "cn": "首页客服電話",
+        "en": "Customer service phone number"
+      },
+      "CANDY_GET": {
+        "cn": "領取甜品",
+        "en": "Get Candies"
+      },
+      "CHECK_DETAIL": {
+        "cn": "查看詳情",
+        "en": "Additional details"
+      },
+      "ADVANTAGE": {
+        "cn": "我們的優勢",
+        "en": "Our advantage"
+      },
+      "SAFETY": {
+        "cn": "安全",
+        "en": "Safety"
+      },
+      "SAFETY_DETAIL": {
+        "cn": "錢包多層加密，離線存儲於銀行保險櫃資金第三方托管，确保安全",
+        "en": "multi-layer encrypted wallets, offline \"cold\" storage wallets in 3rd party bank vault, ensuring the safety of your account!"
+      },
+      "PROFESSIONAL": {
+        "cn": "專業",
+        "en": "Professional"
+      },
+      "PROFESSIONAL_DETAIL": {
+        "cn": "專業的客服團隊，400電話和24小時在線VIP一對一專業服務",
+        "en": "Professional customer service team, Toll-Free 400 call centre and 24 hours online one-to-one VIP service"
+      },
+      "WIFA": {
+        "cn": "全球互通",
+        "en": "Global Interoperability"
+      },
+      "WIFA_DETAIL": {
+        "cn": "為您提供國際平台更多的選擇，更便捷的交易",
+        "en": "Providing you with more international options and more convenient ways to make trades!"
+      },
+      "PARTNERS": {
+        "cn": "合作夥伴",
+        "en": "Partners"
+      },
+      "TRADE_PRICE": {
+        "cn": "24h成交量:",
+        "en": "24HR Volume"
+      },
+      "TRADE_NUMBER": {
+        "cn": "24h成交額:",
+        "en": "24H Amount"
+      },
+      "ACTIVE_INDEX": {
+        "cn": "查看活动詳情",
+        "en": "Detailed  activity"
+      },
+      "SEE_MORE_GG": {
+        "cn": "查看更多&gt;&gt;",
+        "en": "See More&gt;&gt;"
+      },
+      "JS_LANG": {
+        "cn": "",
+        "en": ""
+      },
+      "NEW_PRICE": {
+        "cn": "最新價格",
+        "en": "Latest price"
+      },
+      "WECHAT_ACCOUNT": {
+        "cn": "微信公眾号",
+        "en": "WeChat Official Account"
+      },
+      "PRICE_UP_DOWN": {
+        "cn": "漲跌幅",
+        "en": "Price rise and fall"
+      },
+      "MOB_ACCOUNT": {
+        "cn": "账户",
+        "en": "account"
+      },
+      "MOB_PROPERTY": {
+        "cn": "資產",
+        "en": "Assets"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "首页",
+        "en": "Home"
+      },
+      "TRADE_MARKET": {
+        "cn": "交易區",
+        "en": "Market"
+      },
+      "PACKED_GET": {
+        "cn": "立即搶紅包",
+        "en": "Get red packets"
+      },
+      "PACKED_SUBMIT": {
+        "cn": "确定",
+        "en": "OK"
+      },
+      "END_START": {
+        "cn": "距開始还有",
+        "en": "Start in"
+      },
+      "ACTIVITY_INT": {
+        "cn": "進入活动页面",
+        "en": "More details"
+      },
+      "JS_LANG": {
+        "cn": {
+          "login_now": "请先登陆",
+          "GET_DATA_FAIL": "获取数據失敗",
+          "CANDY_GOT": "恭喜妳已经成功領取",
+          "CANDY_GET": "奖勵"
+        },
+        "en": {
+          "login_now": "Please login first",
+          "GET_DATA_FAIL": "Network error! Please try it again",
+          "CANDY_GOT": "Congratulations! You have got Candies",
+          "CANDY_GET": "Reward"
+        }
+      }
+    },
+    "policy": {
+      "SERVICE_SERVICE": {
+        "cn": "服務條款",
+        "en": "Terms Of Service ('TOS')"
+      },
+      "SERVICE_TO_USE": {
+        "cn": "在使用火网時，不管是訪問網站还是使用火网提供的任何其他服務，用户需承諾遵守本服務條款的約定。用户如果長期使用火网網站，將被視為您同意我們的服務條款。",
+        "en": "By accessing and using the DOBI Trade platform and services you accept and agree to be bound by the terms and and provisions of our TOS."
+      },
+      "SERVICE_NAME": {
+        "cn": "按照本服務條款約定，火网可能被指代為“我們”、“我們的”、“本網站”及“火网”。火网的用户包括但不限於注册用户，同時还包括以任何方式、狀態或形式使用本網站的任何訪問者。“加密貨币”可以用於描述任何形式的数字貨币，包括但不限於比特蔽和萊特蔽。您理解並接受本服務條款。",
+        "en": "According to our TOS the DOBI Trading platform can be referred to as 'DOBI', 'us', 'our', or 'this website.' DOBI users include any visitor to our website or using our services for any purpose.  The term 'Cryptocurrency' may be used to describe any form of digital currency, including but not limited to Bitcoin and/or 'coin'.   By visiting our website or making use of our services you acknowledge that you agree to these terms of service! "
+      },
+      "SERVICE_PROTOCOL": {
+        "cn": "一．用户注册协议",
+        "en": "1.  User Registration Agreement"
+      },
+      "SERVICE_USERU": {
+        "cn": "1.用户注册",
+        "en": "1. User Registration"
+      },
+      "SERVICE_STATUS": {
+        "cn": "1.1注册資格",
+        "en": "1.1 Registration Status"
+      },
+      "SERVICE_BEARING": {
+        "cn": "用户承諾：用户具有完全民事權利能力和行為能力，或雖不具有完全民事權利能力和行為能力,但点击同意注册按鈕，本網即視為经其法定代理人同意並由其法定代理人代理注册及應用火网服務。",
+        "en": "User Obligations:  In consideration of your use of DOBI Trading Services, you represent that you are of legal age and sound mind to form a binding contract and are not a person previously banned from using any DOBI services.  You also agree to: provide true, accurate, current, and complete information about yourself and will ensure registation data is current and up-to-date in the event any personal information should change.  By clicking the 'Sign Up' button you acknowledge that you provide you consent to the terms of this agreement."
+      },
+      "SERVICE_GOAL": {
+        "cn": "1.2 注册目的",
+        "en": "1.2 Registion Purpose"
+      },
+      "SERVICE_PRDER": {
+        "cn": "用户承諾：用户進行用户注册並非出於違反法律法規或破壞火网加密貨币和数字資産交易秩序的目的。",
+        "en": "User Commitment: User registration requirements are not intended to violate any laws or regulations or for the purpose of trading digital assets."
+      },
+      "SERVICE_FOLAT": {
+        "cn": "1.3注册流程",
+        "en": "1. Registration Process"
+      },
+      "SERVICE_ACCURACY": {
+        "cn": "用户同意根據火网用户注册页面的要求提供有效手机等信息，设置火网账号及密码，用户應确保所提供全部信息的真实性、完整性和準确性。",
+        "en": "The user ('you') agree to provide full, accurate and true information in accordance with the information requested on the DOBI user registration page to including but not limited to phone number, identification documents, and valid account password."
+      },
+      "SERVICE_LEGAL": {
+        "cn": "1.4用户合法、完整並有效提供注册所需信息的，有權获得火网账号和密码，火网账号和密码用於用户在火网進行登陆。",
+        "en": "1.4 If a user legally and completely submits all information required for registration, they will be entitled to a DOBI Trading Account which can then be used to login to the DOBI trading platform."
+      },
+      "SERVICE_NEWS": {
+        "cn": "1.5用户获得火网账号及密码時視為用户注册成功，用户同意接收火网發送的與火网網站管理、運營相關的電子郵件和/或短消息。",
+        "en": "1.5 By signing up for and registering for a DOBI Trade account you consent to receiving notifications, SMS, and email messages related to DOBI Trade management and operations."
+      },
+      "SERVICE_INFO": {
+        "cn": "1.6 用户注册成功后進行加密貨币及数字資産交易，應當提供本人的真实身份證信息，進行实名认证。",
+        "en": "1.6 After successfully registering an account on DOBI Trade you agree to provide accurate and authentic documents so that your identity can be verified this may also be called 'Real Name Authentication.'"
+      },
+      "SMS_INFO": {
+        "cn": "2.注册协议",
+        "en": "2. Registration Agreement"
+      },
+      "SMS_INFORM": {
+        "cn": "2.1火网有權隨時更改注册协议而無需提前通知，用户需定期閱覽此协议。",
+        "en": "2.1 DOBI Trade reserves the right to change its terms of service or user agreements at any time and without prior notice.  Users should periodically review these agreements to ensure they can comply with any revisions or changes in the terms or conditions of the agreements."
+      },
+      "SMS_JIESHOU": {
+        "cn": "2.2您理解並接受，買賣加密貨币或数字資産（比特币，萊特币等）存在風險。由於持續的價格波动，您的資産可能隨時增值或貶值。",
+        "en": "2.2 You understand and accept the risk of buying and selling digital assets and cryptocurrencies such as Bitcoins, or other types of digital assets.  Cryptocurrencies are inherently volatile and asset values can appreciate or depreciate dramatically and significantly at any time."
+      },
+      "SMS_ZHIXIAO": {
+        "cn": "2.3您需知曉，購買比特币（或任何其他火网提供的数字貨币或資産）存在風險，收益或虧損都由用户自行承擔，火网對此不承擔任何責任。",
+        "en": "2.3 You need to know that buying Bitcoin or any other digital asset or cryptocurrency on our platform carries significant risks and any profit or loss as a result of user activities is born solely by the user of that trading account."
+      },
+      "SMS_TI_G": {
+        "cn": "2.4火网網站是提供買賣加密貨币及数字資産的交易平台。雖然我們努力确保实現一個公平自由的交易環境，但是對於可能發生的任何形式的惡意“市場操縱”，不論是發生在火网交易平台还是在整個加密貨币及数字資産交易市場內，我們一律不承擔任何責任。",
+        "en": "2.4 DOBI is a trading platform for buying and selling of cryptocurrencies and digtal assets.  And while we strive to ensure a fair and equitable trading environment, we accept no responsibility whatsoever for any form of malicious 'market manipulation' that may occur, whether or not the information is presented on DOBI Trade or from other sources outside of our platform."
+      },
+      "SMS_TI_GI": {
+        "cn": "2.5用户理解並同意，加密貨币及数字資産的價格會因為多種原因（包括政府幹預、市場環境和投机行為等）出現不可預測的波动。",
+        "en": "2.5 By using our services you understand and agree that the price of cryptocurrencies and digital assets can and do fluctuate unpredictably for many (such as: government intervention, market conditions, and market speculation) or for no apparent reason at all. "
+      },
+      "SMS_TTAI": {
+        "cn": "2.6火网平台並不设定現行市價。火网平台上交易的加密貨币和数字資産的價格由用户買賣訂單直接決定。",
+        "en": "2.6 DOBI Trade does not set cryptocurrency or digital asset prices.   The price of any cryptocurrency or digital asset is solely determined by the trading (buying and selling) activities between users of the DOBI Trade platform."
+      },
+      "SMS_NAMES": {
+        "cn": "2.7用户根據火网網站提供的信息作出的任何交易決定，其風險和收益均由用户自行承擔。對於用户在使用火网網站或其應用程序編程接口的過程中实施的任何行為，火网一律不承擔任何責任。",
+        "en": "2.7 All risks and/or benefits of user trading decisions based on information that may be provided on the DOBI Trade website are born by the users themselves.  DOBI Trade takes no responsibility for any behavior that a user performs in the course of using the DOBI Trade website, services, or Application Programming Interface ('API')."
+      },
+      "SMS_TTXINXI": {
+        "cn": "2.8火网不會推遲發布市場信息，但由網絡中斷或類似情形引起的信息延誤，火网並不擔負任何責任。",
+        "en": "2.8 DOBI Trade will not intentionally or deliberately delay the release of market information but is not and will not be responsible for any delays that may occur such as:  network failure, server failure or other causes outside of our reasonable control."
+      },
+      "SMS_ZIJI": {
+        "cn": "2.9用户有責任保護自己的火网账户安全。由於疏忽大意的不安全操作（不管是用户还是火网平台執行的操作行為）造成的任何損失，火网網站、網站負責人及其工作人員將不對此承擔任何責任。",
+        "en": "2.9 Users are responsible for protecting the integrity and security of their DOBI Trading account.  DOBI Trade, the site owner, and its staff will not be responsible for any loss as a result negligence or unsafe actions whether performed by the user or caused by activities on DOBI Trading platform."
+      },
+      "SMS_ZIXING": {
+        "cn": "2.10您須自行負責對您的密码保密。將您的密码泄露給第三方將被視為違反此协议。",
+        "en": "You are responsible for keeping your passwords confidential!   Disclosing your password to any 3rd Party will be considered a violation of this agreement."
+      },
+      "SMS_YIZHI": {
+        "cn": "2.11用户真实姓名與網站用户名一致時方可使用火网服務。用户不可聽從其他第三方企業指示來操作資金交易。",
+        "en": "Users must ensure that they have entered to correct URL for the DOBI Trade website and that their identity information is correct.   Users should not use any 3rd Party companies or services to perform trading activities."
+      },
+      "SMS_YHFW": {
+        "cn": "二、用户服務",
+        "en": "2.  Customer Service"
+      },
+      "SMS_FWNR": {
+        "cn": "1.服務內容",
+        "en": "1. Services"
+      },
+      "SMS_XITONG": {
+        "cn": "1.1火网運用自己的系統，通過互聯網絡等方式為用户提供比特币交易和應用服務。",
+        "en": "1.1 DOBI Trade USES it's own system to provide users with access to cryptocurrencies such as Bitcoin or other digital assets through its software, the internet, and applications among other technologies."
+      },
+      "SMS_HEFA": {
+        "cn": "1.2用户需提供合法、真实、準确、詳盡的個人資料； 如有變动，需及時更新用户資料。如果用户提供的注册資料不合法、不真实、不準确、不詳盡的，用户需承擔因此引起的相應責任及后果，並且火网保留終止用户使用火网各項服務的權利。",
+        "en": "1.2 Users shall provide legal, authentic, accurate and detailed personal data and if any of the personal data should change they agree to update their personal information on DOBI Trade in a timely manner.  The user bears all responsibility for providing true and accurate information; DOBI trade reserves the right to terminate any user account should the information provided prove to be illegal, false, inaccurate, or misleading."
+      },
+      "SMS_SHUZI": {
+        "cn": "1.3 用户有權在火网浏覽加密貨币及数字資産实時行情及交易信息、有權通過火网提交加密貨币及数字資産交易指令並完成加密貨币及数字資産交易。",
+        "en": "1.3 Users have the right to browse cryptocurrencies and digital assets to obtain real-time pricing information, view trading activities, trade (buy/sell) cryptocurrencies and issue trading instructions using the DOBI Trading platform."
+      },
+      "SMS_XXXI": {
+        "cn": "1.4用户有權在火网查看其會員账号下的信息，有權應用火网提供的功能進行操作。",
+        "en": "Users have the right to view their account information, trading activities, trading history, and use trading functions as provided by DOBI Trade."
+      },
+      "SMS_HUODONG": {
+        "cn": "1.5用户有權按照火网發布的活动規則參與火网組織的網站活动。",
+        "en": "1.5 Users have the right to use DOBI Trade platform to participate in trading activities in accordance with the rules and polices published by DOBI Trade."
+      },
+      "SMS_TIGONG": {
+        "cn": "1.6火网承諾為用户提供的其他服務。",
+        "en": "DOBI Trade promises to provide addition services to users."
+      },
+      "SMS_FWGZ": {
+        "cn": "2. 服務規則",
+        "en": "Service Rules"
+      },
+      "SMS_FAG": {
+        "cn": "2.1用户應當遵守法律法規、規章、規範性文件及政策要求的規定，保證账户中所有資金和虛擬币來源的合法性，不得在火网或利用火网服務從事非法或其他損害火网或第三方權益的活动，如發送或接收任何違法、違規、違反公序良俗、侵犯他人權益的信息，發送或接收傳銷材料或存在其他危害的信息或言論，未经火网授權使用或僞造火网電子郵件題頭信息等。",
+        "en": "2.1 Users shall abide by all local laws, regulations, and policies as well as the policies of DOBI Trade platform. They shall also guarantee the legitimacy and legality of the sources for all funds and cryptocurrencies in their account.  Users shall not engage or use DOBI Trade services to engage in illegal, unlawful or perform trading activities on behalf of a third party such as sending or receiving illegal funds, money laundering activities, infringe the rights of others, engage in market manipulation activities, or engage in presenting or distributing false, misleading, and damaging information...etc."
+      },
+      "SMS_MIMA": {
+        "cn": "2.2用户應當遵守法律法規應當妥善使用和保管其火网账号及密码、資金密码、和其注册時綁定的手机号码、以及手机接收的手机验证码的安全。用户對使用其火网账号和密码、資金密码、手机验证码進行的任何操作和后果承擔全部責任。",
+        "en": "2.2 Users shall abide by all laws and regulations and shall properly use their DOBI Trade account as well as properly secure their account, password, trading password, mobile phone, and authentication codes.  Users are fully responsible for any transactions or activities that utilize their trading account, account password, and/or SMS verification codes."
+      },
+      "SMS_ZJ": {
+        "cn": "2.3當用户發現火网账号、密码、或資金密码、验证码被未经其授權的第三方使用，或存在其他账号安全問題時，應立即有效通知火网，要求火网暫停該火网账号的服務。火网有權在合理時間內對用户的該等请求采取行动，但對火网采取行动前用户已经遭受的損失不承擔任何責任。",
+        "en": "2.3 If a user discovers their DOBI Trade account number, password, trading password, or verification code has been compromised by a 3rd Pary or other unauthorized transactions or activities have taken place using their account; they MUST immediately notify DOBI Trade and request to freeze their account.   DOBI Trade will endeavor to process such a request in a timely fashion but will not be liable for any losses suffered by the user prior to the account being frozen/suspended."
+      },
+      "SMS_ZZJ": {
+        "cn": "2.4用户在未经火网同意的情況下不得將火网账号以贈與、借用、租用、轉讓或其他方式處分給他人。",
+        "en": "2.4 DOBI accounts are not transferrable without DOBI Trade's consent.   Users shall not dispose of their account by way of gift, loan, lease, transfer, or otherwise."
+      },
+      "SMS_ZZZHI": {
+        "cn": "3.服務的提供、修改及終止",
+        "en": "3. Provision, modification, and termination of services"
+      },
+      "SMS_TONGSHI": {
+        "cn": "3.1用户在接受火网各項服務的同時，同意接受火网提供的各類信息服務。",
+        "en": "3.1 While using DOBI Trading services the user agrees to accept account, services, or other notifications from DOBI Trade."
+      },
+      "SMS_YOUJIAN": {
+        "cn": "3.2用户在此授權火网可以向其電子郵件、手机、通信地址等發送商業信息。",
+        "en": "3.2 User hereby authorizes DOBI Trade to send business information to their E-mail, mobile phone, or physical address."
+      },
+      "SMS_QLI": {
+        "cn": "3.3火网保留隨時修改或中斷服務而不需通知用户的權利。火网有權行使修改或中斷服務的權利。",
+        "en": "3.3 DOBI reserves the right to modify, suspend or stop its services at any time without notice to the user.   DOBI is entitled to exercise its rights to modify, change, or discontinue services."
+      },
+      "SMS_QYW": {
+        "cn": "三．用户權利與義務",
+        "en": "3. User rights and obligations"
+      },
+      "SMS_YONGHQ": {
+        "cn": "1.用户權利",
+        "en": "1. User Rights"
+      },
+      "SMS_ZHGONG": {
+        "cn": "1.1用户一旦注册成功，成為火网的會員，將得到用户名（用户邮箱）和密码，並對以此組用户名和密码登入系統后所發生的所有活动和事件負責，自行承擔一切使用該用户名的言语、行為等而直接或者間接導致的法律責任。",
+        "en": "1.1 Once a user successfully becomes a member of DOBI Trade and has a user name and mailbox, users' are responsible for their own activities and actions.  When logged into the system, the user bears legal responsibility for all activities, words, statements, etc. made or performed by their user account whether directly or indirectly. "
+      },
+      "SMS_PTFW": {
+        "cn": "1.2用户有權按照本协议約定接受火网提供的加密貨币及数字資産交易平台服務。",
+        "en": "1.2 User have the right to use DOBI Trade and platform services in accordance with this agreement."
+      },
+      "SMS_TBS": {
+        "cn": "1.3用户有權隨時提取在火网的資産余額，包括加密貨币及数字資産，但需向火网支付相應的提币手續費用。",
+        "en": "1.3 The user has the right to withdraw the balance of the assets at Dobi at any time, including the encrypted currency and digital assets, but the need to pay any corresponding transaction charges."  //Please check this!
+      },
+      "SMS_TBYH": {
+        "cn": "2.用户義務",
+        "en": "2. User Obligations"
+      },
+      "SMS_DXYZ": {
+        "cn": "2.1用户有義務妥善保管火网账号、用户名和密码、短信验证码，用户將對用户名和密码負全部責任。因用户原因導致用户名或密码泄露而造成的任何法律后果由用户本人負責，由於用户自身原因泄露這些信息導致的財産損失，本站不負相關責任。",
+        "en": "2.1 Users are responsible for protecting and securing their DOBI Trade account information, such as their account number, username, login password, trading password and SMS verification codes.   And regardless of cause or reason that account information was disclosed, DOBI trade is not liable for any legal consquences nor bears any responsibility for any loss."
+      },
+      "SMS_TBBK": {
+        "cn": "2.2不得利用本站進行違反用户所在國家法律的行為。用户不得通過任何手段惡意注册火网網站账号，包括但不限於以牟利、炒作、套現、获奖等為目的多個账号注册。用户亦不得盜用其他用户账号。如用户違反上述規定，則火网有權直接采取一切必要的措施，包括但不限於暫停或查封用户账号，取消因違規所获利益等。",
+        "en": "2.2 Users shall NOT use DOBI Trade or its services to violate or subvert any national or local laws of the user's country.  Users may not register an account or multiple accounts for the purposes of malicious intent including but not limited to: profiteering, market manipulation, theft/cheating award and gift programs, violating DOBI Trade policies or any other illegal or malicious purposes.  DOBI Trade will take all necessary measures to prevent such activity and may, at its sole discrection, suspend or sieze the user's account(s) and all assets therein due to any violation of this policy."
+      },
+      "SMS_JYH": {
+        "cn": "2.3 用户在火网進行加密貨币及数字資産交易時不得惡意幹擾加密貨币及数字資産交易的正常進行、破壞交易秩序。",
+        "en": "2.3 Users shall not interfere, disrupt, or cause denial of trading or denial of any other services on the DOBI Trade platform."
+      },
+      "SMS_YOHU": {
+        "cn": "2.4用户不得以任何技術手段或其他方式幹擾火网的正常運行或幹擾其他用户對火网服務的使用。",
+        "en": "2.4 The user shall not interfere with the normal operation of DOBI trade or interfere with the other users trading activities by any means, technical or otherwise."
+      },
+      "SMS_ZLX": {
+        "cn": "2.5如用户因網上交易與其他用户産生訴訟的，不得通過司法或行政以外的途徑要求火网提供相關資料。",
+        "en": "2.5 A user must not provide any DOBI Trade platform information to any user who has started litigation against DOBI Trade outside of official administrative or judicial due process."   //Please check this one carefully!!!
+      },
+      "SMS_SL": {
+        "cn": "2.6用户不得以虛構事实等方式惡意诋毀火网的商譽。",
+        "en": "2.6 Users must not create, post, or distribute malicious, fictitious, or slanderous material against DOBI Trade's goodwill."
+      },
+      "SMS_DDSL": {
+        "cn": "四．火网權利和義務",
+        "en": "4.  DOBI Trade's Rights and Obligations"
+      },
+      "SMS_SCZG": {
+        "cn": "4.1如用户不具備本服務條款約定的注册資格，則火网有權拒絕用户進行注册，對已注册的用户有權注銷其火网會員账号，火网因此而遭受損失的有權向前述用户或其法定代理人主張賠償。同時，火网保留其他任何情況下決定是否接受用户注册的權利。",
+        "en": "4.1 If the user does not complete the full registration process in accordance with the terms of service agreement then DOBI trade has the right to refuse to register or cancel the user's registration and the user has the right to write off their account.  DOBI Trade is entitled to recover any benefits givent to suer and recover any loss from the user or their legal representative. It is at the sole discretion of DOBI Trade whether accept or approve account registrations and membership applications."
+      },
+      "SMS_DDSL": {
+        "cn": "4.2火网發現账户使用者並非账户初始注册人時，有權中止該账户的使用。",
+        "en": "4.2 DOBI Trade reserves the rights to suspend, freeze, or close any account where it suspects the person using the account is not the same individual who registered the account with their real ID."
+      },
+      "SMS_ZXC": {
+        "cn": "4.3火网通過技術檢測、人工抽檢等檢測方式合理懷疑用户提供的信息錯誤、不实、失效或不完整時，有權通知用户更正、更新信息或中止、終止為其提供服務。",
+        "en": "4.3 If DOBI Trade suspects or identifies, through technical testing, AI sampling, manual verification or by any other means, any irregular or incorrect information has been submitted during account registration then DOBI trade has the right to notify the user to correct the anomalous information or terminate the account."
+      },
+      "SMS_AAZXC": {
+        "cn": "4.4火网有權在發現火网上顯示的任何信息存在明顯錯誤時，對信息予以更正。",
+        "en": "4.4 DOBI Trade has the right to request and demand that users correct any data that has been identified as incorrect or erroneous."
+      },
+      "SMS_AC": {
+        "cn": "4.5火网保留隨時修改、中止或終止火网服務的權利，火网行使修改或中止服務的權利不需事先告知用户，火网終止一項或多項服務的，終止自火网在網站上發布終止公告之日生效。",
+        "en": "4.5 DOBI Trade has the right to modify, suspend, or terminate DOBI trading or other services, without notice, at any time, effective as of the date written in the discontinuation of services notice. "
+      },
+      "SMS_KEKAO": {
+        "cn": "4.6火网應當采取必要的技術手段和管理措施保障火网的正常運行，並提供必要、可靠的交易環境和交易服務，維護加密貨币及数字資産交易秩序。",
+        "en": "4.6 DOBI Trade will endeavor to provide the necessary technical means, management measures to provide a reliable trading environment and services for trading digital currencies and cryptocurrencies."
+      },
+      "SMS_ANQUAN": {
+        "cn": "4.7火网通過加強技術投入、提升安全防範等措施保障用户的加密貨币及数字資産托管安全，有義務在用户資金出現可以預見的安全風險時提前通知用户。",
+        "en": "4.7 DOBI Trade will endeavor to notify the user if through technical or other analysis means it identifies risks that may affect a users account or trading security."
+      },
+      "SMS_ZHUCS": {
+        "cn": "4.8火网有權在本协议履行期間及本协议終止后保留用户的注册信息及用户應用火网服務期間的全部交易信息，但不得非法使用該等信息。",
+        "en": "4.8 DOBI Trade retains the right to legally use user account information and trading data both during and after termination of the service agreement, but will not use such information illegally."
+      },
+      "SMS_TZS": {
+        "cn": "4.9火网有權隨時刪除火网網站內各類不符合國家法律法規、規範性文件或火网網站規定的用户評價等內容信息，火网行使該等權利不需提前通知用户。",
+        "en": "4.9 DOBI Trade retains the right to delete, terminate, or stop any services and/or accounts due to changes in national laws, independent review, or other reasons without prior notice to the user."
+      },
+      "SMS_TMF": {
+        "cn": "五．拒絕擔保與免責",
+        "en": "5. No Guarantee and Liability Exemption"
+      },
+      "SMS_XUQIU": {
+        "cn": "5.1火网作為“網絡服務提供者”的第三方平台，不擔保網站平台上的信息及服務能充分滿足用户的需求。",
+        "en": "5.1 DOBI Trade as a 'network service provider' as a provider for access to 3rd party cryptocurrencies and digital assets does not guarantee that the platform and fully meet the needs of its users."
+      },
+      "SMS_DANBAO": {
+        "cn": "5.2基於互聯網的特殊性，火网也不擔保服務不會受中斷，對服務的及時性、安全性都不作擔保，不承擔非因火网導致的責任。",
+        "en": "5.2 Due to the nature of the Internet, DOBI trade does not guarantee that services will not  be interrupted, delayed, or security affected by internet related network issues."
+      },
+      "SMS_SHIBZ": {
+        "cn": "5.3火网不對用户所發布信息的保存、修改、刪除或儲存失敗負責。",
+        "en": "5.3 DOBI Trade is not responsible for the failure to save, modify, delete, or store information published by the user."
+      },
+      "SMS_WS": {
+        "cn": "5.4火网內所有用户所發表的用户評論，僅代表用户個人觀點，並不表示本網站贊同其觀點或證实其描述，本網站不承擔用户評論引發的任何法律責任。",
+        "en": "5.4 DOBI Trade allows members to post their personal opinion(s) about trades and trading on its platform.  These 'opinion(s)' are written by our members from their personal point of view and do NOT reflect the opinions of DOBI Trade nor does DOBI Trade accept any liability as a result of user commentary."
+      },
+      "SMS_RRW": {
+        "cn": "5.5所有發給用户的通告，火网都將通過正式的页面公告、站內信、電子郵件、客服電話、手机短信或常規的信件送達。任何非经火网正規渠道获得的中奖、優惠等活动或信息， 火网不承擔法律責任。",
+        "en": "DOBI Trade may issue notices, news and announcements through any or all of the following means: DOBI Trade official news page, e-mail, sms, customer service, or regular mail.  DOBI Trade is not liable for profit/loss as a result of such announcments."
+      },
+      "SMS_ZWS": {
+        "cn": "5.6火网有權根據市場情況調整充值、提币、交易等手續費費率，有權決定免費推廣期的終止。",
+        "en": "DOBI Trade at it's sole discretion has the right to change or adjust service fees, withdrawal limits, transaction fees, and promotional programs periods due to market conditions."
+      },
+      "SMS_LIU": {
+        "cn": "六．隱私權政策",
+        "en": "6.  Privacy Policy"
+      },
+      "SMS_LQING": {
+        "cn": "请仔細閱讀以下內容，明白我們關於您的私人数據的一些條款、規則以及處理方法。通過浏覽該網址，表示您已经接受和同意我們在這項政策中的條款。本协议所稱之火网用户信息是指符合法律、法規及相關規定，並符合下述範圍的信息。",
+        "en": "Please read the following carefully to understand our privacy policies and use of user data.  By using the DOBI Trade website or any of its services you agree to these terms and conditions.  For the purpose of this agreement DOBI Trade considers 'User Information' means use data that is collected complies with laws, regulations, or policies and is within the following scopes."
+      },
+      "SMS_HUO": {
+        "cn": "1.获取信息",
+        "en": "1. Access to personal data."
+      },
+      "SMS_FU": {
+        "cn": "1.1用户注册火网會員或申请火网的服務時，向火网提供的個人信息。",
+        "en": "1.1 Due to local and international laws a user must submit personal information so we can verify their identity when signing up and becoming a member of DOBI Trade."
+      },
+      "SMS_SDD": {
+        "cn": "1.2用户在使用火网服務、參加網站活动或訪問網站網页時，火网自动接收並记錄的用户浏覽器端或手机客户端数據，包括但不限於IP地址、網站Cookie中的資料及用户要求取用的網页记錄。",
+        "en": "1.2 DOBI Trade may also collect data from any user of our services such as browsing our website we will collect the user browser type and version, mobile phone data, as well as IP address and login/logout, and account activities."
+      },
+      "SMS_GEREN": {
+        "cn": "1.3火网從商業夥伴處合法获取的用户個人信息。",
+        "en": "1.3 DOBI Trade may also collect information about its users that is legally obtained through business partners or affiliates."
+      },
+      "SMS_YHUT": {
+        "cn": "1.4其它火网通過合法途徑获取的用户個人信息。",
+        "en": "1.4 DOBI Trade may also obtain information through other legal channels such was public information published on other websites or forums."
+      },
+      "SMS_BAOMM": {
+        "cn": "2.保密协议",
+        "en": "2 Confidentiality Agreement"
+      },
+      "SMS_SJJ": {
+        "cn": "2.1火网承諾：非经法定原因或用户事先許可，火网不會向任何第三方透露用户的密码、姓名、手机号码等非公開信息。",
+        "en": "2.1 DOBI Trade:  Will not provide your personal private data to any third party without your permission unless ordered to do so by a valid court order or otherwise required to do so by law."
+      },
+      "SMS_SJT": {
+        "cn": "2.2在下述法定情況下，用户的個人信息將會被部分或全部披露：经用户同意向用户本人或其他第三方披露。",
+        "en": "2.2 In the case of legal or regulatory reporting requirements a user's personal data may be partially or fully disclosed or the user chooses on their own to disclose there personal data."
+      },
+      "SMS_XIANG": {
+        "cn": "2.3根據用户所在國家的法律、法規等相關規定，或行政机構要求，向行政、司法机構或其他法律規定的第三方披露。",
+        "en": "2.3 DOBI Trade may be required to disclose a user's personal information to a third party in order to comply accordance with the laws, regulations and other relevant provisions of the laws of the country where the user is located, or as required by a valid administrative agency, as provided for by the administrative, judicial or other law"
+      },
+      "SMS_PILU": {
+        "cn": "2.4其它火网根據用户所在國家法律、法規等相關規定進行的披露。",
+        "en": "2.4 DOBI Trade may be required to disclose other information to comply with specific laws, regulations, or other legal mandates of a user's country."
+      },
+      "SMS_BIANHUA": {
+        "cn": "2.5如果我們相關政策做了重要的變化，我們將按照合適的法律條件去做它，並且我們將在網站上發布公告來提醒您這些改變項在它們生效之前。我們建議您定期地去浏覽我們在網站上關於隱私條款的最新信息。",
+        "en": "2.5 If DOBI Trade makes changes to this policy we will do so in accordance with applicable laws and conditions and post notices of such changes to our website prior to the changes coming in to effect.  We also recommend that you periodically review our policies as updated from time to time on our website."
+      },
+      "SMS_QI": {
+        "cn": "七．衝突選擇",
+        "en": "7. Conflict of Choice"
+      },
+      "SMS_QIDIAN": {
+        "cn": "7.1本服務條款是火网與用户注册成為火网用户，使用火网服務之間的重要法律文件， 火网或者用户的任何其他書面或者口頭意思表示與本协议不一致的，均應當以本协议為準。",
+        "en": "7.1 This Agreement will constitute the entire agreement between the parties in relation to the subject matter of this Agreement, and supersedes all previous agreements, arrangements and understandings between the parties in respect of that subject matter."
+      },
+      "SMS_BA": {
+        "cn": "八.聯系我們",
+        "en": "8. Contact Us!"
+      },
+      "SMS_BAYI": {
+        "cn": "8.1為了保持您個人数據的準确、最新和完整，请聯系我們。我們將用合理的方法來更新、修正您此前提交在我們網站上存儲的個人数據。本服務條款最終解釋權歸火网所有，如果您还有其他問題或者疑問關於“服務條款”，请聯系我們：",
+        "en": "In order to keep your personal data accurate, up-to-date and complete, please contact us. We will use reasonable methods to update, amend your personal data previously submitted on our website. For more than all, if you have other questions or questions about 'Terms of Service', please contact us:"
+      }
+    },
+    "navList": {
+      "MAIN_TITLE": {
+        "cn": "我的账户",
+        "en": "My Account"
+      },
+      "PC_TION": {
+        "cn": "暫未推出,请先在PC版操作",
+        "en": "Not yet launched, please operate in the PC version"
+      },
+      "PC_RETURN": {
+        "cn": "返回首页",
+        "en": "Return home page"
+      }
+    }
+  },
+  "user_order": {
+    "list": {
+      "SERVICE_TEL": {
+        "cn": "user客服電話",
+        "en": "Customer Service Phone Number"
+      }
+    }
+  },
+  "user": {
+    "index": {
+      "TITLE_WORD": {
+        "cn": "账户信息-我的账户-火网交易平台",
+        "en": "Account Information - My Account - DOBI Trade"
+      },
+      "DEAR": {
+        "cn": "親愛的",
+        "en": "Dear "
+      },
+      "USER": {
+        "cn": "用户",
+        "en": "User"
+      },
+      "BIND_PHONE": {
+        "cn": "綁定手机",
+        "en": "Register Phone"
+      },
+      "BINDED_PHONE": {
+        "cn": "您已綁定手机",
+        "en": "Registered Phone"
+      },
+      "REAL_INFO_TIPS": {
+        "cn": "实名通過后才可以進行提币等操作",
+        "en": "Withdrawals, Cash Withdrawal, and other operations require real name verification!"
+      },
+      "LOGIN_USE": {
+        "cn": "登陆時使用",
+        "en": "Use when logging in"
+      },
+      "TRADE_PWD_TIPS": {
+        "cn": "设置交易密码后才可以進行買賣",
+        "en": "Trading password must be set before starting to trade!"
+      },
+      "TRADE_SETTING": {
+        "cn": "设置",
+        "en": "Set"
+      },
+      "TRADE_RESET_SETTING": {
+        "cn": "重置交易密码",
+        "en": "Set"
+      },
+      "CHECK": {
+        "cn": "查看",
+        "en": "View"
+      },
+      "AUTH_CHECK": {
+        "cn": "实名认证",
+        "en": "Real Name Verification"
+      },
+      "LOGIN_PWD": {
+        "cn": "登陆密码",
+        "en": "Login Password"
+      },
+      "TRADE_PWD": {
+        "cn": "交易密码",
+        "en": "Trading Password"
+      },
+      "SHOW_USEFUL_COIN": {
+        "cn": "顯示有資金币種",
+        "en": "Show funding currencies"
+      },
+      "SWITCH_OFF": {
+        "cn": "關",
+        "en": "Off"
+      },
+      "SWITCH_ON": {
+        "cn": "開",
+        "en": "On"
+      },
+      "T_HEAD_TYPE": {
+        "cn": "類型",
+        "en": "Type"
+      },
+      "T_HEAD_BALANCE": {
+        "cn": "可用餘額",
+        "en": "Available Balance"
+      },
+      "T_HEAD_FORZEN_MONEY": {
+        "cn": "凍結額",
+        "en": "Frozen Funds"
+      },
+      "T_HEAD_TOTAL": {
+        "cn": "總計",
+        "en": "Total Balance"
+      },
+      "T_HEAD_CTRL": {
+        "cn": "操作",
+        "en": "Operations"
+      },
+      "T_BODY_STOP": {
+        "cn": "暫停",
+        "en": "Pause"
+      },
+      "T_BODY_COIN_IN": {
+        "cn": "充币",
+        "en": "Deposit"
+      },
+      "T_BODY_GO_FA": {
+        "cn": "去法币交易",
+        "en": "Fund trading"
+      },
+      "T_BODY_COIN_OUT": {
+        "cn": "提币",
+        "en": "Withdrawal"
+      },
+      "T_BODY_EXCHANGE_FABI": {
+        "cn": "轉至法币账户",
+        "en": "Transfer to Funding Account"
+      },
+      "T_BODY_EXCHANGE_FABI_STOP": {
+        "cn": "轉至法币账户暂停",
+        "en": "Transfer is currently suspended"
+      },
+      "T_BODY_EXCHANGE_BIBI": {
+        "cn": "轉至币币账户",
+        "en": "Transfer to Trading Account"
+      },
+      "T_BODY_NOT_USE_COIN": {
+        "cn": "未開放交易币種",
+        "en": "List of currencies not currently tradable"
+      },
+      "T_COIN_TO_PRICE": {
+        "cn": "總資產約：",
+        "en": "Total Account Balance"
+      },
+      "BIBI_ACCOUNT": {
+        "cn": "币币账户",
+        "en": "Trading Account"
+      },
+      "FABI_ACCOUNT": {
+        "cn": "法币账户",
+        "en": "Funding Account"
+      },
+      "ALERT_EXCHANGE_FIRST": {
+        "cn": "資金劃轉",
+        "en": "Account Transfer"
+      },
+      "ALERT_NO_MONEY": {
+        "cn": "免手續費",
+        "en": "No additional fees"
+      },
+      "COIN_TYPE": {
+        "cn": "币種",
+        "en": "Coin type"
+      },
+      "ON_FOR": {
+        "cn": "從",
+        "en": "from"
+      },
+      "ON_TO": {
+        "cn": "劃轉至",
+        "en": "to"
+      },
+      "BIBI_ACCOUNT_LAST": {
+        "cn": "币币交易账户餘額",
+        "en": "Balance of Trading Account"
+      },
+      "FABI_ACCOUNT_LAST": {
+        "cn": "法币交易账户餘額",
+        "en": "Balance of Funding Account"
+      },
+      "EXCHANG_NUMS": {
+        "cn": "劃轉数量",
+        "en": "Amount to transfer"
+      },
+      "ONCE_MAX": {
+        "cn": "一次最多可轉",
+        "en": "Maximum transaction limit"
+      },
+      "ALL_EXCHANGE": {
+        "cn": "全部",
+        "en": "All"
+      },
+      "EXHCANGE_NUMS_CAN": {
+        "cn": "请输入有效的劃轉数量",
+        "en": "Please input a valid amount to transfer"
+      },
+      "EXHCANGE_NUMS_MAX": {
+        "cn": "劃轉数量不得高於",
+        "en": "Transaction can not be more than"
+      },
+      "EXHCANGE_NUMS_MIN": {
+        "cn": "劃轉数量不得低於",
+        "en": "Transaction can not be less than"
+      },
+      "EXHCANGE_NUMS_UNENOUGHT": {
+        "cn": "劃轉数量不足",
+        "en": "Insufficient Funds"
+      },
+      "NOW_EXCHANGE": {
+        "cn": "立即劃轉",
+        "en": "Instant transfer"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "我的账户",
+        "en": "My Account"
+      },
+      "RESET_TRADE_PWD": {
+        "cn": "重置交易密码",
+        "en": "Reset the Trading password"
+      },
+      "BIBI_BUY_ACCOUNT": {
+        "cn": "币币交易账户",
+        "en": "Trading Account"
+      },
+      "FABI_BUY_ACCOUNT": {
+        "cn": "法币交易账户",
+        "en": "Funding Account"
+      },
+      "CHECK_ID": {
+        "cn": "身份验证",
+        "en": "Verification"
+      },
+      "SET_NEW_TRADE_PWD": {
+        "cn": "设置新密码",
+        "en": "Reset new password"
+      },
+      "RESET_TRADE_PWD_OK": {
+        "cn": "重置密码成功",
+        "en": "The password has been changed successfully"
+      },
+      "COIN_EXCHANGE": {
+        "cn": "資金劃轉",
+        "en": "Funds transfer"
+      },
+      "YOUR_PHONE_NO": {
+        "cn": "您的手机号：",
+        "en": "your phone number"
+      },
+      "PHONE_CODE": {
+        "cn": "手机验证码",
+        "en": "SMS Code"
+      },
+      "PLEASE_ENTER_PHONE_CODE": {
+        "cn": "请输入手机验证码",
+        "en": "Please input SMS  Code"
+      },
+      "AFTER_REGET_CODE": {
+        "cn": "s后重新获取",
+        "en": "s"
+      },
+      "CODE_LENGTH_NO_CORRECT": {
+        "cn": "验证码長度不正确",
+        "en": "Invalid SMS Code"
+      },
+      "CLICK_GET": {
+        "cn": "点击获取",
+        "en": "Click here to get"
+      },
+      "VOICE_CODE": {
+        "cn": "语音验证码",
+        "en": "Audio Code"
+      },
+      "CAN_GET_AT": {
+        "cn": "可以在",
+        "en": "can get"
+      },
+      "AFTER_GET_VOICE_CODE": {
+        "cn": "s后获取语音验证码",
+        "en": "Can get Audio Code after S"
+      },
+      "PLEASE_NOTE_THE_CALL": {
+        "cn": "请注意收聽來電",
+        "en": "Please wait for the call"
+      },
+      "NEXT_STEP": {
+        "cn": "下一步",
+        "en": "Next step"
+      },
+      "SET_PWD": {
+        "cn": "设置密码",
+        "en": "Set"
+      },
+      "TRADE_PWD_PLACEHOLDER": {
+        "cn": "交易密码長度需在6-16個字符之間",
+        "en": "Your password should not be less than 6 symbols and not more than 16"
+      },
+      "TRADE_PWD_PLACEHOLDER_1": {
+        "cn": "请输入您的交易密码",
+        "en": "Please input your Trading password"
+      },
+      "SURE_PWD": {
+        "cn": "确認密码",
+        "en": "Confirm"
+      },
+      "SURE_PWD_HOLDER_1": {
+        "cn": "请再次输入密码",
+        "en": "Please input password again"
+      },
+      "SURE_PWD_HOLDER_2": {
+        "cn": "重復密码長度需在6-16個字符之間",
+        "en": "Your password should not be less than 6 symbols ,but not more than 16"
+      },
+      "SURE_PWD_HOLDER_3": {
+        "cn": "兩次输入的密码不一致",
+        "en": "New password and current password do not match"
+      },
+      "SURE_PWD_CHANGE": {
+        "cn": "确認修改",
+        "en": "Confirmation"
+      },
+      "RESET_PWD_SUCCESS": {
+        "cn": "修改密码成功！",
+        "en": "The password has been changed successfully"
+      },
+      "GO_TO_TRADE": {
+        "cn": "去交易",
+        "en": "Trade"
+      },
+      "GO_TO_VER": {
+        "cn": "去认证",
+        "en": ""
+      },
+      "CHANGE_LOGIN_PWD": {
+        "cn": "修改登陆密码",
+        "en": ""
+      },
+      "VER_WARING_TIO": {
+        "cn": "实名认证通過后才可進行提現,轉币等操作",
+        "en": ""
+      },
+      "VER_PASS": {
+        "cn": "您已通過实名认证",
+        "en": ""
+      },
+      "TRDE_PWD_SET": {
+        "cn": "您已设置交易密码",
+        "en": ""
+      },
+      "JS_LANG": {
+        "cn":  {
+          "sureBtn": "确定",
+          "setTradePwdTitle": "设置交易密码",
+          "tradePwdti": "您尚未设置交易密码，请先设置！（交易密码是在火网進行交易時需要输入的密码，不同於登陆密码。為确保您的財産安全，请牢记交易密码，防止丟失!）",
+          "setTradePwd": "设置交易密码",
+          "setTradePwdPHold": "请输入交易密码",
+          "setPwdAgain": "再次输入密码",
+          "setPwdAgainPHold": "请确認交易密码",
+          "saveTradePwd": "保存",
+          "openSwitch": "開",
+          "closedSwitch": "關",
+          "LOADING_RMB": "加载中...",
+          "saveSucc": "保存成功！",
+          "saving": "保存",
+          "warnTips": {
+            "pwd1": {
+              "msg": "请输入您的交易密码",
+              "err": "交易密码長度需在6-20個字符之間"
+            },
+            "pwd2": {
+              "msg": "请输入您的交易密码",
+              "err": "重復密码長度需在6-20個字符之間",
+              "noSame": "兩次输入的密码不一致"
+            }
+          }
+        },
+        "en": {
+          "sureBtn": "OK",
+          "setTradePwdTitle": "Set trading password",
+          "tradePwdti": "You have not set your transaction password, please set a trading password!  (This password is different from your login password! Please take care to protect this password to prevent trading loss!）",
+          "setTradePwd": "Set",
+          "setTradePwdPHold": "trading password",
+          "setPwdAgain": "Re-enter",
+          "setPwdAgainPHold": "trading password",
+          "saveTradePwd": "Save trading password",
+          "openSwitch": "Open",
+          "closedSwitch": "Closed",
+          "LOADING_RMB": "loding...",
+          "saveSucc": "Saved Successfully！",
+          "saving": "Saving",
+          "warnTips": {
+            "pwd1": {
+              "msg": "trading password.",
+              "err": "Trading password must be between 6-20 characters"
+            },
+            "pwd2": {
+              "msg": "Please enter your transaction password",
+              "err": "Trading password must be between 6-20 characters",
+              "noSame": "The passwords do not match!"
+            }
+          }
+        }
+      }
+    },
+    "coinin": {
+      "CONDITION_COIN_LIST": {
+        "cn": "币種分類：",
+        "en": "Currency Classifcations"
+      },
+      "CONDITION_CHK_ADDR": {
+        "cn": "查看地址",
+        "en": "View Address"
+      },
+      "CONDITION_COIN_OUT": {
+        "cn": "提币",
+        "en": "Withdraw"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "提币",
+        "en": "Withdraw"
+      }
+    },
+    "success": {
+      "JS_LANG": {
+        "cn": {
+          "BTN_SURE": "确定",
+          "SUBMIT_SUCC": "实名认证資料提交成功，審核時間為1~3個工作日。",
+          "PIC_FRONT": "正面照片未選擇",
+          "PIC_BACK": "背面照片未選擇",
+          "PIC_HAND": "手持照片未選擇",
+          "FILE_READER_NO": "抱歉，您的浏覽器不支持 FileReader,请使用谷歌(chrome)或火狐(firefox)浏覽器操作！",
+          "PIC_SIZE_MAX": "照片大小不能超過2M，请重新上傳！",
+          "PIC_FORMAT_ERROR": "證件图片支持jpg/jpeg/png格式,暫時还不支持其他格式。",
+          "PICK_PIC": "選擇图片",
+          "PIC_FULL": "證件照片需要上傳完整"
+        },
+        "en": {
+          "BTN_SURE": "Ok",
+          "SUBMIT_SUCC": "Authentication documents submitted successfully!  The authentication process will take approximately 1-3 days",
+          "PIC_FRONT": "Front-side of picture ID not selected",
+          "PIC_BACK": "Back-side of picture ID not selected",
+          "PIC_HAND": "Photo with hand-held ID not selected",
+          "FILE_READER_NO": "Sorry your web browser does not support FileReader function.  Please try again using either Google (Chrome) or Firefox web browser!",
+          "PIC_SIZE_MAX": "File size cannot exceed 2 Megabytes.  Please re-submit new document!",
+          "PIC_FORMAT_ERROR": "Document type not supported.  Currently only jpg/jpeg/png files formats are supported!",
+          "PICK_PIC": "Select Picture",
+          "PIC_FULL": "Please upload identity document photos."
+        }
+      }
+    },
+    "realinfo": {
+      "TITLE_WORD": {
+        "cn": "实名认证-我的账户-火网交易平台",
+        "en": "Real Name Authentication - My Account - DOBI Trade"
+      },
+      "FRIEND_TIPS": {
+        "cn": "根據國家相關規定，数字貨币交易需進行实名登记，请填写您的真实身份，感謝您的理解與支持！",
+        "en": "According to the relevant regulations and provisions of the state, you are required to register your real name and provide proof of your identity before you can begin trading digital currencies.  Thank you for your support and understanding!"
+      },
+      "SUB_TITLE_STATU": {
+        "cn": "实名狀態",
+        "en": "Real name status"
+      },
+      "INFO_STATU_NOR": {
+        "cn": "待认证",
+        "en": "Pending certification"
+      },
+      "INFO_STATU_ING": {
+        "cn": "審核中（实名认证資料提交成功，審核時間為1~3個工作日。）",
+        "en": "Review (real-name authentication data submitted successfully, review normally takes 1 - 3 working days."
+      },
+      "INFO_STATU_ED": {
+        "cn": "已认证",
+        "en": "Certified"
+      },
+      "INFO_STATU_FAIL": {
+        "cn": "審核失敗",
+        "en": "Certification Failed"
+      },
+      "USR_REAL_SUCCESS_TITLE": {
+        "cn": "您的身份信息：",
+        "en": "Your identity information:"
+      },
+      "NUMBER_SHENHE": {
+        "cn": "提交審核",
+        "en": "Submit application"
+      },
+      "NUMBER_CXTJ": {
+        "cn": "重新提交",
+        "en": "Submit again"
+      },
+      "USR_REAL_FAIL_TITLE": {
+        "cn": "失敗原因",
+        "en": "Reason for certification failure"
+      },
+      "FORM_REAL_NAME": {
+        "cn": "真实姓名",
+        "en": "Name"
+      },
+      "REAL_NAME_PLACEHOLDER": {
+        "cn": "请输入您的真实姓名",
+        "en": "Please enter your real name"
+      },
+      "REAL_NAME_ERR_MSG": {
+        "cn": "姓名格式不正确",
+        "en": "Error with format of your name"
+      },
+      "CARD_PLACEHOLDER": {
+        "cn": "请输入證件号",
+        "en": "Please enter the document number"
+      },
+      "CARD_ERR_MSG": {
+        "cn": "證件号格式不正确",
+        "en": "ID number format is not correct"
+      },
+      "CARD_TYPE": {
+        "cn": "證件類型",
+        "en": "Type"
+      },
+      "CARD_NO": {
+        "cn": "證　件　号",
+        "en": "Number"
+      },
+      "CH_ID_CARD": {
+        "cn": "中國大陸身份證",
+        "en": "Chinese Mainland ID Card"
+      },
+      "HU_ZHAO": {
+        "cn": "護照",
+        "en": "Passport"
+      },
+      "UPLOAD_IMG": {
+        "cn": "上傳證件照片：",
+        "en": "Upload a valid identification photo :"
+      },
+      "FEON_FACE": {
+        "cn": "正面",
+        "en": "Front"
+      },
+      "BACK_FACE": {
+        "cn": "背面",
+        "en": "Back"
+      },
+      "HAND_KEEY": {
+        "cn": "手持證件照",
+        "en": "Picture Holding ID Document"
+      },
+      "SELECT_FILE": {
+        "cn": "選擇图片",
+        "en": "Select Picture"
+      },
+      "MSG_BOTTOM_TIPS_ONE": {
+        "cn": "1.所有在本站交易的用户均需要实名认证，请提供真实有效的手持本人身份證照片，虛假认证可能會導致账户被凍結，由虛假认证產生的一切后果由用户負責！<br>2.用户请确保上傳內容完整并清晰可見,支持jpg/jpeg/png格式,最多不超過2M。<br>",
+        "en": " 1.All users are required to provide identification information . Please take a picture of yourself holding the ID card. False authentication may cause the account to be frozen<br> 2.please ensure that the uploaded content is complete and clearly visible,Image file format must be jpg /jpeg/png, file size cannot exceed 2 MB.<br>"
+      },
+      "MSG_BOTTOM_TIPS_TWO": {
+        "cn": "3.本人手持證件照需求:右手持身份證,左手持帶有火网、认证人姓名、认证當天日期。",
+        "en": "3.Photo should be taken as the following requirement : Holding the ID card with your right hand ,and holding a piece of paper with Dobi Account , Real name ,Date ID issued on your left hand."
+      },
+      "AUDITING_NAME": {
+        "cn": "真实姓名",
+        "en": "Real Name"
+      },
+      "AUDITING_CARD_TYPE": {
+        "cn": "證件類型",
+        "en": "Document Type"
+      },
+      "AUDITING_CARD_NO": {
+        "cn": "證件号",
+        "en": "ID Number"
+      },
+      "AUDITING_AUTH_TIME": {
+        "cn": "认证時間",
+        "en": "Certification Time"
+      },
+      "RE_AUTH_BTN": {
+        "cn": "重新认证",
+        "en": "Re-Certification Time"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "实名认证",
+        "en": "Verification"
+      },
+      "NUMBER_HOME_PA": {
+        "cn": "页",
+        "en": "Page"
+      },
+      "JS_LANG": {
+        "cn": {
+          "BTN_SURE": "确定",
+          "SUBMIT_SUCC": "实名认证資料提交成功，審核時間為1~3個工作日。",
+          "PIC_FRONT": "正面照片未選擇",
+          "PIC_BACK": "背面照片未選擇",
+          "PIC_HAND": "手持照片未選擇",
+          "FILE_READER_NO": "抱歉，您的浏覽器不支持 FileReader,请使用谷歌(chrome)或火狐(firefox)浏覽器操作！",
+          "PIC_SIZE_MAX": "照片大小不能超過2M，请重新上傳！",
+          "PIC_FORMAT_ERROR": "證件图片支持jpg/jpeg/png格式,暫時还不支持其他格式。",
+          "PICK_PIC": "選擇图片",
+          "PIC_FULL": "證件照片需要上傳完整"
+        },
+        "en": {
+          "BTN_SURE": "Ok",
+          "SUBMIT_SUCC": "Authentication documents submitted successfully!  The authentication process will take approximately 1-3 days",
+          "PIC_FRONT": "Front-side of picture ID not selected",
+          "PIC_BACK": "Back-side of picture ID not selected",
+          "PIC_HAND": "Photo with hand-held ID not selected",
+          "FILE_READER_NO": "Sorry your web browser does not support FileReader function.  Please try again using either Google (Chrome) or Firefox web browser!",
+          "PIC_SIZE_MAX": "File size cannot exceed 2 Megabytes.  Please re-submit new document!",
+          "PIC_FORMAT_ERROR": "Document type not supported.  Currently only jpg/jpeg/png files formats are supported!",
+          "PICK_PIC": "Select Picture",
+          "PIC_FULL": "Please upload identity document photos."
+        }
+      }
+    },
+    "coinin": {
+      "TITLE_WORD": {
+        "cn": " -我的資產-火网交易平台",
+        "en": "Refunds - My Assets - DOBI Trade"
+      },
+      "T_HEADER_ID": {
+        "cn": "记錄ID",
+        "en": "Record ID"
+      },
+      "T_HEADER_TIME": {
+        "cn": "時間",
+        "en": "Time"
+      },
+      "T_HEADER_ADDR": {
+        "cn": "轉入錢包地址",
+        "en": "Deposit Wallet Address"
+      },
+      "T_HEADER_NUM": {
+        "cn": "轉入数量",
+        "en": "Deposit Quantity"
+      },
+      "T_HEADER_SURE_NUM": {
+        "cn": "确認次数",
+        "en": "Number of confirmations!"
+      },
+      "T_HEADER_STATU": {
+        "cn": "狀態",
+        "en": "Status"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": " ",
+        "en": "Deposit"
+      },
+      "NUMBER_HOME_PA": {
+        "cn": "页",
+        "en": "Page"
+      },
+      "NUMBER_TIAO_PA": {
+        "cn": "跳至",
+        "en": "Skip to"
+      },
+      "NUMBER_HOME":{
+        "cn": "首页",
+        "en": "Home"
+      },
+      "NUMBER_FOOR": {
+        "cn": "尾页",
+        "en": "Last page"
+      },
+
+      "JS_LANG": {
+        "cn": {
+          "tablePlatformIn": "平台內",
+          "tablePlatformOut": "平台外",
+          "COPY_NOT_SUPPORT": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容按下 ctrl + c 鍵復制。",
+          "MOB_COPY_NOT_SUPPORT": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容進行復制。",
+          "COPY_NOT_SUPPORT_UPDATE": "您的浏覽器不支持復制功能呢，请安裝最新版本浏覽器后再試試。",
+          "COPY_SUCCESS": "復制成功，请通過 ctrl + v 鍵粘貼。",
+          "MOB_COPY_SUCCESS": "復制成功",
+          "GET_DATA_FAIL": "获取数據失敗",
+          "START_TIME": "请選擇開始時間",
+          "END_TIME": "请選擇結束時間",
+          "START_GT_END": "開始時間不能大於等於結束時間"
+        },
+        "en": {
+          "tablePlatformIn": "Inside Platform",
+          "tablePlatformOut": "Outside Platform",
+          "COPY_NOT_SUPPORT": "Your browser does not support the quick copy function.  Please manually select the information to be copied and use &lt;ctrl&gt; (Windows) or &lt;Command&gt; + 'C' to copy.",
+          "MOB_COPY_NOT_SUPPORT": "The Browser  may not support the copy paste function ,you should mannually copy",
+          "COPY_NOT_SUPPORT_UPDATE": "Your browser does not support the copy function.  Please ensure you have installed latest version of the browser and retry.",
+          "COPY_SUCCESS": "Copy successful!  You can paste the data to another document using &lt;ctrl&gt; or &lt;Command&gt; + 'V'",
+          "MOB_COPY_SUCCESS": "Copy successfully ",
+          "GET_DATA_FAIL": "Failed to get data",
+          "START_TIME": "Please select start time.",
+          "END_TIME": "Please select end time.",
+          "START_GT_END": "Start time cannot be equal to or greater than end time!"
+        }
+      }
+    },
+    "coinout": {
+      "TITLE_WORD": {
+        "cn": "提币-我的資產-火网交易平台",
+        "en": "Withdraw - My Assets - DOBI Trade"
+      },
+      "TITLE_CX": {
+        "cn": "撤銷",
+        "en": "Undo"
+      },
+      "TITLE_TZ": {
+        "cn": "跳至",
+        "en": "Skip to"
+      },
+      "T_HEADER_ID": {
+        "cn": "记錄ID",
+        "en": "Record ID"
+      },
+      "T_HEADER_OUT_TIME": {
+        "cn": "時間",
+        "en": "Time"
+      },
+      "T_HEADER_ADDR": {
+        "cn": "轉出錢包地址",
+        "en": "Withdrawal Wallet Address"
+      },
+      "T_HEADER_NUM": {
+        "cn": "轉出数量",
+        "en": "Withdrawal Quantity"
+      },
+      "T_HEADER_STATU": {
+        "cn": "狀態",
+        "en": "Status"
+      },
+      "T_HEAD_CTRL": {
+        "cn": "操作",
+        "en": "Operations"
+      },
+      "T_BODY_SUCCESS": {
+        "cn": "成功",
+        "en": "Success"
+      },
+      "T_BODY_WAIT": {
+        "cn": "等待",
+        "en": "Wait"
+      },
+      "T_BODY_CANCLE": {
+        "cn": "已取消",
+        "en": "Cancel"
+      },
+
+      "AUTH_TIPS": {
+        "cn": "请您先完成如下设置：",
+        "en": "Please complete the following items:"
+      },
+      "NOT_AUTH_TIPS": {
+        "cn": "还未实名认证",
+        "en": "Not yet authenticated."
+      },
+      "AUTH_NOW": {
+        "cn": "立即认证",
+        "en": "Authenticate now"
+      },
+      "NOT_TRADE_PWD": {
+        "cn": "还未设置交易密码",
+        "en": "Not yet set a trading password."
+      },
+      "REAL_INFO_ING": {
+        "cn": "实名认证審核中",
+        "en": "Real name verification"
+      },
+      "SETTING_NOW": {
+        "cn": "立即设置",
+        "en": "Set now"
+      },
+      "CHECK_NOW": {
+        "cn": "立即查看",
+        "en": "Check now"
+      },
+      "NUMBER_HOME_PA": {
+        "cn": "页",
+        "en": "Page"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "提币",
+        "en": "Withdraw"
+      },
+      "JS_LANG": {
+        "cn": {
+          "sureBtn": "确定",
+          "coinOut": "提币",
+          "fozRich": "當前凍結BTC餘額",
+          "nowCoin": "當前可用",
+          "coinBalance": "餘額",
+          "coinOutAddr": "提币地址",
+          "placeWriteAddr": "请填写接收地址",
+          "usefullAddr": "请输入有效的接收地址",
+          "coinOutNum": "轉出数額",
+          "coinOutNumPHold": "请输入轉出数額",
+          "tradePwd": "交易密码",
+          "tradePwdPHold": "请输入交易密码",
+          "imgCode": "图形验证码",
+          "imgCodePHold": "请输入图形验证码",
+          "phoneCode": "手机验证码",
+          "phoneCodePHold": "请输入手机验证码",
+          "getPhoneCode": "获取验证码",
+          "coinOutTil": "提币",
+          "coinOutTipsSubTit": "轉出須知",
+          "downTipsOne": "每筆轉出最低額度為",
+          "downTipsTwo": "最高限額為",
+          "tradeOut": "轉出",
+          "coinFee": "手續費為",
+          "tradeOutOver": "轉出額度超過",
+          "peopleCheck": "時需人工審核",
+          "balanceNotEnth": "可用餘額不足",
+          "clickGet": "点击获取",
+          "voiceCode": "语音验证码",
+          "canGetAt": "可以在",
+          "afterGetVoiceCode": "后获取语音验证码",
+          "afterGet": "s后重新获取",
+          "coinOutSuccTips": "發起提币成功，请等待确認！",
+          "canNotCopy": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容按下 ctrl + c 鍵復制。",
+          "copyRight": "復制成功，请通過 ctrl + v 鍵粘貼。",
+          "regs": {
+            "wallet": {
+              "msg": "请输入有效的接收地址",
+              "errMsg": "请输入有效的接收地址"
+            },
+            "number": {
+              "msg": "请输入轉出数額",
+              "errMsg": "请输入轉出数額",
+              "overMsg": "轉出数額不符合要求",
+              "less": ""
+            },
+            "pwdtrade": {
+              "msg": "请输入交易密码",
+              "errMsg": "交易密码錯誤"
+            },
+            "captcha": {
+              "msg": "看不清？点击图片更换验证码",
+              "errMsg": "位数不正确"
+            },
+            "code": {
+              "msg": "请输入手机验证码",
+              "errMsg": "手机验证码錯誤"
+            }
+          },
+          "REAL_TIME": "实際到账",
+          "LESS_NUM": "数額過小，無法轉出",
+          "TIME_OVER_TIPS": "開始時間不能大于等于結束時間"
+        },
+        "en": {
+          "sureBtn": "Ok",
+          "coinOut": "Withdraw",
+          "fozRich": "BTC Blocked",
+          "nowCoin": "Available Balance",
+          "coinBalance": "Balance",
+          "coinOutAddr": "Address",
+          "placeWriteAddr": "Please enter receiving address",
+          "usefullAddr": "Please enter a valid address",
+          "coinOutNum": "Amount",
+          "coinOutNumPHold": "Please enter amount to transfer",
+          "tradePwd": "Password",
+          "tradePwdPHold": "Please enter trading password.",
+          "imgCode": "Captcha",
+          "imgCodePHold": "Captcha.",
+          "phoneCode": "SMS code",
+          "phoneCodePHold": "SMS code",
+          "getPhoneCode": "send",
+          "coinOutTil": "Withdraw",
+          "coinOutTipsSubTit": "Transfer instructions",
+          "downTipsOne": "Minimum withdrawal amount",
+          "downTipsTwo": "Maximum withdrawal amount",
+          "tradeOut": "Transfer out",
+          "coinFee": "Transaction Fee",
+          "tradeOutOver": "Exceeded withdrawal limit",
+          "peopleCheck": "transaction needs to be reviewed before processing",
+          "balanceNotEnth": "Insufficient funds",
+          "clickGet": "Click to get",
+          "voiceCode": "Voice verification code",
+          "canGetAt": "Can get",
+          "afterGetVoiceCode": "After receive voice verification code",
+          "afterGet": "after receipt",
+          "coinOutSuccTips": "Withdrawal started successfully, please wait for confirmation！",
+          "canNotCopy": "Your browser does not support the quick copy function.  Please manually select the information to be copied and use &lt;ctrl&gt; (Windows) or &lt;Command&gt; + 'C' to copy.",
+          "copyRight": "Copy successful!  Please paste using &lt;ctrl&gt; or &lt;Command&gt; + 'V'",
+          "regs": {
+            "wallet": {
+              "msg": "Please enter receiving address",
+              "errMsg": "Please enter a valid address"
+            },
+            "number": {
+              "msg": "Please enter amount to transfer",
+              "errMsg": "Please enter amount to transfer",
+              "overMsg": "Invalid amount",
+              "less": ""
+            },
+            "pwdtrade": {
+              "msg": "Please enter trading password.",
+              "errMsg": "Errors! Please input again"
+            },
+            "captcha": {
+              "msg": "Invisible? Click here to change another Captcha code.",
+              "errMsg": "Invalid number"
+            },
+            "code": {
+              "msg": "Please input the SMS Code",
+              "errMsg": "Errors ! Please input again"
+            }
+          },
+          "REAL_TIME": "Delivered&nbsp;",
+          "LESS_NUM": "This amount is too small to transfer",
+          "TIME_OVER_TIPS": "please input a valid time"
+        }
+      }
+    },
+    "trust": {
+      "TITLE_WORD": {
+        "cn": "委托管理-我的交易-火网交易平台",
+        "en": "Commission Management - My Trades - DOBI Trade"
+      },
+      "TITLE_WCJ": {
+        "cn": "未成交",
+        "en": "Undeal"
+      },
+      "TITLE_BFCJ": {
+        "cn": "部分成交",
+        "en": "Partly filled"
+      },
+      "TITLE_QBCJ": {
+        "cn": "全部成交",
+        "en": "All filled"
+      },
+      "TITLE_YJCX": {
+        "cn": "已撤銷",
+        "en": "Operations completed"
+      },
+      "TITLE_CX": {
+        "cn": "撤銷",
+        "en": "Undo"
+      },
+      "TABLE_HEADER_ONE": {
+        "cn": "委托時間",
+        "en": "Commission time"
+      },
+      "TABLE_HEADER_TWO": {
+        "cn": "币種",
+        "en": "Currency"
+      },
+      "TABLE_HEADER_THREE": {
+        "cn": "類型",
+        "en": "Type"
+      },
+      "TABLE_HEADER_FOUR": {
+        "cn": "委托價格",
+        "en": "Commission Price"
+      },
+      "TABLE_HEADER_FIVE": {
+        "cn": "成交数量",
+        "en": "Number of transactions"
+      },
+      "TABLE_HEADER_SIX": {
+        "cn": "尚未成交数量",
+        "en": "Quantity Incomplete"
+      },
+      "TABLE_HEADER_SEV": {
+        "cn": "狀態",
+        "en": "Status"
+      },
+      "TABLE_HEADER_EIG": {
+        "cn": "操作",
+        "en": "In progress"
+      },
+      "NUMBER_HOME_PA": {
+        "cn": "页",
+        "en": "Page"
+      },
+      "JUMP": {
+        "cn": "跳至",
+        "en": "jump to"
+      },
+      "BUY": {
+        "cn": "買入",
+        "en": "Buy"
+      },
+      "SELL": {
+        "cn": "賣出",
+        "en": "Sell"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "委托管理",
+        "en": "Agent Management"
+      },
+      "JS_LANG": {
+        "cn": {
+          "canNotCopy": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容按下 ctrl + c 鍵復制。",
+          "sureBtn": "确定",
+          "copyRight": "復制成功，请通過 ctrl + v 鍵粘貼。",
+          "copyError": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容按下 ctrl + c 鍵復制。"
+        },
+        "en": {
+          "canNotCopy": "Your browser does not support the quick copy function.  Please manually select the information to be copied and use &lt;ctrl&gt; (Windows) or &lt;Command&gt; + 'C' to copy.",
+          "sureBtn": "Ok",
+          "copyRight": "Copy successful!  Please paste using &lt;ctrl&gt; or &lt;Command&gt; + 'V'",
+          "copyError": "Your browser does not support the quick copy function.  Please manually select the information to be copied and use &lt;ctrl&gt; (Windows) or &lt;Command&gt; + 'C' to copy."
+        }
+      }
+    },
+    "deal": {
+      "TITLE_WORD": {
+        "cn": "成交查詢-我的交易-火网交易平台",
+        "en": "Transaction Inquiry - My Transactions - DOBI Trade"
+      },
+      "TABLE_HEADER_ONE": {
+        "cn": "訂單号",
+        "en": "Order Number"
+      },
+      "TABLE_HEADER_TWO": {
+        "cn": "成交時間",
+        "en": "Transaction Time"
+      },
+      "TABLE_HEADER_THREE": {
+        "cn": "币種",
+        "en": "Currency"
+      },
+      "TABLE_HEADER_FOUR": {
+        "cn": "類型",
+        "en": "Type"
+      },
+      "TABLE_HEADER_FIVE": {
+        "cn": "成交價格",
+        "en": "Transaction Price"
+      },
+      "TABLE_HEADER_SIX": {
+        "cn": "成交数量",
+        "en": "Number of Transactions"
+      },
+      "TABLE_HEADER_SEV": {
+        "cn": "成交金額",
+        "en": "Transaction Amount"
+      },
+      "NUMBER_HOME_PA": {
+        "cn": "页",
+        "en": "Page"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "成交查詢",
+        "en": "Transaction query"
+      }
+    },
+    "mplan": {
+      "TITLE_WORD": {
+        "cn": "邀请有禮-经理人計劃-火网交易平台",
+        "en": "Invitation Reward - Manager Scheme - Dobitrade Exchange"
+      },
+      "YAOQING_LI": {
+        "cn": "邀请有禮",
+        "en": "Invitation Rewards"
+      },
+      "YAOQING_RIQ": {
+        "cn": "活动日期",
+        "en": "Activity Date"
+      },
+      "YAOQING_JSU": {
+        "cn": "活动已結束",
+        "en": "Activity has ended"
+      },
+      "FUZHI": {
+        "cn": "復制下面的鏈接發送給朋友",
+        "en": "Please use the following link to send to invite a friend."
+      },
+      "TUIJ": {
+        "cn": "推薦火网数字資產交易平台給你，操作便捷、交易迅速",
+        "en": "sent you an invitation to join DOBI Trading platform, easy to trade, and fast transaction processing"
+      },
+      "LIANJIE": {
+        "cn": "復制鏈接",
+        "en": "Copy link"
+      },
+      "WODE": {
+        "cn": "我的邀请",
+        "en": "My invitations"
+      },
+      "YAO_QINGYOU": {
+        "cn": "已邀请好友",
+        "en": "Invited friends"
+      },
+      "LEI_JI": {
+        "cn": "累計邀请注册奖勵",
+        "en": "Total invitation rewards"
+      },
+      "KEYONG_JI": {
+        "cn": "可用注册奖勵餘額",
+        "en": "Available Invitation Rewards Balance"
+      },
+      "LEIJI_JL": {
+        "cn": "累計交易返傭奖勵",
+        "en": "Available Transaction Rebates"
+      },
+      "KEYONG_YE": {
+        "cn": "可用返傭奖勵餘額",
+        "en": "Available Transaction Rebate Balance"
+      },
+      "TIQU_YE": {
+        "cn": "提取奖勵",
+        "en": "Claim Rewards"
+      },
+      "LTIE_LIAN": {
+        "cn": "粘貼邀请鏈接，發送身邊好友注册新會員",
+        "en": "paste the invitation link, then send membership invitation to friends"
+      },
+      "YQ_JLL": {
+        "cn": "邀请记錄",
+        "en": "Invitations Sent"
+      },
+      "JL_TQU": {
+        "cn": "奖勵提取记錄",
+        "en": "Rewards Collected"
+      },
+      "FANYONG_JL": {
+        "cn": "返傭记錄",
+        "en": "Rebates Collected"
+      },
+      "YQ_PHB": {
+        "cn": "邀请排行榜",
+        "en": "Invitation List"
+      },
+      "YQ_GZ": {
+        "cn": "活动規則",
+        "en": "Rules and Procedures"
+      },
+      "TJ_HY": {
+        "cn": "推薦的好友",
+        "en": "Friend recommendations"
+      },
+      "ZC_TIME": {
+        "cn": "注册時間",
+        "en": "Registration Time"
+      },
+      "HAO_YOU_SHI": {
+        "cn": "好友实名狀態",
+        "en": "Friends real name status"
+      },
+      "NI_JL": {
+        "cn": "您的奖勵",
+        "en": "Your Rewards"
+      },
+      "HUO_JL": {
+        "cn": "活动奖品",
+        "en": "Event Prizes"
+      },
+      "DANG_HAO": {
+        "cn": "當您的好友通過您的專屬邀请鏈接，進行注册並成功通過实名认证后",
+        "en": "When your friends successfully register, using your exclusive registration link, and complete real name authentication."
+      },
+      "DANG_BIAN": {
+        "cn": "您將获得",
+        "en": "You will receive"
+      },
+      "JIANG_BIAN": {
+        "cn": "個MCC作為奖勵",
+        "en": "MCC as reward"
+      },
+      "NI_KE": {
+        "cn": "您可获得好友每次【交易手續費】的",
+        "en": "Your can earn a transaction fee each time your friends complete a trade"
+      },
+      "ZUO_WEI": {
+        "cn": "作為奖勵。如果這筆交易是在<br/>BTC交易區發生的，則返傭BTC；如果在MCC交易區，則返傭MCC，以此類推。",
+        "en": "Any reward earned as a result of <br/>trading activity will be paid in the currency being traded."
+      },
+      "HUO_GZ": {
+        "cn": "活动規則",
+        "en": "Program Rules"
+      },
+      "HUODONG_TIME": {
+        "cn": "活动有效期：",
+        "en": "Activity Period: "
+      },
+      "ZHUCE_TIME": {
+        "cn": "注册有禮活动與邀请返傭活动並不沖突",
+        "en": "there is no conflict between registration and invitation activities"
+      },
+      "HAO_YOUSJ": {
+        "cn": "推薦好友交易奖勵時間段為好友注册完成時間開始后的90天內",
+        "en": "Invited friends must complete registration within 90 days"
+      },
+      "RU_TONG": {
+        "cn": "如果同一用户被多名平台用户所邀请，平台將認定第一位确定的邀请人為該用户邀请人",
+        "en": "If an invitation is sent to the same individual by more than one member, then invitation reward will be issued based on referral link"
+      },
+      "RUO_NI": {
+        "cn": "若您邀请多名好友，您获得的奖勵可累計，無邀请上限",
+        "en": "If you invite more friends your rewards will accumulate.  There is no limit to the number of invitations you can send"
+      },
+      "JIN_Z": {
+        "cn": "禁止任何作弊行為，一旦發現，火网有權收回所給奖勵並對账号進行處理",
+        "en": "Cheating and/or illegal activity is prohibited.  If discovered we resevere the right to recover/reclaim any rebates and rewards issued"
+      },
+      "BAO_LIU": {
+        "cn": "huocoin保留隨時修訂、暫停、終止本活动及任何相關規則之權利",
+        "en": "DOBI Trade reserves the right to revise, ,amend, suspend, or terminate these policies and any promotional activities at any time."
+      },
+      "SUOYOU": {
+        "cn": "本次活动規則最終解釋權歸huocoin所有",
+        "en": "The final interpretation of the rules and policies is exclusively determined by DOBI Trade, all rights reserved. "
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "邀请有禮",
+        "en": "Invitation reward"
+      },
+      "MIN_NUM": {
+        "cn": "最低提取額度",
+        "en": "Minimum amount to withdraw"
+      },
+      "AND_MORE": {
+        "cn": "，且",
+        "en": ",and"
+      },
+      "MAX_LEN": {
+        "cn": "最多不超過",
+        "en": "not more than"
+      },
+      "DOT_LEN": {
+        "cn": "位小数",
+        "en": "decimal places"
+      },
+      "JUST_INT": {
+        "cn": "只能提取整数",
+        "en": "Only integer can be withdrawed"
+      },
+      "JS_LANG": {
+        "cn": {
+          "COPY_NOT_SUPPORT": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容按下 ctrl + c 鍵復制。",
+          "MOB_COPY_NOT_SUPPORT": "您的浏覽器不支持快速復制功能，请手动選擇需要復制的內容進行復制。",
+          "COPY_NOT_SUPPORT_UPDATE": "您的浏覽器不支持復制功能呢，请安裝最新版本浏覽器后再試試。",
+          "COPY_SUCCESS": "復制成功，请通過 ctrl + v 鍵粘貼。",
+          "MOB_COPY_SUCCESS": "復制成功",
+          "BTN_SURE": "确定",
+          "FORM_ERROR_ADDRESS": "请输入有效的接收地址",
+          "FORM_ERROR_NUMBER": "请输入提取数額",
+          "FORM_ERROR_OVER_NUMBER": "提取数額不符合要求",
+          "FORM_MSG_TRADE_PWD": "请输入交易密码",
+          "FORM_ERROR_TRADE_PWD": "交易密码錯誤",
+          "FORM_MSG_CAPTCHA": "看不清？点击图片更换验证码",
+          "FORM_ERROR_CAPTCHA": "位数不正确",
+          "FORM_MSG_CODE": "请输入手机验证码",
+          "FORM_ERROR_CODE": "手机验证码錯誤",
+          "REWARD_SUCCESS": "奖勵提取成功"
+        },
+        "en": {
+          "COPY_NOT_SUPPORT": "Your browser does not support the quick copy function.  Please manually select the information to be copied and use &lt;ctrl&gt; (Windows) or &lt;Command&gt; + 'C' to copy.",
+          "COPY_NOT_SUPPORT_UPDATE": "Your browser does not support the quick copy function.  Please manually select the information to be copied and use &lt;ctrl&gt; (Windows) or &lt;Command&gt; + 'C' to copy.",
+          "COPY_SUCCESS": "Copy successful!  Please paste using &lt;ctrl&gt; or &lt;Command&gt; + 'V'",
+          "BTN_SURE": "Ok",
+          "FORM_ERROR_ADDRESS": "Please enter a valid address",
+          "FORM_ERROR_NUMBER": "Please enter a withdrawal amount",
+          "FORM_ERROR_OVER_NUMBER": "The transaction amount does not meet requirements",
+          "FORM_MSG_TRADE_PWD": "Please enter trading password",
+          "FORM_ERROR_TRADE_PWD": "Trading password error",
+          "FORM_MSG_CAPTCHA": "Can not read Captcha?, Click on picture for new verfication code.",
+          "FORM_ERROR_CAPTCHA": "Verification code is not correct",
+          "FORM_MSG_CODE": "Please enter your SMS verification code",
+          "FORM_ERROR_CODE": "SMS verification code error",
+          "REWARD_SUCCESS": "reward withdrawn successfully",
+          "MOB_COPY_SUCCESS": "Copy successfully "
+        }
+      }
+    },
+    "candy":{
+      "CANDY_GET": {
+        "cn": "領取甜品",
+        "en": "Get Candies"
+      },
+      "CANDY_TH_COIN": {
+        "cn": "币種",
+        "en": "Coin type"
+      },
+      "CANDY_TH_HEIGHT": {
+        "cn": "區塊高度",
+        "en": "Block Height"
+      },
+      "CANDY_TH_RATIO": {
+        "cn": "派發比例",
+        "en": "Percentage"
+      },
+      "CANDY_TH_START": {
+        "cn": "開始日期",
+        "en": "Starting Date"
+      },
+      "CANDY_TH_DATA": {
+        "cn": "截止日期",
+        "en": "Deadline"
+      },
+      "CANDY_TH_GET": {
+        "cn": "可領取",
+        "en": "Attainable"
+      },
+      "CANDY_TH_GOT": {
+        "cn": "已領取",
+        "en": "Got"
+      },
+      "CANDY_TH_OPERA": {
+        "cn": "操作",
+        "en": "Operate"
+      },
+      "CANDY_ACTIVE_COIN": {
+        "cn": "活动贈送币",
+        "en": "Activity Rewards"
+      },
+      "CANDY_FC_COIN": {
+        "cn": "分叉币",
+        "en": "Forked Coin"
+      },
+      "CANDY_COIN_TYPES": {
+        "cn": "币種分類",
+        "en": "Coin Type"
+      },
+      "CANDY_CAN_GET": {
+        "cn": "可用",
+        "en": "Available"
+      },
+      "CANDY_CANGET": {
+        "cn": "領取",
+        "en": "To receive"
+      },
+      "JS_LANG": {
+        "cn": {
+          "CANDY_TH_COIN": "币種",
+          "CANDY_TH_START": "開始日期",
+          "CANDY_TH_DATA": "截止日期",
+          "CANDY_TH_GOT": "已領取",
+          "GET_DATA_FAIL": "获取数據失敗",
+          "CANDY_ACTIVE_COIN": "活动贈送币",
+          "CANDY_CANGET": "領取",
+          "CANDY_GOT": "恭喜妳已经成功領取",
+          "CANDY_GET": "奖勵"
+        },
+        "en": {
+          "CANDY_TH_COIN": "Coin Type",
+          "CANDY_TH_START": "Starting Date",
+          "CANDY_TH_DATA": "Deadline",
+          "CANDY_TH_GOT": "Got",
+          "GET_DATA_FAIL": "Network error",
+          "CANDY_ACTIVE_COIN": "Activity Rewards",
+          "CANDY_CANGET": "To receive",
+          "CANDY_GOT": "Congratulations! You have got candies successfully",
+          "CANDY_GET": "Reward"
+        }
+      }
+    }
+  },
+  "trade": {
+    "index": {
+      "TITLE_WORD": {
+        "cn": "火网交易币币平台",
+        "en": "DOBI Trading Platform"
+      },
+      "NET_ERROR": {
+        "cn": "網絡繁忙",
+        "en": "Network Failure"
+      },
+      "CANCEL_FIAL": {
+        "cn": "撤單未成功",
+        "en": "Withdrawal Unsuccessful"
+      },
+      "TRUST_STATUS_ALL": {
+        "cn": "全部成交",
+        "en": "All Transactions"
+      },
+      "TRUST_STATUS_PART": {
+        "cn": "部分成交",
+        "en": "Partial Transactions"
+      },
+      "TRUST_STATUS_NO": {
+        "cn": "未成交",
+        "en": "Not sold"
+      },
+      "TRADE_AREA_TITLE": {
+        "cn": "交易區",
+        "en": "Trade"
+      },
+      "TRADE_COIN_COUPLE": {
+        "cn": "市場",
+        "en": "Market"
+      },
+      "TRADE_COIN_UP_DOWN": {
+        "cn": "漲跌幅",
+        "en": "24h Changes"
+      },
+      "TRADE_OVER_NUMBERS": {
+        "cn": "成交量",
+        "en": "Trading Volume"
+      },
+      "TRUST_STATUS_CANCEL": {
+        "cn": "已撤銷",
+        "en": "Revoked"
+      },
+      "TRUST_STATUS_FIND": {
+        "cn": "查詢中",
+        "en": "Inquiry"
+      },
+      "INPUT_NEED_VALID": {
+        "cn": "请输入数字,小数點后最多8位",
+        "en": "Please enter a valid number with no more than 8 decimal places"
+      },
+      "FLOATNUM_A": {
+        "cn": "價格必須大於0,小於1,最多",
+        "en": "Price must be a value between 0.00 and 1.00 maximum."
+      },
+      "FLOATNUM_B": {
+        "cn": "位小数",
+        "en": "Decimal Places"
+      },
+      "MAX_TRADE_NUM": {
+        "cn": "最大交易数量為:",
+        "en": "Maximum transaction amount"
+      },
+      "MIN_TRADE_NUM": {
+        "cn": "最小交易数量為:",
+        "en": "Minimum transaction amount"
+      },
+      "AMOUNT_MAX": {
+        "cn": "最多",
+        "en": "Maximum"
+      },
+      "TRADE_BUY_IN": {
+        "cn": "買入",
+        "en": "Buy"
+      },
+      "TRADE_SELL_OUT": {
+        "cn": "賣出",
+        "en": "Sell"
+      },
+      "TRADE_CANCEL": {
+        "cn": "撤銷",
+        "en": "Cancel"
+      },
+      "NAV_PRICE_UP_DOWN": {
+        "cn": "漲跌幅",
+        "en": "24h Changes"
+      },
+      "NEW_PRICE": {
+        "cn": "最新價",
+        "en": "Last Price"
+      },
+      "KLINE_SHOW": {
+        "cn": "点击查看K線图",
+        "en": "Click here to check K line"
+      },
+      "RETURN_TRADE_AREA": {
+        "cn": "返回交易界面",
+        "en": "Chart"
+      },
+      "NAV_TODAY_LOW": {
+        "cn": "24h最高價",
+        "en": "24h High"
+      },
+      "NAV_24H_ORDER" : {
+        "cn": "24h成交量",
+        "en": "24h Volume"
+      },
+      "NAV_24H_MIN" : {
+        "cn": "24h最低價",
+        "en": "24h Low"
+      },
+      "NAV_24H_AMOUNT" : {
+        "cn": "24h成交額",
+        "en": "24h Volume"
+      },
+      "TABLE_THEAD_PRICE_SELL" : {
+        "cn": "賣出價",
+        "en": "Price"
+      },
+      "TABLE_THEAD_PRICE" : {
+        "cn": "價格",
+        "en": "Price"
+      },
+      "TABLE_FORM_RMB" : {
+        "cn": "折合",
+        "en": "Discount"
+      },
+      "TABLE_THEAD_PRICE_BUY" : {
+        "cn": "買入價",
+        "en": "Price"
+      },
+      "TABLE_THEAD_ORDER_NUM" : {
+        "cn": "数量",
+        "en": "Amount"
+      },
+      "TABLE_THEAD_ORDER_SUM" : {
+        "cn": "累積量",
+        "en": "Total"
+      },
+      "NEWS_TRADE": {
+        "cn": "最新成交",
+        "en": "latest bill"
+      },
+      "TRADE_EAREA_SHOW": {
+        "cn": "交易盤展示",
+        "en": "Chart"
+      },
+      "LOAD_MORE_DATA": {
+        "cn": "加載更多...",
+        "en": "Loading"
+      },
+      "MY_TRUST_TITLE": {
+        "cn": "我的委托",
+        "en": "My Agent"
+      },
+      "TRUST_DETAIL": {
+        "cn": "委托詳情",
+        "en": "Detailed agent activity"
+      },
+      "TABLE_THEAD_ORDER_TIME" : {
+        "cn": "時間",
+        "en": "Date"
+      },
+      "TABLE_THEAD_DONE_PRICE" : {
+        "cn": "成交價",
+        "en": "Price"
+      },
+      "TABLE_THEAD_DONE_SUM" : {
+        "cn": "成交量",
+        "en": "Amount"
+      },
+      "TRUST_THEAD_TIME": {
+        "cn": "委托時間",
+        "en": "Time"
+      },
+      "TRUST_THEAD_TYPE": {
+        "cn": "類型",
+        "en": "Type"
+      },
+      "TRUST_THEAD_PRICE": {
+        "cn": "價格",
+        "en": "Price"
+      },
+      "TRUST_THEAD_NUM": {
+        "cn": "委托数量",
+        "en": "Open Orders"
+      },
+      "TRUST_THEAD_DONE_NUM": {
+        "cn": "成交数量",
+        "en": "Completed"
+      },
+      "TRUST_THEAD_NODONE_NUM": {
+        "cn": "尚未成交",
+        "en": "Pending"
+      },
+      "TRUST_THEAD_STATUS": {
+        "cn": "狀態",
+        "en": "Status"
+      },
+      "TRUST_THEAD_HANDLE": {
+        "cn": "操作",
+        "en": "Operation"
+      },
+      "TRUST_ORDER_STATUS_0": {
+        "cn": "未成交",
+        "en": "Undeal"
+      },
+      "TRUST_ORDER_STATUS_1": {
+        "cn": "部分成交",
+        "en": "Partly filled"
+      },
+      "TRUST_ORDER_STATUS_2": {
+        "cn": "全部成交",
+        "en": "All filled"
+      },
+      "TRUST_ORDER_STATUS_3": {
+        "cn": "已撤銷",
+        "en": "Operated completely"
+      },
+      "TRUST_ORDER_STATUS_4": {
+        "cn": "撤銷中",
+        "en": "Operating"
+      },
+      "TRUST_ORDER_CANSEL": {
+        "cn": "撤&nbsp;銷",
+        "en": "Undo"
+      },
+      "RULE_TRADE_RULE": {
+        "cn": "交易規則",
+        "en": "TX&nbsp;Rules"
+      },
+      "RULE_TRADE_TIME": {
+        "cn": "交易時間：",
+        "en": "Trading Hours"
+      },
+      "RULE_TRADE_FEE": {
+        "cn": "交易手續費",
+        "en": "Trading Fees"
+      },
+      "RULE_TRADE_MIN_NUM": {
+        "cn": "最小交易数量：",
+        "en": "Minimum transaction quantity"
+      },
+      "RULE_TRADE_MAX_NUM": {
+        "cn": "最大交易数量：",
+        "en": "Maximum transaction quantity"
+      },
+      "RULE_TRADE_OR": {
+        "cn": "或",
+        "en": "Or"
+      },
+      "RULE_TRADE_AFTER_LOGIN": {
+        "cn": "后才能交易",
+        "en": "After trade"
+      },
+      "TRUST_NO_RECORD": {
+        "cn": "暫無委托",
+        "en": "Temporarily trading is suspended"
+      },
+      "TRADE_FORM_AVIAL_ASSET": {
+        "cn": "餘額：",
+        "en": "Available："
+      },
+      "TRADE_FORM_LOCK_ASSET": {
+        "cn": "凍結額：",
+        "en": "Locked："
+      },
+      "TRADE_FORM_AVIAL_BUY": {
+        "cn": "可買≈",
+        "en": "Available≈"
+      },
+      "TRADE_FORM_AVIAL_SELL": {
+        "cn": "可賣≈",
+        "en": "Available≈"
+      },
+      "TRADE_FORM_COIN_IN": {
+        "cn": "充币",
+        "en": "Deposit"
+      },
+      "TRADE_FORM_COIN_OUT": {
+        "cn": "提币",
+        "en": "Withdraw"
+      },
+      "TRADE_FORM_RATE": {
+        "cn": "下單比例",
+        "en": "Percent"
+      },
+      "TRADE_FORM_SETTLE": {
+        "cn": "交易額約：",
+        "en": "Total"
+      },
+      "TRADE_TALKING_XS": {
+        "cn": "小時",
+        "en": "hour"
+      },
+      "TRADE_FORM_FEE": {
+        "cn": "手續費",
+        "en": "Fee"
+      },
+      "TRADE_FORM_NO_FEE": {
+        "cn": "免",
+        "en": "No Fees"
+      },
+      "TRADE_FORM_BUY_AMOUNT": {
+        "cn": "買入量",
+        "en": "Amount"
+      },
+      "TRADE_FORM_SELL_AMOUNT": {
+        "cn": "賣出量",
+        "en": "Amount"
+      },
+      "TRADE_FORM_BUY_NOW": {
+        "cn": "立即買入",
+        "en": "Buy"
+      },
+      "TRADE_FORM_SELL_NOW": {
+        "cn": "立即賣出",
+        "en": "Sell"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "币币交易",
+        "en": "Coin-Coin Trade"
+      },
+      "MOB_SELL_BTN": {
+        "cn": "賣出盤面",
+        "en": "sale order book"
+      },
+      "MOB_BUY_BTN": {
+        "cn": "買入盤面",
+        "en": "buy order book"
+      },
+      "MOB_SELL": {
+        "cn": "賣出",
+        "en": "Sell"
+      },
+      "MOB_BUY": {
+        "cn": "買入",
+        "en": "Buy"
+      },
+      "MOB_MY_TRUST": {
+        "cn": "我的委托",
+        "en": "My Agent"
+      },
+      "TRADE_UP_DOWN": {
+        "cn": "漲跌幅",
+        "en": "Change"
+      },
+      "TRADE_MARKET": {
+        "cn": "币種",
+        "en": "Pair"
+      },
+      "TRADE_PRICE": {
+        "cn": "價格",
+        "en": "Price"
+      },
+      "TRADE_AMOUNT": {
+        "cn": "成交量",
+        "en": "Completed"
+      },
+       "TRADE_VOLUME": {
+        "cn": "成交額",
+        "en": "Volume"
+      },
+      "TRADE_MARKET_AREA": {
+        "cn": "交易區",
+        "en": "Trade"
+      },
+      "TRADE_WATING": {
+        "cn": "待開放",
+        "en": "It is pending"
+      },
+      "TRADE_TALKING": {
+        "cn": "聊天室",
+        "en": "Chat room"
+      },
+      "TRADE_TALKING_OUT": {
+        "cn": "退出",
+        "en": "Exit"
+      },
+      "TRADE_TALKING_HIDE": {
+        "cn": "隱藏",
+        "en": "Hide"
+      },
+      "TRADE_TALKING_LOGING": {
+        "cn": "登陆聊天室",
+        "en": "Enter the Chat room"
+      },
+      "TRADE_TALKING_SENDS": {
+        "cn": "發送",
+        "en": "Send"
+      },
+      "FORGET_TRADE_PWD": {
+        "cn": "忘记交易密码?",
+        "en": "Forget the password?"
+      },
+      "JS_LANG": {
+        "cn": {
+          "CANCEL_FIAL": "撤單未成功",
+          "NET_ERROR": "網絡繁忙",
+          "TRUST_STATUS_ALL" : "全部成交",
+          "TRUST_STATUS_PART": "部分成交",
+          "TRUST_STATUS_NO" : "未成交",
+          "TRUST_STATUS_CANCEL": "已撤銷",
+          "TRUST_STATUS_FIND" : "查詢中",
+          "INPUT_NEED_VALID" : "请输入数字,小数點后最多8位",
+          "FLOATNUM_A" : "價格必須大於$min,小於$max,最多",
+          "FLOATNUM_B": "最多$float位小数",
+          "MAX_TRADE_NUM": "最大交易数量為:",
+          "MIN_TRADE_NUM": "最小交易数量為:",
+          "AMOUNT_MAX": "最多",
+          "TRADE_BUY_IN": "買入",
+          "TRADE_SELL_OUT": "賣出",
+          "TRADE_CANCEL": "撤銷",
+          "OPEN_SOON": "即將開放",
+          "LOADING": "加載中...",
+          "TRADE_AREA_TITLE": "交易區",
+          "PRICE_HOLDE": "请输入價格",
+          "NUMBER_HOLDE": "请输入数量",
+          "TRADE_MIN": "交易数量不能小於",
+          "TRADE_MAX": "交易数量不能大於",
+          "BUY_OVER": "超出可買入額，请檢查后重新输入",
+          "SELL_OVER": "超出可賣出額，请檢查后重新输入"
+        },
+        "en" : {
+          "CANCEL_FIAL": "Withdrawal Unsuccessful",
+          "NET_ERROR": "Network Failure",
+          "TRUST_STATUS_ALL" : "All Transactions",
+          "TRUST_STATUS_PART": "Partial Transactions",
+          "TRUST_STATUS_NO" : "Not sold",
+          "TRUST_STATUS_CANCEL": "Revoked",
+          "TRUST_STATUS_FIND" : "Inquiry",
+          "INPUT_NEED_VALID" : "Please enter a valid number greater than 0.00000001 but less than 1.",
+          "FLOATNUM_A" : "Price should be given as the following example: 0&lt;?&lt;1",
+          "FLOATNUM_B": "Decimal ",
+          "MAX_TRADE_NUM": "Maximum TX",
+          "MIN_TRADE_NUM": "Minimum TX",
+          "AMOUNT_MAX": "Maximum",
+          "TRADE_BUY_IN": "Buy",
+          "TRADE_SELL_OUT": "Sell",
+          "TRADE_CANCEL": "Cancel",
+          "OPEN_SOON": "Coming Soon",
+          "LOADING": "loading...",
+          "TRADE_AREA_TITLE": "Trade",
+          "PRICE_HOLDE": "Input Price",
+          "NUMBER_HOLDE": "Input Amount",
+          "TRADE_MIN": "The transaction amount cannot be less than",
+          "TRADE_MAX": "The transaction amount cannot be more than",
+          "BUY_OVER": "Exceeding the maximum funds to transfer,please check it and input  again ",
+          "SELL_OVER": "Exceeding the maximum funds to transfer,please check it and input  again please check it and input  again"
+        }
+      }
+    }
+  },
+  "news": {
+    "index": {
+      "FIRST_PAGE": {
+        "cn": "首页",
+        "en": "Home"
+      },
+      "LAST_PAGE": {
+        "cn": "首页",
+        "en": "Home"
+      },
+      "JUMP_TO": {
+        "cn": "跳至",
+        "en": "go to"
+      },
+      "PAGE_CN": {
+        "cn": "页",
+        "en": "Page"
+      },
+      "PAGE_GO": {
+        "cn": "GO",
+        "en": "GO"
+      },
+      "PEOPLE_SEE": {
+        "cn": "熱點資訊",
+        "en": "Hot News"
+      },
+      "TO_TOP": {
+        "cn": "置頂",
+        "en": "Top"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "新聞公告",
+        "en": "Announcements"
+      }
+    },
+    "detail": {
+      "RETURN_BACK": {
+        "cn": "返回列表",
+        "en": "go back"
+      },
+      "PRE_PAGE": {
+        "cn": "前一篇",
+        "en": "Previous page"
+      },
+      "NEXT_PAGE": {
+        "cn": "下一篇",
+        "en": "Next"
+      },
+      "SAY_SAMETHING": {
+        "cn": "說點什麼",
+        "en": "Comment"
+      },
+      "PLEASE_ENTER": {
+        "cn": "不如評論一番？",
+        "en": "go and post your review?"
+      },
+      "LOGIN_BTN": {
+        "cn": "登陆",
+        "en": "log in"
+      },
+      "MOB_TOP_TITLE": {
+        "cn": "新聞公告詳情",
+        "en": ""
+      },
+      "AFTER_ISS": {
+        "cn": "后參與評論",
+        "en": "Review"
+      },
+      "SEED_OUT": {
+        "cn": "發表",
+        "en": "post"
+      },
+      "SEE_ISS": {
+        "cn": "看看評論",
+        "en": "see reviews"
+      },
+      "NO_ISSS": {
+        "cn": "暫無評論",
+        "en": "no reviews yet"
+      },
+      "JS_LANG": {
+        "cn": {
+          "just": "剛剛",
+          "yesterday": "昨天",
+          "the_day_before_yesterday": "前天",
+          "min": "分鐘",
+          "hour": "小時前"
+        },
+        "en": {
+          "just": "just",
+          "yesterday": "Yesterday",
+          "the_day_before_yesterday": "The day before yesterday",
+          "min": "Minute",
+          "hour": "Hours ago"
+        }
+      }
+    }
+  },
+  "api_index":{
+    "index":{
+      "TRADING":{
+        "cn":"交易",
+        "en":"Trading"
+      },
+      "ORDER":{
+        "cn":"委托下單",
+        "en":"Commission orders"
+      },
+      "CANCEL":{
+        "cn":"撤銷委托單",
+        "en":"Cancel the order"
+      },
+      "MY_ORDERS":{
+        "cn":"我的委托單",
+        "en":"My orders"
+      },
+      "TRADING_RULES":{
+        "cn":"交易規則",
+        "en":"Trading Rules"
+      },
+      "TRADING_MARKET":{
+        "cn":"交易市場",
+        "en":"Trading market"
+      },
+      "QUOTES":{
+        "cn":"行情",
+        "en":"Quotes"
+      },
+      "LATEST_QUOTES":{
+        "cn":"最新行情",
+        "en":"Latest Quotes"
+      },
+      "USER":{
+        "cn":"用户",
+        "en":"User"
+      },
+      "EMPTY":{
+        "cn":"無",
+        "en":""
+      },
+      "MY_INFO":{
+        "cn":"我的信息",
+        "en":"Personal Information"
+      },
+      "DEMO_DOWNLOAD":{
+        "cn":"DEMO下載",
+        "en":"DEMO Download"
+      },
+      "DOBI_OPEN_API":{
+        "cn":"DOBI 火网交易平台開放API",
+        "en":"DOBI Trading Platform Opens API"
+      },
+      "DOBI_DESC":{
+        "cn":"應用程序可通過調用DOBI開放平台提供的API获取到資產、交易等数據，因為涉及数據隱私，所以在使用前必須获得DOBI的<a class=\"fn-auth-link\" href=\"https://www.huocoin.com?login&reurl=https://api.huocoin.com/m\">授權</a>(<b>登陆后获取</b>)，才可以調用API。",
+        "en":"The application can obtain assets, transactions, and other data though API which is provided by the DOBI  platform. Because the privacy of date is involved, DOBI <a class=\"fn-auth-link\" href=\"https://www.huocoin.com?login&reurl=https://api.huocoin.com/m\">authorization</a> (available after login) must be obtained before using the API"
+      },
+      "COMMON_PARAM":{
+        "cn":"公共參数",
+        "en":"Common parameters"
+      },
+      "REQ_ADDR":{
+        "cn":"请求地址",
+        "en":"Request address"
+      },
+       "REQ_METHOD":{
+        "cn":"请求方法",
+        "en":"Method"
+      },
+      "REQ_PARAM":{
+        "cn":"请求參数",
+        "en":"Request parameters"
+      },
+      "REQ_EXAMPLE":{
+        "cn":"请求示例",
+        "en":"Request example"
+      },
+      "REP_EXAMPLE":{
+        "cn":"響應示例",
+        "en":"Response example"
+      },
+      "REQ":{
+        "cn":"请求",
+        "en":"Request"
+      },
+      "REP_PARAM":{
+        "cn":"響應參数",
+        "en":"Response parameters"
+      },
+      "ENVI":{
+        "cn":"環境",
+        "en":"Environment"
+      },
+      "HTTPS_REQ_ADDR":{
+        "cn":"HTTPS请求地址",
+        "en":"HTTPS request address"
+      },
+      "OFFICIAL_ENVI":{
+        "cn":"正式環境",
+        "en":"Official environment"
+      },
+      "COMMON_REQ_PARAM":{
+        "cn":"公共请求參数",
+        "en":"Common request parameters"
+      },
+      "PARAM":{
+        "cn":"參数",
+        "en":"Parameter"
+      },
+      "TYPE":{
+        "cn":"類型",
+        "en":"Type"
+      },
+      "NECESSARILY":{
+        "cn":"是否必填",
+        "en":"Necessarily"
+      },
+      "MAX_LEN":{
+        "cn":"最大長度",
+        "en":"Maximum Length"
+      },
+      "DESC":{
+        "cn":"描述",
+        "en":"Description"
+      },
+      "EXAMPLE":{
+        "cn":"示例值",
+        "en":"Example"
+      },
+      "YES":{
+        "cn":"是",
+        "en":"YES"
+      },
+      "NO":{
+        "cn":"否",
+        "en":"NO"
+      },
+      "ACCESS_KEY":{
+        "cn":"訪問秘鑰",
+        "en":"access key"
+      },
+      "TIMESTAMP":{
+        "cn":"時間戳",
+        "en":"timestamp"
+      },
+      "INTERFACE_VER":{
+        "cn":"接口版本，固定為",
+        "en":"interface version, fixed at"
+      },
+      "FIXED_AT":{
+        "cn":"固定為",
+        "en":"fixed at"
+      },
+      "REQ_SIGN_NAV":{
+        "cn":"请求參数的簽名串，詳見:",
+        "en":"See the signature for details:"
+      },
+      "SIGN":{
+        "cn":"簽名",
+        "en":"signature"
+      },
+      "ORDER_ID":{
+        "cn":"委托單id",
+        "en":"order id"
+      },
+      "PAGE_NUM":{
+        "cn":"分页页码",
+        "en":"page number"
+      },
+      "HIGH_PRICE":{
+        "cn":"24小時最高價",
+        "en":"24h High"
+      },
+      "LOW_PRICE":{
+        "cn":"24小時最低價",
+        "en":"24h Low"
+      },
+      "BUY_ONE":{
+        "cn":"買一價",
+        "en":"Buy price"
+      },
+      "SELL_ONE":{
+        "cn":"賣一價",
+        "en":"Sell price"
+      },
+      "VOL24H":{
+        "cn":"24小時成交量",
+        "en":"24h volume"
+      },
+      "TURNOVER":{
+        "cn":"24小時成交額",
+        "en":"24h turnover"
+      },
+      "USER_PHONE":{
+        "cn":"用户綁定手机号",
+        "en":"phone number"
+      },
+      "USER_ASSETS":{
+        "cn":"用户資產，btc_over為btc可用額, btc_lock為btc凍結額，其它币類推",
+        "en":"assets, btc_over:btc balance, btc_lock:btc frozen funds; on the analogy of this."
+      },
+      "PRICE_DECIMAL_LIMIT":{
+        "cn":"價格小数位限制",
+        "en":"decimal limit of price"
+      },
+      "NUMBER_DECIMAL_LIMIT":{
+        "cn":"数量小数位限制",
+        "en":"decimal limit of number"
+      },
+      "MIN_TRADE_NUM":{
+        "cn":"最小交易数量",
+        "en":"Minimum of transactions"
+      },
+      "MAX_TRADE_NUM":{
+        "cn":"最大交易数量",
+        "en":"Maximum of transactions"
+      },
+      "BUY_RATE":{
+        "cn":"买入费率",
+        "en":"buy rate"
+      },
+      "SELL_RATE":{
+        "cn":"卖出费率",
+        "en":"sell rate"
+      },
+      "SORT_TYPE_DESC":{
+        "cn":"排序類型 1：按訂單狀態排序（未成交->部分成交->全部成交->已撤銷）， 2：按時間倒序。",
+        "en":"Sort type, 1: order by status (Uncompleted transactions > Partial transaction > Completed Transactions > Cancelled), 2: order by time."
+      },
+      "FLAG_DESC":{
+        "cn":"委托類型 buy:買, sell:賣",
+        "en":"order type"
+      },
+      "LAST_PRICE":{
+        "cn":"最新（當前）價格",
+        "en":"Last price"
+      },
+      "RATIO":{
+        "cn":"漲跌幅",
+        "en":"Chg"
+      },
+      "PRICE_EQ":{
+        "cn":"最新價格兌换其它币種價，如cny為兌换人民币價格",
+        "en":"The latest price is for other currencies, such as CNY for China Yuan exchange rate"
+      },
+      "DEAL_NUM":{
+        "cn":"已成交数量",
+        "en":"The number of completed transactions"
+      },
+      "OVER_NUM":{
+        "cn":"未成交数量",
+        "en":"The number of uncompleted transactions"
+      },
+      "ORDER_TIME":{
+        "cn":"下單時間",
+        "en":"order time"
+      },
+      "ORDER_TYPE":{
+        "cn":"下單類型 buy:買, sell:賣",
+        "en":"order type:buy/sell"
+      },
+      "PRICE":{
+        "cn":"單價",
+        "en":"price"
+      },
+      "REQUIRE":{
+        "cn":"需要傳",
+        "en":"require"
+      },
+      "NUM":{
+        "cn":"数量",
+        "en":"number"
+      },
+      "NO_MORE_THAN_8_DECIMAL":{
+        "cn":"不超過8位小数",
+        "en":"no more than 8 decimal"
+      },
+      "SEE_EXAMPLE":{
+        "cn":"詳見示例",
+        "en":"See example"
+      },
+      "COMMON_REP_PARAM":{
+        "cn":"公共響應參数",
+        "en":"Common response parameters"
+      },
+      "STATUS_DESC":{
+        "cn":"0失敗，1成功，2錯誤",
+        "en":"0 failed, 1 successful, 2 error"
+      },
+      "REP_STATUS_DESC":{
+        "cn":"返回狀態描述",
+        "en":"the description of Return status"
+      },
+      "OP_SUCCESS":{
+        "cn":"操作成功",
+        "en":"Operation succeeded"
+      },
+      "DEVELOPER":{
+        "cn":"開發者",
+        "en":"Developer"
+      },
+      "REP_DATA":{
+        "cn":"请求應答数據",
+        "en":"response data"
+      },
+      "SIGN_FUNC":{
+        "cn":"簽名算法",
+        "en":"Signature algorithm"
+      },
+      "COMPLETE_EXAMPLE":{
+        "cn":"以下是完整示例",
+        "en":"The following is a complete example"
+      },
+      "STEP1":{
+        "cn":"步驟1、將參数的key按ascii升序排序 例:",
+        "en":"Step 1. Sort the key of the parameter in ascending order of ascii. Example:"
+      },
+      "STEP2":{
+        "cn":"步驟2、拼裝成字符串,得到queryString 例：",
+        "en":"Step 2. Assemble into a string to get queryString. Example:"
+      },
+      "LANGUAGE_DESC":{
+        "cn":"zh-*：中文，en-*：英文，默認（中文）",
+        "en":"zh-*:Chinese，en-*:English, default(Chinese)"
+      },
+      "STEP3":{
+        "cn":"步驟3、將secret key(示例值：fe01ce2a7fbac8fafaed7c982a04e229)與queryString 用HMAC-SHA1算法加密得到簽名字符串, 例：",
+        "en":"Step 3. Encrypt the secret key (example value: fe01ce2a7fbac8fafaed7c982a04e229) and queryString with the HMAC-SHA1 algorithm to obtain the signature string. Example:"
+      }
+
+    },
+    "user":{
+      "DEVELOPER":{
+        "cn":"開發者",
+        "en":"Developer"
+      },
+      "ACCESS_KEY":{
+        "cn":"API訪問憑證 (ACCESS KEY)",
+        "en":"ACCESS KEY"
+      },
+      "SECRET_KEY":{
+        "cn":"API私有密鑰 (SECRET KEY)",
+        "en":"SECRET KEY"
+      },
+      "SECRET_KEY_DESC":{
+        "cn":"資產相關操作需要验证secret key，请妥善保管。如果洩露请第一時間重置密鑰。",
+        "en":"Assets related operations need to verify secret key, please keep it safe. If it leak is asked to reset the key at the first time."
+      },
+      "CREATE_OR_RESET":{
+        "cn":"生成/重置",
+        "en":"create/reset"
+      },
+      "ADD_OR_EDIT":{
+        "cn":"添加/修改",
+        "en":"add/edit"
+      },
+      "IP_WHITE_LIST":{
+        "cn":"IP白名單（API只允許白名單ip请求）",
+        "en":"IP white list (API only allows white list IP requests)"
+      },
+      "IP_WHITE_LIST_DESC":{
+        "cn":"可以添加多個ip， 以英文逗号分隔, 如：",
+        "en":"You can add multiple IP, separated by English comma, such as:"
+      },
+      "SUBMIT":{
+        "cn":"确定",
+        "en":"submit"
+      },
+      "SMS_CODE":{
+        "cn":"短信验证码",
+        "en":"SMS code"
+      },
+      "SMS_CODE_SENT":{
+        "cn":"短信验证码已發送",
+        "en":"SMS code has been sent"
+      },
+      "ERROR_FORMAT":{
+        "cn":"格式錯誤，请仔細檢查",
+        "en":"Error format, please check carefully"
+      },
+      "AUTH":{
+        "cn":"授權",
+        "en":"authorization"
+      },
+      "ORDERBOOK":{
+        "cn":"市場掛單",
+        "en":"Order book"
+      }
+
+    }
+  }
+}

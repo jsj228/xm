@@ -1,0 +1,28 @@
+<div class="rf-content mob-rf-content">
+  <?php // 筛选条件 ?>
+  <?php include PATH_TPL.'/user/condition.phtml';?>
+  <?php // 表格 id="tBody" 不可删除 ?>
+  <div class="coin-in-table shadow-cont no-btm-shadow">
+    <div class="t-body" id="tBody" data-tbody="table">
+      <table>
+        <thead>
+          <tr>
+            <td><?php echo $lang['T_HEADER_ID'] ?></td>
+            <td><?php echo $lang['T_HEADER_TIME'] ?></td>
+            <td><?php echo $lang['T_HEADER_TXID'] ?></td>
+            <td><?php echo $lang['T_HEADER_ADDR_where'] ?></td>
+            <td><?php echo $lang['T_HEADER_NUM'] ?></td>
+            <td><?php echo $lang['T_HEADER_SURE_NUM'] ?></td>
+            <td><?php echo $lang['T_HEADER_STATU'] ?></td>
+          </tr>
+        </thead>
+        <tbody id="dataBody">
+          <?php // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"?>
+        </tbody>
+      </table>
+      <?php // 没有数据时，显示该元素， 设置 display: block ?>
+      <div class="no-data" id="tableNoData" style=""><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+    </div>
+  </div>
+</div>
+<script src="/until/QRcode.js?v=<?php echo $clear_cache;?>"></script>

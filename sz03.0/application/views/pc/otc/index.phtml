@@ -1,0 +1,416 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<div class="bg-content" id="otc">
+    <div style="margin:0 auto;max-width:1200px;width:100%;">
+        <div class="c2cmain">
+        <!-- <p><?php echo $repeat_del;?></p> -->
+        <input type="hidden" value="<?php echo $repeat_del;?>" id="token"/>
+        <input type="hidden" id="pageIndex" value="1">
+
+        <div class="header" style="overflow: hidden">
+            <h4 >otc交易</h4>
+             <div class="fR">
+             <a href="/user/otc" class="fa fa-credit-card fa-fw" style="padding: 17px;color:#ffbd09;text-decoration: none;">地址管理</a>
+               可用余额：<span style="color:#ffbd09;padding-right: 34px" v-text="parseFloat(cnyxover)"></span>
+               冻结余额：<span style="color:#ffbd09"  v-text="parseFloat(cnyxlock)"></span>
+            </div>
+        </div>
+
+        <div class="finance-rd" style="width: 100%;margin-left: 0px;background: white;padding:7px 20px 30px;">
+            <div class="sel-coin" style="overflow: hidden;padding: 15px">
+               
+                <ul >
+                    <li>币种分类</li>
+                    <li v-for="(item,index) in currencytype" @click="clicktype(item.name,index,item.display)"  :class="{colorChange:index==dynamic}" direction="column">
+                        <span  v-text="item.name +'('+item.display +')'" style="margin-left:5px"></span></li>
+                    <li style="float:right;color:#ffbd09;cursor:pointer" @click="Issueorder()">发布订单</li>
+                </ul>    
+            </div>
+            <div class="tabs order-type">
+                    <a class="bachcol"   v-text="'我要买入'+buss" style="cursor:pointer"></a>
+                    <a class="bachcol"   v-text="'我要卖出'+buss" style="cursor:pointer; float: right"></a>
+            </div>
+            <div class="row h5hide">
+                    <div class="col-xs-6 table-responsive" style="margin-top: 25px;">
+                    <table class="table table-striped table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <!-- <th class="user" width="18%" 
+                                    v-text="buss==1?'买入尤里米':'卖出尤里米'"></th> -->
+                                    <th class="" width="10%">手机号</th>
+                                    <th class="pay-method" width="13%">价格</th>
+                                    <th  width="13%">剩余数量</th>
+                                    <th class="price" width="10%">总金额</th>
+                                    <th  width="15%">最小交易数量</th>
+                                    <th  width="10%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in delegationlist" >
+                                    <!-- <td v-text="item.created_date" v-cloak></td> -->
+                                    <td v-text="item.mo" v-cloak></td>
+                                    <td v-text="item.price" v-cloak></td>
+                                    <td v-text="item.numberdeal" v-cloak></td>
+                                    <td v-text="item.price*item.numberdeal" v-cloak></td>
+                                    <td v-text="item.min_number" v-cloak></td>
+                                    <td v-cloak style="cursor:pointer" >
+                                        <span class="btn-infos" @click="Issueorder(item.id,item.price,item.min_number,item.numberdeal,1)" >买入</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <div id="page-break" v-if="all">
+                            <ul>
+                                <li v-if="cur>1" v-cloak>
+                                <a v-on:click="cur--,pageClick()" >上一页</a>
+                                </li>
+                                <li v-if="cur==1" v-cloak>
+                                <a class="banclick" >上一页</a>
+                                </li>
+                                <li v-for="item in indexs" v-bind:class="{'active':cur==item}" v-cloak>
+                                <a v-on:click="btnClick(item), pageClick()" v-text="item"></a>
+                                </li>
+                                <li></li>
+                                
+                                <li v-if="cur==all" v-cloak><a class="banclick" >下一页</a></li>
+                                <li v-else-if="cur!=all" v-cloak>
+                                    <a v-on:click="cur++,pageClick()" >下一页</a>
+                                </li>
+                                <li v-cloak><a>共<i v-text="all"></i>页</a></li>
+                                <div class="jumpbox" v-cloak>
+                                    <input type="number" class="jumppage" />
+                                    <a class="jumpbtn" v-on:click="pageSkip()">跳转</a>
+                                </div>
+                            </ul>
+                        </div>
+
+                </div>
+      
+             
+
+            
+                    <div class="table-responsive col-xs-6" style="margin-top: 25px;">
+
+                            <table class="table table-striped table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <!-- <th class="user" width="18%" 
+                                    v-text="buss==1?'买入尤里米':'卖出尤里米'"></th> -->
+                                    <th class="" width="10%">手机号</th>
+                                    <th class="pay-method" width="13%">价格</th>
+                                    <th  width="13%">剩余数量</th>
+                                    <th class="price" width="10%">总金额</th>
+                                    <th  width="15%">最小交易数量</th>
+                                    <th  width="10%">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in purlist" >
+                                    <!-- <td v-text="item.created_date" v-cloak></td> -->
+                                    <td v-text="item.mo" v-cloak></td>
+                                    <td v-text="item.price" v-cloak></td>
+                                    <td v-text="item.numberdeal" v-cloak></td>
+                                    <td v-text="item.price*item.numberdeal" v-cloak></td>
+                                    <td v-text="item.min_number" v-cloak></td>
+                                    <td v-cloak style="cursor:pointer" >
+                                        <span class="btn-infos" @click="Issueorder(item.id,item.price,item.min_number,item.numberdeal,2)" >卖出</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+
+                        <div id="page-break" v-if="sellpage">
+                            <ul>
+                                <li v-if="sell>1" v-cloak>
+                                <a v-on:click="sell--, sellClick()" >上一页</a>
+                                </li>
+                                <li v-if="sell==1" v-cloak>
+                                <a class="banclick" >上一页</a>
+                                </li>
+                                <li v-for="item in sellpages" v-bind:class="{'active':sell==item}" v-cloak>
+                                <a v-on:click="btnsellClick(item),  sellClick()" v-text="item"></a>
+                                </li>
+                                <li></li>
+                                
+                                <li v-if="sell==sellpage" v-cloak><a class="banclick" >下一页</a></li>
+                                <li v-else-if="sell!=sellpage" v-cloak>
+                                    <a v-on:click="sell++, sellClick()" >下一页</a>
+                                </li>
+                                <li v-cloak><a>共<i v-text="sellpage"></i>页</a></li>
+                                <div class="jumpbox" v-cloak>
+                                    <input type="number" class="jumpspage" />
+                                    <a class="jumpbtn" v-on:click=" sellpageSkip()">跳转</a>
+                                </div>
+                            </ul>
+                        </div>
+                
+             </div>
+             </div>
+
+
+
+        <div class="usdtnote">
+        <div class="notecont">
+            <p style="color:#ffbd09">1. 手续费为0.1%；</p>
+            <p style="color:#ffbd09">2. 一次最多可提交两笔订单；</p>
+            <p>3. 当最小交易数量大于剩余数量时，订单只能以剩余数量进行匹配交易</p>
+            <p>4. 买卖双方发布订单时可输入最小匹配数量；</p>
+            <p>5. 买家火网账户需有足够资金才可发布订单，卖家火网账户最低需预留1000CNYX才可发布订单；</p>
+            <p>6. 卖家转币后务必点击确认转币；买家收到后务必点击确认收币；卖家钱包转币时请备注订单号；</p>
+            <p>7. 冻结资金包括手续费，到账金额为扣除手续费后的金额；</p>
+            <p>8. 卖单可分多次匹配，收币数量以“当前匹配数量”为准，收到币后请及时“确认收币”。</p>
+            <p style="color:#ffbd09">9:交易时，务必保持电话通畅，关注短信提醒，有异议时可添加火网客服微信：huowangkefu008申请仲裁，平台多次联系不到的，将根据对方提交的有利证据，判断将数字资产转给提供充份证据的一方。</p>
+        
+        </div>
+        </div>
+        <div class="bk-pageTit" id="exchangeRecord">
+        <h4 class="pull-left">
+            <i class="bk-ico assetRecord"></i>最近交易記錄
+        </h4>
+        <div class="clearfix"></div>
+        <div class="table-responsive">
+            <table id="billDetail" class="table table-striped table-bordered table-hover" v-cloak>
+
+                <thead>
+               
+                <tr>
+                    <th width="18%" >匹配记录</th>
+                    <th width="8%" style="text-align:left;">价格</th>
+                    <th width="8%" style="text-align:left;">数量</th>
+                    <th width="6%" style="text-align:left;">金额</th>
+                    <th width="10%" style="text-align:left;">订单号</th>
+                    <th width="10%" style="text-align:left;">类型</th>
+                    <th width="16%" style="text-align:left;">操作</th>
+                    <th width="10%" >状态</th>
+                    <th width="22%" >查看</th>
+
+                </tr>
+                </thead>
+
+               <tbody>
+                  <tr v-for="(item,key) in transaction" :name="item.status"
+                   :style="{color:item.uid?'black':'gray'}">
+                    <td v-text="item.created_date"></td>
+                    <td v-text="item.price"></td>
+                    <td v-text="item.number"></td>
+                    <td v-text="item.price*item.number"></td>
+                    <td v-text="item.order_number" style="color:red"></td>
+                    <td >
+                        <span v-if="item.type=='sale'" style="color:green">卖出</span>
+                        <span v-else-if="item.type=='buy'" style="color:red">买入</span>
+                        <span v-else-if="item.type=='1'" style="color:red">买入</span>
+                        <span v-else-if="item.type=='2'" style="color:green">卖出</span>
+                    </td>
+                    <td style="cursor:pointer">
+                        <span  v-text="item.operate" :style="{cursor:(!dubclick?'wait':'pointer')}"
+                            v-if="item.operate=='确认转币'&&item.status==0" @click="Contransfer(item.id,key)" 
+                            style="padding: 5px;border-radius: 4px;background:rgb(255, 189, 9);color:#eee">
+                        </span> 
+                        <span  v-text="item.operate" :style="{cursor:(!dubclick?'wait':'pointer')}" 
+                            v-else-if="item.operate=='确认收币'&&item.status==1" @click="Confirmreceipt(item.id,key)" 
+                            style="padding: 5px;border-radius: 4px;background:rgb(213, 15, 24);color:#eee;">
+                        </span> 
+                        <span v-if="item.uid&&item.status==0" :style="{cursor:(!dubclick?'wait':'pointer')}" 
+                             @click="Revoke(item.id,key,item.type)" 
+                             style="padding: 5px;border-radius: 4px;background:#31b0d5;color:#eee">委托撤销 </span>
+                        <span  v-else-if="item.status==0" :style="{cursor:(!dubclick?'wait':'pointer')}" 
+                            @click.stop="Revokes(item.id,key,item.type)" 
+                            style="padding: 5px;border-radius: 4px;background:#449d44 ;color:#eee">订单撤销</span>
+                    </td>
+                    <td v-if="item.uid" style="cursor:pointer">
+                        <span v-if="item.status==0">未完成</span>
+                        <span v-else-if="item.status==1">已完成</span>
+                        <span v-else-if="item.status==2">已撤销</span>
+                    </td>
+                    <td v-else style="cursor:pointer">
+                        <span v-if="item.status==0">卖家待确认</span>
+                        <span v-else-if="item.status==1">买家待确认 </span>
+                        <span v-else-if="item.status==2">已完成</span>
+                        <span v-else-if="item.status==3">已撤销</span>
+                    </td>
+                    <!-- <td @click="show(item.id)" style="cursor:pointer">查看</td> -->
+                    <td  style="cursor:pointer">
+                        <span class="distance"  v-for="(wall,k) in item.walletList"  v-cloak>
+                            <span class="typeshow iconfont icon-WY" @click="wallshow(wall.id,wall.coin)"> </span>
+                        </span>
+                    </td>
+               </tr>
+                </tbody> 
+                
+            </table>
+
+            
+            <tr style="width:100%;height:230px" >
+                      <div class="no_login_mask white100_f" flex="main:center cross:center" v-show="!isLogin" v-cloak>
+                      <div id="tradeAfterLogin" style="margin-top: 125px;">
+                   <p>
+                       <a class="orange500_f" href="javascript:void(0)" @click.stop.prevent="login">请先登录</a>
+                       <?php echo $lang['RULE_TRADE_OR'] ?>
+                       <!-- <a class="orange500_f" href="javascript:void(0)" @click="register"><?php echo $lang['REGISTER'] ?></a>-->
+                       <?php echo $lang['RULE_TRADE_AFTER_LOGIN'] ?> -->
+                   </p>
+                   </div> 
+                   </div>
+            </tr>
+
+            <div id="page-break" >
+                            <ul>
+                                <li v-if="page>1" v-cloak>
+                                <a v-on:click="page--,pageClicks()" >上一页</a>
+                                </li>
+                                <li v-if="page==1" v-cloak>
+                                <a class="banclick" >上一页</a>
+                                </li>
+                                <li v-for="item in index" v-bind:class="{'active':page==item}" v-cloak>
+                                <a v-on:click="btnClicks(item), pageClicks()" v-text="item"></a>
+                                </li>
+                                <li></li>
+                                
+                                <li v-if="page==pageall" v-cloak><a class="banclick" >下一页</a></li>
+                                <li v-else-if="page!=pageall" v-cloak>
+                                    <a v-on:click="page++,pageClicks()" >下一页</a>
+                                </li>
+                                <li v-else-if="page!=pageall" v-cloak>
+                                <li v-cloak><a>共<i v-text="pageall"></i>页</a></li>
+                                <div class="jumpbox" v-cloak>
+                                    <input type="number" class="jumppages" />
+                                    <a class="jumpbtn" v-on:click="pageSkips()">跳转</a>
+                                </div>
+                            </ul>
+                    </div>
+            
+           
+            
+            <div class="bk-moreBtn">
+                <button id="morebtn" class="btn btn-outline" type="button" style="display: none;"><i class="fa fa-angle-down fa-fw"></i>更多</button>
+            </div>
+        </div>
+
+
+
+    </div>
+    
+   <div class="mask" v-if="mask" v-cloak></div>
+  <div flex="main:center cross:center" class="set_trade_pwd" v-if="recharge" v-cloak>
+       
+       <div class="pwd_form_contain white100_bg relative_dom">
+        <!-- <h4 style="position: absolute;left: 166px;top: 23px;" v-text="buss==1?'买入发布订单':'卖出发布订单'"></h4> -->
+        <!-- <h5 style="position: absolute;left: 166px;top: 23px;"> -->
+        <div style="text-align:center" v-if="isPrice">
+            <label style="padding: 4px 23px;"><input name="Fruit" type="radio" :class={'radioChecked':isbuy=='1'} value="1" v-model="isbuy"/>买入 </label> 
+            <label  style="margin-left: 11px;"><input name="Fruit" type="radio" :class={'radioChecked':isbuy=='2'}  value="2" v-model="isbuy"/>卖出</label> 
+        </div>
+        <!-- </h5> -->
+        <div class="close_btn close_icon" @click="closeicon"></div>
+        <div class="trade_pwd_form"> 
+        <div class="input_g numwer">
+            <p style="display: inline-block;position: relative;top: 15px;font-size: 12px;left: 11px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp价格：</p>
+            <input  autocomplete="off" type="text"  v-model="price" :disabled="!isPrice" style="width:73%;margin-left: 10px;" oninput = "value=value.replace(/[^\d||\.]/g,'')" > 
+        </div>
+        <div class="input_g numwers">
+            <p style="display: inline-block;position: relative;top: 15px;font-size: 12px;left: 11px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp数量：</p>
+            <input  autocomplete="off"    type="text"  :placeholder="!isPrice?('不能小于最小交易数量'+ minquantity):''" oninput = "value=value.replace(/[^\d||\.]/g,'')"
+            v-model="number" style="width:73%;box-shadow: 0 0 0px 1000px white inset; margin-left: 10px;" 
+            :disabled="parseFloat(minquantity)>parseFloat(maxquantity)&&number>=parseFloat(maxquantity)"> 
+          
+        </div>
+        <p v-if="!isPrice &&  number==parseFloat(maxquantity) && number" style="margin-left: 77px;color:red;font-size: 12px;" ></p>  
+        <p v-else-if="!isPrice && number < parseFloat(minquantity) && number" style="margin-left: 77px;color:red;font-size: 12px;" v-text="'不能小于最小交易数量'+parseFloat(minquantity)"></p>
+        <p v-else-if="!isPrice && number > parseFloat(maxquantity) && number" style="margin-left: 77px;color:red;font-size: 12px;" v-text="'不能大于剩余数量'+parseFloat(maxquantity)"></p>
+        
+        <div class="input_g numwer" v-if="isPrice">
+            <p style="    display: inline-block;position: relative;top: 15px;font-size: 12px;left: -12px;">最小交易数量：</p>
+            <input  autocomplete="off" type="text"   v-model="minquantity"   style="width: 73%;position: relative;left: -14px;top:4px;box-shadow: white 0px 0px 0px 1000px inset;"
+             oninput = "value=value.replace(/[^\d||\.]/g,'')" > 
+        </div>       
+        <div class="input_g relative_dom">
+            <p style="display: inline-block;position: relative;top: 14px;margin-top: 20px;font-size: 12px;left: 11px;">交易密码：</p>
+            <input autocomplete="off" class="texts" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" placeholder="請輸入交易密碼" v-model="pwdTrade" style="width:73%;margin-left: 10px;" @focus="focus()"> <!--@focus="focus()"-->
+            <p v-text="msgs" style="margin-left: 76px;color:red"></p>
+        </div> 
+        <div class="submit_tab">
+            <button  class="default_btn orange500_bg white100_f" @click.stop.prevent="Recharge"
+             :style="{cursor:(!dubclick?'wait':'pointer')}" 
+             :disabled="parseFloat(maxquantity) < number && number > parseFloat(minquantity)" >確定</button>
+            <!-- :disabled="parseFloat(maxquantity) < number && number > parseFloat(minquantity) " -->
+        </div>
+        <div flex="dir:right" v-show="forgetPwd" ><a class="blue500_f link" href="/user?set=tradepwd">忘记密码</a></div>
+        </div>
+        </div>
+   </div>
+    <!-- 密码输入错误等等所有弹窗里面的提示语 -->
+    <div class="Backgroundpop" v-if="Backgroundpop" v-cloak>
+        <p style="text-align: center;line-height: 100px;color:green;font-size:16px" v-text="bckpop"></p>
+    </div>
+    <div class="Paymentmethod" v-if="paydetails"  v-cloak>
+        <h4 style="padding:0 50px 10px 10px">查看订单详情</h4>
+        <div class="Paymentmethod2" style="display:block;padding:15px 20px;text-align:center">
+            <div style="display:inline-block;vertical-align:middle;text-align:left;">
+                <p v-if="lookData.name" style="font-size:16px; margin-top:5px" > 
+                   <b>姓名：</b>
+                   <span v-text="lookData.name"></span>
+                </p>
+                <p v-if="lookData.mo" style="font-size:16px; margin-top:5px" > 
+                   <b>手机号：</b>
+                   <span v-text="lookData.mo"></span>
+                </p>
+                <p v-if="lookData.address && lookData.type=='1'" style="font-size:16px; margin-top:5px">
+                    <b>钱包地址：</b>
+                    <span v-text="lookData.address"></span>
+                </p>
+
+              
+                <p v-if="lookData.numbers &&  lookData.type==2" style="font-size:16px; margin-top:5px">
+                    <b>华克金公钥：</b>
+                    <span v-text="lookData.numbers"></span>
+                </p>
+                <p v-if=" lookData.address && lookData.type==2" style="font-size:16px; margin-top:5px">
+                    <b>收币地址：</b>
+                    <span v-text="lookData.address"></span>
+                </p>
+
+                <p v-if=" lookData.numbers && lookData.type==3" style="font-size:16px; margin-top:5px">
+                    <b>欧联平台账号：</b>
+                    <span v-text="lookData.numbers"></span>
+                </p>
+                <p v-if="lookData.address && lookData.type==3" style="font-size:16px; margin-top:5px">
+                    <b>欧联个人收款码：</b>
+                    <span v-text="lookData.address"></span>
+                </p>
+
+
+                 <p v-if="lookData.numbers && lookData.type==4" style="font-size:16px; margin-top:5px">
+                    <b>东南亚平台UID：</b>
+                    <span v-text="lookData.numbers"></span>
+                </p>
+                <p v-if="lookData.address && lookData.type==4" style="font-size:16px; margin-top:5px">
+                    <b>东南亚平台个人收款码：</b>
+                    <span v-text="lookData.address"></span>
+                </p>
+                 
+
+            </div>
+            <!-- v-if="lookData.type=='sale'"-->
+            <p v-if=" lookData.type==1" style="height:65%;display:inline-block;vertical-align:middle;max-width:30%;margin-left:50px;" >
+                <img :src="lookData.img" style="width:100%;max-width:100%;"/> 
+            <p>
+        </div>
+      
+      <div class="clones" @click="clones">&times;</div>
+    </div> 
+
+</div>
+</div>
+      <div class="history">
+      </div>
+    </div>
+  </div>
+
+<script>document.querySelector("li.otc").className+=" now_nav"</script>
+
+<?php  include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>

@@ -1,0 +1,54 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<div class="dob_contain">
+  <img src="/imgs/th_mcc.<?php echo LANG ?>.jpg" alt="<?php echo $lang['DOB_TITLE'] ?>" title="<?php echo $lang['DOB_TITLE'] ?>" />
+</div>
+<div class="relative_dom">
+  <a href="javascript:void(0);" class="jump_top" id="toTop"></a>
+</div>
+<?php // footer ?>
+<div class="index_link" flex="">
+  <div flex-box="1">
+    <p class="index_link_logo gray500_f" flex="cross:center">
+      <img src="/imgs/logo2.png" alt=""><?php echo $lang['INDEX_TRADE_DOBI_TRADE']; ?>
+    </p>
+    <p class="index_link_p gray400_f"><?php echo $lang['INDEX_TRADE_DOBI_BEST']; ?></p>
+  </div>
+  <div flex-box="0" flex="dir:left">
+    <ul class="link_ul link_padd">
+      <li class="link_title gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_FREES']; ?></li>
+      <li class="link_li gray500_f">
+
+        <a href="https://www.huocoin.com/index/policy" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_TERMS']; ?></a>
+      </li>
+      <li class="link_li">
+        <a href="https://www.huocoin.com/news/detail/<?php if (LANG == 'en') { echo '514.html';} else {echo '512.html';} ?>" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_FREES']; ?></a>
+      </li>
+    </ul>
+    <ul class="link_ul link_padd">
+      <li class="link_title gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_TOOL']; ?></li>
+      <li class="link_li"><a href="https://api.huocoin.com/" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_API']; ?></a></li>
+      <li class="link_li"><a href="https://www.huocoin.com/news/category/3" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_HELP']; ?></a></li>
+    </ul>
+    <ul class="link_ul link_padd">
+      <li class="link_title gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_ABOUTS']; ?></li>
+      <li class="link_li">
+        <a href="https://www.huocoin.com/news/detail/<?php if (LANG == 'en') { echo '519.html';} else {echo '511.html';} ?>" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_ABOUT']; ?></a>
+      </li>
+      <li class="link_li">
+        <a href="https://www.huocoin.com/news/category/6" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_PROJECT']; ?></a>
+      </li>
+      <li class="link_li"><a href="https://www.huocoin.com/news/category/5" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_NOTICE']; ?></a></li>
+      <li class="link_li"><a href="https://www.huocoin.com/news/category/2" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_ANNOUNCE']; ?></a></li>
+      <li class="link_li">
+        <a href="https://www.huocoin.com/news/detail/<?php if (LANG == 'en') { echo '526.html';} else {echo '525.html';} ?>" class="gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_APPLE']; ?></a>
+      </li>
+    </ul>
+    <ul class="link_ul">
+      <li class="link_title gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_CONTACT']; ?></li>
+      <li class="link_li gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_EMAIL']; ?>：service@huocoin.com</li>
+      <li class="link_li gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_BUSINESS']; ?>：shangwu@huocoin.com</li>
+      <li class="link_li gray500_f"><?php echo $lang['INDEX_TRADE_DOBI_TOKEN']; ?>：huocoin</li>
+    </ul>
+  </div>
+</div>
+<?php  include PATH_TPL.'/tpl.footer.phtml';?>

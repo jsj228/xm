@@ -1,0 +1,87 @@
+@import "./fun.scss";
+@import "./theme.scss";
+@import "./config.scss";
+@import "./nav.scss";
+@import "./alert.scss";
+@import "./user.reset.scss";
+@import "./user.condition.scss";
+
+.mob-rf-content {
+  position: static;
+  margin-top: pxToRem(94);
+  padding: 0;
+  height: 100%;
+  background: #f8f8f8;
+
+  .mob-cont-contain {
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 0 pxToRem(20) rgba(0, 0, 0, 0.1);
+
+    .u-condition {
+      width: 100%;
+      padding: pxToRem(40) pxToRem(24) pxToRem(45) pxToRem(24);
+      background: #fff;
+      .mob-coin-type {
+        display: none;
+      }
+    }
+  }
+  .coin-in-table {
+    margin: pxToRem(40) 0 0 0;
+    padding: 0 0 pxToRem(50) 0;
+    height: auto;
+    // min-height: pxToRem(300);
+  }
+}
+
+.bg-content {
+  position: static;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.mob_dialog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  display: none;
+
+  .mob-pwd-succ {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: pxToRem(356);
+    width: pxToRem(640);
+    border-radius: pxToRem(8);
+    background: #fff;
+    transform: translate3d( pxToRem(-320), pxToRem(-188), 0);
+
+    .au_dialog {
+      padding: 0 pxToRem(58);
+      width: 100%;
+      &>div {
+        width: 100%;
+      }
+      p {
+        font-size: pxToRem(40);
+      }
+      .submit_btn {
+        width: 100%;
+        line-height: pxToRem(94);
+        font-size: pxToRem(40);
+      }
+      .close_btn {
+        width: pxToRem(30);
+        height: pxToRem(30);
+        background-size: pxToRem(30) pxToRem(30);
+      }
+    }
+  }
+}

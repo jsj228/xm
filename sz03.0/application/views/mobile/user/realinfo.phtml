@@ -1,0 +1,167 @@
+<!-- <link rel="stylesheet" href="/css/userAuth.css?v=<?php echo $clear_cache;?>"> -->
+<!-- <link rel="stylesheet" href="/css/mob.user.realinfo.css"> -->
+<div class="rf-content mob-rf-content" data-pname="<?php echo $pageName;?>">
+  <div class="nav-crumbs mob-hide">
+    <?php echo $lang["USER_NAV_TITLE"] ?> > <a class="active-tab" href="javascript: void(0);" data-status="<?php echo $user[status];?>"
+              data-errmsg="<?php  echo  isset($errorTips) ? $errorTips : '' ?>"><?php echo $lang['USER_NAV_AUTH'] ?></a>
+  </div>
+  <?php // 内容部分 ?>
+  <div class="user-content shadow-cont mob-no-shadow">
+    <?php // 根据国家相关规定，数字货币交易需进行实名登记，请填写您的真实身份，感谢您的理解与支持！ ?>
+    <p class="au_warn_title"><b>!</b><?php echo $lang['FRIEND_TIPS']; ?></p>
+    <p class="auto-statu" id="authStatus" data-austatu="<?php echo $user[status]; ?>">
+      <?php // 实名状态 ?>
+      <span><?php echo $lang['SUB_TITLE_STATU'] ?></span>
+      <?php // class 用法 橙色文字: orange-s, 绿色文字: green-s; 红色文字：red-s  ?>
+      <?php // $user=='空'(待认证) 1(待审核) 2(已认证) 3(审核失败) ?>
+      <?php
+        $statusMsg = "";
+        switch ($user[status]) {
+          case '':
+          $statusMsg = $lang["INFO_STATU_NOR"];
+          break;
+          case 1:
+          $statusMsg = $lang["INFO_STATU_ING"];
+          break;
+          case 2:
+          $statusMsg = $lang["INFO_STATU_ED"];
+          break;
+          case 3:
+          $statusMsg = $lang["INFO_STATU_FAIL"];
+          break;
+        }
+      ?>
+      <span class="<?php
+        if ($user[status] == "" || $user[status] == 1) {
+          echo "orange-s";
+        } else if ($user[status] == 2) {
+          echo "green-s";
+        } else {
+          echo "red-s";
+        }
+      ?>"><?php echo $statusMsg; ?></span>
+    </p>
+    <?php if (!($user[status] == 2 || $user[status] == 3)){ ?>
+      <?php //  style="<?php echo ($user[status] == 2 || $user[status] == 3) ? "display: none" : ""; " ?>
+    <div id="realinfo">
+      <form id="realForm" class="auto-form" action="<?php
+      if(empty($user[status])) {
+        echo '?a=1';
+      } else if(!empty($user['status']==1) || !empty($user['status']==3)) {
+        echo "?a=2";
+      };
+      ?>" method="post" onsubmit="return false;" enctype="multipart/form-data">
+      <div class="form-list">
+        <?php // 真实姓名 ?>
+        <span><?php echo $lang['FORM_REAL_NAME'] ?></span>
+        <input type="text" name="name" maxlength="100" value="<?php echo $POST['name']?:$user["name"]; ?>" placeholder="<?php echo $lang['REAL_NAME_PLACEHOLDER']?>">
+        <p data-tips="name" class="input-tips" data-msg="<?php echo $lang['REAL_NAME_PLACEHOLDER']; ?>" data-err="<?php echo $lang['REAL_NAME_ERR_MSG']; ?>"></p>
+      </div>
+      <div class="form-list" data-tap-disabled="true">
+        <?php // 证件类型 ?>
+        <span><?php echo $lang['CARD_TYPE'] ?></span>
+        <select class="" name="cardtype">
+          <option value="1" <?php echo ($POST['cardtype']?:$user["cardtype"]) == 1 ? "selected" : "" ?>><?php echo $lang['CH_ID_CARD'] ?></option>
+          <option value="2" <?php echo ($POST['cardtype']?:$user["cardtype"]) == 2 ? "selected" : "" ?>><?php echo $lang['HU_ZHAO'] ?></option>
+        </select>
+      </div>
+      <div class="form-list">
+        <?php // 证　件　号 ?>
+        <span class="nor-let"><?php echo $lang['CARD_NO'] ?></span>
+        <input type="text" name="idcard" value="<?php echo $POST['idcard']?:$user["idcard"]; ?>" placeholder="<?php echo $lang['CARD_PLACEHOLDER']?>">
+        <p data-tips="idcard" class="input-tips" data-msg="<?php echo $lang['CARD_PLACEHOLDER']?>" data-err="<?php echo $lang['CARD_ERR_MSG']?>"></p>
+      </div>
+      <?php // 上传证件照片： ?>
+      <p><?php echo $lang['UPLOAD_IMG'] ?></p>
+      <div class="id_img flex-col-center-center" data-imgmax="show">
+        <div class="img_col">
+          <?php // 正面 ?>
+          <p class="img_title"><?php echo $lang['FEON_FACE'] ?></p>
+          <div class="file_par <?php if($user['frontFace']) { echo "succ-file-bg"; }?>">
+            <b class="del_img" data-del="img"></b>
+            <?php//  show( preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['baseyi']) ); ?>
+            <img class="<?php if(!preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['frontFace'])) { echo "no-src";}?>"
+              data-src="0"
+              src="<?php echo preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['frontFace'])?>" alt="" title="正面" data-imgtype="front">
+            <input class="file_inp" data-file="cert" type="file" name="frontFace" value="" data-mobname="baseyi">
+            <p class="file_btn" data-select="btn"><span><?php echo $lang['SELECT_FILE'] ?></span><u class="upload_file_icon"></u></p>
+          </div>
+        </div>
+        <div class="img_col flex-col-center-center">
+          <p class="img_title"><?php echo $lang['BACK_FACE'] ?></p>
+          <div class="file_par back_face <?php if($user['backFace']) { echo "succ-file-bg"; }?>">
+            <b class="del_img" data-del="img"></b>
+            <img class="<?php if(!preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['backFace'])) { echo "no-src";}?>"
+            data-src="0"
+            src="<?php echo preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['backFace'])?>"
+            alt=""
+            title="背面"
+            data-imgtype="back">
+            <input class="file_inp" data-file="cert" type="file" name="backFace" value="" data-mobname="baseer">
+            <?php // 选择图片 ?>
+            <p class="file_btn" data-select="btn"><span><?php echo $lang['SELECT_FILE'] ?></span><u class="upload_file_icon"></u></p>
+          </div>
+        </div>
+        <div class="img_col flex-col-center-center">
+          <p class="img_title"><?php echo $lang['HAND_KEEY'] ?></p>
+          <div class="file_par hand_keey <?php if($user['handkeep']) { echo "succ-file-bg"; }?>">
+            <b class="del_img" data-del="img"></b>
+            <img class="<?php if(!preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['handkeep'])) { echo "no-src";}?>"
+             data-srcs="0" src="<?php echo preg_replace('#(../public/|./)(.+)\.(.+?)$#', '/$2_thumb.jpg', $user['handkeep'])?>"
+             alt=""
+             title="手持证件照"
+             data-imgtype="handkeey">
+            <input class="file_inp" data-file="cert" type="file" name="handkeep" value="" data-mobname="basesan">
+            <?php // 已经选择图片，需要添加 class "correct_statu" 同时删除 span 里的 提示 中文 ?>
+            <p class="file_btn" data-select="btn"><span><?php echo $lang['SELECT_FILE'] ?></span><u class="upload_file_icon"></u></p>
+          </div>
+        </div>
+      </div>
+      <?php // 1.证件上所有信息需清晰可见，证件号码、证件照片等信息需无遮挡、无涂改。 ...... ?>
+      <div class="img_tips"><?php echo $lang['MSG_BOTTOM_TIPS_ONE'] ?></div>
+      <div class="">
+        <button class="submit_btn" type="submit" data-submit="form" <?php echo $user['status'] == "" ? $lang['NUMBER_SHENHE'] : "disabled='disabled'"?> ><?php echo $user['status'] == "" ? $lang['NUMBER_SHENHE'] : $lang['NUMBER_CXTJ']?></button>
+      </div>
+    </form>
+    </div>
+  <?php } else { ?>
+    <?php // 待审核  或  审核失败  style="<?php echo ($user[status] == 2 || $user[status] == 3) ? "display: block" : ""; " ?>
+    <div class="use-msgshow" id="useMsgShow" >
+      <p><?php echo $user["status"] == 2 ? $lang["USR_REAL_SUCCESS_TITLE"] : $lang['USR_REAL_FAIL_TITLE'] ; ?></p>
+      <div class="info-show">
+        <?php // 待审核 ?>
+        <?php if ($user['status'] == 2){ ?>
+        <div>
+          <p>
+            <?php // 真实姓名 ?>
+            <span><?php echo $lang['AUDITING_NAME'] ?></span><?php echo $user['name']; ?>
+          </p>
+          <p>
+            <?php // 证件类型 ?>
+            <span><?php echo $lang['AUDITING_CARD_TYPE'] ?></span><?php echo $user['cardtype'] == 1 ? $lang['ID_TYPE_CH'] : $lang['ID_TYPE_HZ']; ?>
+          </p>
+          <p>
+          <?php // 身份证号 ?>
+            <span><?php echo $lang['AUDITING_CARD_NO'] ?></span><?php echo preg_replace('/^(.{2}).+(.{2})/', "$1********$2", $user['idcard']);?>
+          </p>
+          <p>
+            <?php // 认证时间 ?>
+            <span><?php echo $lang['AUDITING_AUTH_TIME'] ?></span><?php echo date('Y-m-d H:i:s', $user['created']); ?>
+          </p>
+        </div>
+        <?php } ?>
+        <?php // 审核失败 ?>
+        <?php if ($user['status'] == 3) {?>
+          <div >
+            <?php echo $user["content"] ; ?>
+          </div>
+        <?php } ?>
+      </div>
+      <?php // 审核失败 重新认证 按钮 ?>
+      <?php if ($user['status'] == 3){ ?>
+        <a href="/user/realinfo?a=2" class="submit_btn"><?php echo $lang['RE_AUTH_BTN'] ?></a>
+      <?php } ?>
+    </div>
+  <?php } ?>
+  </div>
+</div>

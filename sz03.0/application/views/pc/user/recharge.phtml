@@ -1,0 +1,178 @@
+<div id="recharge">
+    <p class="nav-crumbs">
+        我的资产 > <a class="active-tab">用户充值</a>
+    </p>
+    <div class="header">
+        <div class="headerBox">
+            <div class="fromBox">
+                <label> 充值金额：<input type="text" maxlength="12" v-model="num" placeholder="请输入充值金额！" oninput="this.value=this.value.replace(/[^\d]/g,'')"/></label><br>
+                <label>充值方式：
+                  <?php foreach($method as $v){ ?>
+                    <?php if($v['name']=='bank'){?>
+                        <span :class="{'active':payType=='bank'}"> 
+                            <img src="/imgs/bank.png" width="100">
+                            <input type="radio" value="bank" name="payType"  v-model="payType" >
+                        </span>
+                    <?php }?>
+                    <?php if($v['name']=='alipay'){?>
+                        <span :class="{'active':payType=='alipay'}"> 
+                            <img src="/imgs/alipay.png" width="100">
+                            <input type="radio" value="alipay" name="payType"  v-model="payType" >
+                        </span>
+                    <?php }?>
+                    <?php if($v['name']=='weixin'){?>
+                        <span :class="{'active':payType=='weixin'}"> 
+                            <img src="/imgs/weixin.png" width="100">
+                            <input type="radio" value="weixin" name="payType"  v-model="payType" >
+                        </span>
+                    <?php }?>
+                  <?php }?>
+                </label>
+                <p style="padding-left:70px">
+                    <button @click.stop.prevent="cnyin_up()" :style="{cursor:(!moreClick?'wait':'pointer')}" >立即充值</button>
+                </p>
+            </div>
+            <p class="tx_tips">
+                支付宝微信单笔限额为<b>100</b>元
+                至<b>50000</b>元,网银支付限额为<b>100</b>元 至<b>500000</b>元,
+                充值到账时间为每天<b>8:30</b>
+                至<b>22:30</b>,
+                其余时间充值请等待到账。<br>
+                转账时
+                <b>订单号</b>必须备注,否则将无法到账
+            </p>
+        </div>
+    </div>
+    <h2 class="history" >交易记录
+        <div  class="page"  v-cloak>
+            <!-- <button @click="clickPage('f')" v-if="activePage!=1">首页</button>
+            <button @click="clickPage('l')">上一頁</button>
+            <span v-for="r in Math.ceil(pageSum/pageNum)-1">
+                <button :class="[{active:activePage== i+( r - 1 )*pageNum}]"  :name="i"
+                    v-if="activePage <= r*pageNum&&activePage>(r-1)*pageNum&&r<Math.ceil(pageSum/pageNum)" 
+                    v-for="i in pageNum" 
+                    v-text="i+( r - 1 )*pageNum">
+                </button>
+            </span>
+            <button :class="[{active:activePage== i+parseInt(pageSum/pageNum)*pageNum}]"  name="000"
+
+                v-if="activePage>parseInt(pageSum/pageNum)*pageNum"
+                v-for="i in parseInt(pageSum % pageNum)" 
+                v-show="i+parseInt(pageSum/pageNum)*pageNum"
+
+                v-text="i+parseInt(pageSum/pageNum)*pageNum">
+            </button>
+            <span v-if="activePage<parseInt(pageSum/pageNum)*pageNum+1">
+                <button>...</button>
+                <button v-text="pageSum"></button>
+            </span>
+            <button @click="clickPage( 'r') ">下一頁</button>
+            <button @click="clickPage( 'e')" v-if="activePage!=pageSum">尾页</button> -->
+        </div>
+
+    </h2>
+    <table cellspacing="0" v-cloak>
+        <thead>
+            <tr>
+                <th width="17%">充值时间</th>
+                <th>订单号</th>
+                <th  width="17%">
+                    <span class="selectBox">
+                        <p v-show="selectData=='all'">全部状态</p>
+                        <p v-show="selectData=='0'">未付款</p>
+                        <p v-show="selectData=='1'">充值成功</p>
+                        <p v-show="selectData=='2'">处理中</p>
+                        <p v-show="selectData=='3'">已撤销</p>
+                        <div>   
+                            <p @click="getTableList('all')">全部状态</p>
+                            <p @click="getTableList('0')">未付款</p>
+                            <p @click="getTableList('1')">充值成功</p>
+                            <p @click="getTableList('2')">处理中</p>
+                            <p @click="getTableList('3')">已撤销</p>
+                        </div>
+                    </span>
+                </th>
+                <th>充值方式</th>
+                <th>充值金额</th>
+                <th>实际到账</th>
+                <th>邀请人分红</th>
+                <th width="14%"> 操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr v-for="(itime,key) in tableList">
+                <td v-text="itime.addtime"></td>
+                <td v-text="itime.tradeno" style="color:#e60012"></td>
+                <td >
+                    <span v-show="parseInt(itime.status) == '0'">未付款</span>
+                    <span v-show="parseInt(itime.status)=='1'">充值成功</span>
+                    <span v-show="parseInt(itime.status)=='2'">处理中</span>
+                    <span v-show="parseInt(itime.status)=='3'">已撤消</span>
+                </td>
+                <td>
+                    <span  v-if="itime.type=='alipay'">支付宝</span>
+                    <span  v-else-if="itime.type=='weixin'">微信</span>
+                    <span  v-else-if="itime.type=='bank'">网银</span>
+                </td>
+                <td v-text="itime.num"></td>
+                <td v-text="itime.mum"></td>
+                <td v-text="itime.fee?parseFloat(itime.fee):'无'"></td>
+                <td>
+                    <span v-if="itime.status==0" >
+                        <button :style="{cursor:(!moreClick?'wait':'pointer')}" class="minBtn" @click.stop.prevent="undo(itime.id,key,'chexiao')">撤消</button>
+                        <button :style="{cursor:(!moreClick?'wait':'pointer')}" class="minBtn" @click.stop.prevent="undo(itime.id,key,'Huikuan')">已付款</button>
+                    </span>
+                    <button v-else-if="itime.status>0" :class="['minBtn',{'bg666':itime.status!=0}]" >
+                        <span v-if="itime.status=='1'">充值成功</span>
+                        <span v-else-if="itime.status=='2'">处理中</span>
+                        <span v-else-if="itime.status=='3'">已撤消</span>
+                    </button>
+                    <button class="minBtn" @click.stop.prevent="look(itime.id)">查看</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--jsj 弹框 -->
+    <div class="alertBox" v-if="ifshow" v-cloak>
+        <div class="content">
+            <header v-if="headerShow">
+                <h3 v-text="headText"></h3>
+                <button class="midBtn bgRed"  @click.stop.prevent="ifshowFun()">&times;</button>
+            </header>
+            <div class="body" v-if="bodyShow">
+                <p>
+                    <span v-if="lookData.type=='alipay'" class="red" >支付宝</span>
+                    <span v-else-if="lookData.type=='weixin'" class="red">微信</span>
+                    <span v-else-if="lookData.type=='bank'" class="red">网银</span>
+                转账汇款</p>
+                <p >请使用
+                    <span v-if="lookData.type=='alipay'" class="red" >支付宝</span>
+                    <span v-else-if="lookData.type=='weixin'" class="red">微信</span>
+                    <span v-else-if="lookData.type=='bank'" class="red">网银</span>
+                    转账至以下账号或扫描二维码进行转账，若有疑问请  
+                    <button class="minBtn">联系客服</button>
+                </p>
+                    <div >
+                    <div>
+                        <p><b>转账账号:</b> <span v-text="lookData.username"></span></p>
+                        <p><b>代理姓名:</b> <span v-text="lookData.truename"></span></p>
+                        <p><b>订单编号:</b> <span v-text="lookData.tradeno"></span></p>
+                        <p><b>开户地址:</b> <span v-text="lookData.kaihu"></span></p>
+                        <p><b>支付金额:</b> <span v-text="lookData.num"></span></p>
+                        <p><b>到账金额:</b> <span v-text="lookData.mum"></span></p>
+                        <p v-if="lookData.type=='bank'"><b>开户地址:</b> <span v-text="lookData.kaihu"></span></p>
+
+                    </div> 
+                    <div  v-if="lookData.type!='bank'"  class="img"><img :src="lookData.image" alt=""></div>
+                </div>
+            </div>
+            <footer v-if="footShow">
+                <p>请在汇款［备注/附言］中严格按要求填写充值订单编号：<b class="red" v-text="lookData.tradeno"></b>.</p> 
+                <p>我们会在收到汇款后20分钟内为您入账，在此期间无需联系客服，如有问题我们会主动联系您。</p>
+            </footer>
+        </div>
+    </div>
+</div>
+
+    

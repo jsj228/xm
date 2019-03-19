@@ -1,0 +1,19 @@
+
+// 1200px 以上 使用px
+@media screen and(min-width: $superScreenMin) {
+  footer {
+    height: 56px;
+    background: #07162b;
+    border-top: 1px solid rgba(225,230,244,0.2);
+  }
+  .footer_p {
+    font-size: 14px;
+    color: #A2ABB8;
+  }
+}
+
+@media screen and (max-width: $bigScreenMax) {
+  footer {
+    display: none!important;
+  }
+}

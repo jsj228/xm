@@ -1,0 +1,207 @@
+@import "./config.scss";
+@import "./color.scss";
+//活动部分
+.packed {
+  z-index: 4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+.packed_mask {
+  z-index: 40;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+}
+@media screen and(min-width: $mdScreenMin) {
+  .packed_content {
+    z-index: 51;
+    position: relative;
+    top: -90px;
+    width: 526px;
+    height: 611px;
+    background:url("../assets/packed.png") no-repeat center;
+    .close_packed {
+      position: absolute;
+      top:   20px;
+      right: 30px;
+      width: 32px;
+      height: 32px;
+      background: url("../assets/packed_close.png") no-repeat center;
+    }
+  }
+  .soon {
+    position: absolute;
+    left: 50%;
+    bottom: 49px;
+    transform: translate(-50%, 0);
+    width: 220px;
+    height: 58px;
+    background-color: #feef00;
+    color: #ff0101;
+    font-size: 28px;
+    border-radius: 29px;
+  }
+  // 右侧红包的icon
+  .packed_right {
+    z-index: 100;
+    position: fixed;
+    width: 102px;
+    top: 188px;
+    right: 0;
+  }
+  .packed_icon {
+    width: 102px;
+    height: 189px;
+    background: url('../assets/packed_left.png') no-repeat;
+    cursor: pointer;
+  }
+  .setTimes_p {
+    margin-top: 6px;
+    line-height: 26px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+  }
+  .setTimes_num {
+    width: 24px;
+    height: 20px;
+    background: #b00606;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 2px;
+  }
+  .setTimes_how {
+    color: #fff;
+    width: 9px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+  }
+  .get_success {
+    z-index: 51;
+    position: absolute;
+    width: 490px;
+    height: 331px;
+    background: url("../assets/active_alert.png") no-repeat;
+    .success_mes {
+      margin-top: 190px;
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      color: #080808;
+    }
+    .success_sure {
+      margin-top: 40px;
+      width: 160px;
+      height: 50px;
+      background: #e40000;
+      color: #fff;
+      border-radius: 25px;
+    }
+  }
+}
+
+@media screen and(max-width: $bigScreenMax) {
+  .packed_content {
+    z-index: 40;
+    position: relative;
+    width: pxToRem(721);
+    height: pxToRem(861);
+    background:url("../assets/packed2.png") no-repeat center;
+    background-size: pxToRem(721) pxToRem(861);
+    .close_packed {
+      position: absolute;
+      top: pxToRem(40);
+      right: pxToRem(60);
+      width: pxToRem(64);
+      height: pxToRem(64);
+      background: url("../assets/packed_close.png") no-repeat center;
+      background-size:  pxToRem(64);
+    }
+  }
+  .soon {
+    position: absolute;
+    left: 50%;
+    bottom: pxToRem(80);
+    transform: translate(-50%, 0);
+    width: pxToRem(320);
+    height: pxToRem(85);
+    background-color: #feef00;
+    color: #ff0101;
+    font-size: pxToRem(40);
+    border-radius: pxToRem(42.5);
+  }
+  .packed_right {
+    z-index: 100;
+    position: fixed;
+    width: pxToRem(130);
+    bottom: pxToRem(235);
+    right: pxToRem(3);
+  }
+  .packed_icon {
+    width: pxToRem(130);
+    height: pxToRem(235);
+    background: url('../assets/packed_phone.png') no-repeat;
+    background-size: pxToRem(130) pxToRem(235);
+    cursor: pointer;
+  }
+  .setTimes_p {
+    margin-top: pxToRem(4);
+    line-height: pxToRem(42);
+    font-size: pxToRem(24);
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .setTimes_num {
+    width: pxToRem(34);
+    height: pxToRem(29);
+    background: #b00606;
+    color: #fff;
+    text-align: center;
+    line-height: pxToRem(29);
+    border-radius: pxToRem(2);
+    font-size: pxToRem(24);
+    white-space: nowrap;
+  }
+  .setTimes_how {
+    color: #fff;
+    width: pxToRem(12);
+    height: pxToRem(29);
+    line-height: pxToRem(29);
+    text-align: center;
+  }
+  .get_success {
+    z-index: 51;
+    position: absolute;
+    width: pxToRem(638);
+    height: pxToRem(428);
+    background: url("../assets/active_alert.png") no-repeat;
+    background-size: pxToRem(638) pxToRem(428);
+    .success_mes {
+      margin-top: pxToRem(256);
+      width: 100%;
+      text-align: center;
+      font-size: pxToRem(26);
+      color: #080808;
+    }
+    .success_sure {
+      margin-top: pxToRem(60);
+      width: pxToRem(208);
+      height: pxToRem(64);
+      background: #e40000;
+      color: #fff;
+      border-radius: pxToRem(32);
+      font-size: pxToRem(29)
+    }
+  }
+}

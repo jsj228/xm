@@ -1,0 +1,83 @@
+@import './theme.scss';
+
+.right-bottom-sidebar {
+  position: fixed;
+  right: 30px;
+  bottom: 0;
+  height: 270px;
+  width: 0;
+  // background: red;
+}
+
+.sidebar-container{
+  position: absolute;
+  right: -330px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 67;
+  font-size: 12px;
+  user-select: none;
+  transition: all .1s linear;
+  &.show-rule{
+    right: -30px;
+  }
+  .sidebar-catch{
+    position: absolute;
+    left: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 90px;
+    background: $rule-bg url('../../assets/sidebar-rule.png') bottom center no-repeat;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 4px 2px 0 2px;
+    color: #ffbb03;
+    cursor: pointer;
+    &::before, &::after{
+      content: "";
+      display: block;
+      position: absolute;
+      top: -10px;
+      left: 0;
+      width: 0px;
+      height: 0px;
+      border-width: 5px 12px;
+      border-style: solid;
+      border-color: transparent $rule-bg $rule-bg transparent;
+    }
+    &::after{
+      top: auto;
+      bottom: -10px;
+      border-color:$rule-bg $rule-bg transparent transparent;
+    }
+  }
+  .rule-container{
+    width: 301px;
+    height: 242px;
+    background: $rule-bg;
+    color: $font-l;
+    text-align: left;
+    text-indent: 33px;
+    .rule-top, .rule-midd, .rule-bottom{
+      height: 50px;
+      line-height: 50px;
+      width: 100%;
+      border-bottom: 1px solid $font-d;
+    }
+    .rule-midd{
+      height: 106px;
+      line-height: 34px;
+      border-bottom: 1px solid $font-d;
+    }
+    .rule-bottom{
+      height: 83px;
+      line-height: 34px;
+      border-bottom: none;
+    }
+    span.hight-light{
+      color: #fff;
+      margin-right: 4px;
+    }
+  }
+}

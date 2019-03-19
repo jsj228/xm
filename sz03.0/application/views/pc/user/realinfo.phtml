@@ -1,0 +1,138 @@
+<div class="rf_main gray50_bg" id="realinfo"  flex="dir:top" style="min-width: 1200px">
+  <div class="nav-crumbs hide_767" flex-box="0">
+    <?php echo $lang["USER_NAV_TITLE"] ?> &gt; <a class="active-tab" href="javascript: void(0);"><?php echo $lang['USER_NAV_AUTH'] ?></a>
+  </div>
+  <div class="condition_container realinfo_cont" flex-box="1" flex="dir:top">
+    <?php // 数字货币交易需进行实名登记，请填写您的真实身份，感谢您的理解与支持！ ?>
+    <p class="realinfo_tips" flex-box="0"><?php echo $lang['FRIEND_TIPS_A']; ?> <span class="red500_f"><?php echo $lang['FRIEND_TIPS_B']; ?></span><?php echo $lang['FRIEND_TIPS_C']; ?></p>
+    <div class="realinfo_group white100_bg" flex="" flex-box="0">
+      <span class="realinfo_group_label gray600_f hide_767" flex-box="0"><?php echo $lang['SUB_TITLE_STATU']; ?></span>
+      <span class="realinfo_group_label gray600_f hide_1200" flex-box="0"><?php echo $lang['SUB_TITLE_STATU']; ?></span>
+      <span :class="['realinfo_group_status', {yellow500_f: status == '', deepblue300_f: status == 1, green1000_f: status == 2, red500_f: status == 3}]"
+            flex-box="1" flex="cross:center" v-cloak>{{status == '' ? '<?php echo $lang['INFO_STATU_NOR'] ?>' : status == 1 ? '<?php echo $lang['INFO_STATU_ING'] ?>' : status == 2 ? '<?php echo $lang['INFO_STATU_ED'] ?>' : status == 3 ? '<?php echo $lang['INFO_STATU_FAIL'] ?>' : ''}}
+        <b :class="{realInfo_succ: status == 2, realInfo_err: status == 3}"></b>
+      </span>
+    </div>
+    <?php //真实姓名 ?>
+    <div class="realinfo_input_group" flex="" v-if="status == '' || status == 1" v-cloak>
+      <label class="realinfo_input_label gray600_f hide_767" flex-box="0"><?php echo $lang['FORM_REAL_NAME'] ?></label>
+      <label class="realinfo_input_label gray600_f hide_1200" flex-box="0"><?php echo $lang['FORM_REAL_NAME'] ?></label>
+      <input type="text" v-model.trim="postData.name" @blur="verify('name', 'blur')" @focus="focusInput('name')" placeholder="<?php echo $lang['REAL_NAME_PLACEHOLDER']?>" class="realinfo_input gray200_bg" flex-box="1">
+    </div>
+    <?php //姓名 错误提示 ?>
+    <div class="realInfo_err_name" v-if="status == '' || status == 1" v-cloak>
+      <p class="realInfo_err_p" v-if="this.postDataErr.name == 0" v-cloak></p>
+      <p class="realInfo_err_p realInfo_normal" v-if="this.postDataErr.name == 1" v-cloak><?php echo $lang['REAL_NAME_PLACEHOLDER']; ?></p>
+      <p class="realInfo_err_p red500_f realInfo_err" v-if="this.postDataErr.name == 5" v-cloak><?php echo $lang['REAL_NAME_PLACEHOLDER']; ?></p>
+      <p class="realInfo_err_p red500_f realInfo_err" v-if="this.postDataErr.name == 2" v-cloak><?php echo $lang['REAL_NAME_ERR_MSG']; ?></p>
+      <p class="realInfo_err_p red500_f realInfo_err" v-if="this.postDataErr.name == 4" v-cloak>{{postDataMsg.name}}</p>
+    </div>
+    <?php //证件类型 ?>
+    <div class="realinfo_input_group" flex="" v-if="status == '' || status == 1" v-cloak>
+      <label class="realinfo_input_label gray600_f hide_767" flex-box="0"><?php echo $lang['CARD_TYPE'] ?></label>
+      <label class="realinfo_input_label gray600_f hide_1200" flex-box="0"><?php echo $lang['CARD_TYPE'] ?></label>
+      <select name=""  class="realinfo_input gray200_bg" flex-box="1" v-model="postData.cardtype" @change="verify('idcard', 'select')">
+        <option value="1"><?php echo $lang['CH_ID_CARD'] ?></option>
+        <option value="2"><?php echo $lang['HU_ZHAO'] ?></option>
+        <option value="3"><?php echo $lang['CARD_CAR'] ?></option>
+      </select>
+    </div>
+    <?php //证件类型  占位 ?>
+    <div class="realInfo_err_name" v-if="status == '' || status == 1" v-cloak>
+      <p class="realInfo_err_p" v-if="this.postData.cardtype == 0" v-cloak></p>
+    </div>
+    <?php //证件号 ?>
+    <div class="realinfo_input_group" flex="" v-if="status == '' || status == 1" v-cloak>
+      <label class="realinfo_input_label gray600_f hide_767" flex-box="0"><?php echo $lang['CARD_NO'] ?></label>
+      <label class="realinfo_input_label gray600_f hide_1200" flex-box="0"><?php echo $lang['CARD_NO'] ?><?php echo $lang['CARD_NO']; ?>：</label>
+       <!-- :maxlength="lengths" -->
+      <input type="text" v-model.trim="postData.idcard" flex-box="1" @blur="verify('idcard', 'blur')" @focus="focusInput('idcard')"
+        placeholder="<?php echo $lang['CARD_PLACEHOLDER'] ?>" class="realinfo_input gray200_bg">
+    </div>
+    <?php //证件号 错误提示 ?>
+    <div class="realInfo_err_name" v-if="status == '' || status == 1" v-cloak>
+      <p class="realInfo_err_p" v-if="this.postDataErr.idcard == 0" v-cloak></p>
+      <p class="realInfo_err_p realInfo_normal" v-if="this.postDataErr.idcard == 1" v-cloak><?php echo $lang['CARD_PLACEHOLDER']; ?></p>
+      <p class="realInfo_err_p red500_f realInfo_err" v-if="this.postDataErr.idcard == 5" v-cloak><?php echo $lang['CARD_PLACEHOLDER']; ?></p>
+      <p class="realInfo_err_p red500_f realInfo_err" v-if="this.postDataErr.idcard == 2" v-cloak><?php echo $lang['CARD_ERR_MSG']; ?></p>
+      <p class="realInfo_err_p red500_f realInfo_err" v-if="this.postDataErr.idcard == 4" v-cloak>{{postDataMsg.idcard}}</p>
+    </div>
+
+    <div class="realInfo_all_bg" flex-box="2">
+      <?php //审核通过 身份证信息 ?>
+      <div class="realInfo_userInfo" v-if="status == 2 || status == 3" v-cloak>
+        <span class="realInfo_info_label gray600_f" v-cloak>{{status == 2 ? '<?php echo $lang["USR_REAL_SUCCESS_TITLE"] ?>' : '<?php echo $lang['USR_REAL_FAIL_TITLE']; ?>'}}</span>
+        <div class="realInfo_info gray200_bg" v-if="status == 2" v-cloak>
+          <div class="realInfo_info_cross" flex="">
+            <span class="realInfo_span_labels gray400_f" flex-box="0"><?php echo $lang['AUDITING_NAME'] ?></span>
+            <span class="realInfo_span_content gray600_f" flex-box="1">{{postData.name}}</span>
+          </div>
+          <div class="realInfo_info_cross" flex="">
+            <span class="realInfo_span_labels gray400_f" flex-box="0"><?php echo $lang['AUDITING_CARD_TYPE'] ?></span>
+            <span class="realInfo_span_content gray600_f" flex-box="1">{{postData.cardtype == 1 ? '<?php echo $lang['ID_TYPE_CH'] ?>' : '<?php echo $lang['ID_TYPE_HZ'] ?>'}}</span>
+          </div>
+          <div class="realInfo_info_cross" flex="">
+            <span class="realInfo_span_labels gray400_f" flex-box="0"><?php echo $lang['AUDITING_CARD_NO'] ?></span>
+            <span class="realInfo_span_content gray600_f" flex-box="1">{{postData.idcard}}</span>
+          </div>
+          <div class="realInfo_info_cross" flex="">
+            <span class="realInfo_span_labels gray400_f" flex-box="0"><?php echo $lang['AUDITING_AUTH_TIME'] ?></span>
+            <span class="realInfo_span_content gray600_f" flex-box="1">{{creatTimes(createTime)}}</span>
+          </div>
+        </div>
+        <div class="realInfo_info gray200_bg gray400_f" v-if="status == 3" v-cloak>{{content}}</div>
+      </div>
+      <?php // 重新提交 ?>
+      <div class="realinfo_upload" v-if="status == '' || status == 1" v-cloak>
+            <span class="realinfo_title"><?php echo $lang['UPLOAD_IMG'] ?></span>
+            <div class="realinfo_upload_pic">
+                  <div class="realinfo_upload_one" flex="dir:top">
+                        <span class="realinfo_pic_title gray600_f"><?php echo $lang['FEON_FACE'] ?></span>
+                        <span class="realInfo_close_btn" v-if="frontFaceStatus == 2" @click="picClose('frontFace')" v-cloak></span>
+                        <input type="file" name="frontFace" value="" class="realinfo_pic_btn" accept="image/*" @change="uploadFile">
+                        <img :src="imgs.baseyi" alt="" class="realinfo_pic_img" v-cloak>
+                        <span class="realinfo_pic_choose blue100_bg white100_f" flex="main:center cross:center" v-if="frontFaceStatus == 1" v-cloak><?php echo $lang['SELECT_FILE'] ?> <b class="realinfo_upload_icon"></b></span>
+                        <span class="green650_bg realinfo_pic_success" v-if="frontFaceStatus == 2" v-cloak></span>
+                  </div>
+                  <div class="realinfo_upload_one" flex="dir:top">
+                        <span class="realinfo_pic_title gray600_f"><?php echo $lang['BACK_FACE'] ?></span>
+                        <span class="realInfo_close_btn" v-if="backFaceStatus == 2" @click="picClose('backFace')" v-cloak></span>
+                        <input type="file" name="backFace" value="" class="realinfo_pic_btn" accept="image/*" @change="uploadFile">
+                        <img :src="imgs.baseer" alt="" class="realinfo_pic_img" v-cloak>
+                        <span class="realinfo_pic_choose blue100_bg white100_f" flex="main:center cross:center" v-if="backFaceStatus == 1"><?php echo $lang['SELECT_FILE'] ?> <b class="realinfo_upload_icon"></b></span>
+                        <span class="green650_bg realinfo_pic_success" v-if="backFaceStatus == 2" v-cloak></span>
+                  </div>
+                  <div class="realinfo_upload_one" flex="dir:top">
+                        <span class="realinfo_pic_title gray600_f"><?php echo $lang['HAND_KEEY'] ?></span>
+                        <span class="realInfo_close_btn" v-if="handkeepStatus == 2" @click="picClose('handkeep')" v-cloak></span>
+                        <input type="file" name="handkeep" value="" class="realinfo_pic_btn" accept="image/*" @change="uploadFile">
+                        <img :src="imgs.basesan" alt="" class="realinfo_pic_img" v-cloak>
+                        <span class="realinfo_pic_choose blue100_bg white100_f" flex="main:center cross:center" v-if="handkeepStatus == 1"><?php echo $lang['SELECT_FILE'] ?> <b class="realinfo_upload_icon"></b></span>
+                        <span class="green650_bg realinfo_pic_success" v-if="handkeepStatus == 2" v-cloak></span>
+                  </div>
+            </div>
+      </div>
+
+      <p class="realInfo_warin_p" v-if="status == '' || status == 1" v-cloak><?php echo $lang['MSG_BOTTOM_TIPS_ONE'] ?></p>
+      <p class="realInfo_warin_p" v-if="status == '' || status == 1" v-cloak><?php echo $lang['MSG_BOTTOM_TIPS_TWO'] ?></p>
+      <p class="red500_f realInfo_warin_p" v-if="status == '' || status == 1" v-cloak><?php echo $lang['MSG_BOTTOM_TIPS_THREE'] ?></p>
+      <div class="realInfo_btn_div">
+        <button type="button" name="button" class="realInfo_submit orange500_bg white100_f relative_dom" @click="submit()"
+          v-if="status ==  '' || status == 1" v-cloak>
+          {{status == '' ? "<?php echo $lang['NUMBER_SHENHE'] ?>" : '<?php echo $lang['NUMBER_CXTJ']; ?>'}}
+          <u class="loading-svg" data-loading="svg" v-if="!submitNow"></u>
+        </button>
+        <button type="button" name="button" class="realInfo_submit orange500_bg white100_f relative_dom" @click="submit('re')"
+          v-if="status == 3" v-cloak>
+          <?php echo $lang['NUMBER_CXTJ'] ?>
+          <u class="loading-svg" data-loading="svg" v-if="!submitNow"></u>
+        </button>
+      </div>
+    </div>
+  </div>
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="alertFn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $layout['lang']['DETERMINE'] ?></span>
+  </my-alert>
+</div>

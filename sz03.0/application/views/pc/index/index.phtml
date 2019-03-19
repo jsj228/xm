@@ -1,0 +1,387 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+
+<div id="indexs" class="index_warp">
+  <u class="hide_dom" v-once ref="login"><?php if (isset($_SESSION['user'])) { echo 1; } else { echo 2 ;} ?></u>
+  <!-- 轮播  @click="getCoin"  -->
+  <div class="ggao_top_new">
+      <!-- <h1 class="bannerTitle"><?php echo $lang['BANNER_TITLE']; ?></h1> -->
+    <div class="swiper-container" flex="cross:center" id="bannerContainer"> 
+      <div class="swiper-wrapper">
+        <!-- banner内容style="width:33%;height:100%;" -->
+        <a class="swiper-slide white100_f">
+          <img src="/imgs/banner00.jpg"/>
+        </a>
+        <a href="/user/mplan" class="swiper-slide white100_f">
+          <img src="/imgs/banner01.jpg"/>
+        </a>
+        <a href="/user/candy" class="swiper-slide white100_f">
+        <img src="/imgs/banner02.jpg"/>
+        </a>
+        <a class="swiper-slide white100_f">
+          <img src="/imgs/banner00.jpg"/>
+        </a>
+        <a href="/user/mplan" class="swiper-slide white100_f">
+          <img src="/imgs/banner01.jpg"/>
+        </a>
+        <a href="/user/candy" class="swiper-slide white100_f">
+        <img src="/imgs/banner02.jpg"/>
+        </a>
+         <!--<div class="swiper-slide white100_f">
+          <img src="/imgs/banner03.jpg" >
+        </div> -->
+      </div>
+	  <div class="swiper-pagination swiper_page"></div>
+      <!-- <b class="swiper-button-next"></b>
+      <b class="swiper-button-prev"></b> -->
+    </div>
+    <!--banner 背景粒子 -->
+    <div id="particles" class="ggao_back"></div>
+    <!-- 新闻 -->
+    <div class="swiper_message" flex="main:center">
+      <div class="swiper_message_inner" flex="cross:center dir:left box:justify">
+        <div class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ANNOUNCE'] ?> <i class="message_voice"></i></div>
+        <ul class="message_list" flex="dir:left box:mean">
+          <?php for ($i = 0; $i < count($data['news']); $i++){ ?>
+            <li>
+              <a href="/news/detail/<?php echo $data['news'][$i]['id'] ?>.html" flex="cross:center">
+                <span class="news_content"><?php echo $data['news'][$i]['title']; ?></span>
+                <span>【<?php echo $data['news'][$i]['time']; ?>】</span>
+              </a>
+            </li>
+          <?php } ?>
+        </ul>
+        <a class="message_more" href="/news/category/4" class="message_more"><?php echo $lang['MORE'] ?></a>
+      </div>
+    </div>
+  </div>
+<!-- 市场 -->
+  <div class="warp_bottom" flex="main:center cross:center dir:top">
+    <!-- <div class="ggao_table_bottom white100_bg" :style="{height: calculates + 'px'}"></div> -->
+    <div class="ggao_table_height white100_bg">
+      <div class="ggao_ul" ref="tab_header" flex="box:last">
+        <ul flex="dir:left" v-cloak>
+            <!-- <li :class="['table_change', {table_active_change: indexs == 1}]" @click="tabChange(1, 'choose')" flex="dir:left cross:center main:center">
+              <span :class="['table_self', {table_self_have: indexs == 1}]"></span><?php echo $lang['INDEX_TRADE_SELF'];?>
+            </li>
+            <li :class="['table_change', {table_active_change:indexs == index+2 }]"
+                v-for="(item, index) in coinNum" v-cloak @click="tabChange(index+2, item)">{{item.toUpperCase() == 'NEW' ? '<?php echo $lang['NEW_AREA'] ?>': item.toUpperCase()}}
+            </li> -->
+            <li :class="['table_change', {table_active_change: indexs==1}]" @click="tabChange(1, 'choose')" flex="dir:left cross:center main:center">
+              <span :class="['table_self', {table_self_have: indexs==1}]"></span><?php echo $lang['INDEX_TRADE_SELF'];?>
+            </li>
+            <li :class="['table_change', {table_active_change:indexs == 2}]"
+                v-for="(item, index) in coinNum" v-cloak @click="tabChange(2, item)">
+                  {{item.toUpperCase() == 'NEW' ? '<?php echo $lang['NEW_AREA'] ?>': item.toUpperCase()}}
+            </li>
+        </ul>
+        <?php //查找按钮 ?>
+        <div class="search_btn" flex="cross:center dir:left">
+          <input type="text" name="" placeholder="<?php echo $lang['SEARCH_TRADE_COUPLE']; ?>"
+            v-model="searchInpt"
+            :class="['search_input', 'gray350_bg', {search_foucs: search, search_btn_after: !search}]"
+            @blur="searchBtn()"
+            @focus="search = true"
+            @keyup="searchData" v-cloak maxlength="6">
+        </div>
+      </div>
+      <div class="ggao_tab">
+        <div class="table_div" v-cloak>
+          <div class="ggao_tab_th" flex="box:mean">
+            <span flex="cross:center" @click='order("coin")' class="ggao_trs_first" flex-box="0">
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'coin'"></span>
+              <?php echo $lang['INDEX_TRADE_DUI'];?>
+            </span>
+            <span flex="cross:center" class="ggao_tabs_new" @click='order("price")'>
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'price'"></span>
+              <?php echo $lang['INDEX_TRADE_NEW']; ?>
+            </span>
+            <span flex="cross:center dir:right"  @click='order("ratio")' flex-box="0" class="ggao_trs_first_ratio">
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'ratio'"></span>
+              <?php echo $lang['INDEX_TRADE_CHANGE']; ?>
+            </span>
+            <span flex="cross:center dir:right" @click='order("max")'><?php echo $lang['INDEX_TRADE_HIGHT']; ?>
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'max'"></span>
+            </span>
+            <span flex="cross:center dir:right" @click='order("min")'>
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'min'"></span>
+              <?php echo $lang['INDEX_TRADE_LOW']; ?>
+            </span>
+            <span flex="cross:center dir:right" @click='order("money")' class="ggao_tabs_right">
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn && !first, ggao_order_down: orderFn && !first}]" v-if="orderType === 'money'"></span>
+              <?php echo $lang['INDEX_TRADE_VOLUME']; ?>
+            </span>
+          </div>
+          <div class="ggao_tr" v-for="(item, index) in coinListNum" v-if="coinListNum.length > 0">
+            <a :href="'/trade/'+ item.coin" flex="box:mean cross:center" flex-box="1">
+              <span flex="cross:center dir: left" class="relative_dom ggao_trs ggao_trs_first"  flex="dir:left" flex-box="0">
+                <span flex-box="0"
+                @click.stop.prevent="clickMySelf(item.coin, index)"
+                :class="['tab_choose',item.selected?'tab_choose_no':'tab_choose_click']">
+                </span>
+                <img :src="item.coinurl?item.coinurl:'/coin/coin.png'" alt="" class="coin_img" v-cloak>
+                <span flex-box="1" flex="dir:left cross:center" class="ggao_trs_first_span">
+                  <span class="yellow500_f">{{item.coin.split('_')[0].toUpperCase()}}</span>({{item.display}})/ 
+                  <span class="gray400_f">{{item.coin.split('_')[1].toUpperCase()}}</span>
+                </span>
+              </span>
+              <span flex="cross:center dir:left" class="ggao_trs ggao_tabs_new">{{item.price ? spliceEight(item.price) : item.price}} 
+                <!-- / &nbsp;<span class="gray400_f">${{item.usd ? item.usd.slice(0, 8) : item.usd}}</span> -->
+              </span>
+              <span flex="cross:center dir:right" class="ggao_trs ggao_trs_first_ratio" flex-box="0" :class="{red400_f: item.ratio < 0, green400_f: item.ratio > 0}">{{item.ratio > 0 ?'+' + item.ratio +'%': item.ratio +'%'}}</span>
+              <!-- / &nbsp;<span class="gray400_f">{{'￥' + moneyCal(item.currency, item.price, item.max)}} -->
+              <span flex="cross:center dir:right" class="ggao_trs">{{item.max ? spliceEight(item.max) : item.max}} </span></span>
+               <!-- / &nbsp;<span class="gray400_f">{{'￥' + moneyCal(item.currency, item.price, item.min)}} -->
+              <span flex="cross:center dir:right" class="ggao_trs">{{item.min ? spliceEight(item.min) : item.min}}</span></span>
+              <span flex="cross:center dir:right" class="ggao_trs ggao_tabs_right">{{item.money ? spliceEight(item.money) : item.money}}</span>
+            </a>
+          </div>
+          <div v-if="coinListNum.length <= 0" v-cloak :class="{ggao_tab_no_data: !loading, ggao_tab_loading: loading}" flex="cross:center main:center">
+              <p class="ggao_tab_p gray400_f" v-if="!loading && indexs == 1 && !searching"><?php echo $lang['INDEX_TRADE_DOBI_NO_COIN']; ?></p>
+              <p class="ggao_tab_p gray400_f" v-if="!loading && (indexs != 1 || searching)"><?php echo $lang['INDEX_TRADE_DOBI_NO_DATA']; ?></p>
+          </div>
+        </div>
+      </div>
+      <!-- 返回顶部 -->
+      <a class="jump_top" @click="gotoTop"></a>
+    </div>
+  <!-- 关于我们 -->
+    <div class="warp_abuout_us" flex="cross:center dir:top">
+      <h3><?php echo $lang['INDEX_TITLE']; ?></h3>
+      <p><?php echo $lang['INDEX_TEXT']; ?></p>
+      <ul class="about_us_exp" flex="main:justify">
+        <li flex="cross:center dir:top">
+          <div class="about_exp_img about_exp_flex"></div>
+          <p><?php echo $lang['INDEX_FAST']; ?></p>
+          <div class="about_exp_p">
+            <p><?php echo $lang['INDEX_FAST_ONE']; ?></p>
+            <p><?php echo $lang['INDEX_FASST_TWO']; ?></p>
+            <p><?php echo $lang['INDEX_FAST_THREE']; ?></p>
+            <!-- <p><?php echo $lang['INDEX_FAST_FOUR']; ?></p>
+            <p><?php echo $lang['INDEX_FAST_FIVE']; ?></p> -->
+          </div>
+        </li>
+        <li flex="cross:center dir:top">
+          <div class="about_exp_img about_exp_fast"></div>
+          <p><?php echo $lang['INDEX_FLEX']; ?></p>
+          <div class="about_exp_p">
+            <p><?php echo $lang['INDEX_FLEX_ONE']; ?></p>
+            <p><?php echo $lang['INDEX_FLEX_TWO']; ?></p>
+            <p><?php echo $lang['INDEX_FLEX_THREE']; ?></p>
+          </div>
+        </li>
+        <li flex="cross:center dir:top">
+          <div class="about_exp_img about_exp_safe"></div>
+          <p><?php echo $lang['INDEX_SAFE']; ?></p>
+          <div class="about_exp_p">
+            <p><?php echo $lang['INDEX_SAFE_ONE']; ?></p>
+            <p><?php echo $lang['INDEX_SAFE_TWO']; ?></p>
+            <p><?php echo $lang['INDEX_SAFT_THREE']; ?></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- 页脚links -->
+  <div class="index_link">
+    <div class="index_link_inner" flex="main:justify">
+      <div flex-box="1" flex="dir:right cross:stretch" class="index_link_right">
+         <?php // 友情链接 ?>
+        <!-- <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f">更多</li>
+          <?php // block.cc ?>
+          <li class="link_li">
+            <a href="https://mifengcha.com/" class="white100_f">钱包下载</a>
+          </li>
+          <li class="link_li">
+            <a href="https://mifengcha.com/" class="white100_f" >各币区块浏览器</a>
+          </li>
+          <li class="link_li">
+            <a href="https://mifengcha.com/" class="white100_f" >费用说明</a>
+          </li>
+        </ul>  -->
+        <?php // 费率声明 ?>
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_FREES_TITLE']; ?></li>
+          <li class="link_li white100_f">
+            <a href="https://www.huocoin.wang/index/policy" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_TERMS']; ?></a>
+          </li>
+          <li class="link_li">
+            <a href="/news/detail/346.html" class="white100_f" >费用说明</a>
+          </li>
+          <!-- <li class="link_li">
+            <a href="https://www.huocoin.com/news/detail/<?php if (LANG == 'en') { echo '514.html';} else {echo '512.html';} ?>" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_FREES']; ?></a>
+          </li> -->
+        </ul>
+        <?php // 工具 ?>
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_TOOL']; ?></li>
+          <!-- <li class="link_li"><a href="https://api.huocoin.com/" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_API']; ?></a></li> -->
+          <li class="link_li">
+            <a href="/news/detail/334.html" class="white100_f">钱包下载</a>
+          </li>
+          <!-- <li class="link_li">
+            <a href="https://mifengcha.com/" class="white100_f" >费用说明</a>
+          </li> -->
+          <li class="link_li">
+            <a href="/news/detail/338.html" class="white100_f" >各币区块浏览器</a>
+          </li>
+        </ul>
+        <!-- // 关于  -->
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ABOUTS']; ?></li>
+          <li class="link_li">
+            <!-- <a href="https://www.huocoin.com/news/detail/<?php if (LANG == 'en') { echo '519.html';} else {echo '511.html';} ?>" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ABOUT']; ?></a> -->
+            <a href="news/detail/315.html"><?php echo $lang['INDEX_TRADE_DOBI_ABOUT']; ?></a>
+          </li>
+       
+          <li class="link_li"><a href="/news/category/4" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ANNOUNCE']; ?></a></li>
+          <li class="link_li">
+            <a href="/news/detail/<?php if (LANG == 'en') { echo '526.html';} else {echo '525.html';} ?>" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_APPLE']; ?></a>
+          </li>
+        </ul>
+                  <!--快捷操作  -->
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['USER_HELP']; ?></li>
+          <li class="link_li">
+            <a href="/user/realinfo" class="white100_f"><?php echo $lang['HELP_ONE']; ?></a>
+          </li>
+          <li class="link_li">
+            <a href="/trade" class="white100_f"><?php echo $layout['lang']["TRADE_CENTER"]; ?></a>
+          </li>
+          <li class="link_li">
+            <a  href="/user/coinin" class="white100_f"><?php echo $layout['lang']['USER_NAV_COIN_IN'] ?></a> 
+            <a href="/user/coinout" class="white100_f"><?php echo $layout['lang']['USER_NAV_COIN_OUT'] ?></a>
+          </li>
+          <li class="link_li">
+            <a href="/user/recharge" class="white100_f"><?php echo $layout['lang']['USER_RECHARG']; ?></a>
+          </li>
+        </ul>
+
+        <?php // 联系我们 ?>
+        <ul class="link_ul contact_us" flex-box="2">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_CONTACT']; ?></li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_EMAIL']; ?>：hwCSD@huocoin.wang</li>
+          <!--<li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_MEDIA_EMAIL']; ?>：media@huocoin.com</li>-->
+          <li class="link_li white100_f"><?php echo $lang['INDEX_COMMUNITY_DOBI_EMAIL']; ?>：Hw-community@huocoin.wang</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_BUSINESS']; ?>: business@huocoin.wang</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_INTER_BUSINESS']; ?>：application@huocoin.wang</li>
+          <!--<li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_TOKEN']; ?>：huocoin</li>-->
+          <li class="link_li white100_f"><?php echo $lang['TELL_WE']; ?>：00852-67493962 &nbsp;&nbsp;&nbsp;00852-65292365‬</li>
+          <li class="link_li white100_f"><?php echo $lang['WEB_QQ']; ?>：681023842 &nbsp;&nbsp;&nbsp;952095800</li>
+         
+        </ul>
+	  </div>
+	  <div flex-box="0" class="index_link_left">
+        <p class="index_link_logo white100_f" flex="cross:center">
+		  <img src="/svg/huocoinLogo.svg" alt="">
+        </p>
+        <ul class="index_link_img" flex="dir:left box:mean">
+          <li class="link_tele" @mouseout.stop="erOut('tele')" @mouseover="erIn('tele')" >
+            <?php //二维码 ?>
+            <transition mode="out-in" name="fadeOut" @mouseout.stop="erOut('tele')" @mouseover="erIn('tele')">
+              <div class="link_er" v-if="showEr.tele" v-cloak>
+                <p class="link_er_p"><?php echo $lang['WECHART_ONE']; ?></p>
+                <img src="/imgs/WECHART1.png" alt="<?php echo $lang['WECHART_ONE']; ?>">
+              </div>
+            </transition>
+          </li>
+          <li class="link_what" @mouseout.stop="erOut('whatapp')" @mouseover="erIn('whatapp')">
+            <transition mode="out-in" name="fadeOut" v-cloak>
+              <div class="link_er" v-if="showEr.whatapp">
+                <p class="link_er_p"><?php echo $lang['WECHART_TWO']; ?></p>
+                <img src="/imgs/WECHART2.png" alt="<?php echo $lang['WECHART_TWO']; ?>">
+              </div>
+            </transition>
+          </li>
+          <li class="link_qq" @mouseout.stop="erOut('qq')" @mouseover="erIn('qq')">
+            <transition mode="out-in" name="fadeOut" v-cloak>
+              <div class="link_er" v-if="showEr.qq">
+                <p class="link_er_p"><?php echo $lang['WECHART_THREE']; ?></p>
+                <img src="/imgs/WECHART3.png" alt="<?php echo $lang['WECHART_THREE']; ?>">
+              </div>
+            </transition>
+          </li>
+          <li class="link_wechat" @mouseout.stop="erOut('wechat')" @mouseover="erIn('wechat')">
+            <transition mode="out-in" name="fadeOut" v-cloak>
+              <div class="link_er" v-if="showEr.wechat">
+                <p class="link_er_p"><?php echo $lang['WECHART_FOUR']; ?></p>
+                <img src="/imgs/Telegraph.png" alt="<?php echo $lang['WECHART_FOUR']; ?>">
+              </div>
+            </transition>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+ <!-- 弹框 -->
+  <my-alert v-cloak v-on:callback="callfn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $layout['lang']['DETERMINE'] ?></span>
+  </my-alert>
+ <!-- 活动弹框页面 show($activity) -->
+  <?php if($mcc_act_status){ ?>
+  <div class="active_win" v-cloak>
+    <img class="act_img" @click.stop="getRedPacket" src="/imgs/side_red_packetn.<?php echo $la; ?>.png" />
+    <transition mode="out-in" name="fadeOut">
+      <div class="mask_full" v-if="activeMsg"></div>
+    </transition>
+    <transition mode="out-in" name="zoom">
+      <div class="act_mob" v-if="activeMsg" @click.stop="activeMsg = !activeMsg">
+        <div flex="main:center cross:center dir:top">
+          <div class="act_con_box white100_bg orange500_f relative_dom" :class="{'plus2_act_<?php echo $la; ?>': actType=='plus2'}">
+            <p class="white100_f no_sel" v-if="actType === 'mcc'">{{activeMsg}}</p>
+            <div class="sub_tips white100_f no_sel" v-if="actType === 'mcc'"><?php echo $lang['PLEASE_CHECK_DETAIL']; ?></div>
+            <div class='act_sure_btn' v-if="actType === 'mcc'"><a href="/user/candy?tab=3"><?php echo $lang['VIEW_NOW']; ?></a></div>
+            <div class='act_sure_btn' v-if="actType === 'plus2'"><a href="/news/detail/273.html">立即查看</a></div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <?php } ?>
+  <!-- 公告弹框 用户没有登陆(_SESSION中没有user数据)，并且地址栏中没有请求 v-if="!sessionStorage.win"  -->
+<?php if(!$_SERVER["QUERY_STRING"]){?>
+    <div class="mask_contain" id="winBg" flex="main:center cross:center"  v-if="!sessionStorage.win" v-cloak>
+      <div class="winBox relative_dom" flex="dir:top main:left">
+        <div class="winHeader" flex="main:justify dir:justify box:justify cross:center">
+          <h3>关于火网上线华美资产（USDTK）</h3>
+          <span class="closeBtn" onClick="document.getElementById('winBg').remove();sessionStorage.win='openBrowser'">&times;</span>
+        </div>
+        <div class="winBody">
+         <div>
+            <p>尊敬的火网用户：</p>
+              <p>火网将于3月15号下午15:00在OTC交易区正式上线华美资产（USDTK）交易，后续也可能上线币币交易区。</p>
+              <p>OTC交易模式为火网用户之间的自由挂单与匹配，交易双方通过平台进行一对一的交易；为迎合广大用户需求，方便广大用户交易，火网交易平台将支持以下USDTK交易方式：</p>
+              <p>1、华克金钱包内的代币USDTK，卖方通过华克金钱包对买方绑定的华克金钱包地址进行转币</p>
+              <p>2、或通过其他可互转USDTK的途径进行一对一交易</p>
+              <p>为保障广大会员的资产安全，减少交易双方自行承担的信用风险，避免发生错误转币事件，请仔细阅读以下交易规则及注意事项：</p>
+                <br>
+              <p style="color:red">交易规则：</p>
+              <p style="color:red">1：交易前请于OTC地址管理处绑定自己的多种USDTK收币方式及收币信息；绑定其中一种也可交易；</p>
+              <p style="color:red">2：买卖双方均可直接在挂单处点击买入/卖出按钮进行匹配交易，或提交买入/卖出订单等待匹配（交易非自动匹配）；</p>
+              <p style="color:red">3：交易匹配订单时，若买家有多种收币方式，卖家可选择其中一种收币方式进行转币；</p>
+              <p style="color:red">4：卖家确认转币后请务必点击确认转币，买家确认收到币后请务必点击确认收币，交易即可完成;</p>
+              <p style="color:red"> 5：买家购买资金将自动从火网账户扣除（买家火网账户需预留可用CNYX才可进行交易）；</p>
+              <p style="color:red">6：卖家卖出资金将自动到账火网账户（卖家火网账户需预留不低于1000CNYX才可进行交易）；</p>
+              <p style="color:red">7：买家挂单后会自动冻结交易金额与手续费；</p>
+              <p style="color:red">8：卖家挂单成交后到账金额会自动扣除手续费；</p>
+              <br>
+              <p>如有疑问可联系在线客服咨询，感谢广大用户对火网的支持与理解！</p>
+              <p>官方客服QQ群：681023842 </p>
+              <p>官方客服微信：huocoin  </p>
+              <p>火网官方网址：www.huocoin.com </p>
+         </div>
+        </div>
+          <div class="winFooter">
+          <p>火网运营中心</p>
+          <p>2019年3月13日</p>
+        </div>
+        </div>
+    </div>
+  <?php } ?>
+</div>
+<!-- cdn -->
+<script>document.querySelector("li.index").className+=" now_nav"</script>
+<script src='/until/particles.min.js'></script>
+<?php  include PATH_TPL.'/tpl.index.footer.phtml';?>
+

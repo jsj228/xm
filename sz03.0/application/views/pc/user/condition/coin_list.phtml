@@ -1,0 +1,30 @@
+<div class="coin_list_con"  flex="">
+  <div class="gray600_f list_tit" flex-box="0"><?php echo $lang['USER_CONDITION_COIN_LIST']?></div>
+  <div class="list_item" id="allCoinList" flex-box="1">
+    <?php for($i = 0; $i < count($coinList); $i++){ 
+      // var_dump($coinList)[0]['coin_from'];
+      ?>
+      <span
+        data-coinover="<?php echo $coinList[$i]['coinover'] ?>"
+        data-coincode="<?php echo $coinList[$i]['coin_from'] ?>"
+        data-maxout="<?php echo $coinInfo[$i]['maxout'] ?>"
+        data-minout="<?php echo $coinInfo[$i]['minout'] ?>"
+        data-rateout="<?php echo $coinInfo[$i]['rate_out'] ?>"
+        data-outlimit="<?php echo $coinInfo[$i]['out_limit'] ?>"
+        data-instatus="<?php echo $coinList[$i]['in_status'] ?>"
+        data-outstatus="<?php echo $coinList[$i]['out_status'] ?>"
+        data-nfloat="<?php echo $coinInfo[$i]['number_float'] ?>"
+        data-type="<?php echo $coinList[$i]['type'] ?>"
+        name="<?php if($coinList[$i]['type']=="rgb"){echo 'rgbname';}?>"
+      <?php // in_status == 1 充幣不顯示 ?>
+      class="gray500_f 
+      <?php
+       if(($get['coin'] && $get['coin']==$coinList[$i]['coin_from']) || (!$get['coin'] && $i==0)){
+        echo 'sel_coin';
+      }
+      ?>" ><?php echo strtoupper($coinList[$i]['coin_from']) ?>(<?php echo strtoupper($coinList[$i]['display']) ?>)</span>
+    <?php } ?>
+  </div>
+</div>
+
+

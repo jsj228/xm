@@ -1,0 +1,42 @@
+$slideTime: .3s;
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(200%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fadeInLeft {
+  animation: fadeInLeft $slideTime linear;
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(200%, 0, 0);
+  }
+}
+.fadeInRight {
+  // display: block;
+  animation: fadeInRight $slideTime linear;
+}
+.fadeOutRight {
+  animation: fadeOutRight $slideTime linear;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}

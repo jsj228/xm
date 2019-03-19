@@ -1,0 +1,158 @@
+*{
+    margin:0;padding:0;border:0;
+    outline:none;text-decoration:none;
+}
+[v-cloak]{
+    display: none;
+}
+#recharge{
+    background:#f6f6f6;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 50px 45px 40px;
+    height: 100%;
+    img{width:100%;max-width:100%;}
+    .red{color:#ffbd09;}
+    button,[type=button]{cursor: pointer;}
+    button{border-radius:5px;color:#eee;background:#ffbd09;}
+    .bg666{background:#666!important;}
+    .midBtn{font-size:30px;width: 40px;
+        height: 40px;
+        line-height: 40px;}
+    .minBtn{padding:5px 8px;}
+    .tx_tips{
+        line-height:28px;
+        font-size:18px;
+        color:#666;
+        b{vertical-align:bottom;color: #ffbd09;}
+    }
+    .header{
+        padding:30px 25px;
+        background:#fff;
+    }
+    .headerBox{
+        width:100%;
+        // display: inline-block;
+        // transform: translateX(-50%);
+        // position: relative;
+        // right: -50%;
+        &>*{display:inline-block;width:48%;vertical-align:middle; }
+        .fromBox{
+            margin-right:calc(2% - 5px);
+            padding-right:calc(2% - 5px);
+            border-right:2px dashed #f6f6f6;
+            span{
+                position: relative;
+                width:100px;
+                height:42px;
+                margin:15px auto;
+                display: inline-block;
+                vertical-align:middle;
+                border:2px solid transparent;
+                &.active{border-color:#ffbd09;}
+                input{position:absolute;top:0;left:0;
+                    width:100%;height:100%;opacity:0;
+                    margin:0;z-index:2;cursor: pointer;
+                }
+                img{padding:5.5px 0}
+            }
+        }
+        [type=text]{padding:5px 30px 5px 10px;border-radius:5px;height:30px;
+           border:1px solid #ccc;width:calc(100% - 112px);}
+        button{font-size:18px;height:42px;width:100%;}
+
+    }
+    table{
+        background:#fff;
+        width:100%;
+        max-height:580px;//上好友充值分红和好友交易分红写的
+        overflow-y:auto;
+        th{height:49px;background:#fff;}
+        th:not(:last-child){border-right:1px dashed #dedede;}
+        .selectBox{
+            height:50px;
+            position: relative;
+            display:inline-block;
+            width:50%;min-width:100px;
+            p{line-height:50px;height:50px;text-align:left;padding: 0 30px 0 10px;}
+            &:after{
+                content: "\FE40";
+                width: 14px;
+                height: 8px;
+                position: absolute;
+                right:14px;
+                top: 17px;
+                pointer-events: none;
+                font-size: 17px;
+            }
+            &:hover div{
+                display:inline-block;
+            }
+            div{
+                display:none;
+                border:1px solid #f1e9e9;
+                position: absolute;top:100%;left:0;width:100%;
+                p{line-height:42px;height:42px;}
+                p:nth-child(2n){background:#eee}
+                p:nth-child(2n-1){background:#fff}
+                p:hover{background:#ccc;}
+            }
+
+        }
+        tr:nth-child(2n-1){background:#f6f6f6;}
+        th,td{color:#666;}
+        td{text-align:center;height:45px;}
+
+    }
+    .alertBox{
+        width:calc(100% - 223px);height:100%;position: absolute;top:0;right:0;
+        .content{
+            display:inline-block;position:relative;top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            box-shadow:0 0 20px 10px #263040;;
+            border-radius:8px;
+            overflow: hidden;
+            header{
+                height: 30px;
+                padding:8px 10px 0px;
+                background:#fff;
+                h3{padding-right:34px}
+                button{position: absolute;right:-1px;top:-1px;border-radius:0 0 0 5px}
+            }
+            .body{
+                background:#eee;
+                &>div{
+                    text-align:center;
+                    padding:15px 10px 0;
+                    div{display: inline-block;vertical-align:middle;text-align:left;}
+                    .img{width:180px;;border:1px solid #ddd;margin-left:50px;
+                       }
+                    p{margin:5px 0;font-size:16px;}
+                }
+            }
+            footer,.body{padding:15px;}
+            footer{
+                background:#f6f6f6;
+                p{
+                    margin:10px 0;
+                }
+            }
+        }
+    }
+}
+.history{
+    color:#666;
+    background:#fff;
+    margin-top:30px;
+    padding:7px 10px 7px 25px;
+    border-bottom: 1px solid #f6f6f6;
+    .page{
+        float:right;margin-top:-1px;
+        button{
+            &.active{background:#ffbd09!important;}
+            color:#eee;font-size:17px;background:#999!important;cursor: pointer;
+            display: inline-block;vertical-align:middle;height:30px;padding:0 10px ;margin:0 2px;
+        }
+    }
+}
+  

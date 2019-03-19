@@ -1,0 +1,171 @@
+@import './theme.scss';
+@import '../animation/newTableData.scss';
+
+table.trade-table{
+  width: 261px;
+  color: $lighter-dark;
+  font-size: 12px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  user-select: none;
+
+  tr td, tr th {
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  thead{
+    border-top: 1px solid $font-d;
+    tr{
+      width: 261px;
+      display: block;
+      height: 26px;
+      line-height: 26px;
+      border-bottom: 1px solid $font-d;
+      color: $font-l;
+      th{
+        text-align: left;
+        font-weight: normal;
+        &:nth-child(1){
+          width: 105px;
+          text-indent: 8px;
+        }
+        &:nth-child(2){
+          box-sizing: border-box;
+          width: 94px;
+          padding: 0 10px;
+          white-space: nowrap;
+        }
+        &:nth-child(3){
+          width: 100px;
+        }
+      }
+     }
+  }
+  
+  tbody{
+    background: $table-bg;
+    height: 271px;
+    overflow: hidden;
+    display: block;
+
+    &#buyin-list{
+      tr td:first-child{
+        color: $font-r;
+        text-indent: 8px;
+
+        span.low-vision{
+          color: $font-rr;
+        }
+      }
+    }
+    &#sellout-list{
+      tr td:first-child{
+        color: $font-g;
+        text-indent: 8px;
+
+        span.low-vision{
+          color: $font-gg;
+        }
+      }
+    }
+    tr {
+      height: 21px;
+
+      &:hover{
+        background: $font-d;
+        cursor: pointer;
+      }
+      span.grey-low-vision{
+        color: $font-d;
+      }
+      b {
+        color: #fff;
+        font-weight: normal;
+      }
+
+      td:nth-child(1){
+        text-align: left;
+        width: 100px;
+      }
+      td:nth-child(2){
+        box-sizing: border-box;
+        // padding: 0 10px;
+        width: 78px;
+        text-align: right;
+      }
+      td:nth-child(3){
+        box-sizing: border-box;
+        width: 100px;
+        text-align: right;
+        padding-right: 18px;
+      }
+    }
+  }
+}
+table.deal-table{
+  @extend table.trade-table;
+  thead{
+    tr{
+      th{
+        &:nth-child(1){
+          width: 65px;
+          text-indent: 10px;
+        }
+        &:nth-child(2),&:nth-child(3){
+          text-indent: 0px;
+          padding: 0 0 0 10px;
+          width: 93px!important;
+          text-align: left;
+        }
+        &:nth-child(3){
+          // padding-right: 20px;
+          text-align: left;
+          padding: 0 0 0 10px!important;
+        }
+      }
+    }
+  }
+  tbody{
+    height: 570px;
+    tr{
+      animation: newOne .8s linear;
+    }
+  }
+  td{
+
+    &:nth-child(1){
+      width: 67px!important;
+      text-indent: 10px;
+      color: $font-m;
+      padding: 0;
+    }
+    &:nth-child(2){
+      padding: 0 0 0 10px!important;
+      text-indent: 0px;
+      text-align: left!important;
+      width: 94px!important;
+    }
+    &:nth-child(3){
+      text-align: left!important;
+      text-indent: 0px;
+      padding: 0 0 0 10px!important;
+    }
+
+    &.font-g{
+      color: $font-g;
+      span.low-vision{
+        color: $font-gg
+      }
+    }
+    &.font-r{
+      color: $font-r;
+      span.low-vision{
+        color: $font-rr
+      }
+    }
+  }
+  td:nth-child(2){
+    text-align: left;
+  }
+}

@@ -1,0 +1,144 @@
+<?php  include PATH_TPL.'/mob.tpl.header.phtml';?>
+<?php //show($coinList);//show($layout); ?>
+
+  <section>
+
+    <?php // baner 轮播 ?>
+    <div class="banner-win head-mar" id="bannerContainer">
+      <div class="parallax-bg" style="background-image:url(/imgs/bannerBG.jpg)" data-swiper-parallax="-16%"></div>
+      <?php // Additional required wrapper ?>
+      <div class="swiper-wrapper">
+        <!-- <div class="swiper-slide">
+          <div class="banner-three" data-active="nano">
+            <h2 class="main-title">Nano全球首發火網</h2>
+            <h3>壕送100萬Nano，每人100Nano</h3>
+          </div>
+        </div> -->
+        <div class="swiper-slide relative_dom">
+          <div class="banner-three" style="background-image: url(/activeImgs/xtc-mob.jpg)"></div>
+        </div>
+        <?php // 活动新上币 ?>
+        <?php foreach ($activity as $v) { ?>
+          <div class="swiper-slide">
+            <div class="banner-three" data-active="<?php echo $v['coin']; ?>" style="background-image: url(/activeImgs/mob-active-<?php echo $v['coin']; ?>.jpg)"></div>
+          </div>
+        <?php } ?>
+
+        <?php // 没有 领取 币 的活动 第2屏内容 ?>
+        <?php foreach ($noCoinactivity as $v) { ?>
+          <div class="swiper-slide" style="background-image:url(/activeImgs/mob-will-<?php echo $v ?>.jpg)">
+            <div class="banner-eth-bg"><h2 class="main-title"></h2></div>
+          </div>
+        <?php } ?>
+        <div class="swiper-slide relative_dom">
+          <div class="banner-three" data-active="<?php echo $v['coin']; ?>" style="background-image: url(/activeImgs/mob-qkzj.jpg)"></div>
+        </div>
+        <div class="swiper-slide">
+          <div class="banner-three" data-active="<?php echo $v['coin']; ?>" style="background-image: url(/activeImgs/mob-will-ytg.png)"></div>
+        </div>
+        <div class="swiper-slide">
+          <div class="banner-three" data-active="<?php echo $v['coin']; ?>" style="background-image: url(/activeImgs/mob-active-bosschain.jpg)"></div>
+        </div>
+        <?php // 第2屏内容 ?>
+        <?php // Slides ?>
+        <div class="swiper-slide">
+          <h2 class="main-title"><?php echo $lang['BANNDER_ONE_TITLE'];?></h2>
+        </div>
+        <!-- <div class="swiper-slide">
+          <?php // 第2屏内容 ?>
+          <h2 class="main-title banner-two"><?php echo $lang['BANNDER_THREE_TITLE'];?></h2>
+        </div> -->
+      </div>
+      <?php // If we need pagination ?>
+      <?php // If we need navigation buttons ?>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+    <?php // 登录注册 ?>
+    <div class="flex-center-center login-reg-win" id="loginGroup">
+      <?php // 登录 ?>
+      <!-- <a href="javascript: void(0)" class="btn btn-orang" data-login="login"><?php echo $layout['lang']['LOGIN'] ?></a> -->
+      <a href="/login" class="btn btn-orang" ><?php echo $layout['lang']['LOGIN'] ?></a>
+      <?php  // 注册 ?>
+      <!-- <a href="javascript: void(0)" class="btn btn-gray" data-register="register"><?php echo $layout['lang']['REGISTER'] ?></a> -->
+      <a href="/register" class="btn btn-gray"><?php echo $layout['lang']['REGISTER'] ?></a>
+    </div>
+    <?php  // 幣種選擇 ?>
+    <!-- <div class="login-select-div">
+      <img src="/imgs/down.png" alt="">
+      <select class="login-select" name="">
+        <?php foreach ($coinList as $k => $v) { ?>
+          <option value="<?php echo $k ?>"><?php echo strtoupper($k) ?><?php echo $layout['lang']['TRAE_AREA']; ?></option>
+        <?php } ?>
+      </select>
+    </div> -->
+    <div class="mob-rf-content">
+      <div class="cont-contain mob-cont-contain">
+        <div class="u-condition shadow-cont">
+          <div class="coin-cor">
+            <div class="cor-rf">
+              <div class="mob-sel-coin" id="changeCoin">
+                <span class="coinTypeSpan"><?php echo array_keys($coinList)[0];?></span><?php echo $layout['lang']['TRAE_AREA']; ?>
+              </div>
+              <div class="coin-list" id="coinList">
+                 <?php foreach ($coinList as $k => $v) { ?>
+                   <span class="<?php if(array_keys($coinList)[0] == strtoupper($k)){ echo 'sel-coin';}?>" data-coincode="<?php echo $k ?>"><?php echo strtoupper($k) ?><?php echo $layout['lang']['TRAE_AREA']; ?></span>
+                 <?php } ?>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <?php // 登陆成功 ?>
+    <div class="hide-dom login-out-win" id="loginSuccGroup">
+      <div class="flex-jc-between login-succ-win" >
+        <?php // 账户 ?>
+        <div class="">
+          <p><?php echo $layout['lang']['MOB_ACCOUNT'] ?></p>
+          <div data-phone="id">----</div>
+        </div>
+        <?php // 总资产约 ?>
+        <div class="">
+          <p><?php echo $layout['lang']['MOB_PROPERTY']; ?></p>
+          <div data-account="all"></div>
+        </div>
+      </div>
+    </div>
+    <?php // show($coinList); ?>
+    <?php //  头部 header ?>
+    <ul class="flex-col up-down-list">
+      <li class="flex-jc-between">
+        <?php // 幣種  最新价  涨跌幅 ?>
+        <div class=""><?php echo $layout['lang']['BZ']; ?></div><div class=""><?php echo $layout['lang']['NEW_PRICE']; ?></div><div class=""><?php echo $layout['lang']['PRICE_UP_DOWN']; ?></div>
+      </li>
+    </ul>
+    <?php // 数据 ?>
+    <?php $coin_to_default = 'btc'; foreach ($coinList as $key => $coin) { ?>
+      <ul class="flex-col up-down-list <?php if($key != $coin_to_default) {echo 'hide-ul';} ?>" id="<?php echo $key?>CoinData">
+        <?php foreach($coin as $k => $v){ ?>
+          <li class="flex-jc-between coin_li" data-coincode="<?php echo $v; ?>">
+            <div class="uppercase">
+              <span><?php echo strtoupper(preg_replace('/(_.*)/', '', $v)) ?></span>
+            </div>
+            <div class="">
+              <span data-price="coin">--</span>
+            </div>
+            <div class="up-d-red" data-pritab="tab"><span data-radio="pc">--</span>
+              <span class="rf">&gt;&gt;</span>
+            </div>
+          </li>
+        <?php } ?>
+      </ul>
+      <?php } ?>
+    <?php // 涨跌幅列表 ?>
+    <!-- <ul class="flex-col up-down-list" id="coinData">
+      <li class="flex-jc-between">
+        <?php // 幣種  最新价  涨跌幅 ?>
+        <div class=""><?php echo $layout['lang']['BZ']; ?></div><div class=""><?php echo $layout['lang']['NEW_PRICE']; ?></div><div class=""><?php echo $layout['lang']['PRICE_UP_DOWN']; ?></div>
+      </li>
+    </ul> -->
+  </section>
+  <!-- <script src="/js/mob.main.js" defer async='true'></script> -->
+<?php  include PATH_TPL.'/tpl.footer.phtml';?>

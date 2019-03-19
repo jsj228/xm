@@ -1,0 +1,350 @@
+@import './theme.scss';
+@import './nav.scss';
+@import './table.scss';
+@import './delegate.scss';
+@import './form.scss';
+@import './all-market.scss';
+@import './sidebar.scss';
+@import "../animation/transition.scss";
+@import "../animation/upDown.scss";
+@import "../animation/slider.scss";
+
+
+html, body{
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+body{
+  overflow-x: hidden;
+  &.noscroll-y{
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+@media screen and (min-width: 1366px) and (max-width: 1920px) {
+
+}
+// @media screen and (max-width: 1366px){
+//   .content-t{
+//     margin: 0 15px !important;
+//   }
+//   .content-b{
+//     margin: 0 15px !important;
+//   }
+// }
+
+.hover-bg{
+  display: none;
+  width: 100%;
+  height: 250px;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  background: #181818;
+  opacity: .9;
+}
+.content-t{
+  height: 598px;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row nowrap;
+  flex: 1 1 auto;
+  margin: 0 30px;
+}
+.kline-container{
+  width: 1322px;
+  box-sizing: border-box;
+  border: 1px solid $font-d;
+  border-right: 1px solid $font-d;
+  border-bottom: 2px solid $font-d;
+  &.fullscreen{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* right: 0; */
+    z-index: 68;
+    width: 100%;
+  }
+  }
+.content-tr{
+  height: 598px;
+  margin-left: 3px;
+  display: flex;
+  justify-content: center;
+  flex-flow: row nowrap;
+  flex: 0 0 auto;
+  .tr-l,.tr-r{
+    width: 261px;
+    height: 598px;
+  }
+  .tr-r{
+    margin-left: 3px;
+  }
+}
+.content-b{
+  display: flex;
+  position: relative;
+  height: 270px;
+  justify-content: flex-start;
+  flex-flow: row nowrap;
+  margin: 0 30px;
+  #tradeAfterLogin{
+    display: none;
+    position: absolute;
+    width: calc(100% + 30px);
+    left: 0;
+    // right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(32,32,32, .6);
+    z-index: 68;
+    p{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 40px;
+      color: #999;
+      text-align: center;
+      line-height: 40px;
+      font-size: 16px;
+      user-select: none;
+      a[data-register="register"], a[data-login="login"]{
+        color: orange;
+        padding: 4px 10px;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      a[data-login="login"]{
+        left: 53%;
+      }
+    }
+
+  }
+  .content-bl{
+    width: 1322px;
+    margin-top: 17px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .content-br{
+    width: 532px;
+    margin-left: 3px;
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row nowrap;
+  }
+}
+
+// talk
+.talking {
+  width: 100px;
+  .talking_down {
+    position: fixed;
+    bottom: 0;
+    left: 30px;
+    width: 86px;
+    height: 39px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background: #d99f03;
+    text-align: center;
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      line-height: 39px;
+      font-size: 16px;
+    }
+    span {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #fd373b;
+      color: #fff;
+      text-align: center;
+      line-height: 25px;
+      font-size: 12px;
+      position: absolute;
+      top: -9px;
+      right: -9px;
+    }
+    &:hover {
+      background: #ffbb03;
+      @include transition(all, .5s);
+    }
+  }
+
+  .talking_up {
+    display: none;
+    position: fixed;
+    bottom: 15px;
+    left: 29px;
+    width: 421px;
+    .talking_header {
+      height: 50px;
+      line-height: 50px;
+      padding: 0 18px;
+      background: #3dc18e;
+      color: #fff;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
+      .header_left {
+        float: left;
+        p {
+          padding-left: 47px;
+          background: url(/imgs/talking.png) no-repeat left center;
+        }
+      }
+      .header_right {
+        float: right;
+        span {
+          display: inline-block;
+          padding-left: 20px;
+          a {
+            font-size: 14px;
+            color: #fff;
+          }
+          &.talking_sj{
+            background: url(/imgs/talking_sj.png) no-repeat left center;
+          }
+          &.talking_close{
+            background: url(/imgs/talking_close.png) no-repeat left center;
+            margin-right: 33px;
+          }
+        }
+      }
+    }
+    .talking_content {
+      width: 421px;
+      height: 513px;
+      background: #fff;
+      position: relative;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+      .login_btn{
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 114px;
+        height: 38px;
+        line-height: 38px;
+        border-radius: 16px;
+        background: #3dc18e;
+        color: #fff;
+        border: none;
+        outline: none;
+      }
+      .talking_inner {
+        padding: 0 18px;
+        height: 405px;
+        overflow-y: auto;
+        ul{
+          // height: auto;
+          li{
+            padding-top: 12px;
+            min-height: 46px;
+
+            .icon_peo{
+              cursor: pointer;
+              float: left;
+              width: 26px;
+              height: 26px;
+              img{
+                width: 100%;
+                height: 100%;
+                display: block;
+              }
+            }
+            .peo_mes{
+              width: 331px;
+              // padding-right: 19px;
+              margin-left: 9px;
+              float:left;
+              span{
+                font-size: 12px;
+                color: #ff9703;
+                line-height: 26px;
+                display: inline-block;
+                &.peo_phone{
+                  cursor: pointer;
+                }
+              }
+              p{
+                line-height: 20px;
+                font-size: 14px;
+                color: #333 ;
+              }
+            }
+          }
+        }
+        &::-webkit-scrollbar{
+          width: 8px;
+        }
+        &::-webkit-scrollbar-track{
+          display: none;
+        }
+        &::-webkit-scrollbar-track-piece{
+          background: #e6e6e6;
+        }
+        &::-webkit-scrollbar-thumb{
+          background: #9e9f9f;
+          border-radius: 3px;
+        }
+      }
+      .talking_text {
+        width: 100%;
+        height: 70px;
+        border-top: 1px solid #dbdbdb;
+        textarea{
+          overflow-y: auto;
+          width: 95%;
+          height: 90%;
+          border: none;
+          outline: none;
+          resize: none;
+          padding: 7px 10px 0;
+          font-size: 14px;
+          line-height: 20px;
+          &::-webkit-scrollbar{
+            width: 7px;
+          }
+          &::-webkit-scrollbar-track{
+            display: none;
+          }
+          &::-webkit-scrollbar-track-piece{
+            background: #e6e6e6;
+          }
+          &::-webkit-scrollbar-thumb{
+            background: #9e9f9f;
+            border-radius: 3px;
+          }
+        }
+      }
+      .talking_footer{
+        height: 31px;
+        padding-right: 15px;
+        .sent_btn{
+          float: right;
+          width: 75px;
+          height: 100%;
+          color: #fff;
+          background: #3dc18e;
+          border: none;
+          border-radius: 2px;
+        }
+      }
+      .clear{
+        clear: both;
+      }
+    }
+  }
+}

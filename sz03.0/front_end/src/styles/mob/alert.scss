@@ -1,0 +1,100 @@
+@import "./fun.scss";
+
+.mob_dialog {
+  font-size: pxToRem(30);
+  // display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: pxToRem(30);
+
+  .dialog_content {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    // width: 100%;
+    // height: 100%;
+  }
+  #mobAuto {
+    margin: 0;
+    width: pxToRem(640);
+    height: pxToRem(356);
+    background: #fff;
+
+    & > div {
+      width: pxToRem(524);
+    }
+
+    p {
+      font-size: pxToRem(40);
+    }
+
+    .submit_btn {
+      border-radius: pxToRem(6);
+      width: 100%;
+
+    }
+  }
+
+}
+// alert
+#tips_win.mob-alert {
+  .mid_win {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tips_box {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: pxToRem(640);
+    height: 35%;
+    border-radius: pxToRem(6);
+  }
+
+  .close_cur {
+    width: pxToRem(28);
+    height: pxToRem(28);
+    background-size: 100% 100%;
+  }
+
+  .tips_msg {
+    padding: 0 pxToRem(57);
+    height: auto;
+    font-size: pxToRem(40);
+    // font-size: pxToRem(30);
+  }
+  .alert_title {
+    font-size: pxToRem(45);
+  }
+  .tips_footer {
+    box-sizing: border-box;
+    padding: pxToRem(57);
+    width: 100%;
+
+    .btn {
+      margin: 0;
+      width: 100%;
+      line-height: pxToRem(80);
+    }
+  }
+
+  .green-f {
+    display: block;
+    text-align: center;
+    color: #01b21a;
+  }
+}

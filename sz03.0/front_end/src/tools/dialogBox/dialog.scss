@@ -1,0 +1,294 @@
+@import "../../styles/animation/transition.scss";
+@import "../../styles/animation/layer-transform.scss";
+
+.dialog-box-contain {
+  display: none;
+
+  .module-win {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: rgba(0,0,0, 0.5);
+    // opacity: 0.5;
+  }
+  .box-win {
+    position: relative;
+    animation: layer-transform .3s;
+  }
+  .box-close-btn {
+    position: absolute;
+    top: 18px;
+    right: 21px;
+    z-index: 1;
+    width: 18px;
+    height: 18px;
+    background: url(../../assets/close_btn_icon.png) center center no-repeat;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .dialog-box-content {
+    box-sizing: border-box;
+    padding: 0 116px;
+    width: 572px;
+    height: 412px;
+    background: #fff;
+    border-radius: 10px;
+
+    .dialog-title {
+      box-sizing: border-box;
+      padding:  27px 0 33px 0;
+      font-size: 24px;
+      font-weight: 400;
+      text-align: center;
+    }
+    .top-tips {
+      padding: 9px 21px;
+      color: #666;
+      font-size: 12px;
+      background: #f5f8fd;
+      line-height: 18px;
+    }
+    .form-tab {
+      position: relative;
+      margin: 30px 0;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      font-size: 14px;
+      line-height: 43px;
+      border-radius: 3px;
+      background: #f6f6f6;
+
+      .box-submit-btn {
+        line-height: 45px;
+        width: 100%;
+        border: none;
+        color: #fff;
+        background: #4267b2;
+        border-radius: 3px;
+
+        &:hover {
+          background: #3057a1;
+          @include transition(all, .3s);
+        }
+      }
+      .on-submiting {
+        background: #2a467c;
+      }
+      span {
+        box-sizing: border-box;
+        flex-shrink: 0;
+        color: #666;
+        width: 108px;
+        text-align: center;
+      }
+      .coin-out-sp {
+        letter-spacing: 3px;
+        width: 94px;
+        padding: 0 13px;
+      }
+      input, select {
+        box-sizing: border-box;
+        line-height: 43px;
+        padding: 0 13px;
+        width: 100%;
+        border: none;
+        background: transparent;
+      }
+    }
+    .shot-tab {
+      width: 230px;
+
+      .coin-out-sp {
+        padding: 0 11px;
+        letter-spacing: 0;
+      }
+    }
+
+    .coin-out-form {
+      padding: 0 0 30px;
+
+      .dialog-title {
+        padding: 22px 0 12px 0;
+      }
+      .mut-tab {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin: 30px 0;
+
+        &>img, .voice-btn {
+          height: 43px;
+          width: 103px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .voice-btn {
+          padding: 0;
+          border: none;
+          color: #666;
+          border-radius: 3px;
+          line-height: 43px;
+          text-align: center;
+          background: #f6f6f6;
+        }
+        .disabled-btn {
+          &:hover {
+            cursor: not-allowed;
+          }
+        }
+
+        .form-tab {
+          margin: 0;
+          input, select {
+            padding: 0 9px;
+          }
+        }
+      }
+      .top-tab {
+        margin-top: 20px;
+      }
+      .last-tab {
+        margin: 0;
+      }
+      .coin-out-submit {
+        // margin: 16px 0 29px 0;
+        margin-bottom: 30px;
+        width: 100%;
+        line-height: 43px;
+        font-size: 16px;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        background: #4267b2;
+
+        &:hover {
+          background: #3057a1;
+          transition: all .5s;
+        }
+      }
+
+      .form-tab {
+        margin: 20px 0;
+      }
+      .submit-ing {
+        background: #2a467c;
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
+      .dot-line {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 148px;
+        border-bottom: 1px dashed #ececec;
+      }
+      .friendly-warn {
+        text-align: left;
+        line-height: 20px;
+        font-size: 12px;
+        color: #666;
+
+        h4 {
+          margin-bottom: 16px;
+          text-align: center;
+          color: #333;
+          font-size: 16px;
+        }
+
+        span {
+          color: #ee2222;
+        }
+      }
+      .orange-f {
+        color: #ffbb03;
+      }
+    }
+    .warn-tips-lf {
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: -21px;
+      color: #999;
+      font-size: 12px;
+      line-height: 24px;
+      padding-left: 13px;
+      white-space: nowrap;
+
+      &:before {
+        content: "";
+        display: inline-block;
+        position: relative;
+        margin-right: 4px;
+        top: 2px;
+        left: 0px;
+        width: 12px;
+        height: 12px;
+        background: url(../../assets/input_tips_icon.png) center center no-repeat;
+      }
+    }
+    .err-tips {
+      color: #ee2222;
+
+      &:before {
+        content: "";
+        background-image: url(../../assets/error-tip.png);
+      }
+    }
+    .voice-msg-line {
+      position: absolute;
+      right: 0;
+      bottom: -21px;
+      font-size: 12px;
+      color: #999;
+      &>span {
+        color: #3366cc;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .warn-outline {
+      outline: red solid 1px;
+    }
+    // 交易密码
+    .trade-pwd {
+      .dialog-title {
+        padding-top: 26px;
+        line-height: 23px;
+      }
+      .first-mar {
+        margin-top: 20px;
+      }
+      .top-tips {
+        padding: 8px 21px;
+      }
+    }
+  }
+  .notice-content {
+    .dialog-title {
+      padding: 25px 0 21px 0;
+    }
+    .sub-title {
+      font-size: 16px;
+      line-height: 38px;
+    }
+    .notice-detail {
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

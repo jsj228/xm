@@ -1,0 +1,322 @@
+<div class="rf_main gray50_bg" flex="dir:top" id="mplan" style="min-width: 1200px">
+  <div class="nav-crumbs hide_767" flex-box="0">
+    <?php echo $lang["USER_NAV_MASTER_PLAN"] ?> &gt; <a class="active-tab" href="javascript: void(0);"><?php echo $lang['YAOQING_LI'] ?></a>
+  </div>
+  <div class="mplan_invite">
+    <!-- <?php //活动日期 ?>
+    <p class="gray400_f mplan_active_time">
+      <?php echo $lang['YAOQING_RIQ']?>:
+      <span class="gray600_f mplan_times_span">
+        <?php echo !empty($activity)?$activity['start'].'&nbsp;&nbsp;~&nbsp;&nbsp;'.$activity['end']:$lang['YAOQING_JSU']; ?>
+      </span>
+    </p> -->
+    <?php //复制链接 ?>
+    <p class="mplan_copy_title gray900_f"><?php echo $lang['FUZHI']?>：</p>
+    <div class="mplan_copy_all">
+      <input type="text" class="mplan_copy_content" id="mplan_copy" value="<?php echo $url; ?>" readonly>
+      <button type="button" name="button" class="mplan_btn" @click="copy"><?php echo $lang['LIANJIE']?></button>
+    </div>
+    <?php //邀请人数 ?>
+    <p class="gray600_f mplan_my_list"><?php echo $lang['WODE']?>：
+      <span class="gray600_f mplan_my_pad"><?php echo $lang['YAO_QINGYOU']?> <span class="red500_f"><?php echo Tool_Math::mul($inviteNum, 1)  ?></span><?php echo $lang['PERSON_INT'] ?></span>
+      <!-- <span class="gray600_f mplan_my_pad"><?php echo $lang['YAO_MY']?> <span class="red500_f"><?php echo $myorderdata['myorder']?$myorderdata['myorder']:'0';  ?></span></span> -->
+      <?php //  累計邀請註冊獎勵
+      if (false){ ?>
+      <!-- <span class="gray600_f mplan_my_pad"><?php echo $lang['YAO_ALLMY']?> <span class="red500_f"><?php echo $myorderdata['mynumber']?$myorderdata['mynumber']:'0' ?></span>AIT</span> -->
+      <?php } ?>
+    </p>
+    <?php //邀请记录 ?>
+    <!-- <div class="mplan_coin_list" flex="">
+      <div class="mplan_list_left" flex-box="0">
+        <?php //交易返佣 ?>
+        <ul class="mplan_invite_list">
+          <?php foreach ($rebate as $coin => $v) { ?>
+            <li class="mplan_invite_list_li gray400_f">
+              <?php echo $coin=='mcc_reg'? $lang['LEI_JI']:  $lang['LEIJI_JL'] ?>:
+              <span class="yellow500_f">
+                <?php echo Tool_Math::add($v[$coin.'_in'],$v[$coin.'_out']), strtoupper(str_replace('_reg', '', $coin)) ?>
+              </span>
+            </li>
+          <?php } ?>
+        </ul>
+        <?php //返佣奖励 ?>
+        <ul class="mplan_invite_list">
+          <?php foreach ($rebate as $coin => $v) { ?>
+            <li class="mplan_invite_list_li gray400_f">
+              <?php echo $coin=='mcc_reg'? $lang['KEYONG_JI']: $lang['KEYONG_YE']?>:
+              <span class="green650_f">
+                <?php echo Tool_Math::mul($v[$coin.'_in'], 1), strtoupper(str_replace('_reg','',$coin)) ?>
+              </span>
+            </li>
+          <?php } ?>
+        </ul>
+      </div>
+      <?php //提币按钮 ?>
+      <div flex="0">
+        <button type="button" name="button" class="mplan_btn" @click="showAlert = !showAlert"><?php echo $lang['TIQU_YE']?></button>
+      </div>
+    </div>  -->
+  </div>
+
+  <!-- // 表格 导航 -->
+  <div class="mplan_tabs">
+    <ul class="mplan_change_tab" flex="dir:left">
+      <li @click="tabChange(1)" v-cloak :class="['mplan_tabs_li', 'gray600_f', {mplan_active_li: index == 1}]">专属邀请码</li>
+       <!-- <li @click="tabChange(2)" v-cloak :class="['mplan_tabs_li', 'gray600_f', {mplan_active_li: index == 2}]"><?php echo $lang['JL_TQU'] ?></li>
+       <li @click="tabChange(3)" v-cloak :class="['mplan_tabs_li', 'gray600_f', {mplan_active_li: index == 3}]"><?php echo $lang['FANYONG_JL'] ?></li> -->
+      <li @click="tabChange(4)" v-cloak :class="['mplan_tabs_li', 'gray600_f', {mplan_active_li: index == 4}]"><?php echo $lang['YQ_JLL'] ?></li>
+       <!-- <li @click="tabChange(5)" v-cloak :class="['mplan_tabs_li', 'gray600_f', {mplan_active_li: index == 5}]"><?php echo $lang['YQ_GZ'] ?></li> 
+      <i class="mplan_list_last"></i> -->
+    </ul>
+  </div>
+  <?php // 邀请排行榜 ?>
+   <div v-show ="index == 1" v-cloak flex-box="2" flex="dir:top" style="background:#fff">
+    <div class="Invitation_List" style="min-width: 1200px;">
+    
+    <div class="user_tabs_div">
+     <!-- <div class="quicklink invite-content" style="margin-top: 15px;">
+				<h4 style="margin-bottom: 20px;">专属邀请码</h4>
+				<p class="tip" style="    margin-bottom: 13px;">这是您的专用邀请码，您可点击【复制】按钮分享给朋友，让他们注册帐号时输入您的邀请码</p>
+				<p style="margin-bottom: 20px;">
+					<input type="text" value="" class="Invitationcode" ><input type="button" value="复制"  style="width: 60px;height: 36px;border-radius: 3px;background: #ffbb03;margin-left: 12px;color: white;cursor:pointer" @click="copy"/>
+				</p>
+      </div> -->
+      <div class="quicklink invite-content">
+				<h4 style="margin-bottom: 20px;">专属广告语</h4>
+				<p class="tip" style="margin-bottom: 20px;">这是您的专属广告语，您可点击【复制】按钮，将本文粘贴并发送给您的好友：</p>
+				<p style="margin-bottom: 20px;">
+          <textarea type="text" id="invite-textarea" style="width:550px;height: 100px;line-height: 25px;    color: #666" >火网交易所：火网交易所邀请返现活动重新上线啦！ 邀请好友注册交易，即可享受好友交易手续费30%的分红；邀请好友充值，即可享受好友充值金额0.1%的分红。分红秒到账，更有超多惊喜活动等你来<?php echo $url; ?></textarea>
+          <input type="button" value="复制"  id="copy_button3" style="width: 60px;height: 36px;border-radius: 3px;background: #ffbb03;color: white;cursor:pointer" @click="copy"/>
+				</p>
+			</div>
+
+
+      </div>
+      <div  class="user_tabs_div" style="float:right">
+      </div> 
+      </div>
+    
+  </div> 
+  <?php // 獎勵提取記錄 ?>
+   <div v-show="index == 2" v-cloak flex-box="2" flex="dir:top">
+    <scroll-table :data.sync="tabData" ref="scrollTab" flex-box="2" flex="dir:top">
+      <div slot="thead">
+        <table class="user_tabs border_top_one" rules='none'>
+          <?php //手机端展示用 ?>
+          <tr class="user_tabs_tr white100_bg">
+            <th><?php echo $lang['JL_JL'] ?>ID</th>
+            <th><?php echo $lang['JL_TIME'] ?></th>
+            <th><?php echo $lang['SL_TIME'] ?></th>
+            <th><?php echo $lang['BZ'] ?></th>
+          </tr>
+        </table>
+      </div>
+      <div slot="tbody" class="user_tabs_tr" flex-box="2">
+        <table class="user_tabs border_top_one" rules='none'>
+          <tr v-for="(item, index) in tabData" v-show="!tabLoging && !no_data"
+            :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point', {gray50_bg: index%2 != 0, white100_bg: index%2 == 0 }]">
+            <td>{{item.id}}</td>
+            <td>{{item.created}}</td>
+            <td>{{item.number}}</td>
+            <td>{{item.coin}}</td>
+          </tr>
+        </table>
+        <div class="user_tabs_span white100_bg f_no" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+          <span :class="{loding: tabLoging, no_data: no_data}"></span>
+          <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+        </div>
+      </div>
+    </scroll-table>
+   </div> 
+ <div v-show ="index == 3" v-cloak flex-box="2" flex="dir:top">
+    <scroll-table :data.sync="tabData" ref="scrollTab" flex-box="2" flex="dir:top">
+      <div slot="thead">
+        <table class="user_tabs border_top_one" rules='none'>
+          <?php //手机端展示用 ?>
+          <tr class="user_tabs_tr white100_bg">
+            <th><?php echo $lang['JL_TIME'] ?></th>
+            <th><?php echo $lang['JY_BZ'] ?></th>
+          </tr>
+        </table>
+      </div>
+      <div slot="tbody" class="user_tabs_tr" flex-box="2">
+        <table class="user_tabs border_top_one" rules='none'>
+          <tr v-for="(item, index) in tabData" v-show="!tabLoging && !no_data"
+            :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point', {gray50_bg: index%2 != 0, white100_bg: index%2 == 0 }]">
+            <td>{{item.created}}</td>
+            <td>{{item.number + item.coin}}</td>
+          </tr>
+
+        </table>
+        <div class="user_tabs_span white100_bg f_no" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+          <span :class="{loding: tabLoging, no_data: no_data}"></span>
+          <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+        </div>
+      </div>
+    </scroll-table>
+  </div> 
+  <?php // 邀请记录 ?>
+  <div v-show="index == 4" v-cloak flex-box="2" flex="dir:top">
+    <scroll-table :data.sync="tabData" ref="scrollTab" flex-box="2" flex="dir:top">
+      <div slot="thead">
+        <table class="user_tabs border_top_one" rules='none'>
+          <?php //手机端展示用 ?>
+          <tr class="user_tabs_tr white100_bg">
+            <?php // 推薦的好友 ?>
+            <th><?php echo $lang['TJ_HY'] ?></th>
+            <?php // 註冊時間 ?>
+            <th><?php echo $lang['ZC_TIME'] ?></th>
+            <?php // 好友實名狀態 ?>
+            <th><?php echo $lang['HAO_YOU_SHI'] ?></th>
+            <?php if(false){ ?>
+            <?php // 獎勵提取記錄 ?>
+            <th><?php echo $lang['JL_TQU'] ?></th>
+            <?php // 返傭記錄 ?>
+            <th><?php echo $lang['FANYONG_JL'] ?></th>
+            <?php // 邀請排行榜 ?>
+            <th><?php echo $lang['YQ_PHB'] ?></th>
+            <?php } ?>
+          </tr>
+        </table>
+      </div>
+      <div slot="tbody" class="user_tabs_tr" flex-box="2">
+        <table class="user_tabs border_top_one" rules='none'>
+        
+          <tr v-for="(item, index) in tabData" v-show="!tabLoging && !no_data"
+            :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point', {white100_bg: index%2 != 0,gray50_bg : index%2 == 0 }]">
+            <td v-text="item.mo" v-cloak></td>
+            <td v-text="item.created" v-cloak></td>
+            <td style="color:#ffbb03" v-cloak>
+              <!-- :class="{green650_f: item.status ? item.status.code == 1: false, red500_f: item.status ? item.status.code != 1 : false}" -->
+            <span v-if="item.status==null">未实名 </span>      
+            <span v-else-if="item.status==2">已实名 </span>            
+
+            
+            </td>
+          </tr>
+         
+        </table>
+        
+        <div id="page-break">
+                <ul>
+                    <li v-if="cur>1" v-cloak>
+                    <a v-on:click="cur--,pageClick()" >上一页</a>
+                    </li>
+                    <li v-if="cur==1" v-cloak>
+                    <a class="banclick" >上一页</a>
+                    </li>
+                    <li v-for="item in indexs" v-bind:class="{'active':cur==item}" v-cloak>
+                    <a v-on:click="btnClick(item), pageClick()" v-text="item"></a>
+                    </li>
+                    <li v-if="cur!=all" v-cloak>
+                    <a v-on:click="cur++,pageClick()" >下一页</a>
+                    </li>
+                    <li v-if="cur==all" v-cloak>
+                    <a class="banclick" >下一页</a>
+                    </li>
+                    <li v-cloak><a>共<i v-text="all"></i>页</a></li>
+                    <div class="jumpbox" v-cloak>
+                        <input type="number" class="jumppage" />
+                        <a class="jumpbtn" v-on:click="pageSkip()">跳转</a>
+                    </div>
+                </ul>
+            </div>
+           
+            <input type="hidden" id="pageIndex" value="1">
+            <div class="bk-moreBtn">
+                <button id="morebtn" class="btn btn-outline" type="button" style="display: none;"><i class="fa fa-angle-down fa-fw"></i>更多</button>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="user_tabs_span white100_bg f_no" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+          <span :class="{loding: tabLoging, no_data: no_data}"></span>
+          <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+        </div>
+      </div>
+    </scroll-table>
+  </div>
+
+  
+  <?php // 活动规则 ?>
+  <div v-show ="index == 5" v-cloak flex-box="2" flex="dir:top">
+    <div class="mplan_rule white100_bg" flex-box="2">
+      <?php // 活动奖品 水命 ?>
+      <div class="mplan_rule_half">
+        <h4 class="mplan_rule_h"><?php echo $lang['HUO_JL']?></h4>
+        <div class="mplan_rule_ctn gray400_f"><?php echo $lang['ACT_AWARD']; ?></div>
+      </div>
+      <?php // 活動規則： ?>
+      <div class="mplan_rule_half">
+        <h4 class="mplan_rule_h"><?php echo $lang['HUO_GZ']?></h4>
+        <div class="mplan_rule_ctn gray400_f"><?php echo $lang['ACT_RULE']; ?></div>
+      </div>
+    </div>
+  </div> 
+  <?php //提取奖励弹窗 ?>
+  <div class="draw_alert" flex="cross:center main:center">
+    <?php //幕布 ?>
+    <div class="draw_curtain" v-if="showAlert" v-cloak></div>
+    <?php //内容 ?>
+    <transition name="zoom">
+      <div class="draw_content white100_bg" v-if="showAlert" v-cloak>
+        <?php //pc端title ?>
+        <h3 class="draw_titles"><?php echo $lang['TIQU_YE'] ?> <span class="show_close" @click="showAlert = !showAlert"></span></h3>
+        <?php //提取对应数额 ?>
+        <?php foreach ($rebate as $coin => $v) { ?>
+          <p v-if="drawTypes == '<?php echo $coin ?>'" v-cloak class="draw_over">
+            <?php echo $coin=='mcc_reg'?$lang['KYONG_EN']:$lang['YUEN']?>：&nbsp;&nbsp;&nbsp;<span><?php echo Tool_Math::mul($v[$coin.'_in'], 1), strtoupper(str_replace('_reg','',$coin)) ?></span>
+          </p>
+        <?php } ?>
+        <?php //奖励类型 ?>
+        <div :class="['draw_group', {draw_err_group: drawErr.drawtype == 2}]" flex="">
+          <span class="draw_group_label" flex-box="0" flex="main:center cross:center"><?php echo $lang['KYONG_TT'] ?></span>
+          <select name="" class="draw_group_input" flex-box="1" @change="changeOp" v-model="drawTypes">
+            <option value=""><?php echo $lang['KYONG_TIQU']?></option>
+            <option :value="key" v-if="key != 'pair'"
+                    v-for="(val, key) in optionData">
+              {{key == 'mcc_reg' ? '<?php echo $lang['YAOQING_TIQU']; ?>(MCC)' : '<?php echo $lang['JIAOYI_TIQU'];?>('+ key.toUpperCase() +')'}}
+            </option>
+          </select>
+        </div>
+        <?php //错误提示 ?>
+        <div class="draw_err">
+          <p v-if="drawErr.drawtype == 2" class="draw_err_warin"><?php echo $lang['JIAOYI_LEIXING'] ?></p>
+        </div>
+        <?php  //提取数额?>
+        <div :class="['draw_group', {draw_err_group: drawErr.drawNum == 2 || drawErr.drawNum == 3}]" flex="">
+          <span class="draw_group_label" flex-box="0" flex="main:center cross:center"><?php echo $lang['JIAOYI_SHUE'] ?></span>
+          <input type="text" name="" v-model="drawData.number" flex-box="1" class="draw_group_input"
+                :maxlength="maxLength" @blur="verify('number', 'blur')" @focus="verify('number', 'focus')">
+        </div>
+        <?php //错误提示 ?>
+        <div class="draw_err">
+          <p v-if="drawErr.drawNum == 1 || drawErr.drawNum == 2"
+            :class="{draw_err_warin: drawErr.drawNum == 2, draw_err_normal: drawErr.drawNum == 1}"><?php echo $lang['JSHURU_SHUE'] ?></p>
+          <p v-if="drawErr.drawNum == 3" class="draw_err_warin"><?php echo $lang['JS_LANG']['FORM_ERROR_OVER_NUMBER'] ?></p>
+        </div>
+        <button type="button" name="button" class="draw_btn yellow500_bg white100_f" @click="submitData" :disabled="submit_now">
+          <u class="loading-svg" data-loading="svg" v-if="submit_now" style="left:150px;"></u><?php echo $lang['DETERMINE'] ?>
+        </button>
+        <?php // 提取额度和小数点?>
+        <p class="draw_range" v-if="drawTypes == 'mcc_reg'? optionData['pair']['mcc'] :optionData['pair'][drawTypes]" v-cloak>
+          <?php echo $lang['JTI_BI'] ?>{{drawTypes == 'mcc_reg' ? 'MCC' :drawTypes.toUpperCase()}} <?php echo $lang['MIN_NUM'] ?>:
+          <span class="red500_f">{{getMin() }}{{drawTypes == 'mcc_reg' ? 'MCC' :drawTypes.toUpperCase()}}</span>
+          ，<span v-if="getLimit() > 0 "> <?php echo $lang['AND_MORE'] ?><?php echo $lang['MAX_LEN'] ?> <span class="red500_f">{{getLimit()}}</span> <?php echo $lang['DOT_LEN'] ?>{{drawTypes == 'mcc_reg' ? 'MCC' :drawTypes.toUpperCase()}}. </span>
+          <span v-if="getLimit() == 0"><?php echo $lang['JUST_INT'] ?>{{drawTypes == 'mcc_reg' ? 'MCC' :drawTypes.toUpperCase()}}。</span>
+        </p>
+      </div>
+      <?php //错误提示 ?>
+    </transition>
+  </div>
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="callfn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $lang['DETERMINE']; ?></span>
+  </my-alert>
+
+</div>
+

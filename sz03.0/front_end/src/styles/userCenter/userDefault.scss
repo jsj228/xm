@@ -1,0 +1,256 @@
+
+@import "../common/theme.scss";
+@import "./coinInTable.scss";
+
+.hide-form-dom {
+  height: 0;
+  width: 0;
+  font-size: 0;
+  overflow: hidden;
+}
+.tips-text {
+  padding: 23px 0 0 0;
+}
+
+.tab-one {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid transparent;
+
+  .rf {
+    float: right;
+  }
+  div {
+    margin-top: 16px;
+    width: 50%;
+    box-sizing: border-box;
+
+    &:nth-child(even) {
+      padding-left: 9px;
+    }
+    &:nth-child(odd) {
+      padding-right: 9px;
+    }
+    &>p {
+      display: flex;
+      position: relative;
+      // justify-content: space-between;
+      // text-align: left;
+      padding: 0 20px 0 0;
+      height: 58px;
+      line-height: 58px;
+      color: $grayBlack;
+      font-size: 16px;
+      background: $baseWhite;
+
+      &>.sort-title {
+        // float: left;
+        margin-right: 10px;
+        color: $deepBlack;
+      }
+      &>.self-det {
+        // align-items: flex-start;
+        align-self: flex-start;
+      }
+      &>a {
+        // float: right;
+        // align-self: flex-end;
+        // margin-left: 10px;
+        position: absolute;
+        right: 20px;
+        line-height: 58px;
+        color: #56c;
+        &:hover {
+          color: #598aee;
+          transition: all .3s;
+        }
+      }
+    }
+    .tab-icon {
+      display: inline-block;
+      // float: left;
+      // margin-right: 42px;
+      padding: 0 10px 0 24px;
+      width: 24px;
+      height: 58px;
+      vertical-align: middle;
+    }
+    .correct-tab {
+      background: url(../../assets/correct_icon.png) center center no-repeat;
+    }
+    .warning-tab {
+      background: url(../../assets/warnning_icon.png) center center no-repeat;
+    }
+  }
+}
+.user_index_title {
+  display: flex;
+}
+.user_index_real {
+  display: inline-flex;
+  align-items:center;
+  height: auto;
+  line-height: 16px;
+}
+.user_index_content {
+  padding-right: 40px;
+  display: inline-flex;
+  align-items:center;
+  height: 100%;
+  line-height: 16px;
+}
+.table-tips {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 0 16px 0;
+}
+#yibiallAssets {
+  display: none;
+}
+.user_fabi {
+  display: none;
+}
+// 我的资产
+.my-property {
+  padding-right: 10px;
+  color: $grayBlack;
+
+  span {
+    color: $deepBlack;
+  }
+  //账户切换部分
+  .user_account_changes {
+    padding: 0 12px;
+    height: 24px;
+    border-radius: 2px;
+    border: 1px solid #333;
+    color: #333;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+  }
+  .user_account_active {
+    background: #3366cc;
+    border: 1px solid #3366cc;
+    color: #fff;
+  }
+}
+
+.tab-table {
+  height: 100%;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .coin-in-table {
+    margin: 0;
+  }
+  .order-btn {
+    box-sizing: border-box;
+    padding: 0 10px;
+    color: $norBlack;
+    background: $baseWhite;
+
+    &:hover {
+      border: 1px solid transparent;
+      color: $baseWhite;
+      background: #4267b2;
+      @include transition(all, .3s);
+    }
+  }
+  table {
+    tbody {
+      td {
+        &:last-child {
+          width: 200px;
+          // max-width: 280px;
+        }
+      }
+    }
+  }
+  // .no-val {
+  //   display: none;
+  // }
+}
+.short-table {
+  height: 220px;
+}
+.full-table {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  overflow-y: hidden;
+
+  & > p {
+    flex-shrink: 0;
+  }
+  .tab-table {
+    flex-shrink: 3;
+    height: 100%;
+  }
+}
+.property_span {
+  margin-left: 20px;
+}
+
+
+.swich-btn {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0 10px;
+  width: 50px;
+  line-height: 19px;
+  height: 19px;
+  border-radius: 15px;
+  font-size: 12px;
+  color: $baseWhite;
+  background-color: #d2d2d2;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  b {
+    display: block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: $baseWhite;
+  }
+}
+.coin-in-table {
+  height: 100%;
+}
+
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .tips-text {
+    padding-top: 10px;
+  }
+  .tab-one div {
+    & > p, .tab-icon{
+      height: 44px;
+      line-height: 44px;
+      font-size: 14px;
+
+      a {
+        height: 44px;
+        line-height: 44px;
+        font-size: 14px;
+      }
+    }
+  }
+  .tab-table {
+    height: 15.5em;
+  }
+  .short-table {
+    height: 12.5em;
+  }
+  .table-tips {
+    padding: 10px 0;
+  }
+}

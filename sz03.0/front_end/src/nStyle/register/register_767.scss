@@ -1,0 +1,461 @@
+@import "../config.scss";
+@import "../color.scss";
+
+@media screen and(max-width: $smScreenMax) {
+  .show_pc {
+    display: none!important;
+  }
+  .register_email_img {
+    background-size: pxToRem(31) pxToRem(23);
+  }
+  .register_dom {
+    z-index: 40;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+
+    .reg_mask_contain {
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+    }
+    .reg_mask_contain_767 {
+      display: block;
+    }
+    .reg_mask_contain_1200 {
+      display: none;
+    }
+    .register_pc_reg {
+      display: none;
+    }
+    .register_phone_reg {
+      display: flex;
+    }
+    .register_h3 {
+      display: none;
+    }
+    .register_pc_alert {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right:0;
+      padding: pxToRem(120) 0 0 0;
+    }
+    .log_form,.reg_form {
+      padding: pxToRem(52) pxToRem(38) 0;
+    }
+    .register_switch_phone {
+      // display: flex;
+      display: none;
+      justify-content: space-between;
+      height: pxToRem(88);
+      line-height: pxToRem(88);
+      width: 100%;
+      text-align: center;
+      li {
+        // width: 50%;
+        width: 100%;
+        // border-bottom: 2px solid #dcdcdc;
+        font-size: pxToRem(30);
+        &.selected {
+          // border-bottom: 2px solid $yellow500;
+          color: $yellow500;
+        }
+      }
+    }
+    .reigster_input_group {
+      // margin-bottom: pxToRem(20);
+      position: relative;
+      padding: pxToRem(4);
+      width: pxToRem(670);
+      height: pxToRem(94);
+      // border: 1px solid #666;
+      border-bottom: 1px solid #dcdcdc;
+      border-radius: pxToRem(4);
+      &.register_focus {
+        position: relative;
+        border-bottom: 1px solid transparent;
+        &::before {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          content: '';
+          width: 100%;
+          height: 1px;
+          background: $yellow500;
+          box-shadow: 0px 0px 3px $yellow500;
+        }
+        &.register_input_phone {
+          border-bottom: none;
+        }
+      }
+      .register_label {
+        height: 100%;
+        line-height: 100%;
+        .register_phone_span {
+          height: pxToRem(94);
+        }
+        .register_img {
+          margin-right: pxToRem(18);
+          width: pxToRem(32);
+          height: pxToRem(42);
+          // line-height: pxToRem(94);
+        }
+        .register_area {
+          text-align: center;
+          line-height: pxToRem(94);
+        }
+        .register_border_div {
+          position: relative;
+          &::after {
+            position: absolute;
+            right: 0;
+            top: 16px;
+            content: '';
+            width: 1px;
+            height: pxToRem(42);
+            background-color: #dcdcdc;
+          }
+        }
+      }
+      .register_two_label {
+        width: pxToRem(180);
+      }
+      .register_input {
+        padding-left: pxToRem(11);
+        border: none;
+        height: 100%;
+      }
+      .register_input_right {
+        background: url('../../assets/reg/input-correct.png') no-repeat 90% center;
+        background-size: pxToRem(30) pxToRem(30);
+      }
+
+      .register_area_list {
+        z-index: 50;
+        position: absolute;
+        left: -1px;
+        top: pxToRem(93);
+        padding: pxToRem(20) 0;
+        // width: pxToRem(197);
+        width: 100%;
+        max-height: pxToRem(710);
+        overflow-y: auto;
+        background: $white100;
+        border:1px solid $gray100;
+        border-radius: pxToRem(8);
+        box-shadow: 0px 7px 17px $gray350;
+        .register_font {
+          padding: 0 pxToRem(15);
+          font-size: pxToRem(28);
+          height: pxToRem(56);
+          line-height: pxToRem(56);
+          .register_area_name {
+            max-width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          &:hover {
+
+          }
+        }
+        .register_area_code {
+          margin-left: pxToRem(22);
+          width: pxToRem(93);
+        }
+      }
+    }
+
+    .register_mes_voice {
+      text-align: right;
+    }
+    .register_post {
+      height: pxToRem(20);
+    }
+
+    .register_mes_voice {
+      line-height: pxToRem(40);
+      height: pxToRem(40);
+      font-size: pxToRem(24);
+    }
+    .register_user_agreement {
+      position: relative;
+      padding-top: pxToRem(42);
+      line-height: pxToRem(65);
+      .register_check {
+        .register_checkbox {
+          width: pxToRem(24);
+          height: pxToRem(24);
+        }
+      }
+      .register_over_login {
+        text-align: right;
+      }
+      .register_agreemetn_font {
+        font-size: pxToRem(26);
+      }
+    }
+    //登录
+    .register_login {
+      position: relative;
+      width: 100%;
+      height: pxToRem(90);
+      font-size: pxToRem(36);
+      border-radius: pxToRem(3);
+      border: none;
+      letter-spacing: pxToRem(10);
+    }
+    .reg_btm_line {
+      width: 100%;
+    }
+    .register_go_login {
+      line-height: pxToRem(100);
+      font-size: pxToRem(26);
+    }
+  }
+
+
+  //邮箱注册激活
+  .register_success_bg {
+    background: $white100;
+  }
+  .modal_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 41;
+    width: 100%;
+    height: 100%;
+    padding-top: pxToRem(120);
+  }
+  .modal_content {
+    box-sizing: border-box;
+    background: #fff;
+    height: 100%;
+  }
+  .modal_top {
+    position: relative;
+    margin-top: pxToRem(142);
+    width: 100%;
+    height: pxToRem(408);
+    &.modal_top_email_succ {
+      background: url('../../assets/email-active-succ-phone.png') no-repeat center;
+      background-size: contain;
+    }
+    &.modal_top_email_fail {
+      background: url('../../assets/email-active-fail-phone.png') no-repeat center;
+      background-size: contain;
+    }
+    &.modal_top_phone_succ {
+      background: url('../../assets/phone-active-succ.png') no-repeat center;
+      background-size: contain;
+    }
+    &.modal_top_repwd_succ {
+      background: url('../../assets/register-active-succ-phone.png') no-repeat center;
+      background-size: contain;
+    }
+    &.modal_top_sent_email {
+      background: url('../../assets/active-again-phone.png') no-repeat center;
+      background-size: contain;
+    }
+    .modal_close_btn {
+      display: none;
+    }
+  }
+
+  .modal_main_con {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    color: $gray500;
+    box-sizing: border-box;
+
+    .modal_main_txt {
+      line-height: pxToRem(100);
+      font-size: pxToRem(28);
+      padding: pxToRem(5) pxToRem(70) 0;
+      &.modal_main_txt_b {
+        margin-bottom: 0;
+        line-height: pxToRem(42);
+        text-align: left;
+        font-size: pxToRem(24);
+      }
+    }
+    button {
+      display: block;
+      margin-top: pxToRem(106);
+      width: pxToRem(610);
+      height: pxToRem(90);
+      color: #fff;
+      font-size: pxToRem(36);
+      // margin-bottom: 47px;
+    }
+    .no_email_btn {
+      cursor: pointer;
+      text-align: center;
+      color: #008cff;
+      height: pxToRem(154);
+      line-height: pxToRem(154);
+    }
+    .remail_div {
+      padding: pxToRem(48) pxToRem(70) pxToRem(114);
+      ul {
+        text-align: left;
+        list-style-type: disc;
+        li {
+          list-style-type: disc;
+          &:not(:last-child) {
+          }
+        }
+      }
+      .blue_txt {
+        color: #008cff;
+        cursor: pointer;
+        font-size: pxToRem(24);
+      }
+    }
+  }
+
+  .register_img_ver {
+    width: pxToRem(205);
+    .register_img_btn {
+      background: #fff;
+      width: pxToRem(195);
+      height: pxToRem(80);
+      font-size: pxToRem(22);
+      border-radius: pxToRem(3);
+      white-space: nowrap;
+    }
+    .register_send {
+      border: 1px solid $orange500;
+    }
+  }
+  // 忘記密碼
+  .forget_pwd_step {
+    font-size: pxToRem(34);
+    padding-bottom: pxToRem(100);
+    .forget_pwd_step_num {
+      padding-right: pxToRem(12);
+    }
+  }
+  .forget_pwd_step_pc {
+    display: none;
+  }
+  .forget_warp_btn {
+    margin-top: pxToRem(109);
+  }
+  .forgetTwo_phone {
+    padding-bottom: pxToRem(28);
+    font-size: pxToRem(34);
+  }
+
+
+
+  //输入框错误class
+  .err_all .err_input {
+    border: 1px solid $red500;
+  }
+  //错误提示
+  .register_input_mes,.register_input_code {
+    padding-left: pxToRem(60);
+    line-height: pxToRem(51);
+    height: pxToRem(51);
+    font-size: pxToRem(22);
+    color: $gray400;
+  }
+  //提示框部分
+  .err_tip {
+    background: url('../../assets/input_tips_err_icon.png') no-repeat left center;
+    background-size: pxToRem(20) pxToRem(20);
+  }
+  .err_warn {
+    background: url('../../assets/input_tips_icon.png') no-repeat left center;
+    background-size: pxToRem(20) pxToRem(20);
+  }
+  //密码强弱
+  .min_tip {
+    display: inline-block;
+    vertical-align: text-top;
+    width: pxToRem(30);
+    height: pxToRem(30);
+    background: url('../../assets/user/pwd_weak.svg') no-repeat left center;
+    background-size: pxToRem(30) pxToRem(30);
+  }
+  .middle_tip {
+    display: inline-block;
+    vertical-align: text-top;
+    width: pxToRem(30);
+    height: pxToRem(30);
+    background: url('../../assets/user/pwd_midd.svg') no-repeat left center;
+    background-size: pxToRem(30) pxToRem(30);
+  }
+  .max_tip {
+    display: inline-block;
+    vertical-align: text-top;
+    width: pxToRem(30);
+    height: pxToRem(30);
+    background: url('../../assets/user/pwd_strong.svg') no-repeat left center;
+    background-size: pxToRem(30) pxToRem(30);
+  }
+  // 未勾选弹窗
+  .register_agreemt_uncheck {
+    z-index: 55;
+    position: absolute;
+    top:pxToRem(-10);
+    left: pxToRem(0);
+    // width: pxToRem(250);
+    width: 100%;
+    height: pxToRem(60);
+    line-height: pxToRem(60);
+    text-align: left;
+    .register_content {
+      padding: 0 pxToRem(10) 0 pxToRem(50);
+      background: url('../../assets/err_tip_3x.png') no-repeat pxToRem(14) center;
+      background-size: pxToRem(24);
+      border: 1px solid $gray350;
+      border-radius: pxToRem(4);
+    }
+  }
+  // 协议三角
+  .register_sj {
+    z-index: 56;
+    display: block;
+    position: absolute;
+    transform:rotate(-45deg) translate(-50%, 0);
+    bottom:pxToRem(-4);
+    left: pxToRem(34);
+    width: pxToRem(15);
+    height: pxToRem(15);
+    border-left: 1px solid $gray350;
+    border-bottom: 1px solid $gray350;
+    border-radius: pxToRem(4);
+    background: $white100;
+    font-size: pxToRem(22);
+  }
+  // 加载
+  .loading-svg {
+    display: inline-block;
+    position: absolute;
+    margin-left: pxToRem(10);
+    // left: 30%;
+    top: pxToRem(25);
+    width: pxToRem(35);
+    height: pxToRem(35);
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: pxToRem(35);
+      height: pxToRem(35);
+      background: url('../../assets/loading.svg') center center no-repeat;
+      background-size: pxToRem(35) pxToRem(35);
+    }
+  }
+}

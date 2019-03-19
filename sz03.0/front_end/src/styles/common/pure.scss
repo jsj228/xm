@@ -1,0 +1,33 @@
+// @import "purecss/build/pure-min.css";
+// @import "purecss/build/grids-responsive-min.css";
+
+// hide
+.pure-u-hide {
+  display: none;
+}
+// div[class*="hide"] {
+//   width: 100px;
+// }
+@media screen and (max-width: 568px) {
+  .pure-u-sm-hide {
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pure-u-md-hide {
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .pure-u-lg-hide {
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .pure-u-xl-hide {
+    display: none!important;
+  }
+}

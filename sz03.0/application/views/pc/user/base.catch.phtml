@@ -1,0 +1,13 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+  <!-- <link rel="stylesheet" href="/css/user.css"> -->
+  <?php // 个人中心 ?>
+  <section>
+    <div class="bg-content">
+      <?php // 导航部分 ?>
+      <?php  include PATH_TPL.'/user/left_side.phtml';?>
+      <?php // 页面切换内容 ?>
+      <?php echo $this->content ?>
+    </div>
+    <?php echo $lang['CONDITION_COIN_LIST'] ?>
+  </section>
+<?php include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>

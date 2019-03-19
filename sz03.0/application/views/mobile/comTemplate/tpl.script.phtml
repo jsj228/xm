@@ -1,0 +1,14 @@
+<!-- <script src=/js/manifest.<?php // echo $layout['version']?>.js?v=<?php // echo $layout['clear_cache'];?>></script>
+<script src=/js/vendors.<?php // echo $layout['version']?>.js?v=<?php // echo $layout['clear_cache'];?>></script>
+<script src=/js/commons.<?php // echo $layout['version']?>.js?v=<?php // echo $layout['clear_cache'];?>></script> -->
+  <?php if (IS_MOBILE) {
+    $mob = "mob.";
+  } else {
+    $mob = "";
+  } ?>
+<!-- <script src="/js/<?php // echo $mob.$layout['controller'].'.'.$layout['action'].'.'.$layout['version'].'.js'?>"></script> -->
+<script src=<?php echo "/libs".'/'.$libs['libs']['js'] ?>></script>
+<script src=<?php echo $statics['manifest']['js'] ?>></script>
+<script src=<?php echo $statics['vendors']['js'] ?>></script>
+<script src=<?php echo $statics['commons']['js'] ?>></script>
+<script src=<?php echo $statics[$mob.$layout['controller'].'.'.$layout['action']]['js'] ?>></script>

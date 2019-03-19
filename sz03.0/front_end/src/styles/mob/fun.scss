@@ -1,0 +1,8 @@
+// 设计稿 决定 base size
+$baseSize: 75;
+// 设计稿跟视图 比率
+$dpr: 1;
+
+@function pxToRem($pxToRem) {
+  @return $pxToRem * $dpr / $baseSize * 1rem;
+}

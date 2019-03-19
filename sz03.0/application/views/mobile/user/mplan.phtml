@@ -1,0 +1,215 @@
+<!-- <link rel="stylesheet" href="/css/mplan.css"> -->
+<div class="rf-content mplan-contain mob-rf-content">
+  <div class="nav-crumbs mob-hide">
+    <?php echo $lang["USER_NAV_MASTER_PLAN"] ?> >
+    <a class="active-tab" href="javascript: void(0);"><?php echo $lang['YAOQING_LI']?></a>
+  </div>
+  <?php // 邀請返利 鏈接 提幣 事件 ?>
+  <div class="invite-win white-con shadow-cont mob-no-shadow">
+    <?php // 活動鏈接 ?>
+    <div class="">
+      <p><?php echo $lang['YAOQING_RIQ']?>：<span><?php echo !empty($activity)?$activity['start'].'&nbsp;&nbsp;~&nbsp;&nbsp;'.$activity['end']:$lang['YAOQING_JSU'] ?></span></p>
+      <div class="invite-link-tab">
+        <p><span class="in-step"></span> <?php echo $lang['FUZHI']?>：</p>
+        <?php // 復制鏈接 ?>
+        <div class="link-content">
+          <p class="coin-addr-detail" id="coinAddr">Hi，<?php echo $lang['TUIJ']?>！<?php echo $url; ?></p>
+          <div><a class="iv-btn iv-orange-btn" href="javascript:void(0);" data-copy="ele"><?php echo $lang['LIANJIE']?></a></div>
+        </div>
+      </div>
+      <?php // 分享 ?>
+      <div class="iv-share-win">
+        <p><span class="in-step in-step-two"></span><?php echo $lang['LTIE_LIAN']?> ：</p>
+        <div class="share-icon-list">
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php // 我的邀請 ?>
+  <div class="my-invite">
+    <p class="iv-sub-tit">
+      <span><?php echo $lang['WODE']?>：</span><?php echo $lang['YAO_QINGYOU']?> <span class="red-col"><?php echo Tool_Math::mul($inviteNum, 1)  ?></span> <?php echo $lang['PEOPLE'] ?>
+      <?php // 我的邀请排行 ?>
+      <br>
+      <?php // 我的邀请排行 ?>
+      <span><?php echo $lang['MY_IVT_RANK'] ?></span><?php
+      $myorder="";
+      if($myorderdata['myorder']){
+        $myorder= $myorderdata['myorder']>200?'200+':$myorderdata['myorder'];
+      } else {
+        $myorder="--";
+      }
+      echo $myorder; ?>
+      <br>
+      <?php // 累计邀请注册奖励 ?>
+      <span><?php echo $lang['LEI_JI'] ?></span><?php echo $myorderdata['mynumber']?$myorderdata['mynumber']:'--'; ?>AIT
+    </p>
+    <?php if(false){ ?>
+    <div class="invite-data-tab">
+      <?php // 累計 邀請 數據 ?>
+      <?php foreach ($rebate as $coin => $v) { ?>
+        <?php // mcc ?>
+        <?php if($coin=='mcc_reg'){ ?>
+          <div class="">
+            <div>
+              <div class="">
+                <?php echo $lang['LEI_JI']?>:
+              </div>
+              <div class="orang-f"><span><?php echo Tool_Math::add($v[$coin.'_in'], $v[$coin.'_out']); ?> </span>MCC</div>
+            </div>
+            <div>
+              <div class="">
+                <?php echo $lang['KEYONG_JI']?>:
+              </div>
+              <div class="green-f"><span><?php echo Tool_Math::mul($v[$coin.'_in'], 1) ?></span>MCC</div>
+            </div>
+          </div>
+        <?php } else { ?>
+        <?php //累積 返傭 邀請 數據 ?>
+          <div class="">
+            <div>
+              <div class="">
+                 <?php echo $lang['LEIJI_JL']?>:
+              </div>
+              <div class="orang-f"><span><?php echo Tool_Math::add($v[$coin.'_in'], $v[$coin.'_out']) ?> </span><?php echo strtoupper(str_replace('_reg','',$coin)); ?></div>
+            </div>
+            <div>
+              <div class="">
+                <?php echo $lang['KEYONG_YE']?>:
+              </div>
+              <div class="green-f"><span><?php echo Tool_Math::mul($v[$coin.'_in'], 1) ?> </span><?php echo strtoupper(str_replace('_reg','',$coin)); ?></div>
+            </div>
+          </div>
+        <?php } ?>
+      <?php } ?>
+      <?php // 提幣按鈕 ?>
+      <div class="">
+        <a class="iv-btn" id="coinOutEvent" href="javascript: void(0);"><?php echo $lang['TIQU_YE']?></a>
+      </div>
+    </div>
+    <?php } ?>
+  </div>
+  <?php // 邀請返利列表 ?>
+  <div class="down-win">
+    <?php // 表格 導航 ?>
+    <p class="in-nav" id="inNav">
+      <?php /* <span data-view="2"><?php echo $lang['JL_TQU']; ?></span><span data-view="3"><?php echo $lang['FANYONG_JL']; ?></span> */ ?>
+      <span class="at-in-nav" data-view="1"><?php echo $lang['YQ_JLL']?></span><span data-view="4">
+        <?php echo $lang["YQ_PHB"]; ?></span><span data-view="5"><?php echo $lang['YQ_GZ']?></span>
+    </p>
+    <div class="tab-table" id="inNavWin">
+      <?php // 邀請記錄 ?>
+      <div class="coin-in-table shadow-cont act-view-win mob-no-shadow" data-table="1">
+        <div class="t-body bea-ta" data-tbody="tBody">
+        <table id="tableContent">
+          <thead>
+            <tr>
+              <td><?php echo $lang['TJ_HY']?><?php echo $lang['T_HEAD_TYPE'] ?></td>
+              <td><?php echo $lang['ZC_TIME']?><?php echo $lang['T_HEAD_BALANCE'] ?></td>
+              <td><?php echo $lang['HAO_YOU_SHI']?><?php echo $lang['T_HEAD_FORZEN_MONEY'] ?></td>
+              <td><?php echo $lang['NI_JL']?><?php echo $lang['T_HEAD_TOTAL'] ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            // 綠色文字 class添加"green-font" ; 紅色文字 class 用 "red-font"
+            // 操作列 按鈕 允許操作用 class="order-btn" ,禁用按鈕 用 class="disable-btn"
+            ?>
+          </tbody>
+        </table>
+        <?php // 沒有數據時，顯示該元素， 設置 display: block ?>
+        <!-- <div class="no-data" data-id="tableNoData"></div> -->
+        <div class="no-data table-loading" id="tableLoading"></div>
+        <div class="no-data no-data-def" id="tableNoData" data-id="tableNoData" style="display: none;"><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+        <!-- <?php // if(!isset($coinList['on'])) { ?>
+        <?php //} ?> -->
+      </div>
+      </div>
+      <?php // 獎勵提幣記錄 ?>
+      <div class="iv-share-rule shadow-cont" data-rule="rule"  style="display: none">
+        <div class="">
+          <p><?php echo $lang['HUO_JL']?></p>
+          <?php if(false){ ?>
+          <div class="">
+            <p class="deep-font"><?php echo $lang['DANG_HAO']?>：</p>
+            1.<?php echo $lang['DANG_BIAN']?><span>10</span><?php echo $lang['JIANG_BIAN']?>；<br>
+            2.<?php echo $lang['NI_KE']?><span>20%</span><?php echo $lang['ZUO_WEI']?>。
+          </div>
+        <?php } ?>
+        <?php if(LANG == 'cn'){ ?>
+          <div class="">
+            當您的好友通過您的專屬邀請鏈接，進行註冊並成功通過實名認證後：<br><br>
+            1.您將獲得15個AIT作為獎勵；<br><br>
+            2.邀請好友註冊並實名通過排行榜前200名者可獲得如下獎勵：<br><br>
+            第1名：50000 AIT<br>
+            第2名：30000 AIT<br>
+            第3名：20000 AIT<br>
+            第4-10名：8000 AIT/位<br>
+            第11-50名：3000 AIT/位<br>
+            第51-100名：1000 AIT/位<br>
+            第101-200名：500 AIT/位<br>
+          </div>
+        <?php }else { ?>
+          <div class="">
+            DOBI platform activity: inviting friends to win big reward!<br><br>
+            Event prizes:<br><br>
+            When your friend has registered through your exclusive invitation link and successfully passed the real name certification:<br><br>
+            1. You will receive 15 AIT as a reward;<br><br>
+            2. the top 200 people who invite friends to register and successfully passed the real name certification will receive following rewards.<br><br>
+            NO.1: 50000 AIT<br>
+            NO.2: 30000 AIT<br>
+            NO.3: 20000 AIT<br>
+            NO.4-NO.10: 8000 AIT<br>
+            NO.11-NO.50: 3000 AIT<br>
+            NO.51-NO.100: 1000 AIT<br>
+            NO.101-NO.200: 500 AIT<br><br>
+          </div>
+        <?php } ?>
+        </div>
+        <div class="">
+          <p><?php echo $lang['HUO_GZ']?></p>
+          <?php if(LANG == 'cn'){ ?>
+            <div class="">
+              1.活動時間：2018年6月1日10：00-2018年6月10日10:00<br><br>
+              2.“註冊有禮 邀請送幣”活動獎勵數量有限，先到先得，送完為止；<br><br>
+              3.活动一的邀请好友排名奖励将在5个工作日内发放；活动二和活动三的奖励在实名认证通过后直接发放到您的账户，以上奖励的总和可在【我的账户】-【甜品盒】-【活动赠送币】查看。<br><br>
+              4.邀請送幣活動不限推薦人數，推薦越多用戶註冊，推薦人獲得AIT獎勵可疊加；邀請好友大比拼活動與邀請送幣活動獎勵不沖突，可重復享受。<br><br>
+              5.本次活動贈送的AIT將進行鎖倉一個月，一個月後方可進行轉幣及交易；<br><br>
+              6.禁止任何作弊行為，一旦發現，Dobitrade有權收回所給獎勵並對賬號進行處理；<br><br>
+              7.Dobitrade保留隨時修訂、暫停、終止本活動及任何相關規則之權利；<br><br>
+              8.本次活動規則最終解釋權歸Dobitrade所有。<br><br>
+            </div>
+          <?php }else { ?>
+            <div class="">
+              Activity Rules:<br><br>
+              1.Activity time： June 1, 2018，10：00 - June 10, 2018，10:00<br><br>
+              2.The number of the AIT are limited, so the activity will be end as soon as the reward of AIT over the limited number.<br><br>
+              3.The reward of activity 1 will be issued within 5 working days; the rewards of activity 2 and activity 3 will be issued to your account directly afterpassing the real name certification. The above awards can be viewed in 【My Account】 - 【Candies】-【Activity Rewards】.<br><br>
+              4.The more users are recommended to register, the more AIT rewards can be obtained; the inviting friend competitions are not in conflict with invitations to send money, you can enjoy repeatedly.<br><br>
+              5.The gifting AIT in this activity will be locked for one month, you can carry on the coin transaction after one month transactions;<br><br>
+              6. Prohibit any cheating. Once discovered, Dobitrade has the right to withdraw the award and ban the account; <br><br>
+              7. Dobitrade reserves the right to revise, suspend, terminate this activity at any time;<br><br>
+              8.The final interpretation right of this activity belongs to Dobitrade.<br><br>
+            </div>
+          <?php } ?>
+          <?php if(false){ ?>
+          <div class="">
+            1.<?php echo $lang['HUODONG_TIME'], !empty($activity)?$activity['start'].'&nbsp;&nbsp;~&nbsp;&nbsp;'.$activity['end']:$lang['YAOQING_JSU'] ?>；<br>
+            2.<?php echo $lang['ZHUCE_TIME']?>；<br>
+            3.<?php echo $lang['HAO_YOUSJ']?>；<br>
+            4.<?php echo $lang['RU_TONG']?>；<br>
+            5.<?php echo $lang['RUO_NI']?>；<br>
+            6.<?php echo $lang['JIN_Z']?>；<br>
+            7.<?php echo $lang['BAO_LIU']?>；<br>
+            8.<?php echo $lang['SUOYOU']?>。
+          </div>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php include PATH_TPL.'/comTemplate/tpl.mplan.alert.phtml';?>

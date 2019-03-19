@@ -1,0 +1,156 @@
+@import "../common/theme.scss";
+@import "../common/layout.scss";
+@import "./layout.scss";
+
+.news-win {
+  top: 70px;
+
+  .ns-lf {
+
+  }
+  .content {
+    padding: 20px 50px 20px 32px;
+    position: relative;
+  }
+}
+.ns-det-header {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  position: relative;
+  padding-bottom: 5px;
+  height: 79px;
+  border-bottom: 1px dashed #c6c4c4;
+
+  h1 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 37px;
+    color: $deepBlack;
+  }
+  .ns-det-des {
+    font-size: 12px;
+    line-height: 36px;
+    color: $grayBlack;
+
+    span {
+      margin-right: 50px;
+      height: 24px;
+    }
+  }
+}
+
+
+.ns-detail-content {
+  box-sizing: border-box;
+  position: absolute;
+  left: 32px;
+  top: 99px;
+  right: 0px;
+  bottom: 20px;
+  padding: 18px 50px 0 0;
+  overflow-y: auto;
+  text-align: justify;
+}
+.ns-rf {
+  .op-to-show {
+    width: 100%;
+    opacity: 0;
+    transition: all .3s;
+  }
+  .iss-area {
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    height: 167px;
+
+    textarea {
+      box-sizing: border-box;
+      resize:none;
+      padding: 20px 17px;
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+    }
+    .iss-length {
+      position: absolute;
+      right: 20px;
+      bottom: 6px;
+      color: $grayBlack;
+      font-size: 12px;
+    }
+  }
+  .no-loginin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: #c6c4c4;
+    font-size: 18px;
+
+    a {
+      color: #36c;
+    }
+  }
+  .ns-btn {
+    margin-top: 12px;
+    width: 132px;
+    color: #fff;
+    line-height: 39px;
+    height: 39px;
+    background: #4267b2;
+    &:hover {
+      background-color: #3156a1;
+      transition: all .3s;
+    }
+  }
+  .iss-list {
+    flex-shrink: 2;
+    margin-top: 17px;
+    padding: 9px 20px;
+    height: 70%;
+    overflow-y: auto;
+
+
+    li {
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #c6c4c4;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    .iss-li-top {
+      line-height: 42px;
+      span {
+        &:nth-child(1) {
+          margin-right: 28px;
+          color: $deepBlack;
+        }
+        &:nth-child(2) {
+          color: $grayBlack;
+        }
+      }
+    }
+    .iss-describe {
+      color: $norBlack;
+      line-height: 20px;
+      word-wrap: break-word;
+      // word-break: break-all;
+    }
+  }
+  .no-iss-tab {
+    margin-top: 84px;
+    width: 100%;
+    height: 91px;
+    background: #fff url(../../assets/no-iss-img.png) center center no-repeat;
+  }
+  .no-iss-text {
+    margin-top: 19px;
+    color: $norBlack;
+    text-align: center;
+  }
+}
+
+// @import "./detail.750.scss";

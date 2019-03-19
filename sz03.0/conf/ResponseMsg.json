@@ -1,0 +1,523 @@
+//請求返回信息
+{
+	"PWD_DIFF":{"cn":"兩次輸入的密碼不一致", "en":"Passwords do not match."},
+	"PWD_LEN":{"cn":"密碼長度需在6-20個字符之間", "en":"The password length must be between 6-20 characters."},
+	"NO_SPC_CHR":{"cn":"請勿輸入非法字符", "en":"Illegal character"},
+	"PWD_NOTBESAME":{"cn":"交易密碼不能與登錄密碼相同", "en":"The trading password cannot be the same as the login password."},
+	"PWD_NOTBESAMEY":{"cn":"登錄密碼不能與交易密碼相同", "en":""},
+	"ILLEGAL":{"cn":"'非法操作'", "en":"Illegal operation."},
+	"SET_SUCCESS":{"cn":"設置成功", "en":"Set successfully."},
+	"NEED_LOGIN":{"cn":"請先登錄再進行此操作", "en":"Login required.  Please login!"},
+	"CODE_ERROR":{"cn":"驗證碼錯誤", "en":"Verify code error"},
+	"PARAM_ERROR":{"cn":"參數錯誤", "en":"Parameter error"},
+	"NEED_REAL_AUTH":{"cn":"請實名認證後再操作", "en":"Real name authentication is required."},
+	"PHONE_CODE_ERROR":{"cn":"手機驗證碼錯誤", "en":"Phone verification code error."},
+	"WALLET_ADDR_ERROR":{"cn":"請輸入有效的接收地址", "en":"Please enter a valid wallet address"},
+	"COIN_OUT_FROZEN":{"cn":"您的提幣功能已被凍結，請聯系客服", "en":"Your account has been frozen."},
+	"COIN_OUT_RANGE":{"cn":"轉出數額不能小於%s或者大於%s", "en":"The amount transferred cannot not be less than%s or greater than%s."},
+	"COIN_NOT_ENOUGH":{"cn":"餘額不足", "en":"Insufficient funds in your account."},
+	"NOT_REPEAT":{"cn":"請不要重復操作", "en":"Do not repeat the operation."},
+	"USER_COIN_STATISTIC_MSG":{"cn":"親愛的%s：您在%s第一次轉出%s，至今已累計轉出%d筆，共%s個幣！", "en":"Dear %s: Converted to %s in %s, accumulative total %s times, a total of %s coins!"},
+	"HOURS":{"cn":"小時", "en":"Hours"},
+	"PRICE_ERROR":{"cn":"價格輸入有誤", "en":"Incorrect price!  Please enter a valid price!"},
+	"NUMBER_ERROR":{"cn":"數量輸入有誤", "en":"Incorrect amount! Please enter a valid quantity!"},
+	"DAY_OFF":{"cn":"今天休市", "en":"Trading platform is closed for today."},
+	"HOLIDAY_OFF":{"cn":"節假日休市", "en":"Business office is closed due to Holiday."},
+	"TRANS_TIME":{"cn":"交易時間為 ", "en":"Transaction time is"},
+	"PRICE_RANGE":{"cn":"挂單價格範圍 %s - %s ", "en":"Range of price is %s - %s"},
+	"TRADE_FROZEN":{"cn":"您的交易權限已被凍結，請聯系客服", "en":"Your account has been locked, please contact customer service."},
+	"TRADE_PWD_ERROR":{"cn":"交易密碼錯誤", "en":"Transaction password is incorrect."},
+	"TRADE_BUY_FROZEN":{"cn":"您的買入權限已被凍結,禁止買入", "en":"Your account has been frozen, no buying is allowed."},
+	"TRADE_SALE_FROZEN":{"cn":"您的賣出權限已被凍結,禁止賣出", "en":"Your account has been frozen, no selling is allowed."},
+	"ORDER_SUCCESS":{"cn":"下單成功", "en":"Success!  Your order has been placed."},
+	"SYS_BUSY":{"cn":"系統繁忙", "en":"System busy"},
+	"SYS_ERROR":{"cn":"系統錯誤", "en":"System error"},
+	"WAIT_SEC":{"cn":"請等待%s秒再進行操作", "en":"Please wait for %s seconds to retrying operation."},
+	"THIS_COIN_NOT_ENOUGH":{"cn":"您的%s不足", "en":"You do not have enough %s to complete transaction."},
+	"HAVE_NO_RIGHT":{"cn":"您無權進行此操作", "en":"You do not have permission to perform this transaction."},
+	"CANCEL_FAILED":{"cn":"撤銷失敗，您的委托已經被處理過", "en":"Cancel failed. Your order books has been processed."},
+	"SUCCESS":{"cn":"操作成功", "en":"Success!"},
+	"SMS_TO_VOICE_WARN":{"cn":"短信過於頻繁，請使用語音驗證碼", "en":"Too many SMS!  Please use voice verification code."},
+	"SMS_SUCCESS":{"cn":"發送成功", "en":"Sent successfully!"},
+	"SMS_FAILED":{"cn":"短信過於頻繁，請使用語音驗證碼", "en":"Sent too often, please try again later or use voice verification or try again later."},
+	"SMS_WAIT_SEC":{"cn":"請您過60秒再點擊發送", "en":" Please wait for 60 seconds and retry!"},
+	"NEED_TRADE_PWD":{"cn":"請輸入交易密碼", "en":"Please enter the trading password."},
+	"USER_NOT_EXISIT":{"cn":"賬號不存在", "en":"USER_NOT_EXIST"},
+	"TRAND_NUM_RANGE":{"cn":"最小交易數量為 %s<br>最大交易數量為 %s", "en":"The minimum transaction size is %s<br>, The maximum transaction size is %s"},
+	"COIN_OUT_STOP":{"cn":"提幣暫停", "en":"Withdrawal are currently suspended."},
+	"MODIFY_LOGIN_PASSWORD":{"cn":"恭喜妳成功修改登錄密碼", "en":"Congratulations! Your login password has been changed!"},
+	"RETRIEVE_PASSWORD_SUCCESS":{"cn":"找回密碼成功", "en":"Retrieve password successfully"},
+	"RECORD_ID":{"cn":"記錄ID", "en":"Record ID"},
+	"COINOUT_TIME":{"cn":"轉出時間", "en":"TIMEOUT!"},
+	"RECEIVE_ADDRESS":{"cn":"接收地址", "en":"Receive funds address:"},
+	"ADDRESS_OWNER":{"cn":"錢包地址所屬", "en":"Wallet Address Owner:"},
+	"NUMBER":{"cn":"數量", "en":"NUMBER"},
+	"STATUS":{"cn":"狀態", "en":"STATUS"},
+	"COINOUT_RECORD":{"cn":"轉出記錄", "en":"Withdrawal History"},
+	"IN_PLATFORM":{"cn":"平臺內", "en":"Inside Platform"},
+	"OUT_PLATFORM":{"cn":"平臺外", "en":"Outside Platform"},
+	"BUY":{"cn":"買入", "en":"BUY"},
+	"SALE":{"cn":"賣出", "en":"SELL"},
+	"REAL_AUTHED":{"cn":"已實名", "en":"TRUE"},
+	"UNREAL_AUTHED":{"cn":"未實名", "en":"FALSE"},
+	"YOUXIANG":{"cn":"手機號必須", "en":"MUST enter your phone number!"},
+	"TEL_DUO":{"cn":"手機號格式不正確", "en":"Invalid phone number format"},
+	"TEL_SHAO":{"cn":"手機號格式不正確", "en":"Invalid phone number format"},
+	"TEL_GESHI":{"cn":"手機號格式不正確", "en":"Incorrect phone number!"},
+	"TEL_BUCUNZAI":{"cn":"手機號不存在", "en":"Phone number does not exist!"},
+	"TEL_SHIYONG":{"cn":"手機號已經被使用", "en":"Phone number has already been registered!"},
+	"TEL_PASSWORD":{"cn":"密碼必須", "en":"Must enter password!"},
+	"TEL_CHAOGUO":{"cn":"密碼最多不能超過25個字符", "en":"Pasword cannot exceed 25 characters!"},
+	"TEL_SHAOYU":{"cn":"密碼不能少於6個字符", "en":"Password must be a minimum of 6 characters!"},
+	"TEL_CUOWU":{"cn":"密碼格式錯誤", "en":"invalid password format!"},
+	"TEL_CCW":{"cn":"密碼錯誤", "en":"Password Error!"},
+	"TEL_CHONGFU":{"cn":"重復密碼必須", "en":"Must retype password!"},
+	"TEL_BUYIZHI":{"cn":"密碼不一致", "en":"Password does not match!"},
+	"TEL_YZM":{"cn":"驗證碼必須", "en":"Please enter verification code!"},
+	"TEL_ZQ":{"cn":"位數不正確", "en":"Incorrect number of digits!"},
+	"TEL_YZM_CW":{"cn":"驗證碼錯誤", "en":"Verification code error!"},
+	"TEL_YZM_DX":{"cn":"短信驗證碼必須", "en":"Must enter SMS verification code!"},
+	"TEL_YZM_DXL":{"cn":"短信驗證碼必須6位", "en":"Verification code must be 6 digits!"},
+	"TEL_NUMBER":{"cn":"短信驗證碼錯誤", "en":"SMS verification code error!"},
+	"TEL_NAME":{"cn":"姓名必須", "en":"You must enter your full name!"},
+	"TEL_NAME_YQ":{"cn":"姓名不符合要求", "en":"Name does not requirements!  Please enter your full name!"},
+	"TEL_ZJ":{"cn":"證件必須", "en":"Please attach your documents!"},
+	"TEL_ZJ_GESHI":{"cn":"證件格式不正確", "en":"Incorrect file format!"},
+	"TEL_ZJ_CS":{"cn":"參數錯誤", "en":"Parameter error!"},
+	"TEL_CS":{"cn":"請上傳後缀格式為jpg/jpeg/png的文件", "en":"Please submit documents using jpg/jpeg/png file formats!"},
+	"TEL_CONTENT":{"cn":"內容必須填寫", "en":"Please enter all requested information!  These fields are required!"},
+	"CONTENT_DUO":{"cn":"內容最多140個字", "en":"Content can not be greater than 140 words!"},
+	"CONTENT_DU":{"cn":"內容格式不正確", "en":"Content format is incorrect!"},
+	"NINHAO":{"cn":"您好", "en":"Hello"},
+	"NINHAO_SHENQI":{"cn":"申請註冊或登錄，請確認是本人操作", "en":",Apply for registration or login, please confirm that it is my own operation!"},
+	"NINHAO_ZHAOHUI":{"cn":"申請找回密碼，請確認是本人操作", "en":",Apply for registration or login, please confirm that it is my own operation!"},
+	"BENCI":{"cn":"本次驗證碼5分鐘內有效", "en":"This code is only valid for 5 minutes"},
+	"YAM_YZM":{"cn":"【火網】驗證碼:", "en":"[DOBI] Verfication code:"},
+	"YAM_SHI":{"cn":"【火網】您的驗證碼是", "en":"[DOBI] Your verfication code is"},
+	"YUN_SHI": {"cn": "【DOBI火網】您的驗證碼是", "en": "[DOBI] Your verfication code is"},//云片网签名
+	"YAM_DUANXIN":{"cn":"，如非本人操作，請忽略本短信。", "en":"Please cancel operation."},  //Not sure of this translation!!!
+	"UID":{"cn":"火網賬戶UID", "en":"[DOBI] Account UID error!"},
+	"UID_SHENQI":{"cn":"申請YBEX唯一綁定碼驗證碼，請確認是本人操作", "en":"Confrom you wish to apply YBEX link! "},
+	"SHEN_QI":{"cn":"申請", "en":"application"},
+	"TI_XIAN":{"cn":"提現，請確認是本人操作", "en":"Please confirm operation!"},
+	"BALANCE_NOT_ENOUGH":{"cn":"餘額不足", "en":"Insuficient Funds!"},
+	"BASEYI":{"cn":"正面照片不能為空", "en":"Must attach photo of front side of ID card or Passport"},
+	"BASEER":{"cn":"背面照片不能為空", "en":"Must attach photo of back side of ID card"},
+	"BESESAN":{"cn":"手持證件照不能為空", "en":"Must attach photo with self-picture of you holding your ID card"},
+
+	"SMS_FAIL": {
+		"cn": "發送失敗",
+		"en": "Failed to send SMS!"
+	},
+	"SMS_CHONG": {
+		"cn": "保存成功",
+		"en": "Successfully Saved!"
+	},
+	"SMS_SHIBAN": {
+		"cn": "保存失敗",
+		"en": "Error saving data"
+	},
+	"SMS_SHENHE": {
+		"cn": "資料提交成功，審核時間為1-3個工作日,請您耐心等待!",
+		"en": "Information was successfully submitted, please allow from 1-3 days for verification."
+	},
+	"LOGIN_COMMENT": {
+		"cn": "請先登錄再評論",
+		"en": "Please login to comment!"
+	},
+	"AUTONYM_COMMENT": {
+		"cn": "實名認證通過後方可評論",
+		"en": "Real-name authentication can be reviewed in the rear."
+	},
+	"D_SUCCESS": {
+		"cn": "成功",
+		"en": "Success!"
+	},
+	"D_FAIL": {
+		"cn": "失敗",
+		"en": "Failure!"
+	},
+	"REQUEST_ERROR": {
+		"cn": "請求錯誤",
+		"en": "Error processing request!"
+	},
+	"REGISTER_FAIL": {
+		"cn": "註冊失敗",
+		"en": "Registration Failed!"
+	},
+	"REGISTER_SUCCESS": {
+		"cn": "註冊成功",
+		"en": "Registration Successful!"
+	},
+	"LOGIN_SUCCESS": {
+		"cn": "登入成功",
+		"en": "Login Successful!"
+	},
+	"GET_WALLETADDRESS_FAIL": {
+		"cn": "獲取錢包地址失敗",
+		"en": "Error retrieving wallet address!"
+	},
+	"GET_WALLETADDRESS_SUCCESS": {
+		"cn": "獲取錢包地址成功",
+		"en": "Wallet address retrieved successfully!"
+	},
+	"GET_DATA_SUCCESS": {
+		"cn": "獲取數據成功",
+		"en": "Data retrieved successfully!"
+	},
+	"USER_COIN_IN_MSG": {
+		"cn": "親愛的%s：您在%s第一次轉入%s，至今已累計轉入%d筆，共%s個幣！",
+		"en": "Dear %s: The first time you transferred %s of %s, for a total of %s times, and a total of %s coins!"
+	},
+	"GET_A_WORD_SUCCESS": {
+		"cn": "獲取一句話成功",
+		"en": "Successfully retrieved word!"
+	},
+	"LAST_ONE_PIECE": {
+		"cn": "已經是最後一篇了",
+		"en": "Last part"
+	},
+	"FIRST_ONE_PIECE": {
+		"cn": "已經是第一篇了",
+		"en": "First part"
+	},
+	"INFO_USER_DOBI": {
+		"cn": "賬戶信息-我的賬戶-火網交易平臺",
+		"en": "Account Information - My Account - Dobi Exchange"
+	},
+	"ALREADY_FINISH_MESSAGE": {
+		"cn": "妳已完善過資料",
+		"en": "You have already corrected this information!"
+	},
+	"CARD_ALREADY_IS_USED": {
+		"cn": "證件號已被使用",
+		"en": "ID number has already been registered!"
+	},
+	"CARD_TYPE_ERROR": {
+		"cn": "證件格式不正確",
+		"en": "The document format is not correct!"
+	},
+	"MESSAGE_SUBMIT_FAIL": {
+		"cn": "資料提交失敗,請重試",
+		"en": "Failed to submit data, please retry!"
+	},
+	"CARD_PHOTO_NEED_ALL": {
+		"cn": "證件照片需上傳完整",
+		"en": "Please upload certificate photos! All documents are required!"
+	},
+	"ALREADY_CERTIFIED_SUCCESSFUL": {
+		"cn": "妳已認證成功",
+		"en": "Your certification is successful!"
+	},
+	"TRUST_TIME": {
+		"cn": "委托時間",
+		"en": "Time of order books"
+	},
+	"COIN_TYPE": {
+		"cn": "幣種",
+		"en": "Currency"
+	},
+	"FLAG_TYPE": {
+		"cn": "類型",
+		"en": "Type"
+	},
+	"TRUST_PRICE": {
+		"cn": "委托價格",
+		"en": "order books price"
+	},
+	"TRANSACTION_NUMBER": {
+		"cn": "成交數量",
+		"en": "Number of transactions:"
+	},
+	"NOT_TRANSACTION_NUMBER": {
+		"cn": "尚未成交數量",
+		"en": "Number of transactions not yet processed:"
+	},
+	"NOT_FINISH_TRANSACTION": {
+		"cn": "未成交",
+		"en": "Transactions not yet completed"
+	},
+	"PART_FINISH_TRANSACTION": {
+		"cn": "部分成交",
+		"en": "Partially complete transactions:"
+	},
+	"ALL_FINISH_TRANSACTION": {
+		"cn": "全部成交",
+		"en": "Completed Transactions:"
+	},
+	"ALREADY_CANCEL": {
+		"cn": "已經撤銷",
+		"en": "Transaction already cancelled!"
+	},
+	"TRUST_RECORD": {
+		"cn": "委托記錄",
+		"en": "Transaction History"
+	},
+	"ORDER_NUMBER": {
+		"cn": "訂單號",
+		"en": "Order Number"
+	},
+	"ORDER_SUCCESS_TIME": {
+		"cn": "成交時間",
+		"en": "Time transaction completed"
+	},
+	"ORDER_SUCCESS_PRICE": {
+		"cn": "成交價格",
+		"en": "Transaction price"
+	},
+	"ORDER_SUCCESS_MONEY": {
+		"cn": "成交金額",
+		"en": "Transaction Amount"
+	},
+	"ORDER_SUCCESS_RECORD": {
+		"cn": "成交記錄",
+		"en": "Successful Transaction History"
+	},
+	"D_TIME": {
+		"cn": "時間",
+		"en": "time"
+	},
+	"COIN_IN_NUMBER": {
+		"cn": "轉入數量",
+		"en": "Deposit Quantity"
+	},
+	"CONFIRM_NUMBER": {
+		"cn": "確認次數",
+		"en": "Confirmation Number"
+	},
+	"COIN_IN_RECORD": {
+		"cn": "轉入記錄",
+		"en": "Deposit History"
+	},
+	"SMS_SIGN": {
+		"cn": "【火網】驗證碼",
+		"en": "Dobi"
+	},
+	"YUN_SIGN": {	//云片签名
+		"cn": "【DOBI火網】驗證碼",
+		"en": "【DOBI火網】SMS Code"
+	},
+	"INVITER": {
+		"cn": "邀請人",
+		"en": "Inviter"
+	},
+	"NEED_SET_TRADEPWD": {
+		"cn": "請先設置交易密碼",
+		"en": "Please setup transaction password first"
+	},
+	"COIN_TO_BTC_PRICE": {
+		"cn": "%s | %s –比特幣交易萊特幣，以太坊的幣幣交易平臺-火網交易平臺",
+		"en": "%s | %s - Bitcoin To Litecoin - Ethereum Trading - DOBI Trading Platform"
+	},
+	"THE_NEW_PRICE": {
+		"cn": "%s最新價格%s,火網交易平臺",
+		"en": "%s last price %s, DOBI Trading Platform"
+	},
+	"MAIN_TITLE_INDEX": {
+		"cn": " 火網交易平臺",
+		"en": "DOBI Trade"
+	},
+	"RECORD_NOT_EXISIT": {
+		"cn": "記錄不存在",
+		"en": "record not exisit"
+	},
+	"PENDING_AUDIT": {
+		"cn": "待審批",
+		"en": "Pending audit"
+	},
+	"WAIT_FOR_COINOUT": {
+		"cn": "等待轉出",
+		"en": "Wait"
+	},
+	"CANCELED": {
+		"cn": "已撤銷",
+		"en": "Canceled"
+	},
+	"CONFORM": {
+		"cn": "確認中",
+		"en": "Confirming"
+	},
+	"SUCCEED": {
+		"cn": "成功",
+		"en": "SUCCEED"
+	},
+	"BLOCK_NOT_EXISTS": {
+		"cn": "該區塊尚未生成",
+		"en": "The block does not exist"
+	},
+	"ACTIVITY_EXPIRED": {
+		"cn": "活動已過期",
+		"en": "The activity has expired"
+	}
+	,
+	"ACTIVITY_ABOUT_TO_START": {
+		"cn": "活動即將開始",
+		"en": "The activity is about to start"
+	}
+	,
+	"NO_BRANCH_COIN": {
+		"cn": "沒有分叉幣可領",
+		"en": "No bifurcated currency"
+	},
+	"NO_ABOUT_TRUST": {
+		"cn": "沒有需要取消的相關委托",
+		"en": "No Open Orders"
+	},
+	"PLEASE_ENTER_NUMBER": {
+		"cn": "請輸入數字",
+		"en": "Input Numbers"
+	},
+	"MINPRICE_THAN_MINPRICE": {
+		"cn": "最低價不能高於最高價",
+		"en": "Minimum price can not exceed the maximum one"
+	},
+	"PAGE_EXPIRED": {
+		"cn": "頁面已過期，請刷新頁面",
+		"en": "The page has expired, Please refresh the page!"
+	},
+	"YUN_SEND_FAIL": {
+		"cn": "輸入號碼與歸屬地不匹配",
+		"en": "Phone number can not match with the Area"
+	},
+	"ERROR_NUM_LIMIT": {
+		"cn": "輸入錯誤次數過多，請稍後再試",
+		"en": "Too many errors! Please try it again later!"
+	},
+	"HUODONG_NO": {
+		"cn": "活動已結束!",
+		"en": "Activity has been completed "
+	},
+	"HUODONG_YI": {
+		"cn": "每人每天只能領取一次哦!",
+		"en": "Everyone  gets candies once per day"
+	},
+	"HUODONG_YICI": {
+		"cn": "每人只能領取一次哦!",
+		"en": "Only once for everyone"
+	},
+	"HUODONG_LO": {
+		"cn": "晚來了一步,已經送完咯!",
+		"en": "You are late,Come earlier tomorrow !"
+	},
+	"HUODONG_CG": {
+		"cn": "恭喜您已經成功領取",
+		"en": "Congratulations! You have received Candies"
+	},
+	"HUODONG_BUCUN": {
+		"cn": "该活动不存在!",
+		"en": "No such Activity"
+	},
+	"HUODONG_BUCUN_NO": {
+		"cn": "該活動還未開始!",
+		"en": "No such Activity"
+	},
+	"HUODONG_SIGN": {
+		"cn": "恭喜您連續簽到5次，獲得",
+		"en": "Congratulations ! You have successfully signed in for 5 consecutive days ,you’ve got"
+	},
+	"HUODONG_QISIGN": {
+		"cn": "恭喜您連續簽到7次，獲得",
+		"en": "Congratulations! ,You have successfully signed in for 7 consecutive days ,you’ve got"
+	},
+	"COINTYPE_NOT_EXISIT": {
+		"cn": "該幣種不存在",
+		"en": "No such Currency"
+	},
+	"USER_NOT_EXISIT": {
+		"cn": "用户不存在",
+		"en": "No such Account"
+	},
+	"DOBI_OVER_NOTENOUGH": {
+		"cn": "幣幣賬戶可用餘額不足",
+		"en": "Insufficient Balance in your Trading Account"
+	},
+	"SYSTEM_BUSY": {
+		"cn": "系统繁忙",
+		"en": "System busy!"
+	},
+	"YIBI_OVER_NOTENOUGH": {
+		"cn": "法幣賬戶可用餘額不足",
+		"en": "Insufficient Balance in your Funding Account"
+	},
+	"HUZHUAN_ERROR": {
+		"cn": "賬戶互轉錯誤，請聯繫客服",
+		"en": "Transaction error ! please contact our Customer Service"
+	},
+	"HUZHUAN_SUCCESS": {
+		"cn": "賬戶互轉成功",
+		"en": "Transaction successful"
+	},
+	"GUOJI_VOICE": {
+		"cn": "國際語音暫不支持",
+		"en": "Your Country Code is currently not supported"
+	},
+	"MIN_COINOUT": {
+		"cn": "資金劃轉最小限額為",
+		"en": "Minimum amount to transfer"
+	},
+	"MAX_COINOUT": {
+		"cn": "資金劃轉最大限額為",
+		"en": "Maximum amount to transfer"
+	},
+	"TANASOUT_STOP": {
+		"cn": "劃轉暫停",
+		"en": "Transfer are currently suspended"
+	},
+	"NUMBER_HOME": {
+		"cn": "首頁",
+		"en": "Home"
+	},
+	"NUMBER_FOOR": {
+		"cn": "尾頁",
+		"en": "Last page"
+	},
+	"INTURN_FORBEDDEN": {
+		"cn": "該用戶已凍結，暫無法互轉",
+		"en": "The account has been blocked , transfer is out of service temporarily "
+	},
+	"RECEIPT_COIN_NOTICE": {
+		"cn": "恭喜您領到了%s, 您可以在我的賬戶中查看。",
+		"en": "Congratulations on your receipt of %s. You can check it in my account. "
+	},
+	"RECEIPT_VOLUME_NOTICE": {
+		"cn": "恭喜您領到了%d天免息卷, 您可以在交易中心查看。",
+		"en": "Congratulations, you have received the %d day interest free volume, you can see it in the exchange market. "
+	},
+	"NOT_OPEN_YET": {
+		"cn": "暫未開放",
+		"en": "Not open yet "
+	},
+	"EMAIL_SUCCESS": {
+		"cn": "邮箱已经被激活",
+		"en": ""
+	},
+	"EMAIL_ZIX": {
+		"cn": "您发送过于频繁，请仔细检查邮箱，半小时后再试！",
+		"en": ""
+	},
+	"EMAIL_SB": {
+		"cn": "邮件发送失败",
+		"en": ""
+	},
+	"EMAIL_SUCCESSSB": {
+		"cn": "邮件发送成功",
+		"en": ""
+	},
+	"EMAIL_LOGINMSG":{
+		"cn": "【火網】驗證碼515643（您好:18370628811申請找回密碼，請確認是本人操作），本次驗證碼30分鐘內有效。",
+		"en": ""
+	},
+	"EMAIL_REQUIRE":{
+		"cn": "邮箱验证码不能为空",
+		"en": ""
+	},
+	"EMAIL_MAX":{
+		"cn": "邮箱验证码必须6位",
+		"en": ""
+	},
+	"EMAIL_NUMBER":{
+		"cn": "邮箱验证码错误",
+		"en": ""
+	}
+
+}

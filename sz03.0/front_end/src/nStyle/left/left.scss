@@ -1,0 +1,89 @@
+@import "../config.scss";
+@import "../color.scss";
+
+// 响应式
+// @import "./left_767.scss";
+// @import "./left_980.scss";
+
+// @media screen and (min-width: $superScreenMin) {
+  //内容部分开始到头部导航部分
+  .fn_bg_content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 70px;
+    overflow: hidden;;
+    overflow-y: auto;
+    min-width: 1200px;
+    min-height:1013px;
+    overflow: visible;
+  }
+  .left_nav {
+    width: 223px;
+    box-shadow: 0px 4px 5px  rgba(14,25,43, 0.3) inset;
+    background: rgba(14,25,43, 0.9);
+    .left_first {
+      margin-top: 28px;
+    }
+    .left_dl:not(:last-child){border-bottom: 1px solid $deepBlue500;padding: 0 0 15px 0;}
+    .left_dl {
+      .left_dl_title {
+        // text-align: center;
+        font-size: 16px;
+        text-indent: 44px;
+        line-height: 61px;
+        &:before {
+          content: '';
+          position: relative;
+          display: inline-block;
+          width: 25px;
+          height: 15px;
+          background: url(../../assets/user_default_icon.png) left center no-repeat;
+        }
+      }
+      .my-money {
+
+        &:before {
+          bottom: -1px;
+          background-image: url(../../assets/my_money_icon.png);
+        }
+      }
+      .my-trade {
+
+        &:before {
+          bottom: -2px;
+          background-image: url(../../assets/my_trade_icon.png);
+        }
+      }
+      .my-plan {
+
+        &:before {
+          bottom: -1px;
+          background-image: url(../../assets/master_plan.png);
+        }
+      }
+      .left_dd {
+        margin: 8px 0;
+        // text-align: center;
+        .left_jump {
+          display: inline-block;
+          width: 100%;
+          line-height: 41px;
+          text-indent: 69px;
+          color: #A2ABB8;
+
+          &:hover {
+            color: $white100;
+            background: $activeRed;
+            transition: all .35s;
+          }
+        }
+        .u-active {
+          color: $white100;
+          background: $activeRed;
+        }
+      }
+    }
+  }
+// }

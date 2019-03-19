@@ -1,0 +1,29 @@
+// 设计稿 决定 base size
+$baseSize: 75;
+// 设计稿跟视图 比率
+$dpr: 1;
+
+@function pxToRem($pxToRem) {
+  @return $pxToRem * $dpr / $baseSize * 1rem;
+}
+
+
+// 设计稿 决定 base size
+$baseSize768: 76.8;
+// 设计稿跟视图 比率
+$dpr: 1;
+@function pxToRem768($pxToRem) {
+  @return $pxToRem * $dpr / $baseSize768 * 1rem;
+}
+
+// 手机
+$smScreenMax: 767px;
+// 平板
+$mdScreenMin: 768px;
+$mdScreenMax: 979px;
+// 小屏幕
+$bigScreenMin: 980px;
+$bigScreenMax: 1199px;
+// 大屏幕
+$superScreenMin: 1200px;
+// $superScreenMax: 1200px;

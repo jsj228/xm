@@ -1,0 +1,82 @@
+//分页
+#tabsPages {
+	margin-top: 5px;
+}
+.container_page{
+	// text-align: center;
+	.pageSplie{
+		display: inline-block;
+		li{
+			height: 38px;
+			min-width: 38px;
+			border-radius: 2px;
+			float: left;
+			border: 1px solid transparent;
+			line-height: 38px;
+			text-align: center;
+			margin: 0 3px;
+			background: #fff;
+			box-shadow: 3px 3px 10px  #e4e4e4;
+			a{
+				color: #8b8b8b;
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+			}
+			&:hover{
+				transition: all 0.3;
+				background: #e4e4e4;
+				border: 1px solid transparent;
+			}
+			&.active_li{
+				background: #ffbb03;
+				border: 1px solid #ffbb03;
+				a{
+					color: #fff;
+					&:hover{
+						background: #ffbb03;
+					}
+				}
+			}
+			&.li_none_right{
+				color: #8b8b8b;
+				border-color:transparent;
+			 	margin-right: -2px;
+				margin-left: 9px;
+				background: transparent;
+				box-shadow: none;
+			}
+			&.li_none_left{
+				color: #8b8b8b;
+				border-color:transparent;
+			 	margin-left: -2px;
+				margin-right: 2px;
+				background: transparent;
+				box-shadow: none;
+			}
+			&.li_none{
+				border: none;
+				margin: 0;
+				background: transparent;
+				box-shadow: none;
+			}
+			&.li_text {
+				width: 38px;
+			}
+			&.li_text:hover {
+				background: #fff;
+			}
+			.pages_text{
+				width: 100%;
+				height: 92%;
+				border:none;
+				text-align: center;
+				color: #8b8b8b;
+				appearance: textfield;
+				&::-webkit-inner-spin-button {
+				  appearance: none;
+				}
+			}
+		}
+	}
+}

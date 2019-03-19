@@ -1,0 +1,196 @@
+@import "variables";
+
+@font-face {
+  font-family: 'dobi';
+  src:  url('#{$icomoon-font-path}/dobi.eot?wdwswj');
+  src:  url('#{$icomoon-font-path}/dobi.eot?wdwswj#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/dobi.ttf?wdwswj') format('truetype'),
+    url('#{$icomoon-font-path}/dobi.woff?wdwswj') format('woff'),
+    url('#{$icomoon-font-path}/dobi.svg?wdwswj#dobi') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon_ {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'dobi' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@function unicode($str) {
+  @return unquote("\"") + $str + unquote("\"");
+}
+
+.account_icon {
+  &:before {
+    content: unicode($account_icon);     
+    color: #fff;
+  }
+}
+.dobi_logo_icon {
+  &:before {
+    content: unicode($dobi_logo_icon);     
+    color: #f8b616;
+  }
+}
+.home_icon {
+  &:before {
+    content: unicode($home_icon);     
+    color: #fff;
+  }
+}
+.lang_icon {
+  &:before {
+    content: unicode($lang_icon);     
+    color: #fff;
+  }
+}
+.logout_icon {
+  &:before {
+    content: unicode($logout_icon); 
+  }
+}
+.order_ok_icon {
+  &:before {
+    content: unicode($order_ok_icon);     
+    color: #2ea778;
+  }
+}
+.reg_mes_icon {
+  &:before {
+    content: unicode($reg_mes_icon); 
+  }
+}
+.reg_phone_icon {
+  &:before {
+    content: unicode($reg_phone_icon); 
+  }
+}
+.reg_pwd_icon {
+  &:before {
+    content: unicode($reg_pwd_icon); 
+  }
+}
+.reg_ver_icon {
+  &:before {
+    content: unicode($reg_ver_icon); 
+  }
+}
+.trade_center_icon {
+  &:before {
+    content: unicode($trade_center_icon);     
+    color: #fff;
+  }
+}
+.updownArrow_icon {
+  &:before {
+    content: unicode($updownArrow_icon);     
+    color: #fd373b;
+  }
+}
+.user_close_icon {
+  &:before {
+    content: unicode($user_close_icon); 
+  }
+}
+.user_icon_icon {
+  &:before {
+    content: unicode($user_icon_icon);     
+    color: #fff;
+  }
+}
+.user_login_password_icon {
+  &:before {
+    content: unicode($user_login_password_icon); 
+  }
+}
+.user_pay_password_icon {
+  &:before {
+    content: unicode($user_pay_password_icon); 
+  }
+}
+.user_phone_icon {
+  &:before {
+    content: unicode($user_phone_icon); 
+  }
+}
+.user_real_name_icon {
+  &:before {
+    content: unicode($user_real_name_icon); 
+  }
+}
+.user_setpwd_icon {
+  &:before {
+    content: unicode($user_setpwd_icon);     
+    color: #e7211a;
+  }
+}
+.user_success_icon .path1 {
+  &:before {
+    content: unicode($user_success_icon-path1);  
+    color: rgb(20, 98, 240);
+  }
+}
+.user_success_icon .path2 {
+  &:before {
+    content: unicode($user_success_icon-path2);  
+    margin-left: -1em;  
+    color: rgb(255, 255, 255);
+  }
+}
+.user_warin_icon {
+  &:before {
+    content: unicode($user_warin_icon);     
+    color: #f00;
+  }
+}
+.arrowdown_icon {
+  &:before {
+    content: unicode($arrowdown_icon); 
+  }
+}
+.arrowup_icon {
+  &:before {
+    content: unicode($arrowup_icon); 
+  }
+}
+.cheveron_down_icon {
+  &:before {
+    content: unicode($cheveron_down_icon); 
+  }
+}
+.cheveron_up_icon {
+  &:before {
+    content: unicode($cheveron_up_icon); 
+  }
+}
+.close_icon {
+  &:before {
+    content: unicode($close_icon); 
+  }
+}
+.exclamation_outline_icon {
+  &:before {
+    content: unicode($exclamation_outline_icon); 
+  }
+}
+.minus_outline_icon {
+  &:before {
+    content: unicode($minus_outline_icon); 
+  }
+}
+.minus_solid_icon {
+  &:before {
+    content: unicode($minus_solid_icon); 
+  }
+}
+

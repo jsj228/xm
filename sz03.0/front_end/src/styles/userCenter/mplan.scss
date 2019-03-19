@@ -1,0 +1,364 @@
+@import "../common/theme.scss";
+@import "./index.scss";
+@import "./coinInTable.scss";
+
+.mplan-contain {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  .white-con {
+    background: #fff;
+  }
+  .invite-win {
+    margin: 24px 0;
+    display: flex;
+    padding: 25px 0;
+
+    &>div {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+
+      &:first-child {
+        padding: 0 15px 0 32px;
+        flex-shrink: 2;
+        width: 70%;
+      }
+      &:nth-child(2) {
+        padding: 40px 32px 0 15px;
+        flex-shrink: 1;
+        // width: 44%;
+      }
+
+      &>p {
+        height: 14px;
+        line-height: 14px;
+        padding-bottom: 12px;
+        font-size: 14px;
+        color: $grayBlack;
+
+        span {
+          color: $deepBlack;
+        }
+      }
+    }
+    .in-step {
+      display: inline-block;
+      position: relative;
+      bottom: -2px;
+      text-indent: 0;
+      text-align: center;
+      color: $baseWhite;
+      width: 15px;
+      height: 15px;
+      line-height: 15px;
+      font-size: 6px;
+      border-radius: 50%;
+      background: url(../../assets/iv_step_one.png) center center no-repeat;
+    }
+    .in-step-two {
+      background-image: url(../../assets/iv_step_two.png);
+    }
+  }
+  .share-icon-list {
+    display: flex;
+    padding: 11px 0 0 102px;
+    i {
+      display: inline-block;
+      margin-right: 11px;
+      height: 39px;
+      width: 39px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ccc;
+      background: #fff url(../../assets/xinlang_icon.png) center center no-repeat;
+      &:nth-child(2) {
+        background-image: url(../../assets/qq_iv_icon.png);
+      }
+      &:nth-child(3) {
+        background-image: url(../../assets/wechat.png);
+      }
+    }
+  }
+  .invite-link-tab {
+    padding: 0 0 28px 0;
+    p {
+      color: $norBlack;
+      padding-top: 12px;
+      line-height: 26px;
+    }
+    .link-content {
+      display: flex;
+      width: 100%;
+
+      &>input {
+        box-sizing: border-box;
+        margin-right: 12px;
+        padding: 0 12px;
+        flex-shrink: 1;
+        width: 100%;
+        color: #999999;
+        line-height: 39px;
+        height: 39px;
+        overflow: auto;
+        border: 1px solid #dcdcdc;
+        word-break: keep-all;
+        white-space: nowrap;
+
+      }
+      div {
+        &:nth-child(1) {
+          box-sizing: border-box;
+          padding: 0 0 0 17px;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+  .iv-share-win {
+    display: flex;
+    flex-direction: column;
+    text-indent: 102px;
+    background: url(../../assets/rotate_icon.png) 15px center no-repeat;
+
+    p {
+      white-space: nowrap;
+    }
+  }
+  .my-invite {
+    .iv-sub-tit {
+      color: $deepBlack;
+      padding-bottom: 18px;
+      span {
+        color: $grayBlack;
+      }
+      .red-col {
+        color: #e22;
+      }
+    }
+  }
+  .invite-data-tab {
+    display: flex;
+    justify-content: space-between;
+
+    &>div {
+      flex-shrink: 0;
+      margin: 0 15px 0 0;
+      color: $grayBlack;
+
+
+      &:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      &>p {
+        line-height: 26px;
+      }
+    }
+
+  }
+  .green-f {
+    color: #01b21a;
+  }
+  .orang-f {
+    color: #ffbb03;
+  }
+  .iv-btn {
+    display: inline-block;
+    width: 132px;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    line-height: 39px;
+    background: #4267b2;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #3057a1;
+      transition: all .3s;
+    }
+  }
+  .iv-orange-btn {
+    background: #ffbb03;
+    &:hover {
+      background-color: #ffc72d;
+    }
+  }
+  .tab-table {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 3;
+    height: 100%;
+  }
+  .down-win {
+    flex-shrink: 3;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .act-view-win {
+      display: flex;
+    }
+  }
+  .coin-in-table {
+    display: none;
+
+    .t-head {
+      // height: 100%;
+    }
+  }
+  .in-nav {
+    display: flex;
+    padding-right: 100px;
+
+    i {
+      width: 100px;
+    }
+    span, i {
+      flex-shrink: 0;
+      position: relative;
+      bottom: -1px;
+      box-sizing: border-box;
+      line-height: 33px;
+      padding: 0 17px;
+      border: 1px solid transparent;
+      border-bottom-color: #d3d3d3;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .at-in-nav {
+      border: 1px solid #d3d3d3;
+      border-bottom-color: #f6f6f6;
+    }
+  }
+  .iv-share-rule {
+    box-sizing: border-box;
+    flex-shrink: 2;
+    height: 100%;
+    display: flex;
+    margin-top: 19px;
+    padding: 19px 33px;
+    line-height: 24px;
+    background: #fff;
+    color: $grayBlack;
+
+    &>div{
+      &:first-child{
+        padding: 0 90px 0 0;
+      }
+
+      &>p {
+        color: $deepBlack;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 38px;
+      }
+      .deep-font {
+        color: $norBlack;
+      }
+    }
+    span {
+      color: #e22;
+    }
+  }
+}
+.coin-in-table {
+  .bea-ta {
+    tbody {
+      tr td {
+        width: 100px;
+        &:first-child {
+          width: 30px;
+        }
+      }
+
+    }
+  }
+
+}
+
+.coin-out-form {
+  padding: 0 0 30px;
+  &>p {
+    color: #666;
+    padding-left: 13px;
+    span {
+      color: #333;
+    }
+  }
+  select {
+    color: #666;
+    outline: none;
+  }
+}
+
+.dialog-box-contain {
+  .dialog-box-content {
+    .coin-out-form {
+      .last-tab {
+        position: relative;
+        margin-bottom: 50px;
+      }
+      .coin-out-submit {
+        margin-bottom: 0;
+      }
+      .out-tips {
+        display: none;
+        position: absolute;
+        bottom: -33px;
+        left: 0;
+        font-size: 12px;
+        color: #999;
+        span {
+          color: #e22;
+        }
+      }
+    }
+  }
+}
+.dialog-box-contain {
+  .dialog-box-content {
+    .form-tab {
+      .coin-out-sp {
+        width:auto;
+      }
+    }
+    padding: 0 66px;
+    .shot-tab {
+      width: 331px;
+    }
+  }
+}
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .mplan-contain {
+    // .mplan-contain .invite-win > div:first-child
+    .invite-win {
+      &> div {
+        display: flex;
+        &:first-child {
+          width: 70%;
+        }
+        &> p {
+          flex-shrink: 0;
+        }
+      }
+    }
+    .invite-link-tab{
+      .link-content {
+        &>div {
+          &:first-child {
+            overflow: hidden;
+          }
+        }
+      }
+    }
+    .iv-share-win {
+      text-indent: 0;
+      background: transparent;
+    }
+  }
+}

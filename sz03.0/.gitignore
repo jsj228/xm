@@ -1,0 +1,15 @@
+/log/mysqlError.log
+/conf/application.ini
+/front_end/wPack/*
+/front_end/node_modules/*
+/log/*
+/.idea/*
+/.idea/workspace.xml
+/shell/process.log
+/shell/warningInterval.*
+/shell/warningInterval.recode
+/shell/warningInterval.recode.lock
+/.gitignore.gitignore
+/public/index.php
+/shell/*.log
+/shell/nohup.out

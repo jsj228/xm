@@ -1,0 +1,262 @@
+@import "../../config.scss";
+@import "../../color.scss";
+
+// 响应式
+@import "./user_mplan_767.scss";
+
+// @media screen and(min-width: $superScreenMin) {
+  .mplan_invite {
+    padding: 10px 30px 28px;
+    background: $white100;
+    .mplan_active_time {
+      width: 100%;
+      height: 42px;
+      line-height: 42px;
+      font-size: 14px;
+      .mplan_times_span {
+        display: inline-block;
+        padding-left: 13px;
+      }
+    }
+    .mplan_copy_title {
+      height: 38px;
+      font-size: 14px;
+      line-height: 38px;
+    }
+    .mplan_copy_all {
+      margin-bottom: 20px;
+      .mplan_copy_content {
+        margin-right: 13px;
+        padding-left: 12px;
+        width: 710px;
+        line-height: 39px;
+        font-size: 14px;
+        border: 1px solid #dcdcdc;
+      }
+    }
+    .mplan_my_list {
+      height: 34px;
+      line-height: 34px;
+    }
+    .mplan_my_pad {
+      margin-right: 15px;
+    }
+    .mplan_list_left {
+      margin-right: 15px;
+      width: 724px;
+      .mplan_invite_list {
+        display: flex;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        .mplan_invite_list_li {
+          padding-right: 10px;
+          min-width: 230px;
+          height: 26px;
+          line-height: 26px;
+        }
+      }
+    }
+  }
+  .mplan_change_tab {
+    margin: 20px 0 17px 0;
+    height: 34px;
+    // width: 639px;
+    line-height: 34px;
+    .mplan_tabs_li {
+      padding: 0 18px;
+      height: 100%;
+      border: 1px solid $gray50;
+      border-bottom: 1px solid $gray90;
+      cursor: pointer;
+    }
+
+    .mplan_list_last {
+      display: inline-block;
+      width: 120px;
+      height: 35px;
+      border-bottom: 1px solid $gray90;
+    }
+    .mplan_active_li {
+      color: $yellow500;
+      border: 1px solid $gray90;
+      border-bottom: 1px solid $gray50;
+    }
+  }
+  .mplan_rule {
+    display: flex;
+    padding: 19px 33px;
+    .mplan_rule_half {
+      width: 50%;
+    }
+    .mplan_rule_h {
+      font-size: 16px;
+      line-height: 38px;
+    }
+    p {
+      font-size: 14px;
+    }
+    .mplan_rule_ctn {
+      line-height: 24px;
+    }
+  }
+  .mplan_btn {
+    width: 132px;
+    height: 39px;
+    color: $white100;
+    font-size: 14px;
+    border-radius: 2px;
+    background: $deepBlue300;
+    text-align: center;
+  }
+  //提取奖励
+  .draw_curtain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $gray600;
+    opacity: 0.5;
+  }
+  .draw_content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 14px 50px 57px;
+    width: 440px;
+    border-radius: 8px;
+    .draw_titles {
+      width: 100%;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      font-size: 28px;
+      .show_close {
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        width: 26px;
+        height: 26px;
+        background: url('../../../assets/alert_close.png') no-repeat;
+        cursor: pointer;
+      }
+    }
+    .draw_over {
+      height: 56px;
+      line-height: 56px;
+    }
+    .draw_range {
+      font-size: 14px;
+      line-height: 40px;
+    }
+    .draw_group {
+      width: 100%;
+      height: 44px;
+      border-radius: 4px;
+      border: 1px solid #c1c1c1;
+      overflow: hidden;
+      .draw_group_label {
+        font-size: 14px;
+        width: 94px;
+      }
+      .draw_group_input {
+        border: none;
+        outline: none;
+      }
+    }
+    .draw_err_group {
+      border-color: $red500;
+    }
+    .draw_err {
+      padding-left: 10px;
+      height: 26px;
+      line-height: 26px;
+      .draw_err_normal {
+        padding-left: 20px;
+        background: url('../../../assets/input_tips_icon_3x.png') no-repeat left center;
+        background-size: 15px;
+      }
+      .draw_err_warin {
+        padding-left: 20px;
+        background: url('../../../assets/input_tips_err_icon_3x.png') no-repeat left center;
+        background-size: 15px;
+        color: $red500;
+      }
+    }
+    .draw_btn {
+      position: relative;
+      margin-top: 24px;
+      width: 100%;
+      height: 44px;
+      font-size: 20px;
+      border-radius: 4px;
+    }
+  }
+  .user_tabs_div{
+    float:left;
+    width:45%;
+    // border:1px solid gainsboro;
+    padding: 26px;
+    color: #666;
+    font-size: 1.17em;
+  }
+  .copybtn{
+    background: #ffbd09;
+    padding: 11px;
+    margin-left: 15px;
+    color: #fff;
+    border-radius: 7px;
+  }
+
+  #tips_win {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    display: none;
+    overflow: visible;
+    background: rgba(0,0,0,.5);
+}
+#tips_win .mid_win {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -227px;
+  margin-top: -138px;
+  font-size: 16px;
+}
+.Invitationcode{
+  width: 357px;
+  height: 33px;
+  border-radius: 3px;
+}
+
+textarea {
+  vertical-align: middle;
+  font-size: 14px;
+  min-width: 350px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 2px 5px;
+  color: #eee;
+  margin-right: 10px;
+}
+
+#page-break{margin-top: 20px;margin-left: 20px;}
+#page-break li{list-style: none;}
+#page-break a{border: 1px solid #ddd; text-decoration: none;float: left;padding: 6px 12px;color: #337ab7;cursor: pointer}
+#page-break a:hover{background-color: #eee;}
+#page-break a .banclick{cursor: not-allowed;}
+#page-break .active a{color: #fff;cursor: default;background-color: #337ab7;border-color: #337ab7;}
+#page-break i{font-style: normal;color: #d44950;margin: 0px 4px;font-size: 12px;}
+#page-break .jumpbox .jumppage {border: 1px solid #ddd; margin-left: 40px; height: 33px; width: 40px; float: left;}
+#page-break .jumpbox .jumpbtn {cursor: pointer; margin-left: 10px;}
+#page-break .jumpbox .jumpbtn:active {color: #337ab7;}
+
+
+
+// }

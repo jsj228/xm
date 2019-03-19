@@ -1,0 +1,21 @@
+@import "./fun.scss";
+
+.bg-content {
+  top: pxToRem(105);
+  // bottom: 0;
+  overflow: auto;
+}
+
+.rf-content {
+  left: 0;
+  padding: 0 pxToRem(25);
+  background: #fff;
+  font-size: pxToRem(30);
+
+  .user-content {
+    margin: 0;
+    padding: pxToRem(27) 0 pxToRem(47) 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

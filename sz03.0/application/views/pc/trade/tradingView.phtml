@@ -1,0 +1,157 @@
+<script>
+var UP_COLOR = '#0fbb89';
+var DOWN_COLOR = '#dc1a5a';
+var BG_COLOR = '#0e192b';
+var GRID_COLOR = "#212c3f";
+window.onload = function() {
+  console.log(124);
+  var udf_datafeed = new Datafeeds.UDFCompatibleDatafeed("/ajax_tdv");
+
+  var widget = window.tvWidget = new TradingView.widget({
+    // debug: true, // uncomment this line to see Library errors and warnings in the console
+    autosize: true,
+    symbol: 'mcc_btc',
+    interval: 'D',
+    toolbar_bg: BG_COLOR,
+    container_id: "tradingV",
+    // BEWARE: no trailing slash is expected in feed URL
+    datafeed: udf_datafeed,
+    library_path: "/td_js/charting_library/",
+    locale: "zh",
+    //	Regression Trend-related functionality is not implemented yet, so it's hidden for a while
+    drawings_access: {
+      type: 'black',
+      tools: [{
+        name: "Regression Trend"
+      }]
+    },
+    // 图表 右侧小部件
+    // widgetbar: {
+    //   details: true,
+    //   watchlist: true,
+    //   watchlist_settings: {
+    //     default_symbols: ["NYSE:AA", "NYSE:AAL", "NASDAQ:AAPL"],
+    //     readonly: false
+    //   }
+    // },
+
+    // 禁用的按钮列表
+    disabled_features: [
+      // "header_widget_dom_node",
+      "save_chart_properties_to_local_storage",
+      "volume_force_overlay",
+      "header_symbol_search",
+      // k 线类型 按钮，如： 日线，小时线
+      "header_resolutions",
+
+      "header_interval_dialog_button",
+      // k线类型
+      "header_chart_type",
+      // 设置按钮
+      // "header_settings",
+      // "header_indicators",
+      "header_compare",
+      "header_undo_redo",
+      "header_screenshot",
+      "timeframes_toolbar",
+      "show_hide_button_in_legend",
+      "pane_context_menu"
+    ],
+    // 启用的工具列表
+    enabled_features: [
+    "move_logo_to_main_pane",
+    "study_templates",
+    "control_bar",
+    "keep_left_toolbar_visible_on_small_screens",
+    "dont_show_boolean_study_arguments"
+    ],
+    // kline 样式配置
+    overrides: {
+      "mainSeriesProperties.style": 1,
+      "symbolWatermarkProperties.color": BG_COLOR,
+      "volumePaneSize": "tiny",
+      "paneProperties.background": "#0e192b",
+      "paneProperties.vertGridProperties.color": GRID_COLOR,
+      "paneProperties.vertGridProperties.style": 2,
+      "paneProperties.horzGridProperties.color": GRID_COLOR,
+      "paneProperties.horzGridProperties.style": 2,
+      "paneProperties.crossHairProperties.color": "#FFFFFF",
+      // 蜡烛样式
+      "mainSeriesProperties.candleStyle.upColor": UP_COLOR,
+      "mainSeriesProperties.candleStyle.downColor": DOWN_COLOR,
+      "mainSeriesProperties.candleStyle.borderColor": GRID_COLOR,
+      "mainSeriesProperties.candleStyle.borderUpColor": UP_COLOR,
+      "mainSeriesProperties.candleStyle.borderDownColor": DOWN_COLOR,
+      // 蜡烛 灯芯
+      "mainSeriesProperties.candleStyle.wickUpColor": UP_COLOR,
+      "mainSeriesProperties.candleStyle.wickDownColor": DOWN_COLOR,
+      // 空心 蜡烛
+      "mainSeriesProperties.hollowCandleStyle.upColor": UP_COLOR,
+      "mainSeriesProperties.hollowCandleStyle.downColor": DOWN_COLOR,
+      "mainSeriesProperties.hollowCandleStyle.borderColor": GRID_COLOR,
+      "mainSeriesProperties.hollowCandleStyle.borderUpColor": UP_COLOR,
+      "mainSeriesProperties.hollowCandleStyle.borderDownColor": DOWN_COLOR
+      // "symbolWatermarkProperties.color": "rgba(0, 0, 0, 0.5)"
+    },
+    studies_overrides: {
+      "volume.volume.color.0": UP_COLOR,
+      "volume.volume.color.1": DOWN_COLOR,
+      "volume.volume.transparency": 80,
+      "volume.volume ma.color": "#FF0000",
+      "volume.volume ma.transparency": 50,
+      "volume.volume ma.linewidth": 5,
+      // "volume.show ma": true,
+      "bollinger bands.median.color": "#33FF88",
+      "bollinger bands.upper.linewidth": 5
+    },
+    // 自定义css url
+    custom_css_url: '/td_js/view.css',
+    loading_screen: { backgroundColor: BG_COLOR, foregroundColor: BG_COLOR },
+    debug: false,
+    time_frames: false,
+    // charts_storage_url: 'http://saveload.tradingview.com',
+    charts_storage_api_version: "1.1",
+    client_id: 'https://www.huocoin.com',
+    user_id: 'public_user',
+    favorites: {
+      intervals: ["1", "1D", "3D", "3W", "W", "M"],
+      chartTypes: ["Area", "Line"]
+    }
+  });
+
+  widget.onChartReady(function() {
+    widget.createButton()
+    .on('click', function (e) {
+      console.log(e);
+    })
+    .append('<span>5 min</span>');
+
+    widget.createButton()
+    .on('click', function (e) {
+      console.log(e);
+    })
+    .append('<span>10 min</span>');
+
+    widget.chart().createStudy('MACD', false, false);
+    widget.chart().createStudy("Moving Average", false, false, [5], null, {
+      "plot.color": "#ff0000",
+      "plot.plottype": "line"
+    });
+    widget.chart().createStudy("Moving Average", false, false, [10], null, {
+      "plot.color": "#00ff00",
+      "plot.plottype": "line"
+    });
+    widget.chart().createStudy("Moving Average", false, false, [30], null, {
+      "plot.color": "#00ff00",
+      "plot.plottype": "line"
+    });
+    widget.chart().createStudy("Moving Average", false, false, [60], null, {
+      "plot.color": "#0000ff",
+      "plot.plottype": "line"
+    });
+  }); // end of widget.onChartReady
+  // TradingView.onready(function() {
+  //
+  // }); // end of TradingView.onready
+}
+</script>

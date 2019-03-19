@@ -1,0 +1,202 @@
+@media screen and (max-width: $bigScreenMax) {
+  .hide_767 {
+    display: none;
+  }
+  .realinfo_cont {
+    height: 100%;
+  }
+  .realinfo_tips {
+    padding: pxToRem(23) pxToRem(25);
+    line-height: pxToRem(40);
+    text-indent: 1em;
+    background: url('../../../assets/user/user_pc_warron.png') no-repeat pxToRem(24) pxToRem(31);
+  }
+  .realinfo_group {
+    padding-left: pxToRem(25);
+    margin-bottom: pxToRem(44);
+    height: pxToRem(90);
+    font-size: pxToRem(30);
+    line-height: pxToRem(90);
+    .realinfo_group_label {
+      margin-right: pxToRem(25);
+    }
+    .realInfo_succ {
+      display: inline-block;
+      margin-left:pxToRem(23);
+      width: pxToRem(30);
+      height: pxToRem(30);
+      background: url('../../../assets/svg/from_succ.svg') no-repeat left top;
+      background-size: pxToRem(30);
+    }
+    .realInfo_err {
+      display: inline-block;
+      margin-left:pxToRem(23);
+      width: pxToRem(30);
+      height: pxToRem(30);
+      background: url('../../../assets/svg/from_err.svg') no-repeat;
+      background-size: pxToRem(30);
+    }
+  }
+  .realinfo_input_group {
+    height: pxToRem(90);
+    line-height: pxToRem(90);
+    background: $white100;
+    .realinfo_input_label {
+      width: pxToRem(228);
+      font-size: pxToRem(30);
+      text-align: right;
+    }
+    .realinfo_input {
+      font-size: pxToRem(30);
+      background: $white100;
+      border: none;
+    }
+    .realinfo_input {
+      outline: none;
+    }
+  }
+  .realInfo_err_name {
+    padding-left: pxToRem(45);
+    height: pxToRem(50);
+    line-height: pxToRem(50);
+    .realInfo_err_p {
+      padding-left: pxToRem(37);
+    }
+    .realInfo_normal {
+      background: url('../../../assets/tip-bg.png') no-repeat left center;
+      background-size: pxToRem(23);
+    }
+    .realInfo_err {
+      background: url('../../../assets/error-tip.png') no-repeat left center;
+      background-size: pxToRem(23);
+    }
+  }
+  .realinfo_upload {
+    width: 100%;
+    background: $white100;
+    .realinfo_title {
+      padding-left: pxToRem(40);
+      margin-bottom: pxToRem(7);
+      height: pxToRem(70);
+      line-height: pxToRem(70);
+      font-size: pxToRem(30);
+    }
+    .realinfo_upload_pic {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: pxToRem(34);
+      .realinfo_upload_one {
+        position: relative;
+        margin-bottom: pxToRem(20);
+        width: pxToRem(540);
+        .realinfo_pic_title {
+          text-align: center;
+          line-height: pxToRem(70);
+          font-size: pxToRem(30);
+        }
+        .realinfo_pic_btn {
+          position: relative;
+          z-index: 11;
+          width: 100%;
+          height: pxToRem(354);
+          opacity: 0;
+        }
+        .realinfo_pic_img {
+          position: absolute;
+          z-index: 10;
+          top: pxToRem(70);
+          left: 0;
+          width: 100%;
+          height: pxToRem(299);
+        }
+        .realinfo_pic_choose {
+          z-index: 10;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: pxToRem(55);
+          line-height: pxToRem(55);
+          text-align: center;
+          font-size: pxToRem(28);
+        }
+        .realinfo_pic_success {
+          z-index: 10;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: pxToRem(55);
+          line-height: pxToRem(55);
+          text-align: center;
+          font-size: pxToRem(28);
+          background-image: url('../../../assets/right_icon.png');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        .realInfo_close_btn {
+          position: absolute;
+          z-index: 12;
+          right: pxToRem(10);
+          top: pxToRem(80);
+          width: pxToRem(30);
+          height: pxToRem(30);
+          background: url('../../../assets/realinfo_close.png') no-repeat;
+          background-size: pxToRem(30);
+        }
+        .realinfo_upload_icon {
+          display: inline-block;
+          width: pxToRem(25);
+          height: pxToRem(26);
+          background: url('../../../assets/upload_file.png') no-repeat;
+        }
+      }
+    }
+  }
+  .realInfo_warin_p {
+    padding: 0 pxToRem(25);
+    font-size: pxToRem(24);
+    line-height: pxToRem(42);
+  }
+  .realInfo_btn_div {
+    display: flex;
+    justify-content: center;
+  }
+  .realInfo_submit {
+    margin-top: pxToRem(74);
+    margin-bottom: pxToRem(320);
+    height: pxToRem(90);
+    line-height: pxToRem(90);
+    width: pxToRem(710);
+    font-size: pxToRem(36);
+  }
+  .realInfo_all_bg {
+    background: $white100;
+  }
+  .realInfo_userInfo {
+    padding: 0 pxToRem(24);
+    background: $white100;
+    .realInfo_info_label {
+      height: pxToRem(69);
+      line-height: pxToRem(69);
+      font-size: pxToRem(30);
+      color: $gray500;
+    }
+    .realInfo_info {
+      padding: pxToRem(18) pxToRem(54);
+      min-height: pxToRem(210);
+      line-height: pxToRem(50);
+      font-size: pxToRem(28);
+    }
+    .realInfo_info_cross {
+      font-size: pxToRem(30);
+      height: pxToRem(90);
+      line-height: pxToRem(90);
+      .realInfo_span_labels {
+        margin-right: pxToRem(48);
+      }
+    }
+  }
+}
+

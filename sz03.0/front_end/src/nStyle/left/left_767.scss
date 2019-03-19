@@ -1,0 +1,17 @@
+
+@media screen and (max-width: $mdScreenMax) {
+  //内容部分开始到头部导航部分
+  .bg_content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: pxToRem(120);
+    overflow: hidden;;
+    overflow-y: auto;
+  }
+  //左边栏
+  .left_nav {
+    display: none;
+  }
+}

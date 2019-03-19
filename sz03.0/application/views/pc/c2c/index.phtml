@@ -1,0 +1,417 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<div class="bg-content" id="c2c">
+    <div style="margin:0 auto;max-width:1200px;width:100%">
+        <div class="c2cmain">
+            <!-- <p><?php echo $repeat_del;?></p> -->
+            <input type="hidden" value="<?php echo $repeat_del;?>" id="token"/>
+            
+        <div class="header" style="overflow: hidden">
+            <h4>c2c交易</h4>
+            <a href="/user/bank" style="position: relative;top: 21px;left: 583px;color:#ffbd09" class="fa fa-credit-card fa-fw" >收付款管理</a>
+             <div class="fR">
+               可用余额：<span style="color:#ffbd09;padding-right: 34px" v-text="cnyxover" ></span>
+               冻结余额：<span style="color:#ffbd09" v-text="cnyxlock"></span>
+            </div>
+        </div>
+        <div class="finance-rd" style="width: 100%;margin-left: 0px;background: white;padding: 32px 20px 30px;">
+            <!-- 买入 -->
+            <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12 buy">
+                        <h3 class="b-title" style="margin-bottom: 12px">買入 CNYX</h3>
+                        <div id="buyDefaultForm"><div class="form-group has-feedback form-subline">
+                            <label for="buyUnitPrice" class="control-label">
+                                <span class="buyDefaultLabel">買入价</span> (￥)
+                            </label> 
+                            <div class="input-group">
+                                <input type="hidden" value="1.0000" > 
+                                <input type="text" id="buyUnitPrice" name="buyUnitPrice" disabled="disabled" readonly="readonly" value="1.00" class="form-control form-second" style="color:#ffbd09">
+                            </div>
+                            </div> 
+                            <div class="form-group has-feedback form-subline">
+                                <label for="buyNumber" class="control-label">買入量 (CNYX)</label> 
+                            <div class="input-group">
+                                <input type="text"  name="buyNumber" class="form-control form-second" v-model="Purchase" autocomplete="off">
+                            </div>
+                            </div> 
+                            <div id="buyfinish" style="color: darkgray;">
+                                需要 <span style="color:red" v-text="Purchase"></span> (￥)
+                            </div> 
+                            <div class="form-group">
+                                <button id="buyBtn" type="button" class="btn btn-primary btn-block ft16" @click="buyimmediately" style="background-color: rgb(255, 189, 9);border-color: rgb(255, 189, 9);">立即買入</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-xs-12 sell">
+                        <h3 class="b-title" style="margin-bottom: 12px">賣出 CNYX</h3>
+                        <div class="Urgent">
+                        <label >( <input class="radio_input" type="radio" name="sltype" value="1" checked="" v-model="Urgent">普通</label>
+                            <?php if($urgent['is_lock']==1){?>
+                                <label ><input class="radio_input" type="radio" name="sltype" value="2" v-model="Urgent">加急 </label>
+                            <?php }?>
+                            )
+                        </div>
+                        
+                        <div id="sellDefaultForm">
+                            <div class="form-group has-feedback form-subline">
+                                <label for="buyUnitPrice" class="control-label">
+                                    <span class="sellDefaultLabel">賣出价</span> (￥)
+                                </label> 
+                            <div class="input-group">
+                                <input type="hidden" value="1.00" disabled> 
+                                <input type="text" id="sellUnitPrice" name="sellUnitPrice"  readonly="readonly" disabled="disabled" value="1.00" class="form-control form-second" style="color:#ffbd09"></div>
+                            </div> 
+                            <div class="form-group has-feedback form-subline">
+                                <label for="sellNumber" class="control-label">賣出量 (CNYX)</label> 
+                                <div class="input-group">
+                                    <input type="text"  name="sellNumber" class="form-control form-second" v-model="Sellout" autocomplete="off">
+                                </div>
+                            </div> 
+                            <div id="sellfinish" style="color: darkgray;">
+                                可得 <span style="color:#3dc18e" v-text="Sellout"></span>(￥)
+                            </div> 
+                            <div class="form-group">
+                                <button id="sellBtn" type="button" class="btn btn-second btn-block ft16" @click="sellimmediately">立即賣出</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row h5hide">
+            <div class="col-xs-6">
+                <div class="exchangetlist" id="usdtcnybuylist">
+                    <div class="shd">
+                        <span>商家(卖出委单)</span>
+                        <b>可交易数量</b>
+                        <span class="typeshow">支付类型</span>
+                        <a >操作</a>
+                    </div>
+                    <div class="bd">
+                        <div class="tempWrap" style="overflow:hidden; position:relative;    height: 157px;">
+                            <ul>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+             <div class="col-xs-6">
+                <div class="exchangetlist" id="usdtcnyselllist">
+                <div class="shd">
+                        <span>商户(买入委单)</span>
+                        <b>可交易数量</b>
+                        <span class="typeshow">支付类型</span>
+                        <a style="width: 21%;">操作</a>
+                    </div>
+                    <div class="bd">
+                        <div class="tempWrap" style="overflow:hidden; position:relative; height: 157px;">
+                            <ul ></ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="usdtnote">
+        <div class="notecont">
+            <p style="color:#ffbd09">1. 汇款时请务必备注好订单号，否则将无法到账；</p>
+            <p style="color:#ffbd09">2. 订单匹配后，请买方及时打款给卖方，卖方收款后请及时“确认收款”，逾期多次将暂停两天交易；</p>
+            <p>3. 充值单笔 最低:100元，最高：无上限；普通提现单笔最高:10万，加急提现单笔最高：5万；请预留手续费在账户上；</p>
+            <p>4. 卖出（提现）订单匹配区间为最低限额～订单数量，无法与低于最低限额的买入（充值）订单匹配，请注意调整最低限额；</p>
+            <p>5. 加急（一小时加急到账：费率1%） 普通(24小时内匹配到账，未匹配到账将由商家处理；费率0.5% 匹配时间00:00-24:00）;</p>
+            <p>6. 卖单可分多次匹配，收款金额以“当前匹配数量”为准，收到款后请及时“确认收款”，否则剩余金额将持续锁定，直到“确认收款”后才能参与匹配；</p>
+            <p>7. 交易时，务必保持电话通畅，关注短信提醒，有异议时如果对方申请仲裁，平台多次联系不到的，将根据对方提交的有利证据，判断将数字资产转给提供充份证据的一方。</p>
+        </div>
+        </div>
+        <div class="bk-pageTit" id="exchangeRecord">
+        <h4 class="pull-left">
+            <i class="bk-ico assetRecord"></i>最近兌換記錄
+        </h4>
+        <div class="clearfix"></div>
+        <div class="table-responsive">
+            <table id="billDetail" class="table table-striped table-bordered table-hover" v-cloak>
+                <thead>
+                <tr>
+                    <th width="13%" >时间</th>
+                    <th width="8%" style="text-align:left;">交易类型</th>
+                    <th width="10%" style="text-align:left;">流水单号</th>
+                    <th width="10%" style="text-align:left;">匹配数量</th>
+                    <th width="6%" style="text-align:left;">单价(￥)</th>
+                    <th width="10%" style="text-align:left;">挂单余额(￥)</th>
+                    <th width="8%" >状态</th>
+                    <th width="15%" >操作</th>
+                    <th width="8%" >是否加急</th>
+                    <th width="12%" >支付类型</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item,key) in list" >
+                      
+                    <td v-text="item.addtime"></td>
+                    <td>
+                    <span v-if="item.type==1" v-cloak>买入</span>
+                    <span v-else-if="item.type==2" v-cloak>卖出</span>
+                    </td>
+                    <td  v-text="item.tradeno"></td>
+                    <td  v-text="item.num"></td>
+                    <td  v-text="1"></td>
+                    <td  v-text="item.deal"></td>
+                    <input type="hidden" v-text="token">
+                  <td>
+                    <span v-if="item.status==0 && item.deal_id==0" v-cloak>未匹配</span>
+                    <span v-else-if="item.status==1" v-cloak>已完成</span>
+                    <span v-else-if="item.status==2" v-cloak>已付款</span>
+                    <span v-else-if="item.status==3" v-cloak> 已撤销</span>
+                    <span v-else-if="item.status!=3 && item.status!=1 && item.id!=0 && item.status!=2" v-cloak>已匹配</span>
+                  </td>
+                  <td>
+                  <!-- {{item.status}} -->
+                    <span class="btn btn-success"  v-if="item.type==1 && item.deal_id>0&&(item.status!=3 && item.status!=2&& item.status!=1)"
+                        @click="paid(item.id,key)" :style="{cursor:(!dubclick?'wait':'pointer')}" v-cloak>我已付款</span>
+                    <span class="btn btn-info"    v-if="item.type==1 && item.status==0" :style="{cursor:(!dubclick?'wait':'pointer')}"
+                         @click="Revoke(item.id,key)" v-show="Revokes" v-cloak >撤销</span>
+                    <span class="btn btn-success" v-if="item.type==2 && item.status==2 && item.deal_id" :style="{cursor:(!dubclick?'wait':'pointer')}" 
+                         @click="Confirmreceipt(item.id,key)" v-cloak>确认收款</span>
+                    <span class="btn btn-info"    v-else-if="item.type==2 &&item.status==0 && item.deal_id==0" :style="{cursor:(!dubclick?'wait':'pointer')}" 
+                        @click="Revoke(item.id,key)" v-cloak>撤销</span>
+                  </td>
+                  <td>
+                    <span v-if="item.selltype==1" v-cloak>否</span>
+                    <span v-else-if="item.selltype==2" v-cloak>是</span>
+                  </td>
+                  <td>
+                    <span  class="typeshow iconfont icon-WY"  v-show="item.deal_id!=0 && item.yhk==1" @click="show(item.id,1)" v-cloak></span>
+                    <span  class="typeshow iconfont icon-WX"  v-show="item.deal_id!=0 && item.wx==2" @click="show(item.id,2)" v-cloak></span>
+                    <span  class="typeshow iconfont icon-ZFB" v-show="item.deal_id!=0 && item.yfb==3"  @click="show(item.id,3)" v-cloak></span>
+                  </td>
+                  </tr>
+                </tbody>
+               
+            </table>
+            <div id="page-break">
+                <ul>
+                    <li v-if="cur>1" v-cloak>
+                    <a v-on:click="cur--,pageClick()" >上一页</a>
+                    </li>
+                    <li v-if="cur==1" v-cloak>
+                    <a class="banclick" >上一页</a>
+                    </li>
+                    <li v-for="item in indexs" v-bind:class="{'active':cur==item}" v-cloak>
+                    <a v-on:click="btnClick(item), pageClick()" v-text="item"></a>
+                    </li>
+                    <li v-if="cur!=all" v-cloak>
+                    <a v-on:click="cur++,pageClick()" >下一页</a>
+                    </li>
+                    <li v-if="cur==all" v-cloak>
+                    <a class="banclick" >下一页</a>
+                    </li>
+                    <li v-cloak><a>共<i v-text="all"></i>页</a></li>
+                    <div class="jumpbox" v-cloak>
+                        <input type="number" class="jumppage" />
+                        <a class="jumpbtn" v-on:click="pageSkip()">跳转</a>
+                    </div>
+                </ul>
+            </div>
+           
+            <input type="hidden" id="pageIndex" value="1">
+            <div class="bk-moreBtn">
+                <button id="morebtn" class="btn btn-outline" type="button" style="display: none;"><i class="fa fa-angle-down fa-fw"></i>更多</button>
+            </div>
+        </div>
+
+
+
+    </div>
+    
+   <div class="mask" v-if="mask" v-cloak></div>
+  
+  <div class="buyingquantity" v-if="buyingquantity" v-cloak>
+      <p style="line-height: 125px;text-align: center;font-size: 16px;">请输入买入CNYX数量</p>
+      <button id="btn" @click="Determines">确定</button>
+  </div>
+  <div class="sellwindow" v-if="sellwindow" v-cloak>
+      <p style="line-height: 125px;text-align: center;font-size: 16px;">请输入卖出CNYX数量</p>
+      <button id="btn" @click="Determine">确定</button>
+  </div>
+  <div class="popup" v-if="popup" v-cloak>
+      <p  style="line-height: 125px;text-align: center;font-size: 16px;" v-text="updisplay"></p>
+      <button id="btn" @click="Determineplay">确定</button>
+  </div>
+
+  <div flex="main:center cross:center" class="set_trade_pwd" v-if="transactionpwd" v-cloak>
+ <div class="pwd_form_contain white100_bg relative_dom">
+ <div class="close_btn close_icon" @click="closeicon"></div>
+  <p class="pwd_title gray600_f">請輸入交易密碼</p> 
+  <div class="trade_pwd_form">
+  <div class="input_g relative_dom">
+  <input autocomplete="off" class="texts" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" placeholder="請輸入交易密碼" v-model="trpwd"> <!----></div> 
+  <div class="submit_tab">
+  <button type="button" class="default_btn orange500_bg white100_f" @click="Determineplaypwd" :style="{cursor:(!dubclick?'wait':'pointer')}">確定</button>
+  </div>
+
+  </div>
+  </div>
+  </div>
+  </div>
+
+   <div flex="main:center cross:center" class="set_trade_pwd" v-if="Selltransaction" v-cloak>
+ <div class="pwd_form_contain white100_bg relative_dom">
+ <div class="close_btn close_icon" @click="closeicon"></div>
+  <p class="pwd_title gray600_f">請輸入交易密碼</p> 
+  <div class="trade_pwd_form">
+  <div class="input_g relative_dom">
+  <input autocomplete="off" class="texts" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" placeholder="請輸入交易密碼" v-model="sellpwd"> <!----></div> 
+  <div class="submit_tab">
+  <button type="button" class="default_btn orange500_bg white100_f" @click.stop.prevent="Selltransac" :style="{cursor:(!dubclick?'wait':'pointer')}">確定</button>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+  <div flex="main:center cross:center" class="set_trade_pwd" v-if="recharge" v-cloak>
+       <div class="pwd_form_contain white100_bg relative_dom">
+           <div class="close_btn close_icon" @click="closeicon"></div>
+  
+        <div class="trade_pwd_form">
+        <div class="input_g numwer">
+            <p style="display: inline-block;position: relative;top: 15px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp金额：</p>
+            <input autocomplete="off"    type="text"  v-model="numwer" style="width:73%" @focus="focus()"> <!---->
+            <p v-text="msgg" style="margin-left: 76px;color:red"></p>
+        </div>
+
+        <div class="input_g relative_dom">
+            <p style="display: inline-block;position: relative;top: 14px;margin-top: 20px;">交易密码：</p>
+            <input autocomplete="off" class="texts" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" placeholder="請輸入交易密碼" v-model="sellpwds" style="width:73%" @focus="focus()"> <!---->
+            <p v-text="msgs" style="margin-left: 76px;color:red"></p>
+        </div> 
+        <div class="submit_tab">
+            <button type="button" class="default_btn orange500_bg white100_f" :style="{cursor:(!dubclick?'wait':'pointer')}" @click.stop.prevent="Recharge">確定</button>
+        </div>
+        <div flex="dir:right" v-show="forgetPwd" style="display:none"><a class="blue500_f link" href="/user?set=tradepwd">忘记密码</a></div>
+        </div>
+        </div>
+   </div>
+
+
+
+     <div flex="main:center cross:center" class="set_trade_pwd" v-if="drawal" v-cloak>
+        <div class="pwd_form_contain white100_bg relative_dom">
+        <div class="close_btn close_icon" @click="closeicon"></div>
+  
+        <div class="trade_pwd_form">
+        <div class="input_g numwer">
+             <p style="display: inline-block;position: relative;top: 15px;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp金额：</p>
+             <input autocomplete="off"    type="text"  v-model="numdrawal" style="width:73%" @focus="focus()"> <!---->
+             <p v-text="msgg" style="margin-left: 76px;color:red"></p>
+    </div>
+
+    <div class="input_g relative_dom">
+            <p style="display: inline-block;position: relative;top: 14px;margin-top: 20px;">交易密码：</p>
+            <input autocomplete="off" class="texts" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" placeholder="請輸入交易密碼" v-model="pwdrawal" style="width:73%" @focus="focus()"> <!---->
+            <p v-text="msgs" style="margin-left: 76px;color:red"></p>
+    </div> 
+    <div class="submit_tab">
+            <button type="button" class="default_btn orange500_bg white100_f"  @click.stop.prevent="withdrawal" :style="{cursor:(!dubclick?'wait':'pointer')}">確定</button>
+    </div>
+            <div flex="dir:right" v-show="forgetPwd" style="display:none"><a class="blue500_f link" href="/user?set=tradepwd">忘记密码</a></div>
+  
+  </div>
+  </div>
+  </div>
+ 
+
+
+ <?php // 未登录状态显示 ?>
+      <!-- <div class="no_login_mask white100_f" flex="main:center cross:center" v-show="!isLogin" v-cloak>
+        <div id="tradeAfterLogin">
+          <p>
+            <a class="orange500_f" href="javascript:void(0)" @click="login"><?php echo $lang['LOGIN'] ?></a>
+            <?php echo $lang['RULE_TRADE_OR'] ?>
+            <a class="orange500_f" href="javascript:void(0)" @click="register"><?php echo $lang['REGISTER'] ?></a>
+            <?php echo $lang['RULE_TRADE_AFTER_LOGIN'] ?>
+          </p>
+        </div>
+      </div> -->
+
+
+
+
+  <!-- 密码输入错误等等所有弹窗里面的提示语 -->
+  <div class="Backgroundpop" v-if="Backgroundpop" v-cloak>
+      <p style="text-align: center;line-height: 130px;color:green;font-size:16px" v-text="bckpop"></p>
+  </div>
+  <!-- 确认收款按钮提示语 -->
+  <div class="isshow" v-show="isshow" v-cloak>
+      <p style="text-align: center;line-height: 150px;color:green;font-size:16px" v-text="condow"></p>
+  </div>
+
+ <!-- 支付弹窗 -->
+    <div class="Paymentmethod" v-if="paydetails" v-cloak>
+        <h4 style="padding:15px 0px 10px 10px">查看订单详情</h4>
+        <div class="Paymentmethod2" style="padding:15px 20px;text-align:center;display: inline-block">
+            <div style="display:inline-block;vertical-align:middle;text-align:left;">
+                <p  style="font-size:16px; margin-top:5px"> 
+                    <b v-if="lookData.type==1">买方手机号</b>
+                    <b  v-else >卖方手机号</b>：
+                    <span v-text="lookData.moble"></span>
+                </p>
+                <p  style="font-size:16px; margin-top:5px"> 
+                    <b v-if="lookData.type==1">买方姓名</b>
+                    <b  v-else >卖方姓名</b>：
+                    <span v-text="lookData.truename"></span>
+                </p>
+                
+                <p style="font-size:16px; margin-top:5px">
+                    <b v-if="lookData.paytype==2">微信账号</b>
+                    <b v-else-if="lookData.paytype==1">网银账号</b>
+                    <b v-else-if="lookData.paytype==3">支付宝账号</b>
+                    <span v-text="lookData.bankcard"></span>
+                </p>
+                <p style="font-size:16px; margin-top:5px">
+                    <b>交易方式：</b>
+                    <span v-if="lookData.paytype==2">微信</span>
+                    <span v-else-if="lookData.paytype==1">网银</span>
+                    <span v-else-if="lookData.paytype==3">支付宝</span>
+                </p>
+              
+                <p style="font-size:16px; margin-top:5px">
+                    <b>交易金额：</b><span v-text="lookData.num"></span>
+                </p>
+                <p style="font-size:16px; margin-top:5px">
+                    <b>订单号：</b><span v-text="lookData.tradeno"></span>
+                </p>
+                <p style="font-size:16px; margin-top:5px">
+                    <b>状态：</b><span v-text="lookData.status"></span>
+                </p>
+            
+            </div><p style="height:65%;display:inline-block;vertical-align:middle;max-width:30%;margin-left:50px;" >
+                <img v-if="lookData.paytype!=1" :src="lookData.img" style="width:100%;max-width:100%;"/>
+            <p>
+        </div>
+        <div class="Paymentmethod3" style="padding:15px 10px 15px 10px;">
+            <p style="color: red;">温馨提示：如有任何疑问请联系在线客服或查看帮助中心</p>
+            <p style="color: red;">1.汇款时请务必备注好订单号,否则将无法到账;</p>
+            <p style="color: red;">2.买家匹配后请及时付款,卖家收款后请及时"确认收款",逾期多次暂停交易;</p>
+            <p>3.请仔细核对好对方收付款账号之后再进行收付款等操作;</p>
+            <p>4.买卖双方都以通过实名认证,可放心转账;</p>
+            <p>5.对订单有疑问可直接联系对方协商处理,协商无效可联系平台客服介入;</p>
+        </div>
+      <div class="clones" @click="clones">&times;</div>
+    </div>
+
+</div>
+</div>
+      <div class="history">
+      </div>
+    </div>
+  </div>
+<script>document.querySelector("li.c2c").className+=" now_nav"</script>
+
+<?php  include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>

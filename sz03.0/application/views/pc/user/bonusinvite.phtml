@@ -1,0 +1,65 @@
+<div class="user_index_dom gray200_bg" id="candy" flex-box="1">
+  <div class="user_index">
+    <ul class="user_pan candy_hide" flex="main:left">
+      <li> <?php echo $lang['USER_NAV_MY_ASSETS'] ?><span class="user_gt">&gt;</span></li>
+      <li class="blue200_f">邀请分红</li>
+    </ul>
+    <div class="candy_choose"  v-cloak>
+      <transition model="out-in" name="candy">
+        <ul class="candy_tabs" v-cloak v-if="tabChnage">
+          <li @click="coinClick(1)" :class="['candy_li', 'gray600_f', {candy_active_li: tab == 1 }]">邀请分红</li>
+        </ul>
+      </transition>
+    </div>
+  <!-- 邀请分红 -->
+	<div v-show="tab == 1 " v-cloak>
+		<table width=100% >
+        <thead class="user_tabs" rules='none'>
+            <tr class="user_tabs_tr user_tabs_th white100_bg">
+              <th>推荐的好友</th>
+              <th >注册时间</th>
+              <th>好友实名状态</th>
+              <th >交易分红</th>
+              <th >平台充值分红</th>
+              <th >c2c充值分红</th>
+              <th >总分红</th>
+              <th>操作</th>
+            </tr>
+        </thead>
+        <tbody class="user_tabs" rules='none'>
+          <tr v-cloak  v-show="!tabLoging && !no_data"   v-for="(item, key) in list"   :class="['user_tabs_tr', 'gray600_f', 'user_tabs_td',key%2!= 0?'white100_bg':'gray200_bg']">
+            <td v-text="item.mo"></td> 
+            <td v-text="item.created"></td>
+            <td>
+            <!-- <span v-if="item.status==0">未提交</span>
+            <span v-else-if="item.status==1">未实名</span> -->
+            <span v-if="item.status==2">已实名</span>
+            <span v-else>未实名</span>
+            <!-- <span v-else-if="item.status==3">已拒绝</span> -->
+            </td> 
+            <td class="fee" v-text="item.tradeFee?item.tradeFee:0"></td>
+            <td class="fee" v-text="item.platfromFee?item.platfromFee:0"></td>
+            <td class="fee" v-text="item.c2cFee?item.c2cFee:0"></td>
+            <td class="fees" v-text="item.totalFee"></td>
+            <td><a v-if="item.totalFee" class="minBtn activeBg" :href="'bonusdetails?id='+item.uid">详情</a></td>
+          </tr>
+        </tbody>
+        <div class="user_tabs_span white100_bg" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+          <span :class="{loding: tabLoging, no_data: no_data}"></span>
+          <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+        </div>
+		</table>
+  </div>
+  <div class="tabsPages" :class="all > 1 ? 'page-list-contain':''">
+      <pages :all = "all" v-on:get-tabs="getcoindata"
+        :page-name="'页'"
+        :jump-to-title="'跳至'"
+        :home-title="'首页'"
+        :last-title="'尾页'"
+        :currentpage ="currentpage"
+        @keydown="" v-if="all && all != 1">
+      </pages>
+  </div>
+  </div>
+    
+</div>

@@ -1,0 +1,83 @@
+<div style="display:none;">
+  <?php // 提取獎勵模板 ?>
+  <div id="coinOutTpl">
+  <div class="coin-out-form">
+    <div class="dialog-title"><?php echo $lang['JIANGLI']?></div>
+    <?php foreach ($rebate as $coin => $v) { ?>
+      <p data-ccoin="<?php echo str_replace('_reg','',$coin) ?>" data-ctype="<?php echo $coin=='mcc_reg'?'reg':'trade' ?>" style="display: none;"><?php echo $coin=='mcc_reg'?$lang['KYONG_EN']:$lang['YUEN']?>：&nbsp;&nbsp;&nbsp;<span><?php echo Tool_Math::mul($v[$coin.'_in'], 1), strtoupper(str_replace('_reg','',$coin)) ?></span></p>
+    <?php } ?>
+    <?php // 提幣 選項 ?>
+    <div class="form-tab top-tab parent-dom">
+      <span class="coin-out-sp"><?php echo $lang['KYONG_TT']?></span>
+      <select class="" name="type" id="outType">
+        <option value=""><?php echo $lang['KYONG_TIQU']?></option>
+        <?php foreach($rebate as $coin=>$v){ ?>
+        <option value="<?php echo str_replace('_reg','',$coin) ?>" data-ctype="<?php echo $coin=='mcc_reg'?'reg':'trade' ?>" data-cname="<?php echo str_replace('_reg','',$coin) ?>"><?php echo $coin=='mcc_reg'?$lang['YAOQING_TIQU']:$lang['JIAOYI_TIQU']?>(<?php echo strtoupper(str_replace('_reg','',$coin)) ?>)</option>
+        <?php } ?>
+      </select>
+      <!-- <select type="text" name="wallet" placeholder="請填寫接收地址" /> -->
+      <p class="warn-tips-lf"><?php echo $lang['JIAOYI_LEIXING']?></p>
+    </div>
+    <div class="form-tab parent-dom">
+      <span class="coin-out-sp"><?php echo $lang['JIAOYI_SHUE']?></span>
+      <input type="text" maxlength="31" name="number" autocomplete="new-password" placeholder="<?php echo $lang['JSHURU_SHUE']?>" />
+      <p class="warn-tips-lf"><?php echo $lang['JSHURU_SHUE']?></p>
+    </div>
+    <div class="mut-tab last-tab">
+      <button type="button" class="coin-out-submit" id="formCoinOutBtn"><?php echo $lang['JTI_BI']?><u></u></button>
+      <?php foreach ($pair as $k => $v) { ?>
+
+        <?php if($k=='mcc'){ ?>
+          <p class="out-tips" data-ctype="trade" data-ccoin="<?php echo $k ?>"><?php echo strtoupper($k).$lang['MIN_NUM'] ?>: <span data-minlimit="min"><?php echo $v['min'],strtoupper($k); ?></span>
+            <?php echo $lang['AND_MORE']; ?><?php echo $v['numLimit']>0? ($lang['MAX_LEN'].' <span data-limit="floatLimit">8</span>'.$lang['DOT_LEN']): $lang['JUST_INT'],strtoupper($k); ?>。</p>
+          <p class="out-tips" data-ctype="reg" data-ccoin="<?php echo $k ?>"><?php echo strtoupper($k).$lang['MIN_NUM'] ?>: <span data-minlimit="min"><?php echo $v['min'],strtoupper($k) ?></span>
+            <?php echo $lang['AND_MORE']; ?><?php echo $v['numLimit']>0?($lang['MAX_LEN'].' <span data-limit="floatLimit">8</span>'.$lang['DOT_LEN']) : $lang['JUST_INT'],strtoupper($k); ?>。</p>
+        <?php } else { ?>
+          <p class="out-tips" data-ctype="<?php echo $k=='mcc_reg'?'reg':'trade' ?>" data-ccoin="<?php echo $k ?>"><?php echo strtoupper($k).$lang['MIN_NUM'] ?>: <span data-minlimit="min"><?php echo $v['min'],strtoupper($k) ?></span>
+            <?php echo $lang['AND_MORE']; ?><?php echo $v['numLimit']>0 ? ($lang['MAX_LEN'].' <span data-limit="floatLimit">8</span>'.$lang['DOT_LEN']) : $lang['JUST_INT'],strtoupper($k) ?>.</p>
+        <?php } ?>
+      <?php } ?>
+    </div>
+  </div>
+</div>
+  <?php // 表格模板 ?>
+  <div id="tableTpls">
+    <table>
+      <?php // 邀請記錄 ?>
+      <thead id="">
+        <tr>
+          <td><?php echo $lang['HAO_YOU']?></td>
+          <td><?php echo $lang['HAO_TIME']?></td>
+          <td><?php echo $lang['HAO_ZT']?></td>
+          <td><?php echo $lang['HAO_ZT_JL']?></td>
+        </tr>
+      </thead>
+      <?php // 獎勵提幣記錄 ?>
+      <thead id="">
+        <tr>
+          <td><?php echo $lang['JL_JL']?>ID</td>
+          <td><?php echo $lang['JL_TIME']?></td>
+          <td><?php echo $lang['SL_TIME']?></td>
+          <td><?php echo $lang['BZ']?></td>
+        </tr>
+      </thead>
+      <?php // 返傭記錄 ?>
+      <thead id="">
+        <tr>
+          <td><?php echo $lang['JL_TIME']?></td>
+          <td><?php echo $lang['JY_BZ']?></td>
+        </tr>
+      </thead>
+      <?php // 邀請排行榜 ?>
+      <thead id="">
+        <tr>
+          <td><?php echo $lang['XL_BZ']?></td>
+          <td><?php echo $lang['XL_NAME']?></td>
+          <td><?php echo $lang['YI_NAME']?></td>
+          <td><?php echo $lang['YI_KYC']?></td>
+          <td><?php echo $lang['HAO_ZT_JL']?></td>67
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>

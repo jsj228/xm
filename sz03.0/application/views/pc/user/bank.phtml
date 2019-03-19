@@ -1,0 +1,259 @@
+<div class="rf_main gray50_bg" id="bank" flex="dir:top" style="min-width: 1200px">
+	<div class="nav-crumbs hide_767" flex-box="0">
+		<?php echo $lang["USER_NAV_TITLE"] ?> &gt; <a class="active-tab">
+		c2c收款方式</a>
+	</div>
+	<?php if($auto == 2){ ?>
+	<div v-if="realName">
+		<div class="mplan_tabs">
+			<ul class="mplan_change_tab" flex="dir:left">
+				<li @click="tabChange(1)" :class="[{mplan_active_li: postData.index == 1}]">銀行卡管理</li>
+				<li @click="tabChange(2)" :class="[{mplan_active_li: postData.index == 2}]">微信管理</li>
+				<li @click="tabChange(3)" :class="[{mplan_active_li: postData.index == 3}]">支付寶管理</li>
+			</ul>
+		</div>
+		<div class="mainBox white100_bg">
+		<!-- 银行卡管理 -->
+			<div v-show="postData.index == 1" v-cloak class="bankList">
+				<button class="btnAdd" @click="alertFun('bankShow')">添加銀行卡</button>
+				<div v-for="(itime,key) in bankList">
+					<h4><span v-text="itime.name"></span><span style="float:right" v-text="itime.username">浦发银行</span></h4>
+					<p style="padding:15px 50px" v-text="itime.bankcard"></p>
+					<div class="operat">
+						<button class="minBtn bg_red" @click="openBind(itime.id,key,'delbank')">解绑</button>
+						<span style="float:right">
+							<button class="off"  @click="openBind(itime.id,key,'mysave')"
+							:style="parseInt(itime.status)?'background:#0075a9':'background:#666'">
+							<i :style="parseInt(itime.status)?'left:30px':'left:0.4px'"></i>
+							</button>
+							<a v-show="parseInt(itime.status)">啟用</a>
+							<a v-show="!parseInt(itime.status)">關閉</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			<!-- // 微信管理 -->
+			<div v-if="postData.index == 2" v-cloak>
+				<p style="margin-bottom:20px">
+					<b>微信綁定：</b>
+					<button class="off" userid="8340" status="2"  @click="openBind(postData.id,'','mysave')"
+						:style="parseInt(postData.status) ? 'background:#0075a9':'background:#666'">
+						<i :style="parseInt(postData.status) ?'left:30px':'left:0.4px'"></i>
+					</button>
+					<span v-show="parseInt(postData.status)">啟用</span>
+					<span v-show="!parseInt(postData.status)">關閉</span>
+				</p>
+				<p style="margin-bottom:20px"  v-cloak>
+					<b>姓名:</b><span v-text="realName"></span>
+				</p>
+				<p style="margin-bottom:20px">
+					<b>微信賬號:</b>
+					<input v-model="postData.bankcard"
+						@blur="verify('wx','postData','bankcard','請輸入正確的微信賬號！')" 
+						placeholder="請輸入正確的微信賬號！"  type="text"/>
+					<b class="red" v-show="errStatus.bankcard" v-text="errStatus.bankcard"></b>
+				</p>
+				<h3 style="margin-bottom:6px">上傳微信二維碼 :<a class="red">( 只能修改不能多個 )</a></h3>
+				<p class="p_bg" style="margin-bottom:20px">
+					<a class="red">微信收款二維碼獲取方法：打開微信 -&gt; 點擊收錢 -&gt; 點擊保存圖片 -&gt; 之後上傳即可</a></p>
+				<p style="margin-bottom:20px">
+					<b>微信收款二維碼:</b>
+					<span class="addImg">
+						<!-- 显示 -->
+						<img :src="postData.img" alt="微信收款二維碼"/>
+						<input type="file" @change='uploadFile' accept="image/*"  value="" class="filepath"/>
+						<button class="minBtn bg_red" v-show="!postData.status">上傳二維碼</button>
+						<button class="minBtn bg_red" v-show="postData.status">點擊修改</button>
+						<!-- 提示 -->
+						<b  v-show="postData.status" :class="errStatus.imgErr=='√' ? 'green650_bg' :'bg_red'" v-text="errStatus.imgErr"></b>
+					</span>
+				</p>
+				<div v-if="reset">
+					<p style="position:relative;margin-bottom:20px" v-cloak>
+						<b>手機驗證碼:</b>
+						<span>
+							<input v-model="postData.moblePhone"
+								@blur="verify('moble','postData','moblePhone','請輸入正確的短信驗證碼！')" 
+								placeholder="請輸入正確的短信驗證碼"  type="text"/>
+							<b class="red" v-show="errStatus.moblePhone" v-text="errStatus.moblePhone"></b>
+							<button class="bg_red" v-show="numT>0"><b v-text="numT"></b>S后可再次獲取</button>
+							<button class="bg_red" v-show="numT<0" @click="getmoble()">獲取</button>
+						</span>
+					</p>
+					<p>
+						<input type="button" class="bg_red" value="修改綁定" @click="submit()" style="text-cengin">
+					</p>
+				</div>
+			</div>
+			<!-- 支付宝管理 -->
+			<div v-show="postData.index == 3" v-cloak>
+				<p style="margin-bottom:20px" v-cloak>
+					<span>支付寶綁定：</span>
+					<button class="off" userid="8340" status="2"  @click="openBind(postData.id,'','mysave')"
+						:style="parseInt(postData.status) ? 'background:#0075a9':'background:#666'">
+						<i :style="parseInt(postData.status) ?'left:30px':'left:0.4px'"></i>
+					</button>
+					<span v-show="parseInt(postData.status)">啟用</span>
+					<span v-show="!parseInt(postData.status)">關閉</span>
+				</p>
+				<p style="margin-bottom:20px"  v-cloak>
+					<b>姓名:</b><span v-text="realName"></span>
+				</p>
+				<p style="margin-bottom:20px">
+					<span>支付寶賬號:</span>
+					<input v-model="postData.bankcard"
+						@blur="verify('zfb','postData','bankcard','請輸入正確的支付寶賬號！')" 
+						placeholder="請輸入正確的支付寶賬號！"  type="text"/>
+					<b class="red" v-show="errStatus.bankcard" v-text="errStatus.bankcard"></b>
+				</p>
+				<h3 style="margin-bottom:6px">上傳支付寶二維碼 :<a class="red">( 只能修改不能多個 )</a></h3>
+				<p class="p_bg" style="margin-bottom:20px">
+					<a class="red">支付寶收款二維碼獲取方法：打開支付寶 -&gt; 點擊收錢 -&gt; 點擊保存圖片 -&gt; 之後上傳即可</a></p>
+				<p style="margin-bottom:20px" >
+					<b>支付寶收款二維碼:</b>
+					<span class="addImg">
+						<!-- 显示 -->
+						<img :src="postData.img" alt="支付寶收款二維碼"/>
+						<input type="file" @change='uploadFile' accept="image/*"  value="" class="filepath"/>
+						<button class="minBtn bg_red" v-show="!postData.status">上傳二維碼</button>
+						<button class="minBtn bg_red" v-show="postData.status">點擊修改</button>
+						<!-- 提示 -->
+						<b  v-show="postData.status" :class="errStatus.imgErr=='√' ? 'green650_bg' :'bg_red'" v-text="errStatus.imgErr"></b>
+					</span>
+				</p>
+				<div v-if="reset">
+					<p style="position:relative;margin-bottom:20px;">
+						<b>手機驗證碼:</b>
+						<span>
+							<input v-model="postData.moblePhone"
+								@blur="blur('moble','postData','moblePhone','請輸入正確的短信驗證碼！')" 
+								placeholder="請輸入正確的短信驗證碼"  type="text"/>
+							<b class="red" v-show="errStatus.moblePhone" v-text="errStatus.moblePhone"></b>
+							<button class="bg_red" v-show="numT>0"><b v-text="numT"></b>S后可再次獲取</button>
+							<button class="bg_red" v-show="numT<0" @click="getmoble()">獲取</button>
+						</span>
+					</p>
+					<p>
+						<input type="button" class="bg_red" value="修改綁定" @click="submit()" style="text-cengin"/>
+					</p>
+				</div>
+			</div>
+		</div>
+		<!-- tan  kuang 1-->
+		<div class="alertBox" v-cloak v-if="bankShow">
+			<div class="Bankwindow">
+				<div class="headers">
+					<span style="font-size:16px">添加银行卡</span>
+					<button class="close" @click="alertFun('bankShow')">&times</button>
+				</div>
+				<div>
+					<div class="login_text" style="margin-top:14px">
+						<div class="alert_wrap_title">備註名稱：</div>
+						<span>
+							<input v-model="BankData.name"
+								@blur="verify('regStr','BankData','name','請輸入正確的備註名稱')" 
+							placeholder="請輸入備註名稱"  type="text"/>
+							<b class="red" v-show="errStatus.name" v-text="errStatus.name"></b>
+						</span>
+					</div>
+					<!-- <div class="login_text">
+						<div class="alert_wrap_title">開戶省市：</div>
+						<span class="controls">
+							<select class="prov texts" v-model="BankData.bankProv" name="prov">
+								<option value="-1">--请选择--</option>
+								<option value="0">北京</option>
+								<option value="1">天津</option>
+								<option value="2">河北</option>
+								<option value="3">山西</option>
+								<option value="4">内蒙古</option>
+								<option value="5">辽宁</option>
+								<option value="6">吉林</option>
+								<option value="7">黑龙江</option>
+								<option value="8">上海</option>
+								<option value="9">江苏</option>
+								<option value="10">浙江</option>
+								<option value="11">安徽</option>
+								<option value="12">福建</option>
+								<option value="13">江西</option>
+								<option value="14">山东</option>
+								<option value="15">河南</option>
+								<option value="16">湖北</option>
+								<option value="17">湖南</option>
+								<option value="18">广东</option>
+								<option value="19">广西</option>
+								<option value="20">海南</option>
+								<option value="21">重庆</option>
+								<option value="22">四川</option>
+								<option value="23">贵州</option>
+								<option value="24">云南</option>
+								<option value="25">西藏</option>
+								<option value="26">陕西</option>
+								<option value="27">甘肃</option>
+								<option value="28">青海</option>
+								<option value="29">宁夏</option>
+								<option value="30">新疆</option>
+								<option value="31">香港</option>
+								<option value="32">澳门</option>
+								<option value="33">台湾</option>
+								<option value="34">国外</option>
+							</select>
+							<select class="city texts" v-model="BankData.bankCity" name="city">
+							</select>
+						</span>
+					</div> -->
+					<div class="login_text">
+						<div class="alert_wrap_title">開戶支行：</div>
+						<span>
+							<input v-model="BankData.username" 
+								@blur="verify('regStr','BankData','username','請輸入正確的開戶支行')" 
+								type="text" placeholder="請輸入開戶支行" autocomplete="off"/>
+							<b class="red" v-show="errStatus.username" v-text="errStatus.username"></b>
+						</span>
+					</div>
+					<div class="login_text">
+						<div class="alert_wrap_title">開戶姓名：</div>
+						<input v-model="realName"  type="text" placeholder="您還沒有綁定銀行卡！" disabled="true"/>
+					</div>
+					<div class="login_text">
+						<div class="alert_wrap_title">銀行卡號：</div>
+						<span>
+							<input type="text" v-model="BankData.bankcard" 
+								@blur="verify('bank','BankData','bankcard','請輸入正確的銀行卡號')" 
+								placeholder="請輸入您的銀行卡號!" />
+							<b class="red" v-show="errStatus.bankcard" v-text="errStatus.bankcard">1111</b>
+						</span>
+					</div>
+					<div class="login_text">
+						<div class="alert_wrap_title">短信驗證：</div>
+						<span>
+							<input type="text" 
+								@blur="verify('moble','BankData','moblePhone','請輸入您的短信驗證碼')" 
+								v-model="BankData.moblePhone"  placeholder="請輸入您的短信驗證碼!"/>
+							<b class="red" v-show="errStatus.moblePhone" v-text="errStatus.moblePhone">1111</b>
+							<button class="bg_red" v-show="numT>0"><b v-text="numT"></b>S后可再次獲取</button>
+							<button class="bg_red" v-show="numT<0" @click="getmoble()">獲取</span>
+						</span>
+					</div>
+					<div class="login_button">
+						<input type="button"  value="立即添加" @click="submit()"/>
+					</div>
+				</div>
+			</div>
+			<div></div>
+		</div>	
+		<!-- tan  kuang 2-->
+		<div class="alertBox" v-if="alertMsg"  v-cloak>
+			<div class="Bankwindow">
+				<div class="headers red">
+					<span style="font-size:16px" v-text="alertMsg"></span>
+					<button class="close" @click="alertFun('close')">&times</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php }else{ ?>
+	<div v-else class="mainBox" v-cloak>
+		<h3>你还没有进行实名认证！<a href="/user/realinfo" class="minBtn bg_reds" style="float:right;color:#008cff">去实名认证>></a></h3>
+	</div>
+	<?php } ?>
+</div>

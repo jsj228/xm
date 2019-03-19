@@ -1,0 +1,61 @@
+<!-- <link rel="stylesheet" href="/css/userTrust.css?v=<?php // echo $clear_cache;?>"> -->
+<div class="rf-content mob-rf-content">
+  <?php if (false){ ?>
+  <div class="nav-crumbs">
+    <?php echo $lang["USER_NAV_MY_TRADE"] ?> > <a class="active-tab" href="javascript: void(0);"><?php echo $lang['USER_NAV_TRUST'] ?></a>
+  </div>
+  <?php } ?>
+  <?php // 篩選條件 ?>
+  <?php  include PATH_TPL.'/user/condition.phtml';?>
+  <?php // 表格 ?>
+  <div class="coin-in-table shadow-cont">
+    <div class="t-body" id="tBody">
+      <table>
+        <thead>
+        <tr>
+          <td><?php echo $lang["TABLE_HEADER_ONE"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_TWO"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_THREE"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_FOUR"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_FIVE"] . '(' . strtoupper($coinda['coin_from']) . ')'; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_SIX"] . '(' . strtoupper($coinda['coin_from']) . ')'; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_SEV"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_EIG"]; ?></td>
+          <!-- <td>委托價格</td>
+          <td>成交數量</td>
+          <td>尚未成交數量</td>
+          <td>狀態</td>
+          <td>操作</td> -->
+        </tr>
+        </thead>
+        <tbody id="cancelOrder">
+        <?php
+        // 綠色文字 class添加"green-font" ; 紅色文字 class 用 "red-font" ; 橙色文字 orange-font
+        // 操作列 按鈕 允許操作用 class="order-btn" ,禁用按鈕 用 class="disable-btn"
+        ?>
+        <?php foreach ($list as $v){ ?>
+          <tr>
+            <td><?php echo $v['created'] ?></td>
+            <td><?php echo $v['coin_from'] ?></td>
+            <td class="<?php echo $v['flag']=='buy'?'red-font':'green-font' ?>"><?php echo $v['flag']=='buy'?$lang['BUY']: $lang['SELL'] ?></td>
+            <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['price']),'.') . strtoupper($v['coin_to']) ?></td>
+            <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['numberdeal']),'.') ?></td>
+            <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['numberover']),'.') ?></td>
+            <td class="<?php echo $v['status'] == 0 ? 'red-font' : ($v['status'] == 1 ? 'orange-font' : ($v['status'] == 2 ? 'green-font' : '')) ?>"><?php echo $v['status']==0?$lang['TITLE_WCJ']:($v['status']==1?$lang['TITLE_BFCJ']:($v['status']==2?$lang['TITLE_QBCJ']:$lang['TITLE_YJCX'])) ?></td>
+            <td>
+              <?php // 这个td 不能少 ?>
+              <?php if($v['status']<2) { ?>
+                <button class="order-btn" type="button" name="button" data-cancel='<?php echo $v['id']?>' data-cointo="<?php echo $v['coin_to']?>"><?php echo $lang['TITLE_CX']?></button>
+              <?php } ?>
+            </td>
+          </tr>
+        <?php } ?>
+        </tbody>
+      </table>
+      <?php // 沒有數據時，顯示該元素， 設置 display: block ?>
+      <?php if(!$list){ ?>
+        <div class="no-data" id="tableNoData" style="display:block;"><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+      <?php } ?>
+    </div>
+  </div>
+</div>

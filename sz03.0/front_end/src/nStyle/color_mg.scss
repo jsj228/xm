@@ -1,0 +1,70 @@
+// 此文件包含所有的颜色  包括文字颜色，背景颜色，边框颜色
+
+// 切换颜色，通过切换 body的class 来切换颜色
+
+// 背景颜色 .颜色名_bg， 文字颜色: .颜色名_f
+
+// 颜色命名  颜色基色 + 颜色对比度
+// exp： $orange500 表示标准默认橙色
+//      $orange400 表示比基准橙色 淡一点的 橙色 数字越低，越淡
+
+// 红色
+$red500: #ee2222;
+
+// 橙色
+$orange500: #ffcc00;
+
+// 黄色
+$yellow500: #f00;
+
+// 绿色
+$green500: #0f0;
+
+// 青色
+$cyan500: #0f0;
+
+// 蓝色
+$blur500: #008cff;
+
+// 紫色
+$purple500: #00f;
+
+// 灰色
+$gray500: #666;
+
+// 粉色
+$pink500: #f00;
+
+// 黑色
+$black500: #000;
+
+// 白色
+$white500: #fff;
+
+// 棕色
+$brown500: #333;
+
+.default_bg {
+  //白色
+  .white500_bg {
+    background: $white500;
+  }
+  //橙色
+  .orange500_bg {
+    background: $orange500;
+  }
+}
+.default_f {
+  //橙色
+  .orange500_f {
+    color: $orange500;
+  }
+  //红色
+  .red500_f {
+    color: $red500;
+  }
+  //蓝色
+  .blur500_f {
+    color: $blur500;
+  }
+}

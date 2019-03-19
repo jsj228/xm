@@ -1,0 +1,67 @@
+@import "../common/theme.scss";
+@import "../animation/transition.scss";
+
+$authWarnBgCol: #f5f8fd;
+
+
+.bg-content {
+  min-height: 833px;
+  overflow-y: auto;
+}
+
+.rf-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 223px;
+  padding: 86px 49px 26px 41px;
+  display: flex;
+  flex-direction: column;
+  background: #f6f6f6;
+
+  &>div {
+    flex-shrink: 0;
+
+    &:last-child {
+      flex-shrink: 1;
+      // height: 100%;
+    }
+  }
+
+  .nav-crumbs {
+    color: $deepBlack;
+    .active-tab {
+      color: $deepBlack;
+    }
+    a {
+      &:hover {
+        cursor: text;
+      }
+    }
+  }
+
+  .user-content {
+    margin-top: 24px;
+    height: 100%;
+    padding: 24px 0 0 31px;
+    color: $norBlack;
+    background: $baseWhite;
+    // box-shadow: h-shadow v-shadow blur spread color inset;
+    // box-shadow: 0px 0px 20px #ddd;
+  }
+
+}
+
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .rf-content {
+    padding: 86px 20px 26px 20px;
+    overflow-y: auto;
+
+    .user-content {
+      margin-top: 10px;
+      padding: 10px 20px;
+      overflow-y: auto;
+    }
+  }
+}

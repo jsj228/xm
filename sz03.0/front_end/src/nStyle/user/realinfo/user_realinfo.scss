@@ -1,0 +1,182 @@
+@import "../../config.scss";
+@import "../../color.scss";
+
+// 响应式
+// @import "./user_realinfo_767.scss";
+
+// @media screen and(min-width: $superScreenMin) {
+  .hide_1200 {
+    display: none;
+  }
+  .condition_container {
+    background: $white100;
+  }
+  .realinfo_cont {
+    padding: 0 30px;
+    .realinfo_tips {
+      padding-left: 20px;
+      height: 62px;
+      line-height: 62px;
+      font-size: 14px;
+      background: url('../../../assets/user/user_pc_warron.png') no-repeat 0 24px;
+    }
+    .realinfo_group {
+      margin-bottom: 8px;
+      height: 43px;
+      line-height: 43px;
+      font-size:14px;
+      .realinfo_group_label {
+        margin-right: 24px;
+      }
+      .realInfo_succ {
+        display: inline-block;
+        margin-left: 10px;
+        width: 14px;
+        height: 14px;
+        background: url('../../../assets/form-ok.png') no-repeat;
+      }
+      .realInfo_err {
+        display: inline-block;
+        margin-left: 10px;
+        width: 14px;
+        height: 14px;
+        background: url('../../../assets/form-err.png') no-repeat;
+      }
+    }
+    .realinfo_input_group {
+      width: 342px;
+      height: 43px;
+      line-height: 43px;
+      border-radius: 4px;
+      // margin-bottom: 29px;
+      background: $gray200;
+      .realinfo_input_label {
+        width: 94px;
+        text-align: center;
+        font-size: 14px;
+      }
+      .realinfo_input {
+        padding-left: 10px;
+        border: none;
+        outline: none;
+      }
+    }
+    .realInfo_err_name {
+      padding-left: 13px;
+      height: 29px;
+      line-height: 29px;
+      .realInfo_err_p {
+        padding-left: 20px;
+        height: 100%;
+        font-size: 12px;
+      }
+      .realInfo_normal {
+        background: url('../../../assets/tip-bg.png') no-repeat left center;
+      }
+      .realInfo_err {
+        background: url('../../../assets/error-tip.png') no-repeat left center;
+      }
+    }
+    .realinfo_title {
+      display: inline-block;
+      height: 32px;
+      line-height: 32px;
+    }
+    .realinfo_upload {
+      margin-bottom: 16px;
+    }
+    .realinfo_upload_pic {
+      display: flex;
+      padding-top: 14px;
+      .realinfo_upload_one {
+        position: relative;
+        margin-right: 39px;
+        width: 272px;
+        .realinfo_pic_title {
+          height: 32px;
+          line-height: 32px;
+          text-align: center;
+          font-size: 14px;
+        }
+        .realInfo_close_btn {
+          z-index: 11;
+          position: absolute;
+          right: 5px;
+          top: 37px;
+          width: 22px;
+          height: 22px;
+          background: url('../../../assets/realinfo_close.png') no-repeat;
+        }
+        .realinfo_pic_btn {
+          position: relative;
+          z-index: 10;
+          width: 100%;
+          height: 181px;
+          opacity: 0;
+        }
+        .realinfo_pic_img {
+          position: absolute;
+          top: 32px;
+          left: 0;
+          width: 100%;
+          height: 153px;
+        }
+        .realinfo_pic_choose {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          text-align: center;
+          width: 100%;
+          height: 28px;
+          line-height: 28px;
+        }
+        .realinfo_pic_success {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 28px;
+          width: 100%;
+          background-image: url('../../../assets/right_icon.png');
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        .realinfo_upload_icon {
+          display: inline-block;
+          width: 12px;
+          height: 13px;
+          background: url('../../../assets/upload_file.png') no-repeat;
+        }
+      }
+    }
+    .realInfo_warin_p {
+      height: 20px;
+      line-height: 20px;
+      font-size: 12px;
+    }
+    .realInfo_submit {
+      margin-top: 19px;
+      width: 342px;
+      height: 43px;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+    .realInfo_info_label {
+      height: 48px;
+      line-height: 48px;
+      font-size: 14px;
+    }
+    .realInfo_info {
+      padding: 14px 25px;
+      width: 660px;
+      min-height: 213px;
+      border-radius: 4px;
+    }
+    .realInfo_info_cross {
+      height: 48px;
+      line-height: 48px;
+      font-size: 14px;
+      .realInfo_span_labels {
+        margin-right: 22px;
+      }
+    }
+  }

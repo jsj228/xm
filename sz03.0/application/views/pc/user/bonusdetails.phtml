@@ -1,0 +1,73 @@
+<div class="user_index_dom gray200_bg" id="candy" flex-box="1">
+  <div class="user_index">
+    <ul class="user_pan candy_hide" flex="main:left">
+      <li><?php echo $lang['USER_NAV_MY_ASSETS'] ?><span class="user_gt">&gt;</span></li>
+      <li><a class="blue200_f" href="/user/bonusinvite">邀请分红</a> &gt; </li>
+      <li> 分红详情</li>
+    </ul>
+    <div class="candy_choose"  v-cloak>
+      <transition model="out-in" name="candy">
+        <ul class="candy_tabs" v-cloak>
+          <li @click="coinClick(1)" :class="['candy_li', 'gray600_f', {candy_active_li: tab == 1 }]">交易分红</li>
+          <li @click="coinClick(2)" :class="['candy_li', 'gray600_f', {candy_active_li: tab == 2 }]">平台充值</li>
+          <li @click="coinClick(3)" :class="['candy_li', 'gray600_f', {candy_active_li: tab == 3 }]">C2C充值</li>
+        </ul>
+      </transition>
+    </div>
+    <!-- 交易分红 -->
+		<table width=100% v-show="tab==1">
+        <thead class="user_tabs" rules='none'>
+            <tr class="user_tabs_tr user_tabs_th white100_bg">
+              <th>交易币种</th>
+              <th>交易时间</th>
+              <th>交易价格</th>
+              <th>交易数量</th>
+              <th>买/卖</th>
+              <th>所得分红</th>
+            </tr>
+        </thead>
+        <tbody class="user_tabs" rules='none'>
+          <tr v-cloak  v-show="!tabLoging && !no_data"   v-for="(item, key) in list"   :class="['user_tabs_tr', 'gray600_f', 'user_tabs_td',key%2!= 0?'white100_bg':'gray200_bg']">
+            <td v-text="item.coin_from"></td> 
+            <td v-text="item.created"></td>
+            <td v-text="parseFloat(item.price)"></td> 
+            <td v-text="parseFloat(item.number)"></td>
+            <td v-text="item.opt==2?'卖出':'买入'"></td>
+            <td class="fee" v-text="parseFloat(item.fee)"></td>
+          </tr>
+        </tbody>
+		</table>
+    <!-- 平台充值  C2C充值 -->
+    <table width=100% v-show="tab!=1" v-cloak>
+        <thead class="user_tabs" rules='none'>
+            <tr class="user_tabs_tr user_tabs_th white100_bg">
+              <th >充值时间</th>
+              <th>充值金额</th>
+              <th >所得分红</th>
+            </tr>
+        </thead>
+        <tbody class="user_tabs" rules='none'>
+          <tr  v-show="!tabLoging && !no_data"   v-for="(item, key) in list"   :class="['user_tabs_tr', 'gray600_f', 'user_tabs_td',key%2!= 0?'white100_bg':'gray200_bg']">
+            <td v-text="item.created"></td>
+            <td v-text="parseFloat(item.number)"></td>
+            <td class="fee" v-text="parseFloat(item.fee)"></td>
+          </tr>
+        </tbody>
+		</table>
+    <div class="user_tabs_span white100_bg" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+        <span :class="{loding: tabLoging, no_data: no_data}"></span>
+        <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+      </div>
+    <div class="tabsPages" :class="all > 1 ? 'page-list-contain':''">
+      <pages :all = "all" v-on:get-tabs="getcoindata"
+        :page-name="'页'"
+        :jump-to-title="'跳至'"
+        :home-title="'首页'"
+        :last-title="'尾页'"
+        :currentpage ="currentpage"
+        @keydown="" v-if="all && all != 1">
+      </pages>
+    </div>
+  </div>
+</div>
+

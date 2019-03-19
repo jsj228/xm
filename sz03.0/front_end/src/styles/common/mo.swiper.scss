@@ -1,0 +1,27 @@
+@import "swiper/dist/css/swiper.css"; // init css
+
+
+.news-pagination {
+  text-align: center;
+}
+
+.parallax-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  width: 150%;
+  height: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+// reset swiper.css
+.swiper-button-prev, .news-button-prev {
+  background: url(../../assets/left_arr.png) center center no-repeat;
+}
+
+.news-button-next, .swiper-button-next {
+  background: url(../../assets/right_arr.png) center center no-repeat;
+}

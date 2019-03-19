@@ -1,0 +1,294 @@
+<?php  include PATH_TPL.'/mob.tpl.header.phtml';?>
+<!-- <link rel="stylesheet" href="/css/mob.trade.css?v=<?php echo $clear_cache;?>"> -->
+<div class="hover-bg"></div>
+<div class="nav-midd" style="display: none;">
+  <div class="curr-mar" id="curr-mar">
+    <h2 data-from ="<?php echo $coinPair['coin_from'] ?>" data-to ="<?php echo $coinPair['coin_to'] ?>"><?php echo strtoupper(str_replace('_', '/', $coinPair['name'])) ?><img src="<?= $coinLogo[$coinPair['coin_from']]?>"></h2>
+    <div class="all-mar" id="all-mar">
+      <?php foreach ($coinList as $k => $v) { ?>
+      <dl class="selected" data-coin="<?php echo $v ?>">
+        <img src="<?= $coinLogo[$k]?>">
+        <dt><a href="/trade/<?php echo $v ?>" ><?php echo strtoupper(str_replace('_', '/', $v)) ?></a></dt>
+        <dd class="font-r">--</dd>
+        <dd class='market-up'>--</dd>
+      </dl>
+      <?php } ?>
+    </div>
+
+  </div>
+  <?php // 使用up-arrow類向上紅色箭頭  ?>
+  <div class="curr-price up-arrow">
+    <p id="newest-price">--<span>&nbsp;<?php echo strtoupper($coinPair['coin_to']) ?></span></p>
+  </div>
+  <div class="sm-right updown-change">
+    <p><?php echo $lang['NAV_PRICE_UP_DOWN'] ?></p>
+    <p id="updown-change">--</p>
+  </div>
+  <div class="sm-right lowest-price">
+    <p><?php echo $lang['NAV_TODAY_LOW'] ?></p>
+    <p id="lowest-price">--<span>&nbsp;<?php echo strtoupper($coinPair['coin_to']) ?></span></p>
+  </div>
+  <div class="sm-right day-deal">
+    <p><?php echo $lang['NAV_24H_ORDER'] ?></p>
+    <p class="font-g" id="day-deal">--<span>&nbsp;<?php echo strtoupper($coinPair['coin_from']) ?></span></p>
+  </div>
+  <div class="sm-right">
+    <p><?php echo $lang['NAV_24H_AMOUNT'] ?></p>
+    <p class="font-g" id="day-volumn">--<span>&nbsp;<?php echo strtoupper($coinPair['coin_to']) ?></span></p>
+  </div>
+</div>
+
+<div class="content-t head-mar">
+  <?php // k线图 ?>
+  <div class='kline-container hide-dom'>
+  <!-- <iframe id="klineFrame" src="/Market/kline" style="width: 100%;height: 100%;border: none;"></iframe> -->
+  </div>
+  <?php // 买卖累积量表格 ?>
+  <div class="content-tr">
+    <?php // 買賣盤 切換按鈕 ?>
+    <div class="tr-l" data-top="p">
+      <?php // 币列表 ?>
+      <!-- <div class="top-coin">
+        <input class="coin-list-sel" type="text" name="" value="<?php echo strtoupper(str_replace('_', '/', $coinPair['coin_to'])) ?>" id="changeCoin" readonly>
+        <div class="coin-options" id="coinOptions">
+          <?php foreach ($coinList as $k => $v) { ?>
+          <p data-value="<?php echo $k ?>"><?php echo strtoupper($k) ?></p>
+          <?php } ?>
+        </div>
+      </div> -->
+      <div class="tab_header">
+        <div class="tab_chosen"><?php echo strtoupper($coinPair['coin_from']) ?>/<?php echo strtoupper($coinPair['coin_to']) ?><img src="/imgs/trade_down.png" alt=""></div>
+        <div class="tab_datas"><span class="font_green font_first"></span><span class="font_green font_two"></span></div>
+        <div class="tab_select_chosen">
+          <div class="tab_select_left">
+            <ul>
+              <li class="tab_area_title"><?php echo $lang['TRADE_AREA_TITLE'] ?></li>
+            </ul>
+          </div>
+          <div class="tab_select_right">
+               <table>
+                 <thead>
+                   <tr>
+                     <th class="th_left"><?php echo $lang['TRADE_COIN_COUPLE'] ?></th>
+                     <!-- <img src="/imgs/tab_sel.png" alt=""> -->
+                     <th><?php echo $lang['TRADE_COIN_UP_DOWN'] ?></th>
+                     <!-- <img src="/imgs/tab_sel.png" alt=""> -->
+                     <th class="th_right"><?php echo $lang['TRADE_OVER_NUMBERS'] ?></th>
+                   </tr>
+                 </thead>
+                 <tbody>
+
+                 </tbody>
+               </table>
+             </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="change-tab">
+        <span class="act-t" data-where="sellout-list"><?php echo $layout['lang']['MOB_SELL_BTN'] ?></span>
+        <span data-where="buyin-list"><?php echo $layout['lang']['MOB_BUY_BTN'] ?></span>
+      </div>
+      <table class="trade-table" id="buySellTable">
+        <thead data-tog="sellout-list">
+          <tr>
+            <th><?php echo $lang['TABLE_THEAD_PRICE_SELL'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</th>
+            <th><?php echo $lang['TABLE_THEAD_ORDER_NUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</th>
+            <th><?php echo $lang['TABLE_THEAD_ORDER_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</th>
+          </tr>
+        </thead>
+        <tbody id="sellout-list" data-tog="sellout-list">
+          <tr></tr>
+        </tbody>
+        <thead data-tog="buyin-list" style="display:none">
+          <tr>
+            <th><?php echo $lang['TABLE_THEAD_PRICE_BUY'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</th>
+            <th><?php echo $lang['TABLE_THEAD_ORDER_NUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</th>
+            <th><?php echo $lang['TABLE_THEAD_ORDER_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</th>
+          </tr>
+        </thead>
+        <tbody id="buyin-list" style="display:none">
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tr-r hide-dom">
+      <table class="deal-table">
+        <thead>
+          <tr>
+            <th><?php echo $lang['TABLE_THEAD_ORDER_TIME'] ?></th>
+            <th><?php echo $lang['TABLE_THEAD_DONE_PRICE'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</th>
+            <th><?php echo $lang['TABLE_THEAD_DONE_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</th>
+          </tr>
+        </thead>
+        <tbody id="deal-list">
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="content-b">
+  <div id="sidebar-container" class="sidebar-container mob-hide">
+    <div id="sidebar-catch" class="sidebar-catch"><?php echo $lang['RULE_TRADE_RULE'] ?></div>
+    <div id="rule-container" class="rule-container">
+      <div class="rule-top"><span class="hight-light"><?php echo strtoupper($coinPair['coin_from']); ?></span><?php echo $lang['RULE_TRADE_RULE'] ?></div>
+      <div class="rule-midd">
+        <p><?php echo $lang['RULE_TRADE_TIME'] ?><span class = "hight-light"><?php if($coinPair['open_start']== $coinPair['open_end']){echo '24小時';}else{echo substr($coinPair['open_start'],0,2).':'. substr($coinPair['open_start'], 2, 2).'-'. substr($coinPair['open_end'], 0, 2) . ':' . substr($coinPair['open_end'], 2, 2);} ?></span></p>
+        <p><?php echo $lang['RULE_TRADE_FEE'] ?></p>
+        <p><span><?php echo $lang['TRADE_BUY_IN'] ?> <span class="hight-light"><?php echo ($coinPair['rate_buy']*100).'%'; ?></span></span>&nbsp;&nbsp;&nbsp;<span><?php echo $lang['TRADE_SELL_OUT'] ?> <span class="hight-light"><?php echo ($coinPair['rate'] * 100) . '%'; ?></span></span></p>
+      </div>
+      <div class="rule-bottom">
+        <p><?php echo $lang['RULE_TRADE_MIN_NUM'] ?><span class="hight-light"><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['min_trade']), '.'); ?></span></p>
+        <p><?php echo $lang['RULE_TRADE_MAX_NUM'] ?><span class="hight-light"><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['max_trade']), '.'); ?></span></p>
+      </div>
+    </div>
+  </div>
+  <!-- <div id="tradeAfterLogin" style="display:none !important">
+    <p><a href="javascript:void(0)" data-register="register"><?php echo $lang['REGISTER'] ?></a><?php echo $lang['RULE_TRADE_OR'] ?><a href="javascript:void(0)" data-login="login"><?php echo $lang['LOGIN'] ?></a><?php echo $lang['RULE_TRADE_AFTER_LOGIN'] ?></p>
+  </div> -->
+
+  <?php // 我的委托  ?>
+  <div class="content-bl">
+    <div class="tabs">
+      <div class="delegate-title"><span><?php echo $layout['lang']['MOB_MY_TRUST'] ?></span><i></i></div>
+      <div class="over-table">
+        <table class="delegate-table">
+          <thead>
+            <tr>
+              <th><?php echo $lang['TRUST_THEAD_TIME'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_TYPE'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_PRICE'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_NUM'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_DONE_NUM'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_NODONE_NUM'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_STATUS'] ?></th>
+              <th><?php echo $lang['TRUST_THEAD_HANDLE'] ?></th>
+            </tr>
+          </thead>
+          <tbody id="delegate-list">
+
+          </tbody>
+        </table>
+      </div>
+      <div class="no-record"><i></i><?php echo $lang['TRUST_NO_RECORD'] ?></div>
+    </div>
+  <?php // tabs結束 ?>
+  </div>
+  <?php // 买卖交易 ?>
+  <div class="content-br" data-top="p">
+    <div class="change-tab">
+      <span class="act-t" data-where="formSell"><?php echo $layout['lang']['MOB_SELL'] ?></span>
+      <span data-where="formBuy"><?php echo $layout['lang']['MOB_BUY'] ?></span>
+    </div>
+    <div class="br-l" data-tog="formBuy">
+      <div class="amount-box">
+        <p>
+          <?php echo $lang['TRADE_FORM_AVIAL_ASSET'] ?>
+          <span class="font-r" id="buy-availUse">--</span>
+          <span><?php echo strtoupper($coinPair['coin_to'])?></span>
+        </p>
+        <p>
+          <?php echo $lang['TRADE_FORM_LOCK_ASSET'] ?>
+          <span id="buy-lock">--</span>
+          <span><?php echo strtoupper($coinPair['coin_to']) ?></span>
+        </p>
+        <p>
+          <?php echo $lang['TRADE_FORM_AVIAL_BUY'] ?>
+          <span id="buy-availBuy">--</span>
+          <span><?php echo strtoupper($coinPair['coin_from']) ?></span>
+        </p>
+
+      </div>
+      <div class="btn-group mob-hide">
+        <a href="/user/coinin"><?php echo $lang['TRADE_FORM_COIN_IN'] ?></a>
+        <a href="/user/coinout"><?php echo $lang['TRADE_FORM_COIN_OUT'] ?></a>
+      </div>
+      <form id="form-buy" data-form="trade"
+        novalidate="true"
+        data-pricefloat="<?php echo $coinPair['price_float']; ?>"
+        data-numberfloat="<?php echo $coinPair['number_float']; ?>"
+        data-maxtrade="<?php echo $coinPair['max_trade']; ?>"
+        data-mintrade="<?php echo $coinPair['min_trade']; ?>">
+        <div class='input-g'>
+          <input type="text" maxLength="10" data-buyprice="change" name="buyIn-price" placeholder=<?php echo $lang['TABLE_THEAD_PRICE_BUY'] ?> data-input="trade" />
+          <span class="ext-placeholder"><?php echo strtoupper($coinPair['coin_to']) ?></span>
+        </div>
+        <div class='input-g'>
+          <input type="text" maxLength="10" data-buynum="change" name="buyIn-amount" placeholder=<?php echo $lang['TRADE_FORM_BUY_AMOUNT'] ?> data-input="trade" />
+          <span class="ext-placeholder"><?php echo strtoupper($coinPair['coin_from']) ?></span>
+        </div>
+        <div class="range">
+          <label><?php echo $lang['TRADE_FORM_RATE'] ?></label>
+          <div class="track-container">
+            <div class="track">
+              <div class="dot"></div>
+            </div>
+          </div>
+          <p>0%</p>
+        </div>
+        <div class='input-g settle-g'>
+          <p><?php echo $lang['TRADE_FORM_SETTLE'] ?><span id="buy-settle" data-tormb="0">0.00</span> <?php echo strtoupper($coinPair['coin_to']) ?></p>
+          <p><?php echo $coinPair['rate_buy']>0 ? ($lang['TRADE_FORM_FEE']).(round($coinPair['rate'], 4)*100).'%' : ($lang['TRADE_FORM_NO_FEE']).($lang['TRADE_FORM_FEE']) ?></p>
+        </div>
+        <div class='input-g submit-g'>
+          <input type="submit" value=<?php echo $lang['TRADE_FORM_BUY_NOW'] ?> id="btn-buy">
+        </div>
+      </form>
+    </div>
+    <div class="br-r" data-tog="formSell">
+      <div class="amount-box">
+        <p>
+          <?php echo $lang['TRADE_FORM_AVIAL_ASSET'] ?>
+          <span class="font-r" id="sell-availUse">--</span>
+          <span class=""><?php echo strtoupper($coinPair['coin_from']) ?></span>
+        </p>
+        <p>
+          <?php echo $lang['TRADE_FORM_LOCK_ASSET'] ?>
+          <span id="sell-lock">--</span>
+          <span><?php echo strtoupper($coinPair['coin_from']) ?></span>
+        </p>
+        <p>
+          <?php echo $lang['TRADE_FORM_AVIAL_SELL'] ?>
+          <span id="sell-availBuy">--</span>
+          <span><?php echo strtoupper($coinPair['coin_to']) ?></span>
+        </p>
+      </div>
+      <div class="btn-group mob-hidemob-hidemob-hide">
+        <a href="/user/coinin"><?php echo $lang['TRADE_FORM_COIN_IN'] ?></a>
+        <a href="/user/coinout"><?php echo $lang['TRADE_FORM_COIN_OUT'] ?></a>
+      </div>
+      <form id="form-sell" novalidate="true" data-form="trade">
+        <div class='input-g'>
+          <input type="text" maxLength="10" data-buyprice="change" name="sellOut-price" placeholder=<?php echo $lang['TABLE_THEAD_PRICE_SELL'] ?> data-input="trade" />
+          <span class="ext-placeholder"><?php echo strtoupper($coinPair['coin_to']) ?></span>
+        </div>
+        <div class='input-g'>
+          <input type="text" maxLength="10" data-buynum="change" name="sellOut-amount" placeholder=<?php echo $lang['TRADE_FORM_SELL_AMOUNT'] ?> data-input="trade" />
+          <span class="ext-placeholder"><?php echo strtoupper($coinPair['coin_from']) ?></span>
+        </div>
+        <div class="range">
+          <label><?php echo $lang['TRADE_FORM_RATE'] ?></label>
+          <div class="track-container">
+            <div class="track">
+              <div class="dot"></div>
+            </div>
+          </div>
+          <p>0%</p>
+        </div>
+        <div class='input-g settle-g'>
+          <p><?php echo $lang['TRADE_FORM_SETTLE'] ?><span id="sell-settle" data-tormb="0">0.00</span> <?php echo strtoupper($coinPair['coin_to']) ?></p>
+          <p><?php echo $coinPair['rate_buy']>0 ? ($lang['TRADE_FORM_FEE']).(round($coinPair['rate'], 4)*100).'%': ($lang['TRADE_FORM_NO_FEE']).($lang['TRADE_FORM_FEE']) ?></p>
+        </div>
+        <div class='input-g submit-g'>
+          <input type="submit" value=<?php echo $lang['TRADE_FORM_SELL_NOW'] ?> id="btn-sell">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <script src="/js/mob.trade.js?v=<?php echo $clear_cache;?>"></script> -->
+
+<?php  include PATH_TPL.'/tpl.footerTrade.phtml';?>

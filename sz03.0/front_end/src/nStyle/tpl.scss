@@ -1,0 +1,32 @@
+@import "./config.scss";
+@import "./color.scss";
+@import "./init.scss";
+
+
+// 手机屏幕 小于 767px
+@media screen and(max-width: $smScreenMax) {
+  .test {
+    width: pxToRem(200);
+  }
+}
+
+// 平板 768px ~ 979px
+@media screen and(min-width: $mdScreenMin) and (max-width: $mdScreenMax) {
+  .test {
+    width: pxToRem768(560);
+  }
+}
+
+// 980px ~ 1190px; 使用px
+@media screen and(min-width: $bigScreenMin) and (max-width: $bigScreenMax) {
+  .test {
+    width: 300px;
+  }
+}
+
+// 1200px 以上 使用px
+@media screen and(min-width: $superScreenMin) {
+  .test {
+    width: 500px;
+  }
+}

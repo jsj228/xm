@@ -1,0 +1,10 @@
+.el-collapse {
+  border: none;
+
+  .collapse-wrap {
+    will-change: height;
+    height: 0px;
+    overflow: hidden;
+    transition: height .2s ease-in-out;
+  }
+}

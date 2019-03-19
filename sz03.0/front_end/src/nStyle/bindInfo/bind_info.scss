@@ -1,0 +1,248 @@
+@import "../config.scss";
+@import "../color.scss";
+
+.bind_curtain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+.bind_content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 28px 54px 47px;
+  transform: translate(-50%, -50%);
+  width: 375px;
+  border-radius: 4px;
+  .bind_title {
+    position: relative;
+    margin-bottom: 16px;
+    padding-top: 12px;
+    width: 100%;
+    height: 72px;
+    text-align: center;
+    line-height: 72px;
+    font-size: 20px;
+    &.bind_title_goo {
+      height: auto;
+      line-height: 16px;
+    }
+    .bind_close {
+      z-index: 31;
+      position: absolute;
+      top: -18px;
+      right: -42px;
+      width: 26px;
+      height: 26px;
+      background: url('../../assets/alert_close.png') no-repeat;
+      cursor: pointer;
+    }
+  }
+  .bind_go_title {
+    width: 100%;
+    font-size: 14px;
+  }
+  .bind_google_q {
+    margin: 0 auto;
+    width: 181px;
+    height: 181px;
+    background: url('../../assets/google_q.jpg') no-repeat;
+    background-size: 181px;
+  }
+  .bind_key {
+    width: 100%;
+    text-align: center;
+    .bind_copy {
+      margin-left: 20px;
+      padding: 0;
+      width: 60px;
+      height: 24px;
+      line-height: 24px;
+      border: 1px solid #3366CC;
+      border-radius: 12px;
+      color: #3366CC;
+    }
+  }
+  .bind_google_two {
+    margin: 0 auto;
+    width: 181px;
+    height: 181px;
+    // background: url('../../assets/google_q.jpg') no-repeat;
+    // background-size: 181px;
+    img {
+      width: 100%;
+      height: 100%；
+    }
+  }
+  .top_group {
+    margin-top: 45px;
+  }
+  .bind_group {
+    height: 44px;
+    line-height: 44px;
+    .bind_label {
+      margin-right: 11px;
+      width: 25px;
+    }
+    .bind_area {
+      position: relative;
+      display: inline-block;
+      width: 70px;
+      cursor: pointer;
+      background: url('../../assets/user/area.png') no-repeat 49px center;
+      &::before {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0, -50%);
+        content: '';
+        width: 1px;
+        height: 24px;
+        background: #dcdcdc;
+      }
+    }
+    .bind_choose {
+      z-index: 40;
+      position: absolute;
+      left: 0;
+      top: 45px;
+      padding-top: 15px;
+      height: 300px;
+      width: 100%;
+      overflow-y: auto;
+      border-radius: 4px;
+      .bind_area_code {
+        margin-left: 15px;
+        width: 56px;
+      }
+      .bind_area_name {
+        max-width: 80%;
+      }
+      .bind_li {
+        line-height: 40px;
+        font-size: 16px;
+        cursor: pointer;
+        &:hover {
+          background: $gray350;
+        }
+      }
+      .fn_active {
+        background: $gray350;
+      }
+    }
+    .bind_email {
+      background: url('../../assets/svg/user_email.svg') no-repeat center;
+    }
+    .bind_pwd {
+      background: url('../../assets/user/pwd_pwd.svg') no-repeat center;
+    }
+    .bind_google {
+      background: url('../../assets/google.png') no-repeat center;
+    }
+    .bind_mo {
+      background: url('../../assets/user/user_phone.svg') no-repeat center;
+    }
+    .bind_code {
+      background: url('../../assets/user/user_code.svg') no-repeat center;
+    }
+    .bind_input {
+      border: none;
+      border-bottom: 1px solid #dcdcdc;
+      height: 44px;
+      width: 100%;
+    }
+    .bind_input_phone {
+      border: none;
+      height: 98%;
+    }
+    .focus_input {
+      border-bottom: none;
+    }
+    .bind_input_div {
+      position: relative;
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: $yellow500;
+        box-shadow: 0px 0px 3px $yellow500;
+      }
+    }
+    .bind_btn {
+      margin-left: 6px;
+      width: 108px;
+      height: 44px;
+      border: 1px solid $yellow500;
+      border-radius: 4px;
+    }
+  }
+  .bind_err {
+    width: 100%;
+    min-height: 16px;
+    line-height: 16px;
+  }
+  .bind_submit {
+    position: relative;
+    margin-top: 16px;
+    width: 100%;
+    height: 43px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .bind_warin {
+    padding-left: 36px;
+    height: 36px;
+    line-height: 36px;
+  }
+  .bind_voice {
+    height: 36px;
+    line-height: 36px;
+  }
+
+}
+.bind_alert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 438px;
+  border-radius: 4px;
+  //success
+  .bind_succ_header {
+    position: relative;
+    height: 190px;
+    width: 100%;
+    background: url('../../assets/phone-active-succ.png') no-repeat;
+    .bind_succ_closed {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 24px;
+      height: 24px;
+      background: url('../../assets/close_hd.png') no-repeat;
+      background-size: 24px;
+      cursor: pointer;
+    }
+  }
+  .bind_h3 {
+    height: 66px;
+    line-height: 66px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: normal;
+  }
+  .bind_succ_btn {
+    margin-bottom: 47px;
+    width: 331px;
+    height: 43px;
+    border-radius: 3px;
+    font-size: 18px;
+  }
+}

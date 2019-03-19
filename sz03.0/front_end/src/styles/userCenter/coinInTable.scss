@@ -1,0 +1,202 @@
+@import "../animation/transition.scss";
+@import "../common/theme.scss";
+
+.coin-in-table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 19px;
+  // height: 100%;
+  // min-height: 469px;
+  background: $baseWhite;
+  font-size: 14px;
+  .t-head {
+    color: $norBlack;
+    height: 69px;
+    flex-shrink: 0;
+
+    td {
+      &:last-child {
+        // padding-right: 45px;
+      }
+    }
+  }
+  .t-body {
+    color: $norBlack;
+    height: 100%;
+    flex-shrink: 1;
+    overflow-y: auto;
+
+    thead {
+      line-height: 0;
+      height: 0;
+      overflow: hidden;
+      tr {
+        line-height: 0;
+        height: 0;
+        overflow: hidden;
+        td {
+          line-height: 0;
+          height: 0;
+          overflow: hidden;
+        }
+      }
+    }
+    tbody {
+      // &:after {
+      //   content: "";
+      //   display: table-cell;
+      //   height: 13px;
+      // }
+    }
+  }
+  table {
+    width: 100%;
+    overflow: hidden;
+    border-collapse: collapse;
+    color: $norBlack;
+    font-size: 14px;
+
+    thead, tbody {
+      width: 100%;
+
+      tr {
+        width: 100%;
+      }
+      td {
+        padding: 0 5px;
+        // white-space: nowrap;
+        word-wrap:break-word;
+        word-break:break-all;
+        min-width: 60px;
+        &:first-child {
+          padding-left: 29px;
+        }
+        &:last-child {
+          padding-right: 29px;
+        }
+      }
+      .green-font {
+        color: #01b21a;
+      }
+      .red-font {
+        color: #ee2222;
+      }
+      .orange-font {
+        color: #ffbb03;
+      }
+    }
+
+    thead {
+      // line-height: 69px;
+      height: 69px;
+      tr {
+        height: 69px;
+      }
+    }
+    tbody {
+      line-height: 50px;
+      height: 100%;
+      overflow: visible;
+
+      tr {
+        &:nth-child(odd) {
+          background: #f8f8f8;
+        }
+
+        &:hover {
+          background: #f5faff;
+          @include transition(all, .1s);
+        }
+        .order-btn, .disable-btn {
+          padding: 0 10px;
+          line-height: 24px;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+        }
+        .order-btn {
+          box-sizing: border-box;
+          color: $norBlack;
+          background: $baseWhite;
+
+          &:hover {
+            cursor: pointer;
+            border: 1px solid transparent;
+            color: $baseWhite;
+            background: #4267b2;
+            @include transition(all, .3s);
+          }
+        }
+        .disable-btn {
+          color: $grayBlack;
+          background: #eee;
+
+          &:hover {
+            color: $grayBlack;
+            background: #eee;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+
+  .no-data {
+    display: none;
+    height: 236px;
+    width: 100%;
+  }
+  .no-data-ctx {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .no-data-img {
+    display: inline-flex;
+    width: 91px;
+    height: 116px;
+    background: url(../../assets/table_no_adata.png) center center no-repeat;
+  }
+  .short-no-data {
+    display: block;
+    height: 10em;
+  }
+  .table-loading {
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../../assets/load.gif);
+  }
+  #tBody thead>tr {
+    font-size: 0;
+    // opacity: 0.5;
+  }
+}
+
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .coin-in-table {
+    .t-head {
+      min-height: 35px;
+    }
+    table {
+      thead {
+        line-height: 35px;
+      }
+      tbody {
+        line-height: 35px;
+      }
+      td {
+        min-width: 60px;
+        font-size: 12px;
+      }
+    }
+    .no-data {
+      height: 236px;
+    }
+    .short-no-data {
+      height: 10em;
+    }
+  }
+}

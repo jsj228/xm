@@ -1,0 +1,15 @@
+
+.type_cont {
+  padding-top: 30px;
+}
+
+.out_table {
+  flex-grow: 1;
+  overflow-y: auto;
+
+  .coin-in-table {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		red{color:red; padding-left:20px;}
+	</style>
+</head>
+<body>
+	<h4>我的更新时间：<?php echo date('Y-m-d H:i:s', $userInfo['updated']); ?></h4>
+	<?php foreach ($userInfo as $k=>$v) { if(stripos($k, '_over') || stripos($k, '_lock')) {?>
+	<div><?php echo $k.' ：', $v, '<red>差值：'. $diff['user'][$k].'</red>' ?></div>
+	<?php }} ?>
+
+	<h4>fee用户更新时间：<?php echo date('Y-m-d H:i:s', $fee['updated']); ?></h4>
+	<?php foreach ($fee as $k=>$v) { if(stripos($k, '_over') || stripos($k, '_lock')) {?>
+	<div><?php echo $k.' ：', $v, '<red>差值：'. $diff['fee'][$k].'</red>' ?></div>
+	<?php }} ?>
+</body>
+</html>

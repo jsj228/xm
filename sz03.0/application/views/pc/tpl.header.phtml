@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php // 缓存控制 ?>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	
+	<meta name="viewport" content="width=device-width,height=device-height,maximum-scale=2.0,initial-scale=1.0">
+	<!-- iOS 设备 begin -->
+	<!-- 添加到主屏后的标题（iOS 6 新增） -->
+	<meta name="apple-mobile-web-app-title" content="标题">
+	<!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 -->
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="MobileOptimized" content="320"/>
+	<!-- //表示为移动设备的默认显示宽度为320px，此参数目前使用与安卓手机设备 -->
+	<!-- <meta name=”Iphone-content” content=”320″/>-->
+	<!-- //表示为Iphone设备的默认显示宽度为320px -->
+	<!-- <meta name=”format-detection” content=”telephone=no” /> -->
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<!-- <meta http-equiv="X-Frame-Options" content="deny"> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<?php isset($seot) || $seot = isset($this->layout['seot']) ? $this->layout['seot'] : $layout["lang"]["TITLE_WORD"]; ?>
+	<title>
+		<?php  echo  $seot?:$layout["lang"]["TITLE_WORD"]?>
+	</title>
+	<meta name="keywords" content="<?php  echo isset($this->layout['seok'])?$this->layout['seok']:$lang['KEY_WORDS']?>" />
+	<meta name="description" content="<?php echo isset($this->layout['seod'])?$this->layout['seod']:$lang['DESCRIPTION']?>" />
+	<meta content="telephone=no,email=no" name="format-detection">
+	<link rel="shortcut icon" href="/huocoin.png" />
+	<?php $hasLibs = file_exists(PATH_TPL.'/../../../public/libs.json'); ?>
+	<?php if($hasLibs) { $libs = json_decode(file_get_contents(PATH_TPL.'/../../../public/libs.json'), true);} ?>
+	<?php if ($hasLibs && $libs['libs']['css']) { ?>
+	<link rel="stylesheet" href="<?php echo "/libs".'/'.$libs['libs']['css'] ?>" />
+	<?php }?>
+	<?php $statics = json_decode(file_get_contents(PATH_TPL.'/../../../public/version.json'), true); ?>
+	<?php foreach ($statics[$layout['controller'].'.'.$layout['action']]['css'] as $v) {
+    if ($v) echo "<link rel='stylesheet' href='$v' />";
+  } ?>
+</head>
+<body class="default_bg default_f" id="body_all">
+	<span id="LANG" style="display:none;"><?php echo LANG ?></span>
+	<div flex="main:justify cross:center" class="nav_contain" id="navApp">
+		<?php // 左边部分 ?>
+		<div class="nav_left" flex="dir:left cross:center">
+			<!-- <a class="main_link relative_dom" href="/"> -->
+			<a class="main_link" href="/">
+				<img src="/svg/huocoinLogo.svg">
+			</a>
+			<?php // 导航 ?>
+			<ul flex="dir:left" class="nav_left_sec">
+				<!-- // 交易中心不显示一下导航选项 -->
+				<?php if ($layout['controller'] != 'trade'){ ?>
+					<li class="index rel-dom act-nav-list"><a href="/" class="link"><?php echo $layout['lang']["HOME"]; ?></a></li>
+					<li ><a class="link gray700_f" href="/trade"><?php echo $layout['lang']["TRADE_CENTER"]; ?></a></li>
+					<!-- // 帮助中心 -->
+					<?php $helpurl = Yaf_Registry::get("config")->header->helpurl; if ($helpurl) { ?>
+						<li class=""><a class="link gray700_f" href="<?php echo $helpurl;?>"><?php echo $layout['lang']["HELP_CENTER"]; ?></a></li>
+					<?php } ?>
+					<!-- // 活动资讯 -->
+					<?php $rewardurl = Yaf_Registry::get("config")->header->rewardurl; if ($rewardurl) { ?>
+						<!-- 有奖活动  id="activityCtrl" -->
+						<li class="rel-dom act-nav-list">
+							<a class="link gray700_f" href="<?php echo $rewardurl;?>"><?php echo $layout['lang']["ACTIVITY_NEWS"]; ?></a>
+						</li>
+					<?php } ?>
+					<li class="rel-dom act-nav-list">
+						<a class="link gray700_f" 
+							<?php  if(isset($_SESSION['user'])) {echo 'href="/user/index"';} else{echo "@click.stop='login'";}?>>财务中心</a>
+					</li>
+					<!-- <li class="rel-dom act-nav-list transaction" style="position:relative">
+						<a class="link gray700_f">场外交易<b class="ctrl_icon"></b>
+						</a>
+						<div class="gold-coin">
+							<div class="triangle_border_up">
+								<span></span>
+							</div>
+							<a <?php if(isset($_SESSION['user'])){ echo 'href ="/c2c"'; }else{ echo "@click.stop='login'"; } ?> style="border-bottom: 1px solid #0e192b0f;">c2c交易</a>
+							<a href ="/otc">otc交易</a>
+						</div>
+					</li> -->
+					<li class="rel-dom act-nav-list c2c">
+						<a class="link gray700_f" <?php if(isset($_SESSION['user'])){ echo 'href ="/c2c"'; }else{ echo "@click.stop='login'"; } ?>>C2C交易</a>
+					</li>
+					<li class="rel-dom act-nav-list otc">
+						<a class="link gray700_f" href ="/otc">OTC交易</a>
+					</li>
+
+
+				<?php } ?>
+			</ul>
+		</div>
+		<?php // 右边部分 1200以上屏幕导航 ?>
+		<ul flex="dir:left" class="nav_right gray700_f">
+		<!-- // 个人账户 -->
+			<!-- // 1. 未登录 -->
+			<?php if (!isset($_SESSION['user'])){ ?>
+				<li flex="main:justify cross:center">
+					<button class="login_btn" @click.stop="login"><?php echo $layout['lang']["LOGIN"]; ?></button>&nbsp;&nbsp;
+					<button class="register_btn " @click.stop="register"><?php echo $layout['lang']["REGISTER"]; ?></button>
+				</li>
+			<?php } ?>
+			<!-- //2. 已登录 //userMainu = !userMainu  -->
+			<?php if (isset($_SESSION['user'])) { ?>
+				<li :class="['relative_dom', 'user_part', {now_nav: userMainu}]" @click.stop="changeTab('userMainu')" flex="cross:center">
+					<!-- // 个人中心 user_icon -->
+					<span class="user_icon_person"></span>
+					<a class="gray700_f relative_dom ctrl_icon margin_left_z">
+						<?php 
+						if($_SESSION['user']['mo']){echo substr($_SESSION['user']['mo'], 0, 3).'****'. substr($_SESSION['user']['mo'], 7, 4);}
+						else{ $email_array = explode("@", $_SESSION['user']['email']);
+							$not= substr_replace($email_array[0], '****', 3);
+							$userInfo['email']= $not.'@'.$email_array[1];  echo $userInfo['email'];
+						} ?>
+						<i class="more-i"></i>
+					</a>
+					<!-- <div class="user_acc_mask" v-cloak> -->
+					<transition mode="out-in" name="fadeOut">
+					<ul class="user_account_contain" v-cloak v-if="userMainu">
+						<li><a class="gray700_f account_list accout_a" href="/user"><?php echo $layout['lang']['MY_ACCOUNT']; ?></a></li>
+						<li><a class="gray700_f logout_list accout_a" href="/user/logout"><?php echo $layout['lang']['LOGOUT']; ?></a></li>
+					</ul>
+					</transition>
+					<!-- </div> -->
+				</li>
+			<?php } ?>
+			<li :class="['relative_dom', 'more_tr', {now_nav: lang}]" @click.stop="changeTab('lang')" flex="cross:center">
+				<?php $langImgVersion=1; ?>
+				<img src="/flag/<?php echo LANG ?>.png?v=<?php echo $langImgVersion; ?>" alt="" class="nav_flag"/>
+				<a class="gray700_f link ctrl_icon margin_left_z"></a>
+				<!-- <div class="user_acc_mask" v-cloak> -->
+				<transition mode="out-in" name="fadeOut">
+					<!-- v-on:mouseout="lang = false" -->
+					<div class="user_account_contain user_account_flag" v-cloak v-if="lang">
+						<ul class="black500_f">
+							<?php foreach ($layout['country'] as $key => $cou) { ?>
+							<li>
+								<a class="gray700_f flag_a <?php if(LANG=='<?php echo $key; ?>') { echo " hover_click"; } ?>"
+									@click="changeLangs('<?php echo $key; ?>')">
+									<img src="/flag/<?php echo $key; ?>.png?v=<?php echo $langImgVersion; ?>" alt="" class="nav_flag">
+									<?php echo $cou; ?>
+								</a>
+							</li>
+							<?php } ?>
+						</ul>
+					</div>
+				</transition>
+				<!-- </div> -->
+			</li>
+		</ul>
+		<?php // reqToken ?>
+		<span id="hahaha" style="display: none !important;">
+			<?php echo $layout['reqToken'] ?></span>
+		<input type="hidden" value="<?php echo Yaf_Registry::get("config")->push->host;?>" id="wsurl" />
+	</div>
+
+	<script>
+		(function(a,h,c,b,f,g){a["UdeskApiObject"]=f;a[f]=a[f]||function(){(a[f].d=a[f].d||[]).push(arguments)};g=h.createElement(c);g.async=1;g.charset="utf-8";g.src=b;c=h.getElementsByTagName(c)[0];c.parentNode.insertBefore(g,c)})(window,document,"script","https://assets-cli.udesk.cn/im_client/js/udeskApi.js","ud");
+		ud({
+			"code": "2f6kec52",
+			"link": "https://fwzs6.udesk.cn/im_client/?web_plugin_id=52422"
+		});
+		
+	</script>
+	<!-- <p id="boxp">1111</p> -->

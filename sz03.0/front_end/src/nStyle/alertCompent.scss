@@ -1,0 +1,147 @@
+@import "./config.scss";
+@import "./color.scss";
+
+
+@media screen and(max-width: $mdScreenMax) {
+  .mask_contain {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 101;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+
+
+    .alert_content {
+      width: pxToRem(642);
+      // height: pxToRem(377);
+      border-radius: 8px;
+      background-color: #fff;
+
+      .close_btn {
+        position: absolute;
+        right: pxToRem(28);
+        top: 0;
+        font-size: pxToRem(60);
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .alert_contents {
+        margin-top: pxToRem(69);
+        padding: pxToRem(49) pxToRem(60) pxToRem(49);
+        text-align: center;
+        font-size: pxToRem(36);
+        word-break:break-all;
+      }
+    }
+    .btn_line {
+      button {
+        margin-bottom: pxToRem(90);
+        width: pxToRem(522);
+        height: pxToRem(92);
+        border-radius: 4px;
+        font-size: pxToRem(36);
+        border: none;
+        line-height: pxToRem(92);
+      }
+    }
+  }
+}
+//平板
+@media screen and(min-width: $bigScreenMin) and(max-width: $bigScreenMax) {
+  .mask_contain {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 101;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+
+
+    .alert_content {
+      width: 608px;
+      // height: pxToRem(377);
+      border-radius: 8px;
+      background-color: #fff;
+
+      .close_btn {
+        position: absolute;
+        right: 20px;
+        top: 0;
+        font-size: 60px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .alert_contents {
+        margin-top: 47px;
+        padding: 38px 79px 60px;
+        text-align: center;
+        font-size: 30px;
+        word-break:break-all;
+      }
+    }
+    .btn_line {
+      button {
+        margin-bottom: 63px;
+        width: 450px;
+        height: 60px;
+        border-radius: 4px;
+        font-size: 24px;
+        border: none;
+        line-height: 60px;
+      }
+    }
+  }
+}
+//pc
+@media screen and(min-width: $superScreenMin) {
+  .mask_contain {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 101;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .5);
+
+
+    .alert_content {
+      width: 440px;
+      // height: pxToRem(377);
+      border-radius: 8px;
+      background-color: #fff;
+
+      .close_btn {
+        position: absolute;
+        right: 20px;
+        top: 0;
+        font-size: 40px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .alert_contents {
+        margin-top: 46px;
+        padding: 16px 44px 41px;
+        text-align: center;
+        font-size: 16px;
+        word-break:break-all;
+      }
+    }
+    .btn_line {
+      button {
+        margin-bottom: 46px;
+        width: 340px;
+        height: 42px;
+        border-radius: 4px;
+        font-size: 20px;
+        border: none;
+        line-height: 42px;
+      }
+    }
+  }
+}

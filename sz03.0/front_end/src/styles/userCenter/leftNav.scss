@@ -1,0 +1,84 @@
+@import "../common/theme.scss";
+@import "../animation/transition.scss";
+
+$notActiveFrontCol: #7b7d82;
+
+.left-nav {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 223px;
+  background: #282c37;
+
+  dl {
+
+    border-bottom: 1px solid #3c404a;
+    padding: 0 0 15px 0;
+    &:first-child {
+      margin-top: 28px;
+    }
+    &:last-child {
+      border: none;
+    }
+
+    dt {
+      line-height: 61px;
+      color: $baseWhite;
+      font-size: 16px;
+      text-indent: 20px;
+      &:before {
+        content: '';
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 15px;
+        background: url(../../assets/user_default_icon.png) left center no-repeat;
+      }
+    }
+    .my-money {
+
+      &:before {
+        bottom: -1px;
+        background-image: url(../../assets/my_money_icon.png);
+      }
+    }
+    .my-trade {
+
+      &:before {
+        bottom: -2px;
+        background-image: url(../../assets/my_trade_icon.png);
+      }
+    }
+    .my-plan {
+
+      &:before {
+        bottom: -1px;
+        background-image: url(../../assets/master_plan.png);
+      }
+    }
+
+    dd {
+      margin: 8px 0;
+
+      &>a {
+        display: inline-block;
+        width: 100%;
+        line-height: 41px;
+        white-space: nowrap;
+        text-indent: 32px;
+        color: $notActiveFrontCol;
+
+        &:hover {
+          color: $baseWhite;
+          // background: #eaad08;
+          @include transition(all, .5s);
+        }
+      }
+      .u-active {
+        color: $baseWhite;
+        background: #eaad08;
+      }
+    }
+  }
+}

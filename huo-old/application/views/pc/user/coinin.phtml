@@ -1,0 +1,246 @@
+<!-- <link rel="stylesheet" href="/css/userCoinIn.css?v=<?php echo $clear_cache;?>"> -->
+<div class="rf_main gray50_bg" flex="dir:top">
+  <div class="nav-crumbs">
+    <?php echo $lang["USER_NAV_MY_ASSETS"] ?> > <a class="active-tab" href="javascript: void(0);"><?php echo $lang['USER_NAV_COIN_IN'] ?></a>
+  </div>
+  <?php // 筛选条件 ?>
+  <?php // include PATH_TPL.'/user/condition.phtml';?>
+  <div class="condition_container white100_bg">
+    <?php include PATH_TPL.'/user/condition/coin_list.phtml';?>
+    <div class="coin_list_con"  flex="">
+      <div class="gray600_f list_tit" flex-box="0"><?php echo $lang['CHANGE_TYPE'] ?>：</div>
+      <div class="list_item" id="changeType" flex-box="1">
+        <span class="gray500_f sel_coin" in-type="all"><?php echo $lang['CHANGE_ALL'] ?></span>
+        <span in-type="1" class="gray500_f"><?php echo $lang['NORMAL_CHANGE'] ?></span>
+        <span in-type="2" class="gray500_f"><?php echo $lang['TRADE_ORE'] ?></span>
+        <span in-type="3" class="gray500_f"><?php echo $lang['COIN_GET'] ?></span>
+      </div>
+    </div>
+
+    <!-- 000 -->
+	
+	<div style="overflow:hidden">
+		<div class="coin_list_cons fl" >
+			<div class="gray600_f list_tit" flex-box="0"><span data-ntcoin="notecoin" style="margin-left:30px"></span><?php echo $lang['USER_CDTION_WALLET_ADDR'] ?>：</div>
+				<!-- 充币二维码 -->
+				<div class="coin_in_qr gray500_f" flex="dir:left box:mean">
+				<!-- // 錢包地址 ?> -->
+				<div class="addr_lf">
+					<div class="qr_code_img" id="qrcodeImg"><img src="/imgs/creating_qrCode.png"></div>
+					<div class="addr_context" id="addrShow">
+					<?php // 币地址，一定要放到  <span data-ccodetext> 标签内</span><?php echo $lang['USER_CDTION_WALLET_ADDR'] ?>
+					<!-- <p class="code_addr_text"><span id="coinName"></p> -->
+					<p class="wallt_addr"><span data-ccodetext='code' id="coinAddr" data-cTarget="true"></span></p>
+					<?php // 复制钱包地址 ?>
+					<p>
+						<a class="copy_btn white100_f" href="javascript: void(0);" data-copy="ele" data-type="addr"><?php echo $lang['USER_CDTION_COPY_WALLET_ADDR']; ?></a>
+						<a class="link-to-out" id="linkToOut" target="_blank" href="<?php echo Yaf_Registry::get("config")->yibi->url; ?>"><?php echo $lang['NOBTC_LINK']; ?></a>
+					</p>
+					</div>
+					<?php // 地址生成中... ?>
+					<div class="addr_loading" id="addrLoading"><?php echo $lang['ADDR_LOADING'] ?></div>
+					<?php // 無法充幣 提示 ?>
+					<div class="can-not-in" id="canNotIn"><p><?php echo $lang['USER_CDTION_SO_SORRY'] ?><span data-ntcoin="notecoin"></span><?php echo $lang['USER_CDTION_CAN_NOT_COIN_IN']; ?></p></div>
+				</div>
+			<!-- -->
+			</div>
+			<div class="coin_list_con es_show"  flex="">
+				<div class="gray600_f list_tit" flex-box="0">
+         <span data-ntcoin="notecoin"></span>:
+          <?php echo $lang['COINOUT_LABEL']; ?>
+					<span class="red500_f">(<?php echo $lang['COINOUT_IMPORTANT'] ?>)</span>：
+				</div>
+			</div>
+		<!--  // eos 标签二维码 ?> -->
+			<div class="coin_in_qr gray500_f es_show" flex="dir:left box:mean">
+				<div class="addr_lf">
+					<div class="qr_code_img" id="img_eos"><img src="/imgs/creating_qrCode.png"></div>
+					<div class="all_code_mess" id="addrShowEos">
+					<?php // 币标签，一定要放到  <span data-ccodetext-span> 标签内 ?>
+					<p class="wallt_addr"><span data-ccodetext='code' id="eos_labels" data-cTarget="true"></span></p>
+					<?php // 复制eos标签 ?>
+					<p>
+						<a class="copy_btn white100_f" href="javascript: void(0);" data-copy="ele" data-type="label"><?php echo $lang['COINOUT_LABEL_COPY'] ?></a>
+					</p>
+					</div>
+					<div class="addr_loading" id="addrLoadingEos"><?php echo $lang['ADDR_LOADING'] ?></div>
+					<div class="can-not-in" id="canNotInEos"><p><?php echo $lang['USER_CDTION_SO_SORRY'] ?><span data-ntcoin="notecoin"></span><?php echo $lang['USER_CDTION_CAN_NOT_COIN_IN']; ?></p></div>
+				</div>
+			</div>
+		</div>
+		<div id="fromBox" class="fl">
+            <div>
+			<dl style="margin-bottom: 24px;">
+				<dd style="margin-left: 49px; margin-top:54px;">钱包地址：
+					<span><input type="text" class="texts" id="weike_dzbz" onkeyup="value=value.replace(/[^A-Za-z0-9\-]+/g,&quot;&quot;)" maxlength="24" value=""></span>
+				</dd>
+				<dd style="margin-left: 50px;margin-top:32px">
+				转入数量：<span>
+					<input type="text" class="texts" id="cny_num" maxlength="12" value=""/>
+				</span>
+				</dd>
+				<dd style="margin-left: 34px;margin-top: 15px;">
+				  <button  class="coinin_up">确定</button>
+				</dd>
+			</dl>
+			</div>
+		</div> 
+		<!-- // 转入须知 -->
+		<div class="coin_list_cons fl" style="margin-left: 13%;" data-pagename="<?php echo $pageName;?>">
+			<h5><?php echo $lang['USER_CDTION_COIN_IN_INSTRUCTIONS']; ?></h5>
+			<?php // 1. 此地址是您唯一且独自使用的转入地址，您可以同时进行多次转入 ?>
+			<p><?php echo $lang['USER_CDTION_TIPS_ONE']; ?></p>
+			<?php // 本地址  禁止充值除  之外的其他资产  ，任何其他资产充值将不可找回 ?>
+			<p><?php echo $lang['USER_CDTION_TIPS_TWO_A']; ?><span class="red500_f"><?php echo $lang['USER_CDTION_TIPS_TWO_B']; ?><span data-ntcoin="notecoin"></span><?php echo $lang['USER_CDTION_TIPS_TWO_C']; ?></span><?php echo $lang['USER_CDTION_TIPS_TWO_D']; ?></p>
+		</div>
+	</div>
+
+
+    
+   
+    
+  </div>
+  <p class="user_tips gray500_f" id="userTips"></p>
+  <?php include PATH_TPL.'/user/condition/time_condition.phtml'; ?>
+
+  <?php // 表格 id="tBody" 不可删除 ?>
+  <div class="out_table">
+    <div class="coin-in-table shadow-cont">
+      <div class="t-body" id="tBody">
+        <table>
+          <thead>
+            <tr>
+              <td><?php echo $lang['T_HEADER_ID'] ?></td>
+              <td><?php echo $lang['TABLE_CHANGE'] ?></td>
+              <td><?php echo $lang['T_HEADER_TIME'] ?></td>
+              <td><?php echo $lang['T_HEADER_TXID'] ?></td>
+              <!-- <td><?php echo $lang['T_HEADER_ADDR_where'] ?></td> -->
+              <td><?php echo $lang['T_HEADER_NUM'] ?></td>
+              <td><?php echo $lang['T_HEADER_SURE_NUM'] ?></td>
+              <td><?php echo $lang['T_HEADER_STATU'] ?></td>
+            </tr>
+          </thead>
+          <tbody id="dataBody">
+            <?php // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"?>
+          </tbody>
+          <?php //分頁 ?>
+        </table>
+        <?php // 没有数据时，显示该元素， 设置 display: block ?>
+        <div class="no-data" id="tableNoData" style="display:block;">
+          <div class="no-data-ctx">
+            <span class="no-data-img"></span>
+            <span><?php echo $lang['NO_RECORD_NOW']; ?></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tabsPages" :class="all > 1 ? 'page-list-contain':''">
+      <pages :all = "all" v-on:get-tabs="getTabs"
+      :page-name="'<?php echo $lang['NUMBER_HOME_PA']?>'"
+      :jump-to-title="'<?php echo $lang['NUMBER_TIAO_PA']?>'"
+      :home-title="'<?php echo $lang['NUMBER_HOME']?>'"
+      :last-title="'<?php echo $lang['NUMBER_FOOR']?>'"
+      :currentpage ="currentpage"
+      @keydown=""
+      v-if="all && all != 1"></pages>
+    </div>
+  </div>
+</div>
+
+
+ <div flex="main:center cross:center" class="set_trade_pwd" style="display:none">
+ <div class="pwd_form_contain white100_bg relative_dom">
+ <div class="close_btn close_icon"></div>
+  <p class="pwd_title gray600_f">請輸入交易密碼</p> 
+  <div class="trade_pwd_form">
+  <div class="input_g relative_dom">
+  <input autocomplete="off" class="texts" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" placeholder="請輸入交易密碼"> <!----></div> 
+  <div class="submit_tab">
+  <button type="submit" class="default_btn orange500_bg white100_f">確定</button>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- <style>
+  .set_trade_pwd {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 90;
+    background-color: rgba(0, 0, 0, 0.5);
+	
+}
+.default_bg .white100_bg {
+    background-color: #fff;
+}
+.pwd_form_contain {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 50px 50px 46px;
+    width: 440px;
+    height: 280px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+	display:none;
+}
+
+.relative_dom {
+    position: relative;
+}
+.close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #eaeaea;
+    font-size: 26px;
+    font-weight: 700;
+    z-index: 9;
+}
+.default_f .gray600_f {
+    color: #333;
+}
+.pwd_title {
+    padding: 0 0 26px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 20px;
+    white-space: nowrap;
+}
+.trade_pwd_form input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-bottom: 1px solid #dcdcdc;
+    overflow: hidden;
+}
+.submit_tab {
+    padding: 43px 0 0;
+}
+.default_f .white100_f {
+    color: #fff;
+}
+
+.default_bg .orange500_bg {
+    background-color: #ffbd09;
+}
+  </style>
+ -->
+
+
+

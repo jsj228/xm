@@ -1,0 +1,50 @@
+$bordeColr:#e3493c;
+
+
+.hover-win {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: 170px;
+  white-space: nowrap;
+  height: 30px;
+
+
+  .tri-ang {
+    position: absolute;
+    // left: 0;
+    border: 7px solid transparent;
+  }
+  .tri-right {
+    border-right-color: $bordeColr;
+    left: -14px;
+    top: 8px;
+  }
+  .tri-left {
+    border-left-color: $bordeColr;
+    right: -14px;
+    top: 8px;
+  }
+  .tri-top {
+    border-top-color: $bordeColr;
+    left: 81px;
+    bottom: -14px;
+  }
+  .tri-bottom {
+    border-bottom-color: $bordeColr;
+    left: 81px;
+    top: -14px;
+  }
+
+  .hover-content {
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 12px;
+    color: #660000;
+    line-height: 30px;
+    min-height: 30px;
+    border-radius: 3px;
+    text-align: center;
+    background: $bordeColr;
+  }
+}

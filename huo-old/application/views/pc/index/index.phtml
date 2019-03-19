@@ -1,0 +1,321 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<div id="indexs" class="index_warp">
+  <u class="hide_dom" v-once ref="login"><?php if (isset($_SESSION['user'])) { echo 1; } else { echo 2 ;} ?></u>
+  <!-- 轮播 -->
+  <div class="ggao_top_new">
+  <!-- <script>console.log(<?php var_dump($activity);?>)</script>   @click="getCoin"   -->
+    <div class="swiper-container" flex="cross:center" id="bannerContainer"> 
+      <div class="swiper-wrapper">
+        <!-- banner内容 -->
+        <div class="swiper-slide white100_f">0</div>
+        <div class="swiper-slide white100_f">1</div>
+        <div class="swiper-slide white100_f">2</div>
+        <div class="swiper-slide white100_f">3</div>
+      </div>
+	  <div class="swiper-pagination swiper_page"></div>
+      <b class="swiper-button-next"></b>
+      <b class="swiper-button-prev"></b>
+    </div>
+    <!--banner 背景粒子 -->
+    <div id="particles" class="ggao_back"></div>
+    <!-- 新闻 -->
+    <div class="swiper_message" flex="main:center">
+      <div class="swiper_message_inner" flex="cross:center dir:left box:justify">
+        <div class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ANNOUNCE'] ?> <i class="message_voice"></i></div>
+        <ul class="message_list" flex="dir:left box:mean">
+          <?php for ($i = 0; $i < count($data['news']); $i++){ ?>
+            <li>
+              <a href="/news/detail/<?php echo $data['news'][$i]['id'] ?>.html" flex="cross:center">
+                <span class="news_content"><?php echo $data['news'][$i]['title']; ?></span>
+                <span>【<?php echo $data['news'][$i]['time']; ?>】</span>
+              </a>
+            </li>
+          <?php } ?>
+        </ul>
+        <a class="message_more" href="/news/category/4" class="message_more"><?php echo $lang['MORE'] ?></a>
+      </div>
+    </div>
+  </div>
+
+<!-- 市场 -->
+  <div class="warp_bottom" flex="main:center cross:center dir:top">
+    <!-- <div class="ggao_table_bottom white100_bg" :style="{height: calculates + 'px'}"></div> -->
+    <div class="ggao_table_height white100_bg">
+      <div class="ggao_ul" ref="tab_header" flex="box:last">
+        <ul flex="dir:left" v-cloak>
+          <li :class="['table_change', {table_active_change: indexs == 1}]" @click="tabChange(1, 'choose')" flex="dir:left cross:center main:center">
+            <span :class="['table_self', {table_self_have: indexs == 1}]"></span><?php echo $lang['INDEX_TRADE_SELF'];?>
+		  </li>
+          <li :class="['table_change', {table_active_change:indexs == index+2 }]"
+              v-for="(item, index) in coinNum" v-cloak @click="tabChange(index+2, item)">{{item.toUpperCase() == 'NEW' ? '<?php echo $lang['NEW_AREA'] ?>': item.toUpperCase()}}</li>
+        </ul>
+        <?php //查找按钮 ?>
+        <div class="search_btn" flex="cross:center dir:left">
+          <input type="text" name="" placeholder="<?php echo $lang['SEARCH_TRADE_COUPLE']; ?>"
+            v-model="searchInpt"
+            :class="['search_input', 'gray350_bg', {search_foucs: search, search_btn_after: !search}]"
+            @blur="searchBtn()"
+            @focus="search = true"
+            @keyup="searchData" v-cloak maxlength="6">
+        </div>
+      </div>
+      <div class="ggao_tab">
+        <div class="table_div" v-cloak>
+          <div class="ggao_tab_th" flex="box:mean">
+            <span flex="cross:center" @click='order("coin")' class="ggao_trs_first" flex-box="0">
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'coin'"></span>
+              <?php echo $lang['INDEX_TRADE_DUI'];?>
+            </span>
+            <span flex="cross:center" class="ggao_tabs_new" @click='order("price")'>
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'price'"></span>
+              <?php echo $lang['INDEX_TRADE_NEW']; ?>
+            </span>
+            <span flex="cross:center dir:right"  @click='order("ratio")' flex-box="0" class="ggao_trs_first_ratio">
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'ratio'"></span>
+              <?php echo $lang['INDEX_TRADE_CHANGE']; ?>
+            </span>
+            <span flex="cross:center dir:right" @click='order("max")'><?php echo $lang['INDEX_TRADE_HIGHT']; ?>
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'max'"></span>
+            </span>
+            <span flex="cross:center dir:right" @click='order("min")'>
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn, ggao_order_down: orderFn}]" v-if="orderType === 'min'"></span>
+              <?php echo $lang['INDEX_TRADE_LOW']; ?>
+            </span>
+            <span flex="cross:center dir:right" @click='order("money")' class="ggao_tabs_right">
+              <span :class="['ggao_tab_order', {ggao_order_click: !orderFn && !first, ggao_order_down: orderFn && !first}]" v-if="orderType === 'money'"></span>
+              <?php echo $lang['INDEX_TRADE_VOLUME']; ?>
+            </span>
+          </div>
+          <div class="ggao_tr" v-for="(item, index) in coinListNum" v-if="coinListNum.length > 0">
+            <a :href="'/trade/'+ item.coin" flex="box:mean cross:center" flex-box="1">
+              <span flex="cross:center dir: left" class="relative_dom ggao_trs ggao_trs_first"  flex="dir:left" flex-box="0">
+                <span flex-box="0"
+                @click.stop.prevent="clickMySelf(item.coin, index)"
+                :class="['tab_choose', {tab_choose_click: item.selected == 0,
+                  tab_choose_no: item.selected == 1} ]">
+                </span>
+                <img :src="item.coinurl ? item.coinurl : '/coin/coin.png'" alt="" class="coin_img" v-cloak>
+                <span flex-box="1" flex="dir:left cross:center" class="ggao_trs_first_span">
+                  <span class="yellow500_f">{{item.coin.split('_')[0].toUpperCase()}}</span> &nbsp;/ <span class="gray400_f">{{item.coin.split('_')[1].toUpperCase()}}</span>
+                </span>
+              </span>
+              <span flex="cross:center dir:left" class="ggao_trs ggao_tabs_new">{{item.price ? spliceEight(item.price) : item.price}} / &nbsp;<span class="gray400_f">${{item.usd ? item.usd.slice(0, 8) : item.usd}}</span></span>
+              <span flex="cross:center dir:right" class="ggao_trs ggao_trs_first_ratio" flex-box="0" :class="{red400_f: item.ratio < 0, green400_f: item.ratio > 0}">{{item.ratio > 0 ?'+' + item.ratio +'%': item.ratio +'%'}}</span>
+              <!-- / &nbsp;<span class="gray400_f">{{'￥' + moneyCal(item.currency, item.price, item.max)}} -->
+              <span flex="cross:center dir:right" class="ggao_trs">{{item.max ? spliceEight(item.max) : item.max}} </span></span>
+               <!-- / &nbsp;<span class="gray400_f">{{'￥' + moneyCal(item.currency, item.price, item.min)}} -->
+              <span flex="cross:center dir:right" class="ggao_trs">{{item.min ? spliceEight(item.min) : item.min}}</span></span>
+              <span flex="cross:center dir:right" class="ggao_trs ggao_tabs_right">{{item.money ? spliceEight(item.money) : item.money}}</span>
+            </a>
+          </div>
+          <div v-if="coinListNum.length <= 0" v-cloak :class="{ggao_tab_no_data: !loading, ggao_tab_loading: loading}" flex="cross:center main:center">
+              <p class="ggao_tab_p gray400_f" v-if="!loading && indexs == 1 && !searching"><?php echo $lang['INDEX_TRADE_DOBI_NO_COIN']; ?></p>
+              <p class="ggao_tab_p gray400_f" v-if="!loading && (indexs != 1 || searching)"><?php echo $lang['INDEX_TRADE_DOBI_NO_DATA']; ?></p>
+          </div>
+        </div>
+      </div>
+      <!-- 返回顶部 -->
+      <a class="jump_top" @click="gotoTop"></a>
+    </div>
+<!-- 快捷操作 -->
+	<div class="newUserHelp">
+		<div class="warp_abuout_us" flex="cross:center dir:top" >
+			<h3><?php echo $lang['USER_HELP']; ?></h3>
+			<p><?php echo $lang['USER_HELP_TEXT']; ?></p>
+			<div flex="main:justify cross:center" class="min1200 mT25" style="flex-wrap:wrap">
+				<div  flex="cross:center main:left" class="mT25 w5">
+					<i class="iconfont icon-identity"></i>
+					<h4>
+					  <?php echo $lang['HELP_ONE']; ?>
+						<br>
+						<a>00000000000000000000000</a><a>00000000</a><a>00000000000</a>
+					</h4>
+				</div>
+				<div flex="cross:center main:left"  class="mT25 w5">
+					<i class="iconfont icon-moneyNum"></i>
+					<h4><?php echo $lang['USER_TWO']; ?>
+						<br>
+						<a>000000</a>
+					</h4>
+				</div>
+				<div flex="cross:center main:left"  class="mT25 w5">
+					<i class="iconfont icon-netSilver"></i>
+					<h4><?php echo $lang['USER_THREE']; ?>
+						<br>
+						<a>000000 </a>
+					</h4>
+				</div>
+				<div flex="cross:center main:left"  class="mT25 w5">
+          <i class="iconfont icon-more"></i>					
+            <h4><?php echo $lang['USER_FOUR']; ?>
+						<br>
+						<a>000000 </a>
+					</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+  <!-- 关于我们 -->
+    <div class="warp_abuout_us" flex="cross:center dir:top">
+      <h3><?php echo $lang['INDEX_TITLE']; ?></h3>
+      <p><?php echo $lang['INDEX_TEXT']; ?></p>
+      <ul class="about_us_exp" flex="main:justify">
+        <li flex="cross:center dir:top">
+          <div class="about_exp_img about_exp_flex"></div>
+          <p><?php echo $lang['INDEX_FAST']; ?></p>
+          <div class="about_exp_p">
+            <p><?php echo $lang['INDEX_FAST_ONE']; ?></p>
+            <p><?php echo $lang['INDEX_FASST_TWO']; ?></p>
+            <p><?php echo $lang['INDEX_FAST_THREE']; ?></p>
+            <!-- <p><?php echo $lang['INDEX_FAST_FOUR']; ?></p>
+            <p><?php echo $lang['INDEX_FAST_FIVE']; ?></p> -->
+          </div>
+        </li>
+        <li flex="cross:center dir:top">
+          <div class="about_exp_img about_exp_fast"></div>
+          <p><?php echo $lang['INDEX_FLEX']; ?></p>
+          <div class="about_exp_p">
+            <p><?php echo $lang['INDEX_FLEX_ONE']; ?></p>
+            <p><?php echo $lang['INDEX_FLEX_TWO']; ?></p>
+            <p><?php echo $lang['INDEX_FLEX_THREE']; ?></p>
+          </div>
+        </li>
+        <li flex="cross:center dir:top">
+          <div class="about_exp_img about_exp_safe"></div>
+          <p><?php echo $lang['INDEX_SAFE']; ?></p>
+          <div class="about_exp_p">
+            <p><?php echo $lang['INDEX_SAFE_ONE']; ?></p>
+            <p><?php echo $lang['INDEX_SAFE_TWO']; ?></p>
+            <p><?php echo $lang['INDEX_SAFT_THREE']; ?></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- 页脚links -->
+  <div class="index_link">
+    <div class="index_link_inner" flex="main:justify">
+      <div flex-box="1" flex="dir:right cross:stretch" class="index_link_right">
+        <?php // 友情链接 ?>
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['FRIEND_LINKS']; ?></li>
+          <?php // block.cc ?>
+          <li class="link_li white100_f">
+            <a href="https://mifengcha.com/" class="white100_f">Block.cc</a>
+          </li>
+        </ul>
+        <?php // 费率声明 ?>
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_FREES_TITLE']; ?></li>
+          <li class="link_li white100_f">
+            <a href="https://www.dobitrade.com/index/policy" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_TERMS']; ?></a>
+          </li>
+          <li class="link_li">
+            <a href="https://www.dobitrade.com/news/detail/<?php if (LANG == 'en') { echo '514.html';} else {echo '512.html';} ?>" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_FREES']; ?></a>
+          </li>
+        </ul>
+        <?php // 工具 ?>
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_TOOL']; ?></li>
+          <li class="link_li"><a href="https://api.dobitrade.com/" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_API']; ?></a></li>
+          <li class="link_li"><a href="https://www.dobitrade.com/news/category/3" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_HELP']; ?></a></li>
+        </ul>
+        <?php // 关于 ?>
+        <ul class="link_ul link_padd" flex-box="1">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ABOUTS']; ?></li>
+          <li class="link_li">
+            <a href="https://www.dobitrade.com/news/detail/<?php if (LANG == 'en') { echo '519.html';} else {echo '511.html';} ?>" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ABOUT']; ?></a>
+          </li>
+          <li class="link_li">
+            <a href="https://www.dobitrade.com/news/category/6" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_PROJECT']; ?></a>
+          </li>
+          <li class="link_li"><a href="https://www.dobitrade.com/news/category/2" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_ANNOUNCE']; ?></a></li>
+          <li class="link_li">
+            <a href="https://www.dobitrade.com/news/detail/<?php if (LANG == 'en') { echo '526.html';} else {echo '525.html';} ?>" class="white100_f"><?php echo $lang['INDEX_TRADE_DOBI_APPLE']; ?></a>
+          </li>
+        </ul>
+        <?php // 联系我们 ?>
+        <ul class="link_ul contact_us" flex-box="2">
+          <li class="link_title white100_f"><?php echo $lang['INDEX_TRADE_DOBI_CONTACT']; ?></li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_EMAIL']; ?>：service@dobitrade.com</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_MEDIA_EMAIL']; ?>：media@dobitrade.com</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_COMMUNITY_DOBI_EMAIL']; ?>：community@dobitrade.com</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_BUSINESS']; ?>: shangwu@dobitrade.com</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_INTER_BUSINESS']; ?>：listing@dobitrade.com</li>
+          <li class="link_li white100_f"><?php echo $lang['INDEX_TRADE_DOBI_TOKEN']; ?>：dobitrade</li>
+        </ul>
+	  </div>
+	  <div flex-box="0" class="index_link_left">
+        <p class="index_link_logo white100_f" flex="cross:center">
+		  <img src="/svg/huocoinLogo.svg" alt="">
+        </p>
+        <ul class="index_link_img" flex="dir:left box:mean">
+          <li class="link_tele" @mouseout.stop="erOut('tele')" @mouseover="erIn('tele')" >
+            <?php //二维码 ?>
+            <transition mode="out-in" name="fadeOut" @mouseout.stop="erOut('tele')" @mouseover="erIn('tele')">
+              <div class="link_er" v-if="showEr.tele" v-cloak>
+                <p class="link_er_p"><?php echo $lang['WECHART_ONE']; ?></p>
+                <img src="/imgs/WECHART1.png" alt="<?php echo $lang['WECHART_ONE']; ?>">
+              </div>
+            </transition>
+          </li>
+          <li class="link_what" @mouseout.stop="erOut('whatapp')" @mouseover="erIn('whatapp')">
+            <transition mode="out-in" name="fadeOut" v-cloak>
+              <div class="link_er" v-if="showEr.whatapp">
+                <p class="link_er_p"><?php echo $lang['WECHART_TWO']; ?></p>
+                <img src="/imgs/WECHART2.png" alt="<?php echo $lang['WECHART_TWO']; ?>">
+              </div>
+            </transition>
+          </li>
+          <li class="link_qq" @mouseout.stop="erOut('qq')" @mouseover="erIn('qq')">
+            <transition mode="out-in" name="fadeOut" v-cloak>
+              <div class="link_er" v-if="showEr.qq">
+                <p class="link_er_p"><?php echo $lang['WECHART_THREE']; ?></p>
+                <img src="/imgs/WECHART3.png" alt="<?php echo $lang['WECHART_THREE']; ?>">
+              </div>
+            </transition>
+          </li>
+          <li class="link_wechat" @mouseout.stop="erOut('wechat')" @mouseover="erIn('wechat')">
+            <transition mode="out-in" name="fadeOut" v-cloak>
+              <div class="link_er" v-if="showEr.wechat">
+                <p class="link_er_p"><?php echo $lang['WECHART_FOUR']; ?></p>
+                <img src="/imgs/WECHART4.png" alt="<?php echo $lang['WECHART_FOUR']; ?>">
+              </div>
+            </transition>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+ <!-- 弹框 -->
+  <my-alert v-cloak v-on:callback="callfn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $layout['lang']['DETERMINE'] ?></span>
+  </my-alert>
+ <!-- 活动弹框页面 show($activity) -->
+  <?php if($mcc_act_status){ ?>
+  <div class="active_win" v-cloak>
+    <img class="act_img" @click.stop="getRedPacket" src="/imgs/side_red_packetn.<?php echo $la; ?>.png" />
+    <transition mode="out-in" name="fadeOut">
+      <div class="mask_full" v-if="activeMsg"></div>
+    </transition>
+    <transition mode="out-in" name="zoom">
+      <div class="act_mob" v-if="activeMsg" @click.stop="activeMsg = !activeMsg">
+        <div flex="main:center cross:center dir:top">
+          <div class="act_con_box white100_bg orange500_f relative_dom" :class="{'plus2_act_<?php echo $la; ?>': actType=='plus2'}">
+            <p class="white100_f no_sel" v-if="actType === 'mcc'">{{activeMsg}}</p>
+            <div class="sub_tips white100_f no_sel" v-if="actType === 'mcc'"><?php echo $lang['PLEASE_CHECK_DETAIL']; ?></div>
+            <div class='act_sure_btn' v-if="actType === 'mcc'"><a href="/user/candy?tab=3"><?php echo $lang['VIEW_NOW']; ?></a></div>
+            <div class='act_sure_btn' v-if="actType === 'plus2'"><a href="/news/detail/273.html">立即查看</a></div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <?php } ?>
+</div>
+<!-- cdn -->
+<script>document.querySelector("li.index").className+=" now_nav"</script>
+<script src='/until/particles.min.js'></script>
+<?php  include PATH_TPL.'/tpl.index.footer.phtml';?>
+

@@ -1,0 +1,208 @@
+@import "./theme.scss";
+@import "./fun.scss";
+@import "./config.scss";
+@import "./nav.scss";
+@import "swiper/dist/css/swiper.css";
+@import "./user.condition.scss";
+
+body {
+  background: #f9f9f9;
+}
+
+.main-content {
+  height: 100%;
+  background: #f9f9f9;
+}
+.banner-win {
+  position: relative;
+  height: pxToRem(370);
+  width: 100%;
+  overflow: hidden;
+  color: #fff;
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .main-title {
+      font-weight: 400;
+      font-size: pxToRem(46);
+      word-spacing: pxToRem(6);
+    }
+    .banner-two {
+      text-align: center;
+      font-size: pxToRem(38);
+    }
+    .banner-three {
+      display: flex;
+      flex-direction: column;
+      // justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      height: 100%;
+      width: 100%;
+      background: url(../../assets/newCoinBg.png) center center no-repeat;
+      background-size: 100% 100%;
+
+      .main-title {
+        margin-top: pxToRem(80);
+        font-size: pxToRem(46);
+        color: #00c9ff;
+        letter-spacing: pxToRem(6);
+      }
+
+      h3 {
+        font-weight: 400;
+        line-height: pxToRem(86);
+        font-size: pxToRem(26);
+      }
+    }
+    // eth
+    .banner-eth-bg {
+      height: 100%;
+      width: 100%;
+      background: url(../../assets/ETH_coinbg.png) center center no-repeat;
+      background-size: 100% 100%;
+
+      .main-title {
+        margin-top: pxToRem(108);
+        font-size: pxToRem(46);
+        text-align: center;
+        color: #00c9ff;
+        letter-spacing: pxToRem(6);
+
+        span {
+
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+.login-reg-win {
+  height: pxToRem(119);
+  background: #f9f9f9;
+
+  .btn {
+    margin: 0 pxToRem(10);
+  }
+}
+.login-select-div{
+  position: relative;
+  width: pxToRem(702);
+  height: pxToRem(94);
+  padding: 0 pxToRem(24);
+  text-align: center;
+  .login-select {
+    width: 100%;
+    height: 100%;
+    font-size: pxToRem(34);
+    background: #f4f4f4;
+    padding: 0 pxToRem(30);
+    appearance: none;
+    -webkit-tap-highlight-color: #fff;
+    outline: 0;
+    border: none;
+    option{
+      background: #fff;
+      min-height: pxToRem(47);
+      height: pxToRem(47);
+      font-size: pxToRem(18);
+    }
+  }
+  margin-bottom: pxToRem(30);
+  margin-top: pxToRem(20);
+  img{
+    position: absolute;
+    width: pxToRem(26);
+    height: pxToRem(12);
+    right: pxToRem(53);
+    top: pxToRem(41);
+  }
+}
+.login-out-win {
+  width: 100%;
+  overflow-x: hidden;
+}
+.login-succ-win {
+  box-sizing: border-box;
+  align-items: center;
+  height: pxToRem(120);
+  text-align: center;
+  font-size: pxToRem(30);
+  width: 100%;
+  color: $norBlack;
+
+  &>div {
+    box-sizing: border-box;
+    width: 50%;
+    line-height: pxToRem(45);
+    &:first-child {
+      border-right: 1px solid #e0e0e0;
+    }
+  }
+
+  p {
+    color: $grayBlack;
+  }
+}
+.up-down-list {
+  background: #fff;
+
+  li {
+    box-sizing: border-box;
+    align-items: center;
+    padding: 0 pxToRem(24);
+    height: pxToRem(92);
+    font-size: pxToRem(28);
+    color: $grayBlack;
+    border-bottom: 1px solid #ebebeb;
+
+    &:first-child {
+      height: pxToRem(68);
+      color: $norBlack;
+    }
+    &>div {
+      &:first-child {
+        width: 25%;
+      }
+      &:last-child {
+        width: 41.66%;
+      }
+      width: 33.3%;
+      flex-shrink: 0;
+    }
+    .uppercase {
+      text-transform: uppercase;
+    }
+    .up-d-red {
+      color: #fd373b;
+
+      &:before {
+        content: "+";
+      }
+      span {
+        &:last-child {
+          color: $grayBlack;
+        }
+      }
+    }
+    .down-data {
+      color: #3dc18e;
+
+      &:before {
+        content: "";
+      }
+    }
+  }
+}
+
+// 隐藏 数据列表
+.hide-ul {
+  // display: none;
+  height: 0px;
+  overflow-y: hidden;
+}
+.mob-rf-content .mob-cont-contain .coin-cor .cor-rf .coin-list{height: auto;}

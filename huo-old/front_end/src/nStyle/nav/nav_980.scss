@@ -1,0 +1,268 @@
+@import "../config.scss";
+@import "../color.scss";
+
+// 980px ~ 1190px; 使用px
+@media screen and(min-width: $bigScreenMin) and (max-width: $bigScreenMax) {
+  .nav_contain {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 40;
+    padding: 0 20px;
+    height: 120px;
+    .nav_left {
+      &>* {
+        display: inline-block;
+      }
+    }
+    .main_link {
+      flex-shrink: 0;
+      width: 200px;
+      height: 60px;
+      line-height: 60px;
+      &>span {
+        font-size: 60px;
+
+        &:before {
+          position: relative;
+          top: 3px;
+          display: inline-block;
+          height: 60px;
+          line-height: 60px;
+          font-size: 120px;
+        }
+
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+    .nav_right {
+      display: none;
+    }
+    .row_menu_contain {
+      box-sizing: border-box;
+      position: absolute;
+      right: 0;
+      top: 120px;
+      z-index: 10;
+      padding: 0 60px 60px;
+      width: 483px;
+      overflow-y: auto;
+
+    }
+    .user_img {
+      height: 230px;
+      text-align: center;
+      &> p {
+        line-height: 75px;
+        font-size: 30px;
+      }
+
+      .user_icon {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        font-size: 100px;
+      }
+    }
+    .svg_icon {
+      position: relative;
+      bottom: -3px;
+      margin: 0 19px 0 0;
+      width: 30px;
+      height: 30px;
+    }
+    .row_menu_list {
+
+      .more_icon {
+
+        &:after {
+          float: right;
+          margin-right: 32px;
+          font-size: 22px;
+          transform: scale3d(1.3,1,1);
+        }
+      }
+
+      &>li {
+        text-indent: 10px;
+        text-align: left;
+        font-size: 30px;
+        border: {
+          bottom: 1px solid #00536a;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background: #001a32;
+          transition: all .5s;
+
+          a {
+            color: $white100;
+          }
+        }
+        &>a {
+          display: block;
+          height: 82px;
+          line-height: 82px;
+        }
+      }
+
+      .second_menu_list, .lang_list {
+        height: auto;
+        &:hover {
+          cursor: default;
+          background-color: $deepBlue600;
+        }
+      }
+
+      .second_menu_list {
+        text-indent: 0;
+
+        &>ul {
+          padding: 30px 20px 6px;
+          flex-wrap: wrap;
+
+          &>li {
+            box-sizing: border-box;
+            margin: 0 20px 24px;
+            width: 120px;
+            height: 50px;
+            line-height: 48px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #005398;
+            border-radius: 5px;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .lang_list {
+        padding: 0 0 0 63px;
+
+        line-height: 54px;
+        font-size: 24px;
+
+        a {
+          display: block;
+
+          &>label {
+            width: 150px;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+        input[type="radio"] {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+
+
+    .logout_part {
+      margin: 50px 0 0;
+      text-align: center;
+
+      &>a {
+        display: inline-block;
+        min-width: 120px;
+        width: 140px;
+        height: 50px;
+        line-height: 46px;
+        font-size: 30px;
+        // letter-spacing: 5px;
+        border-radius: 5px;
+      }
+    }
+    .page_title {
+      width: 100%;
+      text-align: center;
+      h2 {
+        font-weight: 500;
+        font-size: 36px;
+      }
+    }
+    .menu_part {
+      flex-shrink: 0;
+      width: 200px;
+      text-align: right;
+    }
+
+    .menu_btn {
+      display: inline-block;
+      padding: 0;
+      width: 60px;
+      height: 60px;
+      background: url(../../assets/menu_btn_icon.png) center center no-repeat;
+      background-size: 60px 60px;
+    }
+  }
+  .user_account_contain {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    z-index: 5;
+    padding: 10px 0;
+    width: 120px;
+    border-radius: 5px;
+
+    li {
+      a {
+        box-sizing: border-box;
+        display: block;
+        padding: 0 18px;
+        line-height: 24px;
+        height: 24px;
+        width: 100%;
+        font-size: 12px;
+        text-align: left;
+
+        &:before {
+          margin-right: 5px;
+        }
+
+        &:hover {
+          color: #008fff;
+          background-color: #0d1e2c;
+          transition: all .3s;
+        }
+      }
+    }
+  }
+
+  // 未登录
+  .register_btn, .login_btn {
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  //
+  .login_btn {
+    // margin-right: 7px;
+    color: $white100;
+    border: 1px solid $white100;
+  }
+
+  .login_btn_top {
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    line-height: 36px;
+    font-size: 26px;
+    border-radius: 5px;
+  }
+}

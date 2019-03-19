@@ -1,0 +1,965 @@
+@import "../config.scss";
+@import "../color.scss";
+
+// 980px ~ 1199px; 使用px
+@media screen and(min-width: $bigScreenMin) and (max-width: $bigScreenMax) {
+  body {
+    // height: auto;
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    // overflow-y: auto;
+  }
+
+  // 隐藏750 class
+  .bs_change_btn_750, .bs_title_750, .bs_change_btn_750, .trade_area_btn, .trade_rule_contain, .new_trade_list_750, .collapse_title, .cancel_car_750, .buy_table_750 {
+    display: none!important;
+  }
+
+  // 交易中心导航
+  .trade_nav {
+    box-sizing: border-box;
+    margin: 20px 0 30px;
+    padding: 0 22px 0 30px;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    background-color: $deepBlue600;
+
+    .top_new_price {
+
+      .arrowup_icon, .arrowdown_icon {
+        font-size: 18px;
+      }
+    }
+    // 价格区域
+    .price_list {
+      // padding: 10px 0 0;
+      width: 100%;
+
+      .ratio_980 {
+        display: inline-block;
+      }
+
+      &>div {
+        box-sizing: border-box;
+        // padding: 0 20px;
+        text-align: center;
+        font-size: 12px;
+        width: 130px;
+
+        &>p {
+          padding: 0 0 10px;
+          font-size: 14px;
+        }
+
+        &:nth-child(2) {
+          display: none;
+        }
+        &:first-child {
+          flex-shrink: 0;
+          width: 50%;
+          text-align: center;
+          font-size: 22px;
+          line-height: 40px;
+          &>p {
+            display: none;
+          }
+        }
+      }
+    }
+    // 交易区按钮
+    .trade_area_btn {
+      box-sizing: border-box;
+      width: 160px;
+      height: 70px;
+      line-height: 70px;
+      font-size: 24px;
+      text-align: center;
+      border: 1px solid $blue500;
+
+      .ctrl_icon {
+        display: inline-block;
+        width: 1px;
+        height: 1px;
+        left: -20px;
+        top: -23px;
+        &:after {
+          height: 20px;
+        }
+      }
+    }
+
+    .trade_area_btn_750 {
+      box-sizing: border-box;
+      width: 174px;
+      height: 80px;
+      line-height: 74px;
+      font-size: 24px;
+      text-align: center;
+      // border: 1px solid $blue500;
+
+      .ctrl_icon {
+        display: inline-block;
+        width: 1px;
+        height: 1px;
+        left: -30px;
+        top: -20px;
+
+        &:after {
+          height: 20px;
+        }
+      }
+    }
+
+    // 交易区
+    .area_win {
+      position: absolute;
+      top: 67px;
+      right: auto;
+      left: 0;
+      z-index: 3;
+      width: 572px;
+      height: 328px;
+      // overflow-y: hidden;
+      border: 1px solid $deepBlue400;
+
+      &:after {
+        content: "" ;
+        display: block;
+        position: absolute;
+        top: -1px;
+        right: 0;
+        z-index: 10;
+        width: 136px;
+        height: 2px;
+        background-color: $deepBlue600;
+        // $deepBlue600;
+      }
+    }
+    .all_title_list {
+      padding: 0 21px;
+      height: 34px;
+      line-height: 34px;
+      border-bottom: 1px solid $deepBlue400;
+      text-transform: uppercase;
+
+      &>li {
+        // width: 70px;
+        text-align: center;
+        white-space: nowrap;
+
+        &:hover {
+          cursor: pointer;
+          color: $orange500;
+          transition: all .3s;
+        }
+      }
+      .active_area {
+        position: relative;
+
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          bottom: -1px;
+          right: 0;
+          height: 1px;
+          background-color: $orange500;
+        }
+      }
+    }
+    // 币列表
+    .area_coin_body {
+      display: none;
+    }
+
+    .area_win_touch {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 120px;
+      z-index: 6;
+      padding: 0 20px;
+      height: 560px;
+      overflow-y: hidden;
+    }
+    .area_coin_body_touch {
+      // margin: 40px 0 0;
+      height: 520px;
+      overflow-y: hidden;
+
+      .area_t_head li, .area_t_body li >div {
+        flex-shrink: 0;
+      }
+
+      .area_t_head {
+        line-height: 30px;
+
+        border: {
+          bottom: 1px solid #012848;
+        }
+
+        li {
+          box-sizing: border-box;
+          flex-grow: 1;
+          padding: 0 10px;
+          opacity: .3;
+
+          &:first-child {
+            padding: 0 0 0 20px;
+          }
+        }
+
+      }
+
+      .area_t_body {
+        height: 480px;
+        line-height: 30px;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow-y: auto;
+
+        li {
+
+          &:last-child {
+            bottom: none;
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: #00182b;
+            transition: all .3s;
+          }
+
+          &>div {
+            flex-grow: 1;
+            padding: 0 10px;
+
+            &:first-child {
+              padding: 0 0 0 20px;
+            }
+          }
+        }
+      }
+
+
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+
+        td {
+          padding: 0 10px;
+          text-align: left;
+          height: 30px;
+          line-height: 30px;
+
+          &:first-child {
+            padding: 0 0 0 20px;
+          }
+        }
+
+        thead {
+          display: flex;
+          position: absolute;
+          left: 20px;
+          right: 0;
+          top: 37px;
+          width: 100%;
+
+          tr {
+            width: 100%;
+          }
+          td {
+            box-sizing: border-box;
+            width: 25%;
+            opacity: .3;
+
+            &:nth-child(1) {
+              min-width: 208px;
+            }
+            &:nth-child(1) {
+              min-width: 231px;
+            }
+            &:nth-child(1) {
+              min-width: 324px;
+            }
+            &:nth-child(1) {
+              min-width: 221px;
+            }
+          }
+        }
+
+        tbody {
+
+          tr {
+
+            &:hover {
+              cursor: pointer;
+              background-color: #00182b;
+              transition: all .3s;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+
+
+  .trade_center {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 120px 0 0;
+    height: 100%;
+    width: 100%;
+    min-height: 500px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    // .bor_all_gray {
+    //   border: 1px solid $gray500;
+    // }
+    .trade_succ_list, .bs_table, .mytrust_list {
+      ul,table {
+        font-size: 16px;
+      }
+    }
+
+    .tra_bg_980 {
+      margin: 0 0 20px;
+      // background: #000b14;
+      // $black600;
+    }
+    // Kline  bug sell和 成交 列表 容器
+    .data_list_top {
+      box-sizing: border-box;
+      margin: 0 auto;
+      padding: 69px 0 0;
+      max-width: 940px;
+      height: 822px;
+
+      &>div {
+        width: 100%;
+      }
+    }
+
+    .kline_btn {
+      position: absolute;
+      right: 0;
+      top: 10px;
+      width: 160px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 20px;
+      border-radius: 5px;
+      // display: block;
+    }
+
+    // k线图 外框
+    .kline_contain {
+      display: none;
+      // width: 100%;
+    }
+    // 买卖盘  成交列表
+    .buy_sell_area, .trade_succ_list {
+      margin: 0;
+
+    }
+
+    // 买卖盘面
+    .buy_sell_area {
+      flex-shrink: 0;
+      margin: 0 18px 0 0;
+      width: 478px;
+    }
+
+    // .trade_succ_list, .bs_table, .mytrust_list {
+    //   table {
+    //     tbody tr {
+    //       &:hover {
+    //         cursor: pointer;
+    //         background-color: #00111f;
+    //         transition: all .3s;
+    //       }
+    //     }
+    //   }
+    // }
+
+    // 买卖  成交 table 公共样式
+    .trade_succ_list, .bs_table {
+      box-sizing: border-box;
+
+      .table_header {
+        // position: absolute;
+        // left: 0;
+        // right: 0;
+        // top: 0;
+        height: 60px;
+        line-height: 64px;
+        font-size: 20px;
+        // background-color: #00191e;
+      }
+      .bs_body {
+        overflow-y: hidden;
+      }
+
+      ul {
+
+        font-size: 20px;
+      }
+
+      ul>li>div, .table_header>span {
+        padding: 0 8px;
+        white-space: nowrap;
+
+        &:first-child {
+          padding: 0 0 0 30px;
+        }
+      }
+
+      .sell_list {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      ul,table {
+        width: 100%;
+        border-collapse: collapse;
+
+        &>colgroup {
+          width: 33.3%;
+        }
+
+        thead {
+          position: relative;
+          height: 60px;
+          line-height: 64px;
+          font-size: 20px;
+          background-color: #00191e;
+        }
+
+        tbody {
+          font-size: 20px;
+        }
+
+      }
+
+      td {
+        padding: 0 8px;
+        white-space: nowrap;
+
+        &:first-child {
+          padding: 0 0 0 30px;
+        }
+      }
+    }
+
+    // 买卖 表格
+    .bs_table {
+      width: 100%;
+      height: 365px;
+      overflow-y: hidden;
+
+      .table_header {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 2;
+      }
+
+      table tbody, ul {
+        line-height: 50px;
+      }
+    }
+    // 没有header  table
+    .no_head_table {
+      height: 307px;
+
+      thead {
+        display: none;
+      }
+    }
+    // 最新价格 人民币
+    .table_mid {
+      // display: block;
+      height: 62px;
+      line-height: 62px;
+      border: {
+        top: 1px solid #102333;
+        bottom: 1px solid #102333;
+      }
+      background-color: $deepBlue500;
+
+      &>span {
+        display: inline-block;
+
+        &:first-child {
+          max-width: 255px;
+          font-size: 28px;
+          text-align: right;
+        }
+        &:last-child {
+          width: 190px;
+          text-align: left;
+          font-size: 22px;
+        }
+      }
+    }
+    // 成交列表
+    .trade_succ_list {
+      flex-shrink: 0;
+      width: 440px;
+      height: 733px;
+      overflow-y: hidden;
+
+      .table_header>span, li>div {
+        width: 39%;
+        white-space: nowrap;
+
+        &:first-child {
+          width: 22%;
+          flex-shrink: 0;
+        }
+      }
+
+      ul, table tbody {
+        line-height: 48px;
+      }
+    }
+    // 未登录遮罩
+    .no_login_mask {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 640px;
+      z-index: 11;
+      font-size: 24px;
+      background: rgba(0,11,20,.6);
+    }
+    // 我的委托 买卖下单 form
+    .mytrust_form_contain {
+      flex-direction: column-reverse;
+      // margin: 0 0 30px;
+      width: 100%;
+
+
+    }
+
+    // 自定义滚动条
+    .scroll_bar {
+      &::-webkit-scrollbar {
+        width: 3px;
+        // height: 44px;
+        background: $black400;
+      }
+      &::-webkit-scrollbar-button {
+        display: none;
+      }
+      &::-webkit-scrollbar-thumb {
+        width: 3px;
+        height: 44px;
+        background: $deepBlue500;
+      }
+    }
+
+    // 我的委托
+    .mytrust_list {
+      box-sizing: border-box;
+      // padding: 0 34px 0 0;
+      width: 100%;
+      background-color: $deepBlue600;
+
+      .collapse_title  {
+        display: block;
+      }
+
+      // 撤销按钮
+      .mytrust_ca_btn {
+        display: inline-block;
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid $white100;
+        border-radius: 3px;
+        text-align: center;
+      }
+      .mytrust_ca_btn_dis {
+        color: $gray500;
+        cursor: not-allowed;
+        border-color: $gray500;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th, tbody td {
+        padding: 0 5px;
+        text-align: left;
+        white-space: nowrap;
+
+        &:first-child {
+          padding: 0 5px 0 33px;
+        }
+        &:last-child {
+          padding: 0 58px 0 0;
+        }
+      }
+
+      thead tr {
+        height: 30px;
+        line-height: 30px;
+      }
+
+      tbody {
+
+        tr {
+          height: 80px;
+          line-height: 80px;
+        }
+        td {
+          width: 12.5%;
+          word-break: break-all;
+          word-wrap:break-word;
+
+          &:last-child {
+            width: 50px;
+            max-width: 50px;
+          }
+        }
+      }
+    }
+
+    // 买卖表单 容器
+    .bs_form_contain {
+      justify-content: center;
+      margin: 0 0 30px 0;
+      width: 100%;
+      height: 640px;
+
+      // 980 下margin 黑色
+      .form_mar_980 {
+        position: absolute;
+        left: 0;
+      }
+    }
+    .amount_box {
+      line-height: 45px;
+
+      &>p {
+        white-space: nowrap;
+      }
+    }
+    .bs_btn_group {
+      padding: 6px 0 0;
+    }
+    .link_btn {
+      box-sizing: border-box;
+      display: inline-block;
+      width: 80px;
+      height: 45px;
+      line-height: 41px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    .green_link_btn {
+      margin: 0 0 32px;
+      border: 1px solid $lightRed500;
+    }
+    .red_link_btn {
+      border: 1px solid $lightGreen500;
+    }
+    // 买卖form
+    .bs_form {
+      box-sizing: border-box;
+      flex-shrink: 0;
+      padding: 20px 0 0 30px;
+      width: 470px;
+      font-size: 20px;
+
+      &:first-child {
+        margin: 0 3px 0 0;
+      }
+
+      .input_g {
+        position: relative;
+        margin-top: 11px;
+        height: 58px;
+        line-height: 58px;
+        // font-size: 12px;
+        user-select: none;
+
+        input {
+          box-sizing: border-box;
+          padding: 0 25px 0 8px;
+          width: 100%;
+          height: 58px;
+          // line-height: 58px;
+          font-size: 22px;
+          background-color: #152532;
+          border: 1px solid transparent;
+
+          &:focus {
+            border: 1px solid #005398;
+          }
+
+          &::placeholder {
+            color: $gray400;
+          }
+        }
+      }
+
+      .ext_placeholder {
+        position: absolute;
+        top: 0;
+        right: 9px;
+        bottom: 0;
+      }
+      .price_rmb {
+        text-indent: 22px;
+        line-height: 40px;
+        // font-size: 12px;
+      }
+
+      .range_group {
+        // padding:
+        // margin: 16px 0 0;
+        padding: 40px 0 20px;
+        height: 25px;
+        line-height: 25px;
+        white-space: nowrap;
+        // font-size: 12px;
+
+        label {
+          display: inline-block;
+          margin: 0 25px 0 0;
+          // width: 54px;
+        }
+
+        .track_contain {
+          box-sizing: border-box;
+          display: inline-block;
+          padding: 8px 0 0;
+          width: 250px;
+          height: 20px;
+        }
+        .track_line_bg {
+          height: 4px;
+          border-radius: 2px;
+          background-image: linear-gradient($lightGreen500, $lightGreen500);
+          background-size: 0% 100%;
+          background-repeat: no-repeat;
+        }
+        .sell_track_bg {
+          background-image: linear-gradient($lightRed500, $lightRed500);
+        }
+        .trade_dot {
+          position: absolute;
+          left: 0;
+          top: -2px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+
+        .track_line_bg, .trade_dot {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        &>span {
+          margin-left: 10px;
+          font-size: 20px;
+          // font-size: 12px;
+        }
+      }
+
+      .trade_fee {
+        margin: 0 0 50px;
+        height: 26px;
+        line-height: 26px;
+
+        &>p {
+          white-space: nowrap;
+
+          &>span {
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            // font-weight: 400;
+          }
+        }
+      }
+
+      .is_submitting {
+        position: relative;
+        background-color: $red700;
+
+        &:hover {
+          cursor: not-allowed;
+        }
+        &::before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 18px;
+          top: 8px;
+          font-size: 10px;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          box-shadow: 0px -6.5px white,
+            -4.5px -4.5px rgba(255, 255, 255, 0.875),
+            -6.5px 0 rgba(255, 255, 255, 0.75),
+            -4.5px 4.5px rgba(255, 255, 255, 0.625),
+            0 6.5px rgba(255, 255, 255, 0.5),
+            4.5px 4.5px rgba(255, 255, 255, 0.375),
+            6.5px 0 rgba(255, 255, 255, 0.25),
+            4.5px -4.5px rgba(255, 255, 255, 0.125);
+          animation: rotate 1s infinite forwards steps(32, end);
+        }
+      }
+      .submit_btn {
+        display: block;
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        font-size: 28px;
+        border: none;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .tips_win {
+        box-sizing: border-box;
+        position: absolute;
+        left: 30px;
+        right: 0;
+        // top: 160px;
+        bottom: 240px;
+        z-index: 6;
+        padding: 13px 18px;
+        height: 60px;
+        min-height: 26px;
+        font-size: 22px;
+        text-align: center;
+        background-color: #ccc;
+
+        .err_tips_icon, .order_ok_icon {
+          position: absolute;
+          left: 12px;
+          top: 18px;
+        }
+      }
+    }
+
+    // 交易密码
+    .set_trade_pwd {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 90;
+      background-color: rgba(0,0,0,.5);
+
+      .input_g {
+        border: 1px solid $black900;
+        border-radius: 5px;
+      }
+    }
+
+    .pwd_form_contain {
+      box-sizing: border-box;
+      padding: 50px 50px 46px;
+      width: 440px;
+      height: 280px;
+      border-radius: 10px;
+    }
+
+    .pwd_title {
+      padding: 0 0 26px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      font-size: 28px;
+    }
+
+    .close_btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 26px;
+      font-weight: 700;
+      z-index: 9;
+    }
+
+    .trade_pwd_form {
+
+      input {
+        box-sizing: border-box;
+        padding: 0 10px;
+        width: 100%;
+        height: 38px;
+        line-height: 38px;
+        border: none;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+    }
+
+    .tip_placeholder {
+      position: absolute;
+      left: 0;
+      bottom: -25px;
+      z-index: 3;
+      line-height: 14px;
+      padding: 11px 0 0;
+      text-indent: 11px;
+
+      span {
+        margin: 0 3px 0 0;
+      }
+    }
+
+    .err_tips {
+      color: $red550;
+    }
+
+    .form_err {
+      border-color: $red550;
+    }
+
+    .submit_tab {
+      padding: 43px 0 0;
+
+      button {
+        height: 44px;
+        line-height: 44px;
+        font-size: 20px;
+
+        &:hover {
+          background-color: $orange600;
+          transition: all .3s;
+        }
+      }
+    }
+
+  }
+
+}

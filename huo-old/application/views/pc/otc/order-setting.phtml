@@ -1,0 +1,221 @@
+//接单设置
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+
+<!-- <link rel="stylesheet" href="/css/newsDefault.css"> -->
+
+<div class="bg-content" id="c2c">
+    <div class="c2cmain">
+      
+    <div class="c2c-nav">
+ 	 <ul>
+         <li>
+             <div class="lev-1 on Retract"><span>QC/CNY </span><i class="fa fa-angle-up"></i><i class="fa fa-angle-down"></i></div>
+             <ul id="userSet" l="" style="display: block;">
+                
+                 <li><a class="lev-2" href="/otc/order/list" rel="orderList">订单管理</a></li>
+             <li><a class="lev-2" href="/otc/user/business?isSelect=true" rel="Becomebusiness">商家申请</a></li><li><a class="lev-2" href="/otc/user/" rel="businessinfo">个人信息</a></li></ul>
+         </li>
+         <li id="businessManage" class="hide">
+             <div class="lev-1 on ">商户管理<i class="fa fa-angle-up"></i><i class="fa fa-angle-down"></i></div>
+             <ul>
+             	 <li><a class="lev-2" href="/otc/user/business?isSelect=true" rel="Becomebusiness">商家申请</a></li>
+                 <li><a class="lev-2" href="/otc/mad/publishSell" rel="publishSell">发布广告</a></li>
+                 <li><a class="lev-2" href="/otc/mad/list/1" rel="tradeManage">广告管理</a></li>
+                 <li><a class="lev-2" href="/otc/mad/orderList/0" rel="buyList">商家订单</a></li>
+             	 
+                 <li><a class="lev-2" href="/otc/user/" rel="businessinfo">商家信息</a></li>
+                 <li><a class="lev-2" href="/otc/orderstats" rel="financeStatistics">财务报表</a></li>
+                 
+             </ul>
+         </li>
+         <li>
+             <div class="lev-1 on drop-down">OTC设置<i class="fa fa-angle-up"></i><i class="fa fa-angle-down"></i></div>
+             <ul id="otcSet" style="display: block;">
+                 <li><a class="lev-2" href="/otc/user/setpay" rel="setpay">支付设置</a></li>
+                 <li><a class="lev-2" href="/otc/user/settingOrder" rel="settingOrder">接单设置</a></li>
+                 
+
+                 
+             </ul>
+         </li>
+	 </ul>
+ </div>
+
+ <div class="page-content">
+                <div class="page-title tabs-title">
+                    <div class="tabs">
+                        
+                            <a class="tab " href="/otc/order/list/5">等待接单
+                                
+                            </a>
+                        
+                            <a class="tab active" href="/otc/order/list/0">未支付
+                                
+                            </a>
+                        
+                            <a class="tab " href="/otc/order/list/1">已付款
+                                
+                            </a>
+                        
+                            <a class="tab " href="/otc/order/list/2">已完成
+                                <b>4</b>
+                            </a>
+                        
+                            <a class="tab " href="/otc/order/list/3">已取消
+                                
+                            </a>
+                        
+                            <a class="tab " href="/otc/order/list/4">申诉中
+                                
+                            </a>
+                        
+                            <a class="tab " href="/otc/order/list/6">拒绝接单
+                                <b>1</b>
+                            </a>
+                        
+                            <a class="tab " href="/otc/order/list/7">接单超时
+                                <b>2</b>
+                            </a>
+                        
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="table-wrap">
+                        <table class="table table-noborder c2c-table">
+                            <thead>
+                                <tr>
+                                    <td class="time">时间</td>
+                                    <td class="order-id">订单号</td>
+                                    <td class="type">类别</td>
+                                    <td class="num">数量</td>
+                                    <td class="unit-price">单价</td>
+                                    <td class="sum-price">总价</td>
+                                    
+                                    <td class="action">操作</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                            
+                                <tr>
+                                    <td colspan="10">
+                                        没有相关数据
+                                    </td>
+                                </tr>
+                            
+                            
+                            
+
+                            </tbody><tfoot>
+                            <tr>
+                                <td colspan="10">
+                                    <div id="page_navA" class="page_nav">
+                                        <div class="con">
+                                            
+
+                                            
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+      
+      <div class="history">
+      </div>
+    </div>
+  </div>
+<?php  include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>
+
+<style>
+    .bg-content{
+     padding-top:70px;
+     .fL{float:left;}
+     .fR{float: right;}
+     a{color:$black300}
+     .c2cmain{
+       width:100%;max-width:1200px;margin:50px auto 0;
+       .header>*{
+         display:inline-block;vertical-align:middle;
+       }
+  
+     }
+   
+   }
+   .c2cmain {
+    background: white;
+    padding: 0 19px;
+   }
+
+
+   body{
+    background: #f5f5f5;
+}
+
+.c2c-nav {
+    width: 200px;
+    float: left;
+    background: #FFF;
+    padding-bottom: 80px;
+}
+ul, li, dl, dt, dd {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.c2c-nav .lev-1 {
+    background: #3dc18e;
+    color: #FFF;
+    line-height: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 6px;
+    position: relative;
+    padding: 0 15px;
+    text-align: left;
+}
+.c2c-nav .lev-1 span {
+    color: #FFF;
+    cursor: pointer;
+    line-height: 40px;
+    font-size: 14px;
+}
+.lev-1 i {
+    font-size: 16px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -8px;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.c2c-nav li ul {
+    margin-bottom: 20px;
+}
+.c2c-nav li li {
+    padding: 0 10px;
+    position: relative;
+}
+.c2c-nav li li a {
+    display: block;
+    border-bottom: 1px solid #EEE;
+    line-height: 45px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+}
+.lev-1.on .fa-angle-up, .lev-1 .fa-angle-down {
+    display: none;
+}
+</style>

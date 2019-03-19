@@ -1,0 +1,110 @@
+
+<!-- <link rel="stylesheet" href="/css/userCoinIn.css?v=<?php echo $clear_cache;?>"> -->
+
+<div class="tag-list-content assets_content bg_w">
+            <h1 class="safe_center clear">
+                <span>商户充值</span>
+                <span style="margin-left: 10px;"><a href="/act/nyd.html">抽奖活动</a></span>
+            </h1>
+            <div id="hints" class="mytips" style="display:none;">
+                <p></p><p>
+	<span style="color:#337FE5;line-height:21px;font-size:12px;"><span style="color:#337FE5;font-size:12px;"><span style="color:#337FE5;font-family:&quot;font-size:12px;line-height:34px;">只允许使用本人的支付宝进行</span></span></span><span style="color:#0096E0;line-height:21px;"><span><span style="color:#FF0D00;font-family:'Microsoft YaHei';font-size:14px;line-height:34px;"><span style="color:#9933E5;"></span><span style="color:#337FE5;font-size:12px;">转账充值，请确保汇款人姓名与帐号注册的身份证姓名一致</span></span></span></span><span style="color:#337FE5;font-family:&quot;font-size:12px;line-height:34px;">。</span>
+</p>
+<p>
+	<span style="color:#337FE5;font-family:&quot;font-size:12px;line-height:34px;">充值限额100至50000，充值到账时间为每天 9:00 至 21:00，请提前做好充值准备</span>
+</p><p></p>
+            </div>
+            <div class="mytable-body ">
+                <div class="step1   pwtrade  pw  mt30">
+                        <div class="tx_tips">
+                            支付宝微信单笔限额为<span style="color:#ff0000">100</span>元
+                            至<span style="color:#ff0000">50000</span>元,网银支付限额为<span style="color:#ff0000">100</span>元 至<span style="color:#ff0000">500000</span>元,
+                            充值到账时间为每天<span style="color:#ff0000">9:00</span>
+                            至<span style="color:#ff0000">22:00</span>,
+                            其余时间充值请等待到账。
+                            <br><br>
+                            转账时<span style="color:#ff0000;font-weight: bold;"></span><span style="color:#ff0000;font-weight: bold;">订单号</span>必须备注,否则将无法到账
+                        </div>
+                    <div class="weituo_bizhong" style="margin-left: 149px; margin-bottom: 10px;display: none;">
+                        <div class="bizhong_select">
+                            <div class="bz_btn">
+                              <img src="https://firecoin.oss-cn-shenzhen.aliyuncs.com/Upload/coin/20e58f7436685a19c62bd8dd8b70a793.png" alt="" style=" width: 22px;float: left;margin-top: 7px;margin-right: 5px;">
+                                <span id="coin-default">
+                                    <select name="type" id="coin-select" style="margin-top: 6px;">
+                                        <option value="cny" selected="selected">CNY (CNY)</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <script>
+                            $("#coin-select").change(function () {
+                                var coin        = $("#coin-select option:selected").val();
+                                window.location = '/finance/mycz.html';
+                            });
+                        </script>
+                        <div class="bizhong_type" style="width: 220px;">
+                            <span>可用<em class="coin-name"></em>：<font class="coin-balance">0</font></span>
+                        </div>
+                    </div>
+                    <br>
+                    <dl>
+                        <dt>充值金额：</dt>
+                        <dd style="position: relative;">
+                            <input type="text" class="finance_texts" id="cnyin_num" maxlength="12" value="" >
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt class="cnyin_type">充值方式：</dt>
+                        <dd class="payment-icon-list payment-list ">
+                            <ul style="width:600px;">
+                                <li class="wx curr" data="alipay"><img src="/imgs/alipay.png" width="100"></li>
+                                <li class="wx" data="weixin"><img src="/imgs/weixin.png" width="100"></li>
+                                <li class="wx" data="bank"><img src="/imgs/bank.png" width="100"></li>
+                            </ul>
+                            
+                            <input type="hidden" id="cnyin_type" value="alipay">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt></dt>
+                        <dd>
+                            <input type="button" value="立即充值" onclick="cnyin_up()">
+                        </dd>
+                    </dl>
+                </div>
+                <div class="step2 f_body">
+                    <table class="f_table" id="investLog_content">
+                        <thead>
+                        <tr>
+                            <th width="">充值时间</th>
+                            <th width="">充值订单</th>
+                            <th width="">充值方式</th>
+                            <th width="">充值金额</th>
+                            <th width="">实际到账</th>
+                            <th width="">
+                                <span>
+                                    <select id="status-select" class="mW100">
+                                        <option value="">全部状态</option>
+                                        <option value="1">未付款</option>
+                                        <option value="2">充值成功</option>
+                                        <option value="3">人工到账</option>
+                                        <option value="4">处理中</option>
+                                        <option value="5">已撤销</option>
+                                        <option value="6">花呗到账</option>
+                                    </select>
+                                </span>
+                            </th>
+                            <th width="">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                    </tbody>
+                    </table>
+                    <div class="pages"> </div>
+                </div>
+                </div>
+        </div>
+        
+    

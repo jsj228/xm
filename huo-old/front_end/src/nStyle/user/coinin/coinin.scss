@@ -1,0 +1,213 @@
+.user_tips {
+  display: none;;
+  padding: 19px 0 0;
+}
+.condition_container {
+  padding-bottom: 0px;
+}
+.es_show {
+  display: none;
+}
+.coin_in_qr {
+  margin-top: 17px;
+  margin-bottom: 23px;
+  padding: 0  50px;
+
+  .qr_code_img {
+    margin: 0 30px 0 0;
+    img {
+      width: 116px;
+      height: 116px;
+    }
+  }
+  .all_code_mess {
+    display: none;
+  }
+  .addr_lf {
+    min-width:300px;;
+    display: flex;
+    .addr_context, .can-not-in {
+      display: none;
+    }
+    .addr_context, .addr_des {
+      padding: 10px 0 0;
+    }
+    .code_addr_text {
+      padding: 0 0 10px
+    }
+    .wallt_addr {
+      line-height: 44px;
+    }
+    .addr_loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // height: 100%;
+      min-width:115px;
+    }
+    .copy_btn {
+      display: inline-block;
+      margin: 7px 0 0;
+      width: 130px;
+      height: 39px;
+      line-height: 39px;
+      text-align: center;
+      font-size: 18px;
+      background: #3366cc;
+      border-radius: 3px;
+    }
+    .link-to-out, .link_to_out {
+      color: #3366cc;
+    }
+    .can-not-in>p {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .addr_des {
+    border-left: 1px dashed #e3e3e3;
+    padding: 0 0 0 30px;
+    line-height: 21px;
+
+    &>h5:first-child {
+      padding: 10px 0;
+    }
+  }
+}
+.out_table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-grow: 1;
+
+  .coin-in-table {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    // min-height: 300px;
+    // max-height: 319px;
+    .forzen_question {
+      margin-left: 6px;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url('../../../assets/question.png') no-repeat;
+      background-size: 16px;
+    }
+  }
+}
+
+.fl{
+	// display:flex;
+  float:left;
+  width: 28%;
+}
+#fromBox{
+  border: 1px solid #eee;width: 400px;display: none;border-radius: 10px;
+  margin-top: 36px;
+  padding-bottom: 36px;
+  // dd{text-align: right;}
+  span{position: relative;top: -10px;}
+  input{
+      padding: 0 10px;
+      width: 216px;
+      height:36px;
+      line-height:32px;
+      border: none;
+      -moz-border-radius:5px;
+      border-radius: 5px;
+      border-bottom: 1px solid #dcdcdc;
+  }
+  button{
+      width: 350px;
+      height:36px;
+      border: 1px solid;
+      text-align: center;
+      line-height:32px;background: #ffbd09;
+      color: white;
+      border-radius:10px;
+	  margin-top:20px;
+  }
+}
+
+.set_trade_pwd {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 90;
+    background-color: rgba(0, 0, 0, 0.5);
+	
+}
+.default_bg .white100_bg {
+    background-color: #fff;
+}
+.pwd_form_contain {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 50px 50px 46px;
+    width: 440px;
+    height: 280px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+	display:none;
+}
+
+.relative_dom {
+    position: relative;
+}
+.close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #eaeaea;
+    font-size: 26px;
+    font-weight: 700;
+    z-index: 9;
+}
+.default_f .gray600_f {
+    color: #333;
+}
+.pwd_title {
+    padding: 0 0 26px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 20px;
+    white-space: nowrap;
+}
+.trade_pwd_form input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-bottom: 1px solid #dcdcdc;
+    overflow: hidden;
+}
+.submit_tab {
+    padding: 43px 0 0;
+}
+.default_f .white100_f {
+    color: #fff;
+}
+
+.default_bg .orange500_bg {
+    background-color: #ffbd09;
+}
+.texts:focus {
+  background: rgb(250, 255, 189);
+}
+    

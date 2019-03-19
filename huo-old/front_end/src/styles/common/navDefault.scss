@@ -1,0 +1,278 @@
+@import "./theme.scss";
+@import "../animation/transition.scss";
+// 活动弹框 模板页面容器
+#activityCotain {
+  display: none;
+}
+
+.activity-nav {
+  color: #ffbb03!important;
+}
+
+.logo-line {
+  display: flex;
+  // margin-right: 125px;
+  height: 31px;
+  h3 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 31px;
+    &:hover {
+      cursor: pointer;
+      color: $baseOrangeCol;
+      transition: all .3s;
+    }
+  }
+  span {
+    margin: 0 20px;
+    border-left: 1px solid #656f83;
+  }
+  a {
+    display: inline-block;
+    width: 87px;
+    height: 31px;
+    padding-right: 8px;
+    background: url(/imgs/logo.png) center center no-repeat;
+    background-size: 100% 100%;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.nav-tab {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 0px 60px 0 60px;
+  color: rgba(255,255,255, .6);
+  background: #282c37;
+  box-shadow: 0 0 10px 0 #111;
+  .all-up-down {
+    display: none;
+  }
+  .nav-rf>li {
+    .trade_tips{
+      display: none;
+    }
+  }
+  .nav-rf>li:hover {
+    .trade_tips{
+      display: none;
+    }
+  }
+  .nav-lf {
+    display: flex;
+    padding-top: 12px;
+    color: rgba(255,255,255, .6);
+
+    .sub-ti-tips {
+      display: flex;
+      justify-content: space-between;
+      margin-left: 31px;
+
+      h2 {
+        color: rgba(255,255,255, .6);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 31px;
+      }
+    }
+
+    .lang-btn {
+      color: rgba(255,255,255, .6);
+      margin-left: 43px;
+      line-height: 31px;
+      font-size: 12px;
+
+      &:before {
+        content: "";
+        position: relative;
+        left: -5px;
+        top: 3px;
+        display: inline-block;
+        width: 19px;
+        height: 13px;
+        background: url(../../assets/hklog.png) center center no-repeat;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .sel-lang-win {
+
+    }
+  }
+
+  .nav-rf {
+    display: flex;
+    font-size: 12px;
+    position: relative;
+
+    // &>{
+    //   padding-top: 0;
+    // }
+    &>li {
+      color: rgba(255,255,255, .6);
+      // color: $baseWhite;
+      line-height: 54px;
+      &>button {
+        margin-top: 1px;
+      }
+    }
+    button {
+      box-sizing: border-box;
+      padding: 0;
+      width: 74px;
+      line-height: 27px;
+      text-align: center;
+      border: 1px solid $baseWhite;
+      border-radius: 2px;
+    }
+    .login-btn {
+      color: $deepBlack;
+      background: $baseWhite;
+      &:hover {
+        cursor: pointer;
+        background: #e4e4e4;
+        @include transition(all, .5s);
+      }
+    }
+
+    .register-btn {
+      color: $baseWhite;
+      border: 1px solid rgba(255,255,255,.3);
+      background: transparent;
+
+      &:hover {
+        border-color: rgba(255,255,255,.6);
+        cursor: pointer;
+        @include transition(all, .3s);
+      }
+    }
+    .lang-btn {
+
+      line-height: 31px;
+      &:before {
+        content: "";
+        position: relative;
+        left: -5px;
+        top: 3px;
+        display: inline-block;
+        width: 19px;
+        height: 13px;
+        background: url(../../assets/china.png) center center no-repeat;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .rel-dom {
+    position: relative;
+  }
+  .user-nav-contain {
+    display: none;
+    position: absolute;
+    padding-top: 12px;
+    bottom: -78px;
+    left: 15px;
+  }
+
+  .lang-tran {
+    left: -20px;
+    bottom: -44px;
+  }
+  .user-nav {
+    padding: 10px 0;
+    width: 124px;
+    border-radius: 3px;
+    background: $baseWhite;
+
+    li {
+      color: $deepBlack;
+      font-size: 12px;
+      line-height: 28px;
+      text-indent: 17px;
+
+      &>a {
+        display: block;
+        width: 100%;
+        padding: 0;
+        color: #343434;
+      }
+      &:hover {
+        cursor: pointer;
+        background: #ececec;
+        transition: all .5s;
+      }
+    }
+  }
+  &>ul {
+    display: flex;
+
+    &>li {
+      margin: 0 12px;
+      a,span {
+        padding: 0 10px;
+        line-height: 31px;
+      }
+      span {
+        color: $baseWhite;
+      }
+    }
+    .tag-btn {
+      margin: 0 8px;
+    }
+  }
+
+  .more-i {
+    position: relative;
+    top: -1px;
+    margin: 0 0 0 7px;
+    display: inline-block;
+    width: 11px;
+    height: 7px;
+    background: url(../../assets/more_icon.png) center center no-repeat;
+  }
+
+  .user-icon {
+    position: relative;
+    top: 6px;
+    display: inline-block;
+    text-align: center;
+    text-indent: 12px;
+    width: 33px;
+    height: 21px;
+    line-height: 21px;
+    background: url(../../assets/login_icon.png) left center no-repeat;
+
+    i {
+      position: absolute;
+      top: 7px;
+      right: -3px;
+    }
+  }
+  .act-nav-list {
+    .user-nav-contain {
+      left: 0;
+    }
+  }
+}
+.footer-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 25px;
+  z-index: 1;
+  font-size: 12px;
+  color: rgba(255,255,255, 0.6);
+
+  .f-email {
+    margin-left: 17px;
+    color: rgba(255,255,255, 0.6);
+  }
+}

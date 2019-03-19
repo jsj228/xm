@@ -1,0 +1,298 @@
+@import "./color.scss";
+
+// 背景颜色
+.default_bg {
+  // 白色背景
+  .white100_bg {
+    background-color: $white100;
+  }
+  .white500_bg {
+    background-color: $white500;
+  }
+  // 红色
+  .red500_bg {
+    background-color: $red500;
+  }
+  .red560_bg {
+    background-color: $red560;
+  }
+  .red600_bg {
+    background-color: $red600;
+  }
+  .red700_bg {
+    background-color: $red700;
+  }
+
+  // light Red
+  .lightred500_bg {
+    background-color: $lightRed500;
+  }
+
+  // 橙色
+  .orange500_bg {
+    background-color: $orange500;
+  }
+  //黄色
+  .yellow500_bg {
+    background-color: $yellow500;
+  }
+  // 绿色
+  .green500_bg {
+    background-color: $green500;
+  }
+  .green650_bg {
+    background-color: $green650;
+  }
+  .green600_bg {
+    background-color: $green600;
+  }
+  .green700_bg {
+    background-color: $green700;
+  }
+  .green800_bg {
+    background-color: $green800;
+  }
+  .green900_bg {
+    background-color: $green900;
+  }
+  .green1000_bg {
+    background-color: $green1000;
+  }
+
+  // light green
+  .lightgreen500_bg {
+    background-color: $lightGreen500;
+  }
+
+  // 蓝色
+  .blue100_bg {
+    background-color: $blue100;
+  }
+  .blue200_bg {
+    background-color: $blue200;
+  }
+  .blue500_bg {
+    background-color: $blue500;
+  }
+  .blue800_bg {
+    background-color: $blue800;
+  }
+  .blue600_bg {
+    background-color: $blue600;
+  }
+
+  // light
+  .lightblue100_bg {
+    background-color: $lightBlue100;
+  }
+  .lightblue200_bg {
+    background-color: $lightBlue200;
+  }
+  .lightblue300_bg {
+    background-color: $lightBlue300;
+  }
+  .lightblue600_bg {
+    background-color: $lightBlue600;
+  }
+
+  // 深蓝色
+  .deepblue200_bg {
+    background-color: $deepBlue200;
+  }
+  .deepblue400_bg {
+    background-color: $deepBlue300;
+  }
+  .deepblue500_bg {
+    background-color: $deepBlue500;
+  }
+  .deepblue600_bg {
+    background-color: $deepBlue600;
+  }
+  .deepblue700_bg {
+    background-color: $deepBlue600;
+  }
+
+  // 灰色
+  .gray50_bg {
+    background-color: $gray50;
+  }
+  .gray80_bg {
+    background-color: $gray80;
+  }
+  .gray100_bg {
+    background-color: $gray100;
+  }
+  .gray150_bg {
+    background-color: $gray150;
+  }
+  .gray200_bg {
+    background-color: $gray200;
+  }
+  .gray250_bg {
+    background-color: $gray250;
+  }
+  .gray350_bg {
+    background-color: $gray350;
+  }
+  .gray300_bg {
+    background-color: $gray300;
+  }
+  .gray400_bg {
+    background-color: $gray400;
+  }
+  .gray500_bg {
+    background-color: $gray500;
+  }
+  .gray600_bg {
+    background-color: $gray600;
+  }
+
+  // 黑色
+  .black400_bg {
+    background-color: $black400;
+  }
+  .black500_bg {
+    background-color: $black500;
+  }
+  .black800_bg {
+    background-color: $black800;
+  }
+  .black900_bg {
+    background-color: $black900;
+  }
+}
+
+.default_f {
+
+  // 白色字体
+  .white100_f {
+    color: $white100;
+  }
+
+  // 红色
+  .red400_f {
+    color: $red400;
+  }
+  .red500_f {
+    color: $red500;
+  }
+  .red560_f {
+    color: $red560;
+  }
+  .red600_f {
+    color: $red600;
+  }
+  .red700_f {
+    color: $red700;
+  }
+  // light Red
+  .lightred500_f {
+    color: $lightRed500;
+  }
+  .lightred600_f {
+    color: $lightRed600;
+  }
+
+  // 橙色
+  .orange500_f {
+    color: $orange500;
+  }
+
+  // 黄色
+  .yellow500_f {
+    color: $yellow500;
+  }
+  // 绿色
+  .green500_f {
+    color: $green500;
+  }
+  .green650_f {
+    color: $green650;
+  }
+  .green600_f {
+    color: $green600;
+  }
+  .green700_f {
+    color: $green700;
+  }
+  .green800_f {
+    color: $green800;
+  }
+  .green1000_f {
+    color: $green1000;
+  }
+
+  // light green
+  .lightgreen500_f {
+    color: $lightGreen500;
+  }
+  .lightgreen600_f {
+    color: $lightGreen600;
+  }
+
+  // 蓝色
+  .blue200_f {
+    color: $blue200;
+  }
+  .blue500_f {
+    color: $blue500;
+  }
+  .blue800_f {
+    color: $blue800;
+  }
+
+  //深蓝色
+  .deepblue200_f {
+    color: $deepBlue200;
+  }
+  .deepblue300_f {
+    color: $deepBlue300;
+  }
+  // 灰色
+  .gray300_f {
+    color: $gray300;
+  }
+  .gray350_f {
+    color: $gray350;
+  }
+  .gray380_f {
+    color: $gray380;
+  }
+  .gray400_f {
+    color: $gray400;
+  }
+  .gray500_f {
+    color: $gray500;
+  }
+  .gray600_f {
+    color: $gray600;
+  }
+  .gray700_f {
+    color: $gray700;
+  }
+
+  // 黑色
+  .black500_f {
+    color: $black500;
+  }
+  .black900_f {
+    color: $black900;
+  }
+  //绿色
+  .green400_f {
+    color: $green400;
+  }
+  .green500_f {
+    color: $green500;
+  }
+
+  // 链接 hover 颜色
+  .link {
+    transition: all .3s;
+    &:hover {
+      cursor: pointer;
+      color: $red500;
+      transition: all .3s;
+    }
+  }
+}

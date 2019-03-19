@@ -1,0 +1,21 @@
+<?php include PATH_TPL.'/tpl.header.phtml';?>
+<section>
+  
+  <div class="login-contain" id="regActive">
+    <?php // 注册成功 ?>
+    <div v-cloak class="login-form flex-center-middle reg-succ" v-if="activeFail">
+      <div class="success-img email-lose"></div>
+      <p><?php echo $lang['FIRST_SHI']?></p>
+      <?php // 注册 提交 表单 ?>
+      <a class="submit-btn" href="/register"><?php echo $lang['FIRST_GO_Z']?></a>
+    </div>
+    <?php // 激活 成功 ?>
+    <div v-cloak class="login-form flex-center-middle reg-succ" v-if="activeSuccess">
+      <div class="success-img"></div>
+      <p><?php echo $lang['FIRST_GO_LOGIN']?></p>
+      <?php // 注册 提交表 单 ?>
+      <a class="submit-btn" href="/login"><?php echo $lang['GO_LOGIN']?></a>
+    </div>
+  </div>
+</section>
+<?php include PATH_TPL.'/tpl.bodyclose.phtml';?>

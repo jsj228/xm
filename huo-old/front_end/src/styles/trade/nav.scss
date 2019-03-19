@@ -1,0 +1,407 @@
+@import './theme.scss';
+
+[v-cloak] {
+  display: none!important;
+}
+nav{
+  width: 100%;
+  height: 70px;
+  user-select: none;
+}
+.nav-tab{
+  width: 100%;
+  height: 70px;
+  background:linear-gradient(to top, #181818 0%, #1e1e1e 60%, #252525 100%);
+  box-shadow: none;
+  padding: 0;
+  border-bottom: 1px solid $font-d;
+  box-sizing: content-box;
+  color: $font-d;
+
+  .nav-lf{
+    padding: 0;
+    .sub-ti-tips {
+      margin-left: 28px;
+      h2{
+        color: #fff;
+        line-height: 70px;
+      }
+      .lang-btn{
+        line-height: 70px;
+        margin-left: 0;
+      }
+
+    }
+  }
+  .nav-rf{
+    line-height: 70px;
+    padding-top: 7px;
+    padding-right: 132px;
+    .rel-dom .user-nav-contain{
+      bottom: -82px;
+    }
+  }
+  .logo{
+    padding: 21px 0 18px 30px;
+  }
+  .sub-ti-tips{
+    position: absolute;
+    top: 0;
+    right: 2%;
+    h2{
+      display: none;
+    }
+  }
+}
+.nav-midd{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row nowrap;
+  position: absolute;
+  top: 0;
+  left: 292px;
+  z-index: 10;
+  width: 55.4%;;
+  height: 70px;
+  border-left: 1px solid $font-d;
+  color: $font-l;
+  text-align: center;
+  user-select: none;
+  .curr-mar{
+    position: relative;
+    width: 139px;
+    height: 100%;
+    border-right: 1px solid $font-d;
+    // background: url('../../assets/slidedown-arrow.png') 13.71em center no-repeat;
+    cursor: pointer;
+    &:hover {
+      background: #1c1c1c;
+    }
+    &:hover {
+      .all-mar-new {
+        display: block;
+      }
+    }
+
+    h2{
+        padding-left: 22px;
+
+        &::after{
+          position: absolute;
+          right: 10px;
+          top: 0;
+          content: "";
+          display: block;
+          width: 12px;
+          height: 70px;
+          background: url('../../assets/slidedown-arrow.png') center no-repeat;
+        }
+    }
+
+    &.up-arrow{
+      background-image: url("../../assets/big-price-up.png");
+    }
+    &.down-arrow{
+      background-image: url("../../assets/big-price-down.png");
+    }
+    // &:hover
+    h2{
+      position: relative;
+      z-index: 2;
+      font-size: 16px;
+      height: 100%;
+      line-height: 70px;
+      color: #c3c3c3;
+      text-align: left;
+      font-weight: 400;
+      background: #1c1c1c;
+
+      img{
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        left: 23px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .all-mar{
+    display: block;
+    background: #1c1c1c;
+  }
+  .all-title-list {
+    display: flex;
+    text-transform: uppercase;
+    padding: 0 22px;
+    border-bottom: 1px solid #313131;
+
+    li {
+      padding: 0 22px;
+      line-height: 31px;
+
+      &:hover {
+        color: #ffbb03;
+        transition: all .3s;
+      }
+    }
+    .act-coin {
+      position: relative;
+      color: #ffbb03;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 1px;
+        background: #ffbb03;
+      }
+    }
+  }
+  .all-mar-new {
+    display: none;
+    position: relative;
+    left: -1px;
+    top: -1px;
+    z-index: 1;
+    width: 572px;
+    height: 328px;
+    overflow: hidden;
+    border: 1px solid #313131;
+    background: #1c1c1c;
+  }
+  .area-coin-body {
+    box-sizing: border-box;
+    width: 572px;
+    height: 296px;
+    padding: 39px 0 0 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      width:8px;
+      height:5px;
+      background: #333;
+      opacity: .8;
+    }
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 8px;
+      height: 48px;
+      background: #9e9b91;
+    }
+    .tarde_wating {
+      text-align: center;
+      line-height: 255px;
+      height: 255px;
+      font-size: 36px;
+    }
+    .red-font {
+      color: $font-r;
+    }
+    .green-font {
+      color: $font-g;
+    }
+    table {
+      border-collapse: collapse;
+      width: 572px;
+      font-size: 12px;
+      line-height: 30px;
+      color: #c3c3c3;
+      overflow-x: hidden;
+
+      td {
+        text-align: left;
+        width: 33.3%;
+        white-space: nowrap;
+        padding: 0 10px;
+
+        &:first-child {
+          padding: 0 0 0 22px;
+        }
+        &:last-child {
+          padding: 0 22px 0 0;
+        }
+        a {
+          color: #c3c3c3;
+        }
+      }
+
+      thead {
+        display: flex;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 32px;
+        height: 29px;
+        padding: 10px 0 0 0;
+        background: #1c1c1c;
+
+        td {
+          color: rgba(255,255,255,.3);
+        }
+      }
+
+      tbody {
+
+        tr {
+          &:hover {
+            background: #28241b;
+            transition: all .3s;
+          }
+        }
+        td {
+          width: 30%;
+          min-width: 15%;
+          text-transform: uppercase;
+
+          span {
+            color: #505050;
+            font-weight: 600;
+          }
+          &:last-child {
+            box-sizing: border-box;
+            min-width: 82px;
+          }
+        }
+      }
+    }
+  }
+}
+
+  .curr-price{
+    width: 22.28em;
+    background-repeat: no-repeat;
+    background-position: 20em center;
+    position: relative;
+    cursor: default;
+    &.up-arrow{
+      // background-image: url('../../assets/big-price-up.png');
+      &::after{
+        position: absolute;
+        right: 0px;
+        top: -7px;
+        display: block;
+        content: '';
+        width: 16px;
+        height: 75px;
+        background: url('../../assets/big-price-up.png') center no-repeat;
+        animation: upData 2s infinite;
+      }
+      p#newest-price{
+        color: $font-r;
+      }
+      span.low-vision{
+        color: $head-r;
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+    &.down-arrow{
+      // background-image: url('../../assets/big-price-down.png');
+      &::after{
+        position: absolute;
+        right: 0px;
+        top: -7px;
+        display: block;
+        content: '';
+        width: 16px;
+        height: 75px;
+        background: url('../../assets/big-price-down.png') center no-repeat;
+        animation: downData 2s infinite;
+      }
+      p{
+        color: $font-g;
+      }
+      span.low-vision{
+        color: $head-g;
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+    p{
+      font-size: 30px;
+      text-align: center;
+      line-height: 70px;
+      font-weight: bold;
+      span{
+        font-size: 18px;
+        font-weight: normal;
+      }
+    }
+  }
+  .sm-right{
+    width: 12em;
+    padding: 18px 0;
+    cursor: default;
+    &.day-deal{
+      width: 10.57em;
+    }
+    &.updown-change{
+      width: 7.86em;
+    }
+    p:first-child{
+      font-size: 12px;
+      span{
+        font-size: 14px;
+      }
+    }
+    p:last-child{
+      color: $font-r;
+      margin-top: 2px;
+      color: #fff;
+    }
+    p#updown-change{
+      &.up-change{
+        color: $font-r !important;
+      }
+      &.down-change{
+        color: $font-g !important;
+      }
+    }
+  }
+
+$minMidScreenWidth: 1280px;
+$maxMidScreenWidth: 1600px;
+
+@media screen and (max-width: $maxMidScreenWidth) {
+  .lowest-price, .updown-change{
+    display: none;
+  }
+  #all-mar{
+    width: 900px;
+  }
+
+}
+
+$minSmallScreenWidth: 756px;
+$maxSmallScreenWidth: 1279px;
+
+@media screen and (min-width: $minSmallScreenWidth) and (max-width: $maxSmallScreenWidth) {
+  // .nav-tab {
+  //   .nav-lf {
+  //     .sub-ti-tips {
+  //       display: none;
+  //     }
+  //   }
+  // }
+  .nav-midd{
+    left: 307px;
+  }
+  .lowest-price{
+    display: none;
+  }
+  #all-mar{
+    width: 900px;
+  }
+
+}

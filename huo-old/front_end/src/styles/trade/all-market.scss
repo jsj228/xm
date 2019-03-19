@@ -1,0 +1,90 @@
+@import './theme.scss';
+
+.all-mar{
+  position: absolute;
+  display: none;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  width: 1082px;
+  height: 200px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: $font-l;
+  user-select: none;
+  left: 0px;
+  dl{
+    position: relative;
+    box-sizing: border-box;
+    background: transparent;
+    flex: 0 0 auto;
+    margin-right: 26px;
+    margin-top: 0;
+    width: 334px;
+    height: 59px;
+    border-bottom: 1px dotted #464646;
+    border-left: 2px solid transparent;
+    img{
+      display: block;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &:hover{
+      border-left: 2px solid $font-y;
+      background:linear-gradient(to right, #433714 0%, #302916 50%, #272317 60%, #1b1a18 90%);
+    }
+    dt{
+      position: absolute;
+      left: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      text-indent: 26px;
+      a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        color: $font-l;
+      }
+    }
+    dd{
+      text-align: right;
+      width: 100%;
+      color: $font-r;
+      font-weight: normal;
+      line-height: 27px;
+      &.font-r{
+        color: $font-r;
+        span.low-vision{
+          color: $font-rr;
+        }
+      }
+      &.font-g{
+        color: $font-g;
+        span.low-vision{
+          color: $font-gg;
+        }
+      }
+      &.market-down{
+        background: url('../../assets/sm-price-down.png') right center no-repeat;
+        color: $font-g;
+      }
+      &.market-up{
+        background: url('../../assets/sm-price-up.png') right center no-repeat;
+        color: $font-r;
+      }
+      &:nth-of-type(1){
+        font-size: 14px;
+      }
+      &:nth-of-type(2){
+        font-size: 12px;
+        padding-right: 10px;
+        box-sizing: border-box;
+      }
+    }
+  }
+  
+}

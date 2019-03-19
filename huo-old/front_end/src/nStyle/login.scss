@@ -1,0 +1,41 @@
+@media screen and(min-width: $superScreenMin) {
+  // 加载
+  .loading-svg {
+    display: inline-block;
+    position: absolute;
+    margin-left: 10px;
+    // left: 30%;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width:20px;
+      height:20px;
+      background: url('../../assets/loading.svg') center center no-repeat;
+      background-size: 20px 20px;
+    }
+  }
+}
+@media screen and (max-width: $bigScreenMax) {
+  .loading-svg {
+    display: inline-block;
+    position: absolute;
+    margin-left: pxToRem(10);
+    // left: 30%;
+    top: pxToRem(25);
+    width: pxToRem(35);
+    height: pxToRem(35);
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: pxToRem(35);
+      height: pxToRem(35);
+      background: url('../../assets/loading.svg') center center no-repeat;
+      background-size: pxToRem(35) pxToRem(35);
+    }
+  }
+}

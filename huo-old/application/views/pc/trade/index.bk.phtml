@@ -1,0 +1,632 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+
+<!-- <div class="hover-bg"></div> -->
+<div class="trade_center black900_bg" id="app">
+  <div class="hide_dom" v-cloak><span id="coin_from"><?php echo $coinPair['coin_from']; ?></span><span id="coin_to"><?php echo $coinPair['coin_to']; ?></span></div>
+  <b class="hide_dom" v-once v-cloak>{{setCoinFromTo('<?php echo $coinPair['coin_from'] ?>', '<?php echo $coinPair['coin_to'] ?>')}}</b>
+  <?php // 交易中心導航 ?>
+  <div class="trade_nav relative_dom" flex="main:right">
+    <?php // 最新价格 ?>
+    <div class="price_list" flex="main:right box:mean">
+      <?php // 1.最新價 ?>
+      <div class="top_new_price white100_f">
+        <?php // 标题 ?>
+        <p class="gray400_f"><?php echo $lang['NEW_PRICE']; ?></p>
+        <?php // 数据 ?>
+        <div id="newestPrice"
+          :data-tormb="compPrice(orders.price)"
+          class="red500_f up_down_arr"
+          :class="{'red500_f': orders.ratio>=0, 'green500_f': orders.ratio<0}"
+          v-cloak>{{orders.price | numUse}}<span
+            :class="{'red600_f': orders.ratio>=0, 'green600_f': orders.ratio<0}">{{orders.price | numZero}}</span>
+              <span :class="orders.ratio>=0 ? 'arrowup_icon' : 'arrowdown_icon'"></span><span
+              class="ratio_980 ratio_767"
+              :class="{'red500_f': orders.ratio>=0, 'green500_f': orders.ratio<0}" v-cloak>&nbsp;&nbsp;&nbsp;{{orders.ratio | numUseAndAnd}}%</span>
+        </div>
+      </div>
+      <?php // 2.漲跌幅 ?>
+      <div class="top_new_price">
+        <?php // 标题 ?>
+        <p class="gray400_f"><?php echo $lang['NAV_PRICE_UP_DOWN'] ?></p>
+        <?php // 数据 ?>
+        <div class="red500_f" :class="{'red500_f': orders.ratio>=0, 'green500_f': orders.ratio<0}" v-cloak>{{orders.ratio | numUseAndAnd}}%</div>
+      </div>
+      <?php // 3.24h最高价 ?>
+      <div class="top_new_price">
+        <?php // 标题 ?>
+        <p class="gray400_f"><?php echo $lang['NAV_TODAY_LOW'] ?></p>
+        <?php // 数据 ?>
+        <div class="white100_f" v-cloak>{{orders.max | numUseAndAnd}}</div>
+      </div>
+      <?php // 4.24h最低价 ?>
+      <div class="top_new_price">
+        <?php // 标题 ?>
+        <p class="gray400_f"><?php echo $lang['NAV_24H_MIN']; ?></p>
+        <?php // 数据 ?>
+        <div class="white100_f" v-cloak>{{orders.min | numUseAndAnd}}</div>
+      </div>
+      <?php // 5.24h成交量 ?>
+      <div class="top_new_price">
+        <?php // 标题 ?>
+        <p class="gray400_f"><?php echo $lang['NAV_24H_AMOUNT'] ?></p>
+        <?php // 数据 ?>
+        <div class="white100_f" v-cloak id="tradeSum" :data-tormb="compPrice(orders.sum) * orders.price">{{orders.money}}&nbsp;</div>
+      </div>
+    </div>
+    <?php // 交易区 ?>
+    <div class="trade_area_btn deepblue600_bg white100_f relative_dom" flex-box="0" @mouseout="areaShow = false" @mouseover="areaShow = true">
+      <span class="ctrl_icon" data-from ="<?php echo $coinPair['coin_from'] ?>" data-to="<?php echo $coinPair['coin_to'] ?>"><?php echo strtoupper(str_replace('_', '/', $coinPair['name'])) ?></span>
+      &nbsp;&nbsp;&nbsp;
+      <?php // 交易区列表 ?>
+      <div class="area_win deepblue600_bg relative_dom" v-cloak v-show="areaShow">
+        <u v-cloak v-once>{{changeArea('<?php echo $coinPair['coin_to'] ?>')}}</u>
+        <?php // 切换 按钮 列表 ?>
+        <ul class="all_title_list gray500_f upper_word" flex="box:mean">
+          <?php foreach ($coinList as $key => $coin) { ?>
+            <li :class="curArea == '<?php echo $key ?>' ? 'orange500_f active_area':''" @click="changeArea('<?php echo $key; ?>')"><?php echo $key.$lang['TRAE_AREA'] ?></li>
+          <?php } ?>
+        </ul>
+        <?php // 币列表 1200 以上 ?>
+        <div class="area_coin_body">
+          <div v-if="curArea == 'usdt'" flex="main:center cross:center"  style="height:100%;">
+            <h3 class="tarde_wating"><?php echo $lang['TRADE_WATING'] ?></h3>
+          </div>
+          <table v-if="curArea != 'usdt'">
+            <thead>
+              <tr ref="thead" class="white100_f">
+                <td><?php echo $lang['TRADE_MARKET'] ?></td>
+                <td><?php echo $lang['TRADE_PRICE'] ?></td>
+                <td>24h<?php echo $lang['TRADE_UP_DOWN'] ?></td>
+                <td>24h<?php echo $lang['TRADE_VOLUME'] ?></td>
+              </tr>
+            </thead>
+            <?php // 默认 显示 ?>
+            <?php foreach ($coinList as $key => $coin) { ?>
+              <?php if ($key == $coinPair['coin_to']) { ?>
+                <tbody class="gray300_f" data-area="<?php echo $key; ?>" v-if="!hasArea">
+                  <?php foreach($coin as $k => $v){ ?>
+                    <tr>
+                      <td><?php echo strtoupper(preg_replace('/(_.*)/', '', $v)) ?>&nbsp;<span class="gray500_f">/&nbsp;<?php echo $key ?></span></td>
+                      <td>--</td><td>--</td><td>--</td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              <?php } ?>
+            <?php } ?>
+            <?php // 获取数据后显示 ?>
+            <tbody class="gray300_f" v-cloak v-for="(area, key) in areas" v-if="curArea === key" ref="element">
+              <!-- <tr v-for="(coin, name) in area" @click="changeCoin(name)"> -->
+              <tr v-for="item in area" @click="changeCoin(item.coin)">
+                <td>{{item.coin | beat-name}}&nbsp;<span class="gray500_f upper_word">/&nbsp;{{key}}</span></td>
+                <td>{{item.price | del-zero}}<span class="gray500_f">{{item.price | get-zero}}</span><span class="gray500_f">&nbsp;/&nbsp;￥&nbsp;{{item.currency ? item.currency : '--'}}</span></td>
+                <td :class="item.ratio < 0 ? 'green500_f' : 'red500_f' ">{{item.ratio >= 0 ? "+" : ""}}{{item.ratio}}%</td>
+                <td>{{item.money | numLen10 | numUse}}<span class="gray500_f">{{item.money | numLen10 | numZero}}</span>&nbsp;<span class="upper_word">{{key}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <?php // 交易区 750 ?>
+    <div class="trade_area_btn_750 deepblue600_bg white100_f upper_word relative_dom" flex-box="0" @touchstart.stop="isLogin && (areaTouchShow = !areaTouchShow)" @click.stop='areaTouchFn'>
+      <span data-from ="<?php echo $coinPair['coin_from'] ?>" data-to="<?php echo $coinPair['coin_to'] ?>"><?php echo strtoupper(str_replace('_', '/', $coinPair['name'])) ?></span>
+      &nbsp;&nbsp;&nbsp;<span class="ctrl_icon"></span>
+    </div>
+    <?php // 币列表 0 ~ 1200 ?>
+    <div class="area_win_touch deepblue500_bg" v-cloak v-show="areaTouchShow">
+      <u v-cloak v-once>{{changeArea('<?php echo $coinPair['coin_to'] ?>')}}</u>
+      <?php // 切换 按钮 列表 ?>
+      <ul class="all_title_list white100_f" flex="box:mean">
+        <?php foreach ($coinList as $key => $coin) { ?>
+          <li :class="curArea == '<?php echo $key ?>' ? 'orange500_f active_area':''" @click="changeArea('<?php echo $key; ?>')"><?php echo $key.$lang['TRAE_AREA'] ?></li>
+        <?php } ?>
+      </ul>
+
+      <?php // 0 ~ 1200 未登陆 ?>
+      <div class="area_coin_body_touch">
+        <div v-if="curArea == 'usdt'" class="area_t_body" flex="main:center cross:center">
+          <h3 class="tarde_wating white100_f"><?php echo $lang['TRADE_WATING'] ?></h3>
+        </div>
+        <div v-if="curArea != 'usdt'">
+
+          <ul class="white100_f area_t_head" flex="">
+            <li class="upper_word"><?php echo $lang['TRADE_MARKET'] ?></li>
+            <li><?php echo $lang['TRADE_PRICE'] ?></li>
+            <li>24h<?php echo $lang['TRADE_UP_DOWN'] ?></li>
+            <li>24h<?php echo $lang['TRADE_AMOUNT'] ?></li>
+          </ul>
+
+          <ul class="area_t_body gray300_f" data-area="<?php echo $key; ?>" v-if="!hasArea">
+            <?php foreach($coin as $k => $v){ ?>
+                <li><?php echo strtoupper(preg_replace('/(_.*)/', '', $v)) ?>&nbsp;<span class="gray500_f">/&nbsp;<?php echo $key ?></span></li>
+                <li>--</li><li>--</li><li>--</li>
+            <?php } ?>
+          </ul>
+          <ul class="gray300_f area_t_body" v-cloak v-for="(area, key) in areas" v-if="curArea === key" ref="elementUnLogin750">
+            <!-- <li flex="box:mean" v-for="(coin, name) in area" @click="changeCoin(name)" flex=""> -->
+            <li v-for="item in area" @click="changeCoin(item.coin)" flex="">
+              <div class="upper_word">{{item.coin | beat-name}}</div>
+              <div>{{item.price | del-zero}}<span class="gray500_f">{{item.price | get-zero}}</span></div>
+              <div :class="item.ratio < 0 ? 'green500_f' : 'red500_f' ">{{item.ratio >= 0 ? "+" : ""}}{{item.ratio}}%</div>
+              <div flex-box="1">{{item.money | numLen10 | numUse}}<span class="gray500_f">{{item.money | numLen10 | numZero}}</span>&nbsp;<span class="upper_word">{{key}}</span></div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <?php // 行情列表 ?>
+  <div class="trade_nav trade_nav_no_login relative_dom" v-if="!isMobUnlogin" v-cloak>
+    <div class="area_win_touch deepblue500_bg relative_dom" v-cloak>
+      <?php // 切换 按钮 列表 ?>
+      <ul class="all_title_list white100_f" flex="box:mean">
+        <?php foreach ($coinList as $key => $coin) { ?>
+          <li :class="curArea == '<?php echo $key ?>' ? 'orange500_f active_area':''"  @click="changeArea('<?php echo $key; ?>')"><?php echo $key.$lang['TRAE_AREA'] ?></li>
+        <?php } ?>
+      </ul>
+
+      <?php // 0 ~ 1200 已登陆 ?>
+      <div class="area_coin_body_touch">
+        <div v-if="curArea == 'usdt'" class="area_t_body" flex="main:center cross:center">
+          <h3 class="tarde_wating"><?php echo $lang['TRADE_WATING'] ?></h3>
+        </div>
+        <div v-if="curArea != 'usdt'">
+          <ul class="white100_f area_t_head" flex="">
+            <li class="upper_word"><?php echo $lang['TRADE_MARKET'] ?></li>
+            <li><?php echo $lang['TRADE_PRICE'] ?></li>
+            <li>24h<?php echo $lang['TRADE_UP_DOWN'] ?></li>
+            <li>24h<?php echo $lang['TRADE_AMOUNT'] ?></li>
+          </ul>
+          <ul class="area_t_body gray300_f" data-area="<?php echo $key; ?>" v-if="!hasArea">
+            <?php foreach($coin as $k => $v){ ?>
+                <li><?php echo strtoupper(preg_replace('/(_.*)/', '', $v)) ?>&nbsp;<span class="gray500_f">/&nbsp;<?php echo $key ?></span></li>
+                <li>--</li><li>--</li><li>--</li>
+            <?php } ?>
+          </ul>
+          <ul class="gray300_f area_t_body" v-cloak v-for="(area, key) in areas" v-if="curArea === key" ref="elementUnLogin750">
+            <!-- <li flex="box:mean" v-for="(coin, name) in area" @click="tipsLogin" flex=""> -->
+            <li flex="" v-for="item in area" @click="tipsLogin">
+              <div flex-box="1" class="upper_word">{{item.coin | beat-name}}&nbsp;<span class="gray500_f">/&nbsp;{{key}}</span></div>
+              <div>{{item.price | del-zero}}<span class="gray500_f">{{item.price | get-zero}}</span></div>
+              <div :class="item.ratio < 0 ? 'green500_f' : 'red500_f' ">{{item.ratio >= 0 ? "+" : ""}}{{item.ratio}}%</div>
+              <div flex-box="1">{{item.money | numLen10 | numUse}}<span class="gray500_f">{{item.money | numLen10 | numZero}}</span>&nbsp;<span class="upper_word">{{key}}</span></div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <?php // 手机端 已经登录 表格 ?>
+  <div v-else v-cloak class="black900_bg trade_content">
+    <?php // 750屏幕 最新成交 ?>
+    <el-collapse class="new_trade_list_750">
+      <div class="white100_f collapse_title deepblue600_bg" slot="title"><?php echo $lang['NEWS_TRADE'] ?>&nbsp;&nbsp;&nbsp;<span class="ctrl_icon"></span></div>
+      <?php // 成交列表 ?>
+      <div class="deepblue600_bg gray500_f trade_succ_contain" class="trade_succ_list" slot="content" v-cloak>
+        <div class="trade_succ_list">
+          <table id="deal-list">
+            <colgroup></colgroup><colgroup></colgroup><colgroup></colgroup>
+            <thead class="green900_bg">
+              <tr class="gray400_f">
+                <td><?php echo $lang['TABLE_THEAD_ORDER_TIME'] ?></td>
+                <td><?php echo $lang['TABLE_THEAD_DONE_PRICE'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</td>
+                <td><?php echo $lang['TABLE_THEAD_DONE_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</td>
+              </tr>
+            </thead>
+            <tbody v-cloak>
+              <tr v-for='order in orders.d' :data-tormb="compPrice(order.p)">
+                <td>{{order.t}}</td>
+                <td :class="order.s =='sell' ? 'green500_f' : 'red500_f'">{{order.p | numLen10 | numUse}}<span :class="order.s =='sell' ? 'green800_f' : 'red600_f'">{{order.p | numLen10 | numZero}}</span></td>
+                <td class="gray300_f">{{order.n | numLen10 | numUse}}<span class="gray500_f">{{order.n | numLen10 | numZero}}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </el-collapse>
+    <?php // k线图  买卖盘面 成交列表 ?>
+    <div class="tra_bg_980 trade_content_top">
+      <?php // kline 切换按钮 980以下 ?>
+      <div class="data_list_top relative_dom" flex="main:justify">
+        <p class="bs_title_750 white100_f"><?php echo $lang['TRADE_EAREA_SHOW']; ?></p>
+        <button class="kline_btn blue600_bg white100_f" type="button" @click="tradeKline">{{klineShow ? "<?php echo $lang['RETURN_TRADE_AREA'] ?>" : "<?php echo $lang['KLINE_SHOW']; ?>"}}</button>
+        <?php // k线图 ?>
+        <div class="deepblue600_bg kline_contain" :style="{display: klineShow ? 'block': 'none'}">
+          <iframe id="klineFrame" src="/Market/kline" style="width: 100%;height: 100%;border: none;"></iframe>
+        </div>
+        <div flex="main:justify" flex-box="0" :class="buySaleShow ? '' : 'hide_dom'" class="bs_table_750 list_contain">
+          <?php // 买卖盘面 ?>
+          <div class="deepblue600_bg buy_sell_area" flex="dir:top">
+
+            <?php // sell 卖出 盘 ?>
+            <div class="bs_table relative_dom" id="sell_table" flex="dir:top">
+              <div class="table_header gray400_f green900_bg sell_table_750" flex="box:mean">
+                <span><?php echo $lang['TABLE_THEAD_PRICE'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</span>
+                <span><?php echo $lang['TABLE_THEAD_ORDER_NUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</span>
+                <span><?php echo $lang['TABLE_THEAD_ORDER_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</span>
+              </div>
+              <div class="relative_dom bs_body" flex-box="1" ref="sellList">
+                <transition-group class="relative_dom sell_list" :duration="{ enter: 300, leave: 300 }" name="fade" tag="ul" mode="out-in" id="sellout-list">
+                  <li class="gray300_f" flex="box:mean" v-if='idx>=trust.sale.length-sellMaxNum' v-for='(sell, idx) in trust.sale' :key="sell.p" @click="sellClick(sell)" @touchstart.stop="sellTouch(sell)" :data-tormb="compPrice(sell.p)">
+                    <div class="green500_f">{{sell.p | numLen10 | numUse}}<span class="green800_f">{{sell.p | numLen10 | numZero}}</span></div>
+                    <div >{{sell.n | numLen10 | numUse}}<span class="gray500_f">{{sell.n | numLen10 | numZero}}</span></div>
+                    <div >{{sell.l | numLen10 | numUse}}<span class="gray500_f">{{sell.l | numLen10 | numZero}}</span></div>
+                  </li>
+                </transition-group>
+              </div>
+            </div>
+
+            <?php // 交易最新价格 人民币 ?>
+            <div class="table_mid" flex="main:justify cross:bottom">
+              <span class="red500_f" flex-box="1" v-cloak>{{orders.price | numUse}}<span class="red600_f" v-cloak>{{orders.price | numZero}}</span></span><span class="orange500_f" v-cloak>￥{{ (orders.price * rmbPrice) | numUseNoDot | numLen2}}</span>
+            </div>
+
+            <?php // buy 买入 盘 ?>
+            <div class="bs_table no_head_table" flex="dir:top" id="buy_table">
+              <div flex="box:mean" class="table_header gray400_f green900_bg buy_table_750" flex="box:mean">
+                <span><?php echo $lang['TABLE_THEAD_PRICE'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</span>
+                <span><?php echo $lang['TABLE_THEAD_ORDER_NUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</span>
+                <span><?php echo $lang['TABLE_THEAD_ORDER_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</span>
+              </div>
+              <div class="relative_dom bs_body" flex-box="1">
+                <transition-group class="relative_dom" name="fade" tag="ul" mode="out-in" id="buyin-list">
+                  <li class="gray300_f" flex="box:mean" v-if='idx<sellMaxNum' v-for='(buy, idx) in trust.buy' :key="buy.p" @click="buyClick(buy)":data-tormb="compPrice(buy.p)" @touchstart.stop="buyTouch(buy)">
+                    <div class="red500_f">{{buy.p | numLen10 | numUse}}<span class="red700_f">{{buy.p | numLen10 | numZero}}</span></div>
+                    <div class="gray300_f">{{buy.n | numLen10 | numUse}}<span class="gray500_f">{{buy.n | numLen10 | numZero}}</span></div>
+                    <div class="gray300_f">{{buy.l | numLen10 | numUse}}<span class="gray500_f">{{buy.l | numLen10 | numZero}}</span></div>
+                  </li>
+                </transition-group>
+              </div>
+
+            </div>
+          </div>
+
+          <?php // 成交列表 ?>
+          <div class="deepblue600_bg gray500_f trade_succ_contain" id="pc1200">
+            <div class="trade_succ_list relative_dom">
+              <div class="table_header gray400_f green900_bg sell_table_750" flex="">
+                <span><?php echo $lang['TABLE_THEAD_ORDER_TIME'] ?></span>
+                <span><?php echo $lang['TABLE_THEAD_DONE_PRICE'] ?>(<?php echo strtoupper($coinPair['coin_to']) ?>)</span>
+                <span><?php echo $lang['TABLE_THEAD_DONE_SUM'] ?>(<?php echo strtoupper($coinPair['coin_from']) ?>)</span>
+              </div>
+              <transition-group class="relative_dom" name="fade" tag="ul" mode="out-in" id="deal-list">
+                <li v-for='(order, idx) in orders.d' flex="" :key="idx" :data-tormb="compPrice(order.p)">
+                  <div>{{order.t}}</div>
+                  <div :class="order.s =='sell' ? 'green500_f' : 'red500_f'">{{order.p | numLen10 | numUse}}<span :class="order.s =='sell' ? 'green800_f' : 'red600_f'">{{order.p | numLen10 | numZero}}</span></div>
+                  <div class="gray300_f">{{order.n | numLen10 | numUse}}<span class="gray500_f">{{order.n | numLen10 | numZero}}</span></div>
+                </li>
+              </transition-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php // 我的委托  买卖下单 form ?>
+    <div class="mytrust_form_contain relative_dom" flex="main:justify">
+      <?php // 未登录状态显示 ?>
+      <div class="no_login_mask white100_f" flex="main:center cross:center" v-show="!isLogin" v-cloak>
+        <div id="tradeAfterLogin">
+          <p>
+            <a class="orange500_f" href="javascript:void(0)" @click="login"><?php echo $lang['LOGIN'] ?></a>
+            <?php echo $lang['RULE_TRADE_OR'] ?>
+            <a class="orange500_f" href="javascript:void(0)" @click="register"><?php echo $lang['REGISTER'] ?></a>
+            <?php echo $lang['RULE_TRADE_AFTER_LOGIN'] ?>
+          </p>
+        </div>
+      </div>
+      <?php // 我的委托 表格 ?>
+      <div class="mytrust_list gray400_f deepblue600_bg scroll_bar" v-cloak v-show="!isDealTrust">
+        <p class="collapse_title deepblue500_bg"><?php echo $lang['MY_TRUST_TITLE'] ?></p>
+        <scroll-table :data.sync="mytrust.list" class="test_table">
+          <div slot="thead" class="scroll_head">
+            <table>
+              <thead>
+                <tr class="mytrust_list_head">
+                  <th><?php echo $lang['TRUST_THEAD_TIME'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_TYPE'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_PRICE'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_NUM'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_DONE_NUM'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_NODONE_NUM'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_STATUS'] ?></th>
+                  <th><?php echo $lang['TRUST_THEAD_HANDLE'] ?></th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <?php //  scroll_bar ?>
+          <div slot="tbody" class="scroll_body scroll_bar">
+            <div class="">
+              <table>
+                <tbody id="mytrust-list">
+                  <?php // tr 字段説明 1.時間（） 2.类型  3.价格  4.委托数量 5.成交数量 6.尚未成交 7.状态 8.操作?>
+                  <?php // 7.状态 说明 0: 未成交 (font-r); 1: 部分成交 (font-y); 2: 全部成交 (font-g); 3: 已撤銷 ('');  其他 :查詢中 （font-r）;  ?>
+                  <tr
+                    v-if="mytrust.list.length > 0"
+                    v-for="(trust, idx) in mytrust.list"
+                    :class="idx%2==0 ? 'deepblue500_bg' : 'deepblue600_bg'"
+                    :data-id="trust.i"
+                    :key="idx"
+                    @touchstart.stop="tStart"
+                    @touchmove.stop="tMove"
+                    @touchend.stop="showCancelPane(trust)"
+                    :data-tormb="compPrice(trust.p)">
+                    <td>{{trust.t}}</td>
+                    <td class="upper_word" :class="trust.f == 'sale'? 'green500_f':'red500_f'">{{trust.cf}}{{trust.f == 'sale' ? "<?php echo $lang['TRADE_SELL_OUT']?>" : "<?php echo $lang['TRADE_BUY_IN']?>"}}</td>
+                    <td>{{trust.p | numLen10 | numUseNoDot}}</td>
+                    <td>{{trust.n | numLen10 | numUseNoDot}}</td>
+                    <td>{{trust.d | numLen10 | numUseNoDot}}</td>
+                    <td>{{trust.o | numLen10 | numUseNoDot}}</td>
+                    <td
+                    :data-s="trust.s"
+                    <?php // 0: 未成交 1.部分成交 2.全部成交 3.已撤銷  其他：撤銷中 ?>
+                    :class="{'red500_f': trust.s == 0, 'yellow500_f': trust.s == 1, 'green500_f': trust.s == 2  }">{{trust.s == 0 ? '<?php echo $lang['TRUST_ORDER_STATUS_0']?>' : trust.s == 1 ? '<?php echo $lang['TRUST_ORDER_STATUS_1']?>' : trust.s == 2 ? '<?php echo $lang['TRUST_ORDER_STATUS_2']?>' : trust.s == 3 ? '<?php echo $lang['TRUST_ORDER_STATUS_3']?>' : '<?php echo $lang['TRUST_ORDER_STATUS_4']?>...' }}</td>
+                    <td><a
+                      class="mytrust_ca_btn white100_f"
+                      @click.self.stop="cancelOrder(trust)"
+                      @touchend.self.stop="cancelOrder(trust)"
+                      :class="{'mytrust_ca_btn_dis': trust.s >= 2}"
+                      href="javascript:void(0);"><?php echo $lang['TRUST_ORDER_CANSEL']?>{{canceling(trust.i) ? '...' : ''}}</a></td>
+                    </tr>
+                </tbody>
+              </table>
+              <div v-if="mytrust.list.length == 0" class="no_record"><?php echo $lang['NO_RECORD_NOW']; ?></div>
+              <div class="more_record" v-if="mytrustPage < mytrust.totalPage" @click="loadMoreMytrust"><?php echo $lang['LOAD_MORE_DATA']; ?></div>
+            </div>
+          </div>
+        </scroll-table>
+      </div>
+      <div class="cancel_car_750 deepblue600_bg relative_dom" v-show="isDealTrust" v-cloak flex="dir:top">
+        <p class="collapse_title white100_f"><?php echo $lang['TRUST_DETAIL']; ?> <span class="close_icon" @touchstart.self.stop="closeCancelPane"></span></p>
+        <ul class="car_ctn deepblue500_bg gray300_f">
+          <li><span><?php echo $lang['TRUST_THEAD_TIME'] ?></span><span>{{deTrust.t}}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_TYPE'] ?></span><span :class="deTrust.f == 'sale'? 'green500_f':'red500_f'">{{deTrust.cf}}{{deTrust.f == 'sale' ? "<?php echo $lang['TRADE_SELL_OUT']?>" : "<?php echo $lang['TRADE_BUY_IN']?>"}}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_PRICE'] ?></span><span>{{deTrust.p | numLen10 | numUseNoDot}}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_NUM'] ?></span><span>{{deTrust.n | numLen10 | numUseNoDot}}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_DONE_NUM'] ?></span><span>{{deTrust.d | numLen10 | numUseNoDot}}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_NODONE_NUM'] ?></span><span>{{deTrust.o | numLen10 | numUseNoDot}}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_STATUS'] ?></span><span :class="{'red500_f': deTrust.s == 0, 'yellow500_f': deTrust.s == 1, 'green500_f': deTrust.s == 2  }">{{deTrust.s == 0 ? '<?php echo $lang['TRUST_ORDER_STATUS_0']?>' : deTrust.s == 1 ? '<?php echo $lang['TRUST_ORDER_STATUS_1']?>' : deTrust.s == 2 ? '<?php echo $lang['TRUST_ORDER_STATUS_2']?>' : deTrust.s == 3 ? '<?php echo $lang['TRUST_ORDER_STATUS_3']?>' : '<?php echo $lang['TRUST_ORDER_STATUS_4']?>...' }}</span></li>
+          <li><span><?php echo $lang['TRUST_THEAD_HANDLE'] ?></span><a
+            class="mydeTrust_ca_btn white100_f"
+            @touchstart.self="cancelOrder(deTrust)"
+            :class="{'mytrust_ca_btn_dis': deTrust.s >= 2}"
+            href="javascript:void(0);"><?php echo $lang['TRUST_ORDER_CANSEL']?>{{canceling(deTrust.i) ? '...' : ''}}</a></li>
+        </ul>
+      </div>
+      <?php // 买卖 form ?>
+      <div class="bs_form_contain deepblue500_bg relative_dom" flex-box="5" flex>
+        <?php // 买卖 表单切换按钮 750 屏幕显示 ?>
+        <div class="bs_change_btn_750" flex="main:center">
+          <span class="white100_f" :class="{'action_form': buyFormStatus}" @click.stop.self="buySellChange('buy')"><?php echo $lang['MOB_BUY'] ?></span><span class="white100_f" :class="{'action_form': sellFormStatus}" @click.stop.self="buySellChange('sell')"><?php echo $lang['MOB_SELL'] ?></span>
+        </div>
+        <?php // buy 买入 ?>
+        <div class="bs_form white100_f relative_dom" v-cloak id="form-buy" v-show="buyFormStatus">
+          <div flex="main:justify">
+            <?php // 賬戶餘額 冻结额 ?>
+            <div class="amount_box gray400_f" flex-box="1">
+              <?php // btc over（余额） ?>
+              <p :data-tormb="compPrice(area_over)" flex="cross:center"><span><?php echo $lang['TRADE_FORM_AVIAL_ASSET'] ?></span><span class="red500_f" @click.stop.self="formNumValue('buy', 1)" id="buy-availUse">{{area_over || "0"}}</span>&nbsp;<span><?php echo strtoupper($coinPair['coin_to'])?></span></p>
+              <?php // btc 冻结 ?>
+              <p :data-tormb="compPrice(area_lock)" flex="cross:center"><span><?php echo $lang['TRADE_FORM_LOCK_ASSET'] ?></span><span id="buy-lock">{{area_lock || "0"}}</span>&nbsp;<span><?php echo strtoupper($coinPair['coin_to']) ?></span></p>
+              <?php // 可买约 ?>
+              <p :data-tormb="compPrice(canBuyNum) * orders.price" flex="cross:center"><span><?php echo $lang['TRADE_FORM_AVIAL_BUY'] ?></span>&nbsp;<span id="buy-availBuy">{{canBuyNum | numUseAndAnd}}</span>&nbsp;<span><?php echo strtoupper($coinPair['coin_from']) ?></span></p>
+            </div>
+            <?php // 買賣按鈕 ?>
+            <div class="bs_btn_group" flex="dir:top" flex-box="0">
+              <a class="link_btn green_link_btn white100_f" href="/user/coinin?coin=<?php echo $coinPair['coin_to']; ?>"><?php echo $lang['TRADE_FORM_COIN_IN'] ?></a>
+              <a class="link_btn red_link_btn white100_f" href="/user/coinout?coin=<?php echo $coinPair['coin_to']; ?>"><?php echo $lang['TRADE_FORM_COIN_OUT'] ?></a>
+            </div>
+          </div>
+          <form class="" onsubmit="return false"
+            data-pricefloat="<?php echo $coinPair['price_float']; ?>"
+            data-numberfloat="<?php echo $coinPair['number_float']; ?>"
+            data-maxtrade="<?php echo $coinPair['max_trade']; ?>"
+            autocomplete="off"
+            data-mintrade="<?php echo $coinPair['min_trade']; ?>">
+            <?php // 传入交易规则 ?>
+            <u v-once v-cloak>{{getPhpRule({max: '<?php echo $coinPair['max_trade']; ?>', min: '<?php echo $coinPair['min_trade']; ?>', pfloat: '<?php echo $coinPair['price_float']; ?>', nfloat: '<?php echo $coinPair['number_float']; ?>'}, 'buy')}}</u>
+            <div class='input_g'>
+              <input type="text" class="gray300_f"
+                v-model="buyForm.price"
+                @input.stop='priceInput("buy")'
+                @keyup.13.stop='submitOrder("buy")'
+                maxLength="10" name="buyIn-price" placeholder=<?php echo $lang['TABLE_THEAD_PRICE_BUY'] ?> data-input="trade" data-buyprice="change" />
+              <span class="ext_placeholder gray300_f"><?php echo strtoupper($coinPair['coin_to']) ?></span>
+            </div>
+            <p class="price_rmb gray400_f"><?php echo $lang['TABLE_FORM_RMB']; ?>： <span class="gray300_f">￥{{buyForm.price ? compPrice(buyForm.price) : '--'}}</span></p>
+            <div class='input_g'>
+              <input type="text" class="gray300_f"
+                v-model="buyForm.number"
+                @input='numInput("buy")'
+                @keyup.13.stop='submitOrder("buy")'
+                maxLength="10" data-buynum="change" name="buyIn-amount" placeholder=<?php echo $lang['TRADE_FORM_BUY_AMOUNT'] ?> data-input="trade" />
+              <span class="ext_placeholder gray300_f"><?php echo strtoupper($coinPair['coin_from']) ?></span>
+            </div>
+            <div class="range_group">
+              <label class="gray400_f">
+                <?php echo $lang['TRADE_FORM_RATE'] ?>
+              </label><div class="track_contain">
+                <div class="track_line_bg gray600_bg relative_dom" ref="track" @touchstart.self="trackClick($event, 'buy')" @click.self="trackClick($event, 'buy')" :style="{backgroundSize: buyRatio+'% 100%'}">
+                  <div class="trade_dot white100_bg"
+                    @touchstart.self="rangeOn($event, 'buy')"
+                    @touchmove.stop="moveDot($event, 'buy')"
+                    v-on:mousedown.self="rangeOn($event, 'buy')"
+                    v-on:mousemove.self="moveDot($event, 'buy')"
+                    :style="{left: buyDotLeft}"></div>
+                </div>
+              </div><span class="gray400_f">
+                {{buyRatio}}%
+              </span>
+            </div>
+            <div class="trade_fee gray400_f" flex="main:justify cross:bottom">
+              <p><?php echo $lang['TRADE_FORM_SETTLE'] ?><span id="buy-settle" class="red500_f" :data-tormb="compPrice(buySettle)">{{buySettle > 0 ? buySettle : '0.00'}}</span> <?php echo strtoupper($coinPair['coin_to']) ?></p>
+              <p><?php echo $coinPair['rate_buy']>0 ? ($lang['TRADE_FORM_FEE']).(round($coinPair['rate'], 4)*100).'%' : ($lang['TRADE_FORM_NO_FEE']).($lang['TRADE_FORM_FEE']) ?></p>
+            </div>
+            <div :class="{'is_submitting': buySubmitting}">
+              <button class="submit_btn buy_submit_btn red700_bg white100_f" @click='submitOrder("buy")'><?php echo $lang['TRADE_FORM_BUY_NOW'] ?>
+                <?php if($coinPair['free_expire']){
+                  echo '<span v-cloak v-if="noFeeAllTime>0">&nbsp;&nbsp;免息剩: {{noFee.h>0?(noFee.h+"h "):""}}{{noFee.min>0?(noFee.min+"min"):""}}</span>';
+                } ?>
+              </button>
+            </div>
+            <?php // 提交输入提示框 ?>
+            <transition name="fade" mode="out-in">
+              <div class="tips_win white100_bg relative_dom red500_f" v-if="buyTips ==='over'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['TRADE_MAX'] . trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['max_trade']), '.'); ?></div>
+              <div class="tips_win white100_bg relative_dom red500_f" v-else-if="buyTips ==='short'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['TRADE_MIN'] . trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['min_trade']), '.'); ?></div>
+              <div class="tips_win white100_bg relative_dom red500_f" v-else-if="buyTips ==='inputN'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['PRICE_HOLDE']; ?></div>
+              <div class="tips_win white100_bg relative_dom red500_f" v-else-if="buyTips ==='inputP'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['NUMBER_HOLDE']; ?></div>
+              <div class="tips_win white100_bg relative_dom red500_f" v-else-if="buyTips ==='overB'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['BUY_OVER']; ?></div>
+              <div class="tips_win white100_bg relative_dom" :class="buyOrderOk ? 'green700_f': 'red500_f'" v-else-if="buyTips"><span :class="buyOrderOk ? 'order_ok_icon' : 'err_tips_icon'"></span>{{buyTips}}</div>
+            </transition>
+          </form>
+        </div>
+        <?php // sell 卖出 ?>
+        <div class="bs_form white100_f relative_dom" v-cloak id="form-sell" v-show="sellFormStatus">
+          <div flex="main:justify">
+            <?php // 賬戶餘額 冻结额 ?>
+            <div class="amount_box gray400_f">
+              <?php // btc over（余额） ?>
+              <p :data-tormb="compPrice(coin_over) * orders.price || 0" flex="cross:center"><?php echo $lang['TRADE_FORM_AVIAL_ASSET'] ?><span class="green500_f" @click.stop.self="formNumValue('sell', 1)" id="sell-availUse">{{coin_over || 0}}</span>&nbsp;<span><?php echo strtoupper($coinPair['coin_from'])?></span></p>
+              <?php // btc 冻结 ?>
+              <p :data-tormb="compPrice(coin_lock)" flex="cross:center"><?php echo $lang['TRADE_FORM_LOCK_ASSET'] ?><span id="sell-lock">{{coin_lock || 0}}</span>&nbsp;<span><?php echo strtoupper($coinPair['coin_from']) ?></span></p>
+              <?php // 可买约 ?>
+              <p :data-tormb="compPrice(canSellNum)" flex="cross:center"><?php echo $lang['TRADE_FORM_AVIAL_SELL'] ?>&nbsp;<span id="sell-availBuy">{{canSellNum | numUseAndAnd}}</span>&nbsp;<span><?php echo strtoupper($coinPair['coin_to']) ?></span></p>
+            </div>
+            <?php // 買賣按鈕 ?>
+            <div class="bs_btn_group" flex="dir:top">
+              <a class="link_btn green_link_btn white100_f" href="/user/coinin?coin=<?php echo $coinPair['coin_from']; ?>"><?php echo $lang['TRADE_FORM_COIN_IN'] ?></a>
+              <a class="link_btn red_link_btn white100_f" href="/user/coinout?coin=<?php echo $coinPair['coin_from']; ?>"><?php echo $lang['TRADE_FORM_COIN_OUT'] ?></a>
+            </div>
+          </div>
+          <form
+            data-pricefloat="<?php echo $coinPair['price_float']; ?>"
+            data-numberfloat="<?php echo $coinPair['number_float']; ?>"
+            data-maxtrade="<?php echo $coinPair['max_trade']; ?>"
+            data-mintrade="<?php echo $coinPair['min_trade']; ?>"
+            autocomplete="off"
+            data-form="trade" onsubmit="return false">
+            <u v-once v-cloak>{{getPhpRule({max: '<?php echo $coinPair['max_trade']; ?>', min: '<?php echo $coinPair['min_trade']; ?>', pfloat: '<?php echo $coinPair['price_float']; ?>', nfloat: '<?php echo $coinPair['number_float']; ?>'}, 'sell')}}</u>
+            <div class='input_g'>
+              <input type="text" class="gray300_f"
+                v-model="sellForm.price"
+                @input.self="priceInput('sell')"
+                @keyup.13='submitOrder("sell")'
+                maxLength="10" data-buyprice="change" name="sellOut-price" placeholder=<?php echo $lang['TABLE_THEAD_PRICE_SELL'] ?> data-input="trade" />
+              <span class="ext_placeholder gray300_f"><?php echo strtoupper($coinPair['coin_to']) ?></span>
+            </div>
+            <p class="price_rmb gray400_f"><?php echo $lang['TABLE_FORM_RMB']; ?>： <span class="gray300_f">￥{{sellForm.price ? compPrice(sellForm.price): '--'}}</span></p>
+            <div class='input_g'>
+              <input type="text" class="gray300_f"
+                v-model="sellForm.number"
+                @input.self='numInput("sell")'
+                @keyup.13='submitOrder("sell")'
+                maxLength="10" data-buynum="change" name="sellOut-amount" placeholder=<?php echo $lang['TRADE_FORM_SELL_AMOUNT'] ?> data-input="trade" />
+              <span class="ext_placeholder gray300_f"><?php echo strtoupper($coinPair['coin_from']) ?></span>
+            </div>
+            <?php // 滑杆 ?>
+            <div class="range_group">
+              <label class="gray400_f">
+                <?php echo $lang['TRADE_FORM_RATE']; ?>
+              </label><div class="track_contain">
+                <div class="track_line_bg sell_track_bg gray600_bg relative_dom" @click.self="trackClick($event, 'sell')" :style="{backgroundSize: sellRatio+'% 100%'}">
+                  <div class="trade_dot white100_bg"
+                    @touchstart.self="rangeOn($event, 'sell')"
+                    @touchmove.stop="moveDot($event, 'sell')"
+                    v-on:mousedown.self="rangeOn($event, 'sell')"
+                    v-on:mousemove.self="moveDot($event, 'sell')" :style="{left: sellDotLeft}"></div>
+                </div>
+              </div><span class="gray400_f">{{sellRatio}}%</span>
+            </div>
+            <div class='trade_fee gray400_f' flex="main:justify cross:bottom">
+              <p><?php echo $lang['TRADE_FORM_SETTLE'] ?><span id="sell-settle" class="green500_f" :data-tormb="compPrice(sellSettle)">{{sellSettle > 0 ? sellSettle : '0.00'}}</span> <?php echo strtoupper($coinPair['coin_to']) ?></p>
+              <p><?php echo $coinPair['rate_buy']>0 ? ($lang['TRADE_FORM_FEE']).(round($coinPair['rate'], 4)*100).'%': ($lang['TRADE_FORM_NO_FEE']).($lang['TRADE_FORM_FEE']) ?></p>
+            </div>
+            <div :class="{'is_submitting': sellSubmitting}">
+              <u class="hide_dom" v-once :data-sell="setFeeTime('<?php echo $coinPair['free_expire']; ?>')"></u>
+              <?php // 活動開關控制 activeButton ?>
+              <button class="submit_btn sell_submit_btn green700_bg white100_f" name="button" @click='submitOrder("sell")' ><?php echo $lang['TRADE_FORM_SELL_NOW'] ?>
+                <?php if($coinPair['free_expire']){
+                  echo '<span v-cloak v-if="noFeeAllTime>0">&nbsp;&nbsp;免息剩: {{noFee.h>0?(noFee.h+"h "):""}}{{noFee.min>0?(noFee.min+"min"):""}}</span>';
+                } ?>
+              </button>
+              <!-- <input type="submit"  value= id="btn-sell"> -->
+            </div>
+            <?php // 提交输入提示框 ?>
+            <transition name="fade" mode="out-in">
+              <div class="tips_win white100_bg red500_f" v-if="sellTips === 'over'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['TRADE_MAX'] . trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['max_trade']), '.'); ?></div>
+              <div class="tips_win white100_bg red500_f" v-else-if="sellTips === 'short'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['TRADE_MIN'] . trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['min_trade']), '.'); ?></div>
+              <div class="tips_win white100_bg red500_f" v-else-if="sellTips === 'inputN'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['PRICE_HOLDE']; ?></div>
+              <div class="tips_win white100_bg red500_f" v-else-if="sellTips === 'inputP'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['NUMBER_HOLDE']; ?></div>
+              <div class="tips_win white100_bg red500_f" v-else-if="sellTips === 'overS'"><span class="err_tips_icon"></span><?php echo $lang['JS_LANG']['SELL_OVER']; ?></div>
+              <div class="tips_win white100_bg" :class="sellOrderOk ? 'green700_f': 'red500_f'" v-else-if="sellTips"><span :class="sellOrderOk ? 'order_ok_icon' : 'err_tips_icon'"></span>{{sellTips}}</div>
+            </transition>
+          </form>
+        </div>
+        <?php // 980 屏幕 黑条 ?>
+        <p class="form_mar_980"></p>
+
+      </div>
+    </div>
+
+    <?php // 交易密碼 ?>
+    <transition name="fade" mode="out-in">
+      <div class="set_trade_pwd" v-if="setPwd" v-cloak flex="main:center cross:center">
+        <div class="pwd_form_contain white100_bg relative_dom">
+          <div class="close_btn gray400_f close_icon" @click.stop="closePwd"></div>
+          <p class="pwd_title"><?php echo $lang['REAL_PASSWORD'] ?></p>
+          <div class="trade_pwd_form">
+            <div class="input_g relative_dom" :class="{'form_err': pwdTips}">
+              <input autocomplete="off" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" type="password" maxlength="25" v-on:change="pwdTips = ''" v-model="pwdTrade" placeholder="<?php echo $lang['REAL_PASSWORD'] ?>" @keyup.13="surePwd" v-focus  />
+              <p class="tip_placeholder" v-if="pwdTips && pwdTips === 1" v-cloak><span class="default_tips_icon"></span><?php echo $lang['REAL_PASSWORD']; ?></p>
+              <p class="tip_placeholder err_tips" v-else-if="pwdTips" v-cloak><span class="err_tips_icon"></span>{{pwdTips}}</p>
+            </div>
+            <div class="submit_tab" v-cloak>
+              <button class="default_btn orange500_bg white100_f"
+                :class="{'is_submitting': pwdSubmitting}"
+                type="submit"
+                :disabled="pwdSubmitting"
+                @click.stop="surePwd"><?php echo $lang['DETERMINE']?></button>
+            </div>
+            <div flex="dir:right" v-if="forgetPwd"><a class="blue500_f link" href="/user?set=tradepwd"><?php echo $lang['FORGET_TRADE_PWD']; ?></a></div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+
+  <?php // 交易规则 ?>
+  <div class="trade_rule_contain" :class="{tradeRuleStatue: 'no_active_rule'}" flex="main:center cross:center">
+    <?php // 交易规则 ?>
+    <div class="trade_rule_sidebar deepblue600_bg orange500_f relative_dom"><span><?php echo $lang['RULE_TRADE_RULE'] ?></span></div>
+    <div class="rule_context deepblue600_bg white100_f">
+      <p class="rule_title"><?php echo strtoupper($coinPair['coin_from']).$lang['RULE_TRADE_RULE']; ?></p>
+      <div class="rule_detail deepblue500_bg gray400_f">
+        <p>1、<?php echo $lang['RULE_TRADE_TIME'] ?>
+          <?php if($coinPair['open_start']== $coinPair['open_end']){
+            echo '24'.$lang['TRADE_TALKING_XS'];
+            }else{ echo substr($coinPair['open_start'],0,2).':'. substr($coinPair['open_start'], 2, 2).'-'. substr($coinPair['open_end'], 0, 2) . ':' . substr($coinPair['open_end'], 2, 2);} ?>
+        </p>
+        <p>2、<?php echo $lang['RULE_TRADE_FEE'] ?></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php
+          echo $lang['TRADE_BUY_IN'] ?>&nbsp;<?php
+          echo ($coinPair['rate_buy']*100).'%'; ?>&nbsp;&nbsp;<?php
+          echo $lang['TRADE_SELL_OUT'].'&nbsp;'.($coinPair['rate'] * 100).'%'; ?>
+        </p>
+        <hr>
+        <div class="white100_f">
+          <p><?php echo $lang['RULE_TRADE_MIN_NUM'] ?>&nbsp;<?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['min_trade']), '.'); ?></p>
+          <p><?php echo $lang['RULE_TRADE_MAX_NUM'] ?>&nbsp;<?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $coinPair['max_trade']), '.'); ?></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php // 弹框 ?>
+  <my-alert v-cloak :show-status="alertShow" v-on:callback="alertCB">
+    <div class="" slot="content">content</div>
+    <span slot="btnTitle"></span>
+  </my-alert>
+</div>
+<?php  include PATH_TPL.'/tpl.footerTrade.phtml';?>

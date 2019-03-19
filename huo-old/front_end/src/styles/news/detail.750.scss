@@ -1,0 +1,102 @@
+@import "../../nStyle/config.scss";
+
+@media screen and (max-width: $bigScreenMax) {
+  .news-win {
+
+    .ns-lf {
+      box-sizing: border-box;
+      width: 100%;
+
+      .content {
+        padding: 10px;
+
+        &> ul .list-rt {
+          display: none;
+        }
+      }
+    }
+
+    .ns-rf {
+      display: none;
+    }
+    .ns-det-header {
+      .ns-det-des span {
+        margin-right: 15px;
+      }
+
+      h1 {
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+    .ns-detail-content {
+      left: 10px;
+      padding: 10px 10px 10px 0;
+    }
+
+    .con-tit {
+      min-height: pxToRem(52);
+      height: auto;
+
+      a {
+        margin-bottom: pxToRem(20);
+        width: auto;
+        padding: 0 10px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+
+@media screen and(min-width: $bigScreenMin) and (max-width: $bigScreenMax) {
+
+  .news-win {
+    top: 120px;
+
+    .content {
+      padding: 5px;
+      position: relative;
+    }
+
+  }
+
+
+
+  .ns-detail-content {
+    box-sizing: border-box;
+    position: absolute;
+    left: 32px;
+    top: 99px;
+    right: 0px;
+    bottom: 20px;
+    padding: 18px 50px 0 0;
+    overflow-y: auto;
+    text-align: justify;
+  }
+
+
+}
+
+@media screen and (max-width: $mdScreenMax) {
+  .news-win {
+    padding: 10px 10px;
+    top: pxToRem(120);
+
+    .ns-lf {
+
+      .content > ul {
+        padding: 5px;
+      }
+    }
+
+    .con-tit a {
+      width: auto;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+     .page-list .page-form {
+       display: none;
+     }
+  }
+}

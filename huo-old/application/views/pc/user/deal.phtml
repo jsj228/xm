@@ -1,0 +1,81 @@
+<div class="rf_main gray50_bg" flex="dir:top">
+  <div class="nav-crumbs">
+    <?php echo $lang["USER_NAV_MY_TRADE"] ?> > <a class="active-tab" href="javascript: void(0);"><?php echo $lang['USER_NAV_DEAL'] ?></a>
+  </div>
+  <?php // 篩選條件 ?>
+  <div class="condition_container white100_bg">
+    <?php include PATH_TPL.'/user/condition/coin_list.phtml';?>
+
+    <div class="coin_list_con type_cont gray500_f" flex="" id="coinFlag">
+      <?php // 交易类型： ?>
+      <div class="list_tit">
+        <span><?php echo $lang["USER_CDTION_TRADE_TYPE"];?></span>
+      </div>
+      <div class="list_item">
+        <span class="<?php echo ($get['flag']==1||$get['flag']=='')?'sel_coin':'';?>" data-flag="1"><?php echo $lang['USER_CDTION_FLAG_ALL']; ?></span>
+        <span class="<?php echo $get['flag']==2?'sel_coin':'';?>" data-flag="2"><?php echo $lang['USER_CDTION_FLAG_BUY']; ?></span>
+        <span class="<?php echo $get['flag']==3?'sel_coin':'';?>" data-flag="3"><?php echo $lang['USER_CDTION_FLAG_SELL']; ?></span>
+      </div>
+    </div>
+  </div>
+
+  <?php include PATH_TPL.'/user/condition/time_condition.phtml'; ?>
+  <?php // 表格 ?>
+  <div class="out_table" flex>
+    <div class="coin-in-table shadow-cont">
+      <div class="t-body" id="tBody">
+        <table>
+          <thead>
+            <tr>
+              <td><?php echo $lang["TABLE_HEADER_ONE"]; ?></td>
+              <td><?php echo $lang["TABLE_HEADER_TWO"]; ?></td>
+              <td><?php echo $lang["TABLE_HEADER_THREE"]; ?></td>
+              <td><?php echo $lang["TABLE_HEADER_FOUR"]; ?></td>
+              <td><?php echo $lang["TABLE_HEADER_FIVE"]; ?></td>
+              <td><?php echo $lang["TABLE_HEADER_SIX"] . '(' . strtoupper($coinda['coin_from']) . ')'; ?></td>
+              <td><?php echo $lang["TABLE_HEADER_SEV"]; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php // 綠色文字 class添加"green-font" ; 紅色文字 class 用 "red-font"?>
+            <?php foreach ($list as $v){
+              $isBuy = ((($v['buy_uid']==$user['uid'] && $v['buy_uid'] !=$v['sale_uid']) || $v['buy_tid']>$v['sale_tid'] && $v['buy_uid'] ==$v['sale_uid']));
+            ?>
+              <tr>
+                <td><?php echo $v['id']?></td>
+                <td><?php echo $v['created'] ?></td>
+                <td><?php echo $v['coin_from'] ?></td>
+                <td class="<?php echo $v['flag']==strtoupper($lang['USER_CDTION_FLAG_BUY'])?'red-font':'green-font' ?>"><?php echo $v['flag']; ?></td>
+                <td><?php echo Tool_Math::eftnum($v['price']).' '.strtoupper($v['coin_to']) ?></td>
+                <td><?php echo Tool_Math::eftnum($v['number']) ?></td>
+                <td><?php echo Tool_Math::mul( $v['price'], $v['number']).' '.strtoupper($v['coin_to']) ?></td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+        <?php // echo $pageinfo; ?>
+        <?php // 沒有數據時，顯示該元素， 設置 display: block ?>
+        <?php if(!$list){ ?>
+          <div class="no-data" id="tableNoData" style="display:block;">
+            <div class="no-data-ctx">
+              <span class="no-data-img"></span>
+              <span><?php echo $lang['NO_RECORD_NOW']; ?></span>
+            </div>
+          </div>
+        <?php } ?>
+      </div>
+    </div>
+    <?php // 分页 ?>
+  </div>
+  <?php if ($pageinfo) { ?>
+    <div class="page-list" id="pageNumList">
+      <?php echo $pageinfo; ?>
+      <div class="page-form" id="goPage">
+        <input type="hidden" name="cate" value="4">
+        跳至&nbsp;&nbsp;<input maxLength="5" type="text" name="p" value="">&nbsp;&nbsp;<?php echo $lang['NUMBER_HOME_PA'] ?>
+        <button type="submit" name="button" id="go">GO</button>
+      </div>
+    </div>
+  <?php } ?>
+</div>
+<!-- <script src="/js/userTrust.js?v=<?php echo $clear_cache;?>" defer async="true"></script> -->

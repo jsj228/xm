@@ -1,0 +1,519 @@
+<!-- <link rel="stylesheet" href="/css/mob.user.index.css?v=<?php echo $clear_cache;?>"> -->
+<div class="rf-content mob-rf-content" id="bodyContent">
+  <!-- <div class="nav-crumbs">
+    <?php echo $lang['USER_NAV_TITLE'] ?> > <a class="active-tab" href="javascript: void(0);"><?php echo $lang['USER_NAV_INDEX'] ?></a>
+  </div> -->
+  <p class="tips-text"><?php echo $lang['DEAR'],$userInfo['realInfo']?$userInfo['realInfo']['name']:$lang['USER'] ?></p>
+  <div class="tab-one">
+    <div>
+      <?php
+      // 警告提示 用 class="tab-icon warning-tab"
+      // 通过用 class="tab-icon correct-tab"
+      ?>
+      <p class="shadow-cont">
+        <span class="sort-title"><u class="tab-icon correct-tab"></u><?php echo $lang['BIND_PHONE'] ?></span>
+         <span class="self-det"><?php if ($userInfo['mo']) {
+             if ($userInfo['area'] == '+86') {
+               echo $lang['BINDED_PHONE'] . substr_replace($_SESSION['user']['mo'], '****', 3, 4);
+             } else {
+               echo $lang['BINDED_PHONE'] . substr_replace($_SESSION['user']['mo'], '**', -4, 2);
+             }
+           } else {
+             echo "";
+           }
+           ?></span>
+      </p>
+    </div>
+    <div>
+      <p class="shadow-cont user_index_p">
+        <span class="sort-title"><u class="tab-icon <?php echo $userInfo['realInfo']?'correct-tab':'warning-tab'?> "></u><?php echo $lang['AUTH_CHECK'] ?></span>
+        <span class="self-det user_index_content"><?php echo $lang['REAL_INFO_TIPS'] ?></span>
+        <a href="/user/realinfo"><?php echo $lang['CHECK'] ?></a>
+      </p>
+    </div>
+    <div>
+      <p class="shadow-cont">
+        <span class="sort-title"><u class="tab-icon correct-tab"></u><?php echo $lang['LOGIN_PWD'] ?></span>
+        <span class="self-det"><?php echo $lang['LOGIN_USE'] ?></span>
+      </p>
+    </div>
+    <div>
+      <p class="shadow-cont user_index_p">
+        <span class="sort-title"><u class="tab-icon <?php echo $userInfo['pwdtrade']?'correct-tab':'warning-tab'?>"></u><?php echo $lang['TRADE_PWD'] ?></span>
+        <span class="self-det user_index_content"><?php echo $lang['TRADE_PWD_TIPS'] ?></span>
+        <?php if(!$userInfo['pwdtrade']){ ?>
+          <a href="javascript: void(0);" data-tradepwd="pwd"><?php echo $lang['TRADE_SETTING'] ?>&gt;&gt;</a>
+        <?php } else { ?>
+          <a href="javascript: void(0);" data-reset="tradepwd"><?php echo $lang['TRADE_RESET_SETTING'] ?>&gt;&gt;</a>
+        <?php } ?>
+      </p>
+    </div>
+  </div>
+  <?php // 表格 ?>
+  <div class="<?php if(!isset($coinList['off'])){ echo "full-table"; }?>">
+    <div class="table-tips">
+      <?php // 显示 有资产 按钮 ?>
+      <div>
+        <?php echo $lang['SHOW_USEFUL_COIN'] ?>&nbsp;&nbsp;&nbsp;<span class="swich-btn" data-swich="btn" data-state="on"><b></b><span><?php echo $lang['SWITCH_ON'] ?></span></span>
+      </div>
+      <?php // 我的资产  ?>
+      <div class="my-property">
+        <?php echo $lang['T_COIN_TO_PRICE'] ?>
+        <span id="allAssets"><?php echo sprintf('%.8f', $allToBtc) ?></span>
+        <span id="yibiallAssets"><?php echo sprintf('%.8f', $yibiallToBtc) ?></span><span>BTC</span>
+      </div>
+    </div>
+    <div class="property-div">
+      <ul class="property-tabs" data-tabs="property">
+        <li class="property-acitve" data-pro="bi"><?php echo $lang['BIBI_ACCOUNT']; ?></li>
+        <li data-pro="fa"><?php echo $lang['FABI_ACCOUNT']; ?></li>
+      </ul>
+    </div>
+    <div class="tab-table shadow-cont" id="swichTable">
+      <div class="coin-in-table" data-table="1">
+        <div class="t-body" data-tbody="tBody">
+          <table>
+            <thead>
+              <tr>
+                <td><?php echo $lang['T_HEAD_TYPE'] ?></td>
+                <td><?php echo $lang['T_HEAD_BALANCE'] ?></td>
+                <td><?php echo $lang['T_HEAD_FORZEN_MONEY'] ?></td>
+                <td><?php echo $lang['T_HEAD_TOTAL'] ?></td>
+                <td><?php echo $lang['T_HEAD_CTRL'] ?></td>
+              </tr>
+            </thead>
+            <?php //币币列表 ?>
+            <tbody class="user_bibi">
+              <?php
+              // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"
+              // 操作列 按钮 允许操作用 class="order-btn" ,禁用按钮 用 class="disable-btn"
+              ?>
+              <?php if(isset($coinList['on']['owned'])) foreach ($coinList['on']['owned'] as $k=>$v) { ?>
+              <tr class="bibi" data-price="<?php if (isset($coinPrice[$v['name']])){echo $coinPrice[$v['name']];} ?>">
+                <td class="coin_name <?php echo $v['name'].'_name' ?>"><?php echo strtoupper($v['name']) ?></td>
+                <td class="price_over"><?php echo sprintf('%.8f', $userInfo[$v['name'].'_over']) ?></td>
+                <td><?php echo sprintf('%.8f', $userInfo[$v['name'].'_lock']) ?></td>
+                <td><?php echo sprintf('%.8f', Tool_Math::add($userInfo[$v['name'].'_over'], $userInfo[$v['name'].'_lock'])) ?></td>
+                <td>
+                  <button
+                    <?php // 暂停按钮 禁用 点击功能 ?>
+                    <?php if($v['in_status']){ ?>
+                      disabled="disabled"
+                    <?php } else{ ?>
+                      data-coin="<?php echo $v['name'];?>"
+                      data-coinin="coinin"
+                    <?php } ?>
+                    class="<?php echo $v['in_status']?'disable-btn':'order-btn' ?>"
+                    type="button"
+                    name="button"><?php echo $lang['T_BODY_COIN_IN']?>&nbsp;<?php echo $v['in_status']?$lang['T_BODY_STOP']:'' ?></button>&nbsp;&nbsp;&nbsp;
+                  <button
+                    <?php if ($v['out_status'] || $userInfo[$v['name'].'_over']<=0){ ?>
+                      disabled="disabled"
+                    <?php } else { ?>
+                      data-coin="<?php echo $v['name'];?>"
+                      data-coinout="coinout"
+                    <?php } ?>
+                    class="<?php echo ($v['out_status'] || $userInfo[$v['name'].'_over']<=0)?'disable-btn':'order-btn' ?>"
+                    type="button"
+                    name="button"><?php echo $lang['T_BODY_COIN_OUT']?>&nbsp;<?php echo $v['out_status']?$lang['T_BODY_STOP']:'' ?></button>&nbsp;&nbsp;&nbsp;
+                    <?php if ($v['otc'] == 0 && $v['coin_transfer'] == 0) { ?>
+                      <button class="order-btn" type="button" name="button" data-account-btn="bi"
+                      data-coinmax="<?php echo $userInfo[$v['name'].'_max']?>"
+                      data-uid="<?php echo $userInfo['uid']?>"
+                      data-max="<?php echo $v['otc_transfer_nfloat']?>"
+                      data-opt="out"><?php echo $lang['T_BODY_EXCHANGE_FABI']; ?></button>
+                    <?php }else if($v['otc'] == 0 && $v['coin_transfer'] ==1){ ?>
+                      <button class="disable-btn" disabled="disabled" type="button" name="button"
+                      data-account-btn="bi"><?php echo $lang['T_BODY_EXCHANGE_FABI_STOP']; ?></button>
+                    <?php } ?>
+                </td>
+              </tr>
+              <?php } ?>
+              <?php //没资金的币 ?>
+              <?php if(isset($coinList['on']['others'])) foreach ($coinList['on']['others'] as $k=>$v) { ?>
+              <tr class="no-val" data-price="<?php if (isset($coinPrice[$v['name']])){echo $coinPrice[$v['name']]; }?>">
+                <td class="coin_name <?php echo $v['name'].'_name' ?>"><?php echo strtoupper($v['name']) ?></td>
+                <td class="price_over"><?php echo sprintf('%.8f',$userInfo[$v['name'].'_over']) ?></td>
+                <td><?php echo sprintf('%.8f',$userInfo[$v['name'].'_lock']) ?></td>
+                <td><?php echo sprintf('%.8f', Tool_Math::add($userInfo[$v['name'].'_over'],$userInfo[$v['name'].'_lock'])) ?></td>
+                <td>
+                  <?php // 充 提 币按钮 ?>
+                  <button
+                    <?php if($v['in_status']){ ?>
+                      disabled="disabled"
+                    <?php }else{ ?>
+                      data-coin="<?php echo $v['name'];?>"
+                      data-coinin="coinin"
+                    <?php } ?>
+                    class="<?php echo $v['in_status']?'disable-btn':'order-btn' ?>"
+                    type="button"
+                    name="button"><?php echo $lang['T_BODY_COIN_IN']?>&nbsp;<?php echo $v['in_status']?$lang['T_BODY_STOP']:'' ?></button>&nbsp;&nbsp;&nbsp;
+                  <button
+                    disabled="disabled"
+                    class="disable-btn"
+                    type="button"
+                    name="button"><?php echo $lang['T_BODY_COIN_OUT']?>&nbsp;<?php echo $v['out_status']?$lang['T_BODY_STOP']:'' ?></button>&nbsp;&nbsp;&nbsp;
+                    <?php if ($v['otc'] == 0 && $v['coin_transfer'] == 0) { ?>
+                      <button class="order-btn" type="button" name="button" data-account-btn="bi"
+                      data-coinmax="<?php echo $userInfo[$v['name'].'_max']?>"
+                      data-uid="<?php echo $userInfo['uid']?>"
+                      data-max="<?php echo $v['otc_transfer_nfloat']?>"
+                      data-opt="out"><?php echo $lang['T_BODY_EXCHANGE_FABI']; ?></button>
+                    <?php }else if($v['otc'] == 0 && $v['coin_transfer'] ==1){ ?>
+                      <button class="disable-btn" disabled="disabled" type="button" name="button"
+                      data-account-btn="bi"><?php echo $lang['T_BODY_EXCHANGE_FABI_STOP']; ?></button>
+                    <?php } ?>
+                </td>
+              </tr>
+              <?php } ?>
+
+              <!-- <?php if(isset($coinList['off'])) foreach ($coinList['off'] as $k=>$v) { ?>
+                <tr>
+                  <td><?php echo strtoupper($v['name']) ?></td>
+                  <td><?php echo floatval($userInfo[$v['name'].'_over']) ?></td>
+                  <td><?php echo floatval($userInfo[$v['name'].'_lock']) ?></td>
+                  <td><?php echo floatval($userInfo[$v['name'].'_over'] + $userInfo[$v['name'].'_lock']) ?></td>
+                  <td>
+                    <button
+                        <?php // 暂停按钮 禁用 点击功能 ?>
+                        <?php if ($v['in_status'])
+                        { ?>
+                          disabled="disabled"
+                        <?php }
+                        else
+                        { ?>
+                          data-coin="<?php echo $v['name']; ?>"data-coinin="coinin"
+                        <?php } ?>
+                        class="<?php echo $v['in_status'] ? 'disable-btn' : 'order-btn' ?>" type="button"
+                        name="button"><?php echo $lang['T_BODY_COIN_IN'] ?><?php echo $v['in_status'] ? $lang['T_BODY_STOP'] : '' ?></button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button
+                        <?php if ($v['out_status'] || $userInfo[$v['name'] . '_over'] <= 0)
+                        { ?>
+                          disabled="disabled"
+                        <?php }
+                        else
+                        { ?>
+                          data-coin="<?php echo $v['name']; ?>"data-coinout="coinout"
+                        <?php } ?>
+                        class="<?php echo ($v['out_status'] || $userInfo[$v['name'] . '_over'] <= 0) ? 'disable-btn' : 'order-btn' ?>"
+                        type="button"
+                        name="button"><?php echo $lang['T_BODY_COIN_OUT'] ?><?php echo $v['out_status'] ? $lang['T_BODY_STOP'] : '' ?></button>
+                  </td>
+                </tr>
+              <?php } ?> -->
+
+            </tbody>
+
+
+            <?php //法币部分 ?>
+            <tbody class="user_fabi">
+            <?php if($if_data == 1){ ?>
+              <?php if(isset($yibicoinList['on']['owned'])) foreach ($yibicoinList['on']['owned'] as $k=>$v) { ?>
+                <tr class="fabi"
+                  data-trade="<?php if (isset($coinPrice[$v['name']])){ echo $coinPrice[$v['name']][0];} ?>"
+                  data-price="<?php if (isset($coinPrice[$v['name']])){ echo $coinPrice[$v['name']][1];} ?>">
+                  <td class="coin_name <?php echo $v['name'].'_name' ?>"><?php echo strtoupper($v['name']) ?></td>
+                  <td class="price_over"><?php echo sprintf('%.8f',$yibiuserInfo[$v['name'].'_over']) ?></td>
+                  <td><?php echo sprintf('%.8f',$yibiuserInfo[$v['name'].'_lock']) ?></td>
+                  <td><?php echo sprintf('%.8f', Tool_Math::add($yibiuserInfo[$v['name'].'_over'],$yibiuserInfo[$v['name'].'_lock'])) ?></td>
+                  <td>
+                   <button type="button" name="button"
+                        <?php if ($v['otcin_status']) { ?>
+                          disabled="disabled"
+                        <?php } else { ?>
+                          data-coinout='faout'
+                        <?php } ?> class="<?php echo $v['otcin_status'] ? 'disable-btn' : 'order-btn' ?>"
+                            data-url="<?php echo Yaf_Registry::get("config")->yibi->url; ?>">
+                      <?php echo $lang['T_BODY_GO_FA'] ?>&nbsp;<?php echo $v['otcin_status'] ? $lang['T_BODY_STOP'] : '' ?>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <?php if($v['otc'] == 0 && $v['coin_transfer'] ==1){ ?>
+                      <button class="disable-btn" disabled="disabled" type="button" name="button"
+                      data-account-btn="bi"><?php echo $lang['T_BODY_EXCHANGE_FABI_STOP']; ?></button>
+                    <?php } else { ?>
+                      <button class="order-btn" type="button" name="button" data-account-btn="fa"
+                      data-coinmax="<?php echo $yibiuserInfo[$v['name'].'_max']?>"
+                      data-uid="<?php echo $userInfo['uid']?>"
+                      data-max="<?php echo $v['otc_transfer_nfloat']?>"
+                      data-opt="in"><?php echo $lang['T_BODY_EXCHANGE_BIBI']; ?></button>
+                    <?php } ?>
+                  </td>
+                </tr>
+              <?php } ?>
+              <?php //没资金的币 ?>
+              <?php if(isset($yibicoinList['on']['others'])) foreach ($yibicoinList['on']['others'] as $k=>$v) { ?>
+                <tr class="no-val fabi"
+                data-trade="<?php if (isset($coinPrice[$v['name']])){ echo $coinPrice[$v['name']][0];} ?>"
+                data-price="<?php if (isset($coinPrice[$v['name']])){ echo $coinPrice[$v['name']][1];} ?>">
+                <td class="coin_name <?php echo $v['name'].'_name' ?>"><?php echo strtoupper($v['name']) ?></td>
+                <td class="price_over"><?php echo sprintf('%.8f',$yibiuserInfo[$v['name'].'_over']) ?></td>
+                <td><?php echo sprintf('%.8f',$yibiuserInfo[$v['name'].'_lock']) ?></td>
+                <td><?php echo sprintf('%.8f', Tool_Math::add($yibiuserInfo[$v['name'].'_over'],$yibiuserInfo[$v['name'].'_lock'])) ?></td>
+                <td>
+                  <?php // 充 提 币按钮 ?>
+                 <button type="button" name="button"
+                      <?php if ($v['otcin_status']) { ?>
+                        disabled="disabled"
+                      <?php } else { ?>
+                        data-coinout='faout'
+                      <?php } ?> class="<?php echo $v['otcin_status'] ? 'disable-btn' : 'order-btn' ?>"
+                          data-url="<?php echo Yaf_Registry::get("config")->yibi->url; ?>">
+                    <?php echo $lang['T_BODY_GO_FA'] ?>&nbsp;<?php echo $v['otcin_status'] ? $lang['T_BODY_STOP'] : '' ?>
+                  </button>&nbsp;&nbsp;&nbsp;
+                  <?php if($v['otc'] == 0 && $v['coin_transfer'] ==1){ ?>
+                    <button class="disable-btn" disabled="disabled" type="button" name="button"
+                    data-account-btn="bi"><?php echo $lang['T_BODY_EXCHANGE_FABI_STOP']; ?></button>
+                  <?php } else { ?>
+                    <button class="order-btn" type="button" name="button" data-account-btn="fa"
+                    data-coinmax="<?php echo $yibiuserInfo[$v['name'].'_max']?>"
+                    data-uid="<?php echo $userInfo['uid']?>"
+                    data-max="<?php echo $v['otc_transfer_nfloat']?>"
+                    data-opt="in"><?php echo $lang['T_BODY_EXCHANGE_BIBI']; ?></button>
+                  <?php } ?>
+                </td>
+              </tr>
+              <?php } ?>
+            <?php } ?>
+            </tbody>
+
+        </table>
+          <?php // 没有数据时，显示该元素， 设置 display: block ?>
+          <?php if(!isset($coinList['on'])) { ?>
+            <div class="no-data" data-id="tableNoData" style="display: block"><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+          <?php } ?>
+          <?php if($if_data == 0) { ?>
+            <div class="no-data table-loading" data-id="tableNoData" style="display: none"></div>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php // 下架 币 表格 ?>
+  <?php if(isset($coinList['off'])){?>
+    <!-- <div class="" style="display: block"> -->
+    <!-- <div class="">
+      <p class="table-tips"><?php echo $lang['T_BODY_NOT_USE_COIN']; ?></p>
+      <div class="tab-table short-table">
+        <?php // 已经下架币种列表（请提现） ?>
+        <div class="coin-in-table shadow-cont" data-table="2" id="notUseCoin">
+          <div class="t-body" data-tbody="tBody">
+            <table>
+              <thead>
+                <tr>
+                  <td><?php echo $lang['T_HEAD_TYPE'] ?></td>
+                  <td><?php echo $lang['T_HEAD_BALANCE'] ?></td>
+                  <td><?php echo $lang['T_HEAD_FORZEN_MONEY'] ?></td>
+                  <td><?php echo $lang['T_HEAD_TOTAL'] ?></td>
+                  <td><?php echo $lang['T_HEAD_CTRL'] ?></td>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"
+                // 操作列 按钮 允许操作用 class="order-btn" ,禁用按钮 用 class="disable-btn"
+                ?>
+                <?php if(isset($coinList['off'])) foreach ($coinList['off'] as $k=>$v) { ?>
+                  <tr>
+                    <td><?php echo strtoupper($v['name']) ?></td>
+                    <td><?php echo floatval($userInfo[$v['name'].'_over']) ?></td>
+                    <td><?php echo floatval($userInfo[$v['name'].'_lock']) ?></td>
+                    <td><?php echo floatval($userInfo[$v['name'].'_over'] + $userInfo[$v['name'].'_lock']) ?></td>
+                    <td>
+                      <button
+                          <?php // 暂停按钮 禁用 点击功能 ?>
+                          <?php if ($v['in_status'])
+                          { ?>
+                            disabled="disabled"
+                          <?php }
+                          else
+                          { ?>
+                            data-coin="<?php echo $v['name']; ?>"data-coinin="coinin"
+                          <?php } ?>
+                          class="<?php echo $v['in_status'] ? 'disable-btn' : 'order-btn' ?>" type="button"
+                          name="button"><?php echo $lang['T_BODY_COIN_IN'] ?><?php echo $v['in_status'] ? $lang['T_BODY_STOP'] : '' ?></button>
+                      &nbsp;&nbsp;&nbsp;
+                      <button
+                          <?php if ($v['out_status'] || $userInfo[$v['name'] . '_over'] <= 0)
+                          { ?>
+                            disabled="disabled"
+                          <?php }
+                          else
+                          { ?>
+                            data-coin="<?php echo $v['name']; ?>"data-coinout="coinout"
+                          <?php } ?>
+                          class="<?php echo ($v['out_status'] || $userInfo[$v['name'] . '_over'] <= 0) ? 'disable-btn' : 'order-btn' ?>"
+                          type="button"
+                          name="button"><?php echo $lang['T_BODY_COIN_OUT'] ?><?php echo $v['out_status'] ? $lang['T_BODY_STOP'] : '' ?></button>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            <?php if(!isset($coinList['off'])) { ?>
+              <?php // 没有数据时，显示该元素， 设置 display: block ?>
+              <div class="no-data" data-id="tableNoData" style="display: block"><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+            <?php } ?>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  <?php } ?>
+</div>
+<div class="hide-form-dom">
+  <form action="/user/coinout" method="get" id="coinOutForm">
+    <input type="text" name="coin" value="">
+  </form>
+</div>
+<?php // 重置交易密码 ?>
+<div class="mob-reset" id="resTPWD">
+  <div class="reset-t-pwd" v-if="setTradePwd" v-cloak>
+    <div class="while-contain">
+      <?php //重置交易密码 ?>
+      <div class="res-title"><?php echo $lang['RESET_TRADE_PWD']?></div>
+      <i class="close-btn" @click="close"></i>
+      <?php // 步骤 ?>
+      <div class="top-step" v-cloak>
+        <?php //身份验证 ?>
+        <div :class="{'active-step': step >= 1}">
+          <span>1<i></i></span>
+          <p><?php echo $lang['CHECK_ID'] ?></p>
+        </div>
+        <?php //设置新密码 ?>
+        <div :class="{'active-step': step >= 2}">
+          <span>2<i></i></span>
+          <p><?php echo $lang['SET_NEW_TRADE_PWD'] ?></p>
+        </div>
+        <?php // 重置密码成功  ?>
+        <div :class="{'active-step': step >= 3}">
+          <span>3</span>
+          <p><?php echo $lang['RESET_TRADE_PWD_OK'] ?></p>
+        </div>
+      </div>
+      <?php // 第一步 ?>
+      <div class="form-contain" v-if="step === 1" v-cloak>
+        <?php // 您的手机号： ?>
+        <p class="phone-tab"><span><?php echo $lang['YOUR_PHONE_NO'] ?></span><?php echo $userInfo['mo']; ?></p>
+        <?php // 手机验证码 ?>
+        <div class="form-tab relative-dom">
+          <div class="radius-group short-inp">
+            <span class="lab"><?php echo $lang['PHONE_CODE'] ?></span><input
+              v-model="formDate.code"
+              @focus='inputFocus("code")'
+              @blur='inputBlur("code")'
+              type="text" maxlength="6" placeholder="<?php echo $lang['PLEASE_ENTER_PHONE_CODE'] ?>" />
+          </div>
+          <?php // action=7     语音8  ?>
+          <button type="button" v-if="count === 0" class="btn-d" name="button" @click="getPhoneCode(7)"><?php echo $lang['ACQUIRING'] ?></button>
+          <button type="button" v-if="count > 0" class="btn-d disable-btn" v-cloak name="button">{{count}}<?php echo $lang['AFTER_REGET_CODE'] ?></button>
+          <?php // 1 focus 2 错误, 3后台msg 4?>
+          <p class="tips-tab" v-if="dataTips.code === 1"><?php echo $lang['PLEASE_ENTER_PHONE_CODE'] ?></p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.code === 2"><?php echo $lang['CODE_LENGTH_NO_CORRECT'] ?></p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.code === 3">{{errMsg.code}}</p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.code === 4"><?php echo $lang['PLEASE_ENTER_PHONE_CODE'] ?></p>
+          <?php // 点击获取 语音验证码 ?>
+          <p class="voice-tab" v-if="voiceBtn"><?php echo $lang['CLICK_GET'] ?><a href="javascript:void(0);" @click="getPhoneCode(8)"><?php echo $lang['VOICE_CODE'] ?></a></p>
+          <p class="voice-tab orange-f" v-if="count > 0 && !voiceMsg"><?php echo $lang['CAN_GET_AT'] ?>{{count}}<?php echo $lang['AFTER_GET_VOICE_CODE'] ?></p>
+          <p class="voice-tab orange-f" v-if="voiceMsg"><?php echo $lang['PLEASE_NOTE_THE_CALL'] ?></p>
+        </div>
+        <?php // 下一步 按钮 ?>
+        <div class="form-tab">
+          <button type="button" class="submit-btn" name="button" @click="nextStep"><?php echo $lang['NEXT_STEP'] ?>{{isSubmit ? '...' : ''}}</button>
+        </div>
+      </div>
+      <?php // 第二步 ?>
+      <div class="form-contain step-two" v-if="step === 2" v-cloak>
+        <?php // 交易密码 ?>
+        <div class="form-tab radius-group">
+          <span><?php echo $lang['SET_PWD'] ?></span><input type="password" maxlength="16"
+            @focus="inputFocus('p1')" @blur="inputBlur('p1')"
+            v-model="formDate.p1" placeholder="<?php echo $lang['TRADE_PWD_PLACEHOLDER'] ?>" />
+          <?php // 1 focus 2 错误, 3后台msg 4?>
+          <p class="tips-tab" v-if="dataTips.p1 === 1"><?php echo $lang['TRADE_PWD_PLACEHOLDER_1'] ?></p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.p1 === 2"><?php echo $lang['TRADE_PWD_PLACEHOLDER'] ?></p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.p1 === 3">{{errMsg.code}}</p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.p1 === 4"><?php echo $lang['TRADE_PWD_PLACEHOLDER_1'] ?></p>
+        </div>
+        <?php // 確認交易密碼 ?>
+        <div class="form-tab radius-group">
+          <span><?php echo $lang['SURE_PWD'] ?></span><input type="password" maxlength="16"
+            @focus="inputFocus('p2')" @blur="inputBlur('p2')"
+            v-model="formDate.p2" placeholder="<?php echo $lang['SURE_PWD_HOLDER_1'] ?>" />
+          <?php // 1 focus 2 错误, 3后台msg 4: ?>
+          <p class="tips-tab" v-if="dataTips.p2 === 1"><?php echo $lang['SURE_PWD_HOLDER_1'] ?></p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.p2 === 2"><?php echo $lang['SURE_PWD_HOLDER_2'] ?></p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.p2 === 3">{{errMsg.code}}</p>
+          <p class="tips-tab err-tips" v-else-if="dataTips.p2 === 4"><?php echo $lang['SURE_PWD_HOLDER_3'] ?></p>
+        </div>
+        <?php // 下一步 按钮 ?>
+        <div class="form-tab">
+          <button type="button" class="submit-btn" name="button" @click="setTradePwdFn"><?php echo $lang['SURE_PWD_CHANGE'] ?>{{isSubmit ? '...' : ''}}</button>
+        </div>
+      </div>
+      <?php // 第三步 ?>
+      <div class="form-contain step-thr" v-if="step === 3" v-cloak>
+        <u class="pwd-succ"></u>
+        <?php // 修改密码成功！ ?>
+        <p><?php echo $lang['RESET_PWD_SUCCESS'] ?></p>
+        <a class="submit-btn" href="/trade"><?php echo $lang['GO_TO_TRADE'] ?></a>
+      </div>
+    </div>
+  </div>
+</div>
+<?php //币互转 ?>
+<div id="userAlert" class="user_alert" v-cloak>
+  <div class="user_alert_contain user_cointain" v-if="userShow">
+    <div class="user_resest_title"><?php echo $lang['COIN_EXCHANGE']?></div>
+    <i class="close-btn" @click="closeFn"></i>
+    <div class="user_title">
+      <span class="user_close" @click="closeFn"></span>
+      <p><?php echo $lang['ALERT_EXCHANGE_FIRST']; ?> <span class="user_subtitle"><?php echo $lang['ALERT_NO_MONEY']; ?></span></p>
+    </div>
+    <div class="user_content">
+      <div class="user_group">
+        <label class="user_group_label"><?php echo $lang['COIN_TYPE']; ?></label>
+        <input type="text" name="" :value="alertData.coin" readonly class="user_group_inputs">
+      </div>
+
+      <?php //币币到法币 ?>
+      <div class="user_group" v-if = 'outShow'>
+        <label class="user_group_label"><?php echo $lang['ON_FOR']; ?><span class="user_group_nums"><?php echo $lang['BIBI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverbi}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['BIBI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+      <div class="user_group" v-if = 'outShow'>
+        <label class="user_group_label"><?php echo $lang['ON_TO']; ?><span class="user_group_nums"><?php echo $lang['FABI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverfa}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['FABI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+
+      <?php //法币到币币 ?>
+      <div class="user_group" v-if = 'inShow'>
+        <label class="user_group_label"><?php echo $lang['ON_FOR']; ?><span class="user_group_nums"><?php echo $lang['FABI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverfa}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['FABI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+      <div class="user_group" v-if = 'inShow'>
+        <label class="user_group_label"><?php echo $lang['ON_TO']; ?><span class="user_group_nums"><?php echo $lang['BIBI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverbi}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['BIBI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+
+      <div class="user_group">
+        <label class="user_group_label"><?php echo $lang['EXCHANG_NUMS']; ?><span class="user_group_nums"><?php echo $lang['ONCE_MAX']; ?>: <span class="user_red">{{alertData.maxrange}}</span></span></label>
+        <input type="text" name="" v-model="changeNums" placeholder="<?php echo $lang['EXCHANG_NUMS']; ?>"
+        :class="{user_group_inputs:true, user_group_btns:true, err_input: verifyNums === 2 || verifyNums === 4}" :maxlength="maxlength"
+        @focus="verifInput(changeNums, 'focus')" @blur="verifInput(changeNums, 'blur')" @keyup.enter="verifInput(changeNums, 'enter')" @keyup="inputVer(changeNums)">
+        <button type="button" name="button" class="user_group_btn" @click.stop.prevent="allexchange"><?php echo $lang['ALL_EXCHANGE']; ?></button>
+      </div>
+      <p class="user_warn_mes" v-if="verifyNums === 0 || verifyNums === 5"></p>
+      <p class="user_warn_mes" v-if="verifyNums === 1"><?php echo $lang['EXHCANGE_NUMS_CAN']; ?></p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 2"><?php echo $lang['EXHCANGE_NUMS_CAN']; ?></p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 4">{{errMes}}</p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 6"><?php echo $lang['EXHCANGE_NUMS_MAX']; ?>{{errNum}}</p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 7"><?php echo $lang['EXHCANGE_NUMS_MIN']; ?>{{errNum}}</p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 8"><?php echo $lang['EXHCANGE_NUMS_UNENOUGHT']; ?></p>
+    </div>
+    <div class="user_btn_div">
+      <button type="button" name="button" class="user_submit_btn" @click="goChange" :disabled="stopClick">
+        <?php echo $lang['NOW_EXCHANGE']; ?>
+        <u class="loading-svg" data-loading="svg" style="left:206px;" v-if="loading"></u>
+      </button>
+    </div>
+  </div>
+</div>

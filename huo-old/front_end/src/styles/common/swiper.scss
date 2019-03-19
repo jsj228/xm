@@ -1,0 +1,42 @@
+@import "swiper/dist/css/swiper.css"; // init css
+
+.banner-container {
+  width: 100%;
+  height: 100%;
+}
+
+.news-container {
+  margin: 0 auto;
+  width: 600px;
+  height: 100%;
+
+  img {
+    width: 600px;
+    height: 260px;
+  }
+}
+
+.news-pagination {
+  text-align: center;
+}
+
+.parallax-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 130%;
+  height: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+// reset swiper.css
+.swiper-button-prev, .news-button-prev {
+  background: url(../assets/left_arr.png) center center no-repeat;
+}
+
+.news-button-next, .swiper-button-next {
+  z-index: 9;
+  background: url(../assets/right_arr.png) center center no-repeat;
+}

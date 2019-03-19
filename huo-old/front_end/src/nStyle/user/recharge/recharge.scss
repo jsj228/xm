@@ -1,0 +1,207 @@
+.bg_w {
+    background-color: #f7f7f7;
+    
+}
+.tag-list-content {
+    width: 100%;
+    float: right;
+    min-height: 510px;
+    /* padding-bottom: 30px; */
+}
+.assets_content {
+    border-left: 1px solid #D5D5D5;
+    position: relative;
+    border: none;
+   // margin-bottom: 30px;
+    transition: all 1s;
+    padding-bottom: 30px;
+}
+.assets_content h1 {
+    font-size: 14px;
+    height: auto;
+    line-height: 15px;
+    color: black;
+    padding: 20px 20px 15px 28px;
+    width: 96%;
+    margin: 0 auto 10px;
+}
+
+.safe_center {
+    height: 50px;
+    border-bottom: 1px solid #d9d9d9;
+}
+.safe_center a {
+    color: rgb(15, 2, 2);
+}
+
+.mytips {
+    color: #eee;
+    text-align: left;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #161f2b;
+    border: 1px solid #e3493c;
+    margin: 5px;
+    padding: 10px 12px;
+}
+.mytips p {
+    background-color: transparent!important;
+}
+.mytable-body {
+    padding: 0 20px;
+}
+.mt30 {
+    margin-top: 30px;
+}
+.tx_tips {
+    width: 91%;
+    margin: 20px auto;
+    background: #f5f5f5;
+    padding: 15px 40px;
+}
+.weituo_bizhong {
+    padding-top: 9px;
+    height: 40px;
+}
+.pwtrade dl {
+    width: 800px;
+    margin: 0 auto 10px;
+    color: #666;
+    overflow: hidden;
+    height: 42px;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+ol, ul, dl, li, ul, ol {
+    list-style: none;
+}
+.pwtrade dt {
+    width: 150px;
+    text-align: right;
+}
+
+.pwtrade dl>* {
+    float: left;
+    height: 42px;
+}
+
+
+.finance_texts {
+    text-align: right;
+    font-size: 19px;
+    padding-right: 10px;
+}
+
+.f_table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-bottom: 2px solid #0075a9;
+}
+.pages {
+    clear: both;
+    text-align: center;
+    line-height: 30px;
+    padding: 15px;
+}
+.f_table th select {
+    font-size: 12px;
+}
+.f_table select {
+    color: #fff;
+}
+select.mW100 {
+    min-width: 100px;
+    width: 100px;
+}
+select.mW100{
+    color: black;
+}
+select {
+    height: 40px;
+    font-size: 12px;
+}
+input, select, textarea {
+    vertical-align: middle;
+    font-size: 14px;
+    /* width: 55%; */
+    min-width: 350px;
+    height: 35px;
+    line-height: 32px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+   // background: #262a42;
+    //padding: 2px 5px;
+    color: #eee;
+    margin-right: 10px;
+    border: 1px solid gray;
+}
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    outline: none;
+    border: 0;
+    background: none;
+    text-decoration: none;
+
+}
+.f_table th {
+    font-weight: 400;
+    height: 45px;
+    line-height: 32px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    //background: rgba(0,117,169,0.5);
+}
+a, button, [type='button'], .close {
+    cursor: pointer;
+}
+
+[type="button"] {
+    text-align: center;
+    background: #a90000;
+    font-size: 18px;
+    color: #eee;
+}
+.payment-icon-list li.wx>img {
+    margin-top: 4px;
+}
+
+img {
+    width: 100%;
+}
+.payment-icon-list li.curr, .payment-list li.curr {
+    border: 2px solid #FB1D1D;
+    color: #FB1D1D;
+}
+
+
+.payment-icon-list li.wx {
+    background: #eee;
+    margin-right: 10px;
+    height: 50px;
+}
+
+
+.payment-list li {
+    font-size: 14px;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+    width: 107px;
+    background: #0075a9;
+    overflow: hidden;
+    padding: 1px 6px;
+}
+ol, ul, dl, li, ul, ol {
+    list-style: none;
+}

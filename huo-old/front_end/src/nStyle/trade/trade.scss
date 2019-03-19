@@ -1,0 +1,1391 @@
+@import "../config.scss";
+@import "../color.scss";
+
+// 响应式
+// @import "./trade_980.scss";
+// @import "./trade_979.scss";
+// @import "./trade_750.scss";
+
+// 0c9573
+body {
+  overflow-x: hidden;
+}
+$hoverWinBg: rgb(37,47,65);
+.default_bg {
+
+  .nav_contain {
+    background-color: $lightBlue200;
+  }
+}
+.k_line_contain {
+  height: 100%;
+}
+.hover-win {
+
+  .tri-top {
+    border-top-color: $hoverWinBg;
+  }
+  .tri-left {
+    border-left-color: $hoverWinBg;
+  }
+  .tri-bottom {
+    border-bottom-color: $hoverWinBg;
+  }
+  .hover-content {
+    color: #fff;
+    background-color: $hoverWinBg;
+  }
+}
+// #navApp {
+//   display: none;
+// }
+.tarde_wating {
+  font-size: 26px;
+  text-align: center;
+}
+@media screen and(max-width: $bigScreenMin) {
+  .tarde_wating {
+    font-size: pxToRem(36);
+  }
+}
+
+.trade_center {
+  .trade_succ_list, .bs_table, .mytrust_list {
+
+    table,ul {
+
+      tbody tr, li {
+        &:hover {
+          background-color: #1d2739;
+          transition: all .3s;
+        }
+      }
+    }
+  }
+  .coming_soon {
+    font-size: pxToRem(36);
+  }
+  .no_record {
+    padding: 30px 0 0 0;
+    text-align: center;
+    font-size: 18px;
+  }
+}
+
+.top_new_price {
+
+  .arrowup_icon, .arrowdown_icon {
+    display: inline-block;
+  }
+
+  .arrowup_icon {
+    animation: upData 2s infinite;
+  }
+  .arrowdown_icon {
+    animation: downData 2s infinite;
+  }
+}
+
+.more_record {
+  text-align: center;
+  line-height: 50px;
+  font-size: 16px;
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// 手机屏幕 小于 767px
+
+// 1200px 以上 使用px
+// @media screen and(min-width: $superScreenMin) {
+
+
+  body {
+    // height: 100%;
+    // min-height: 937px;
+    // overflow: hidden;
+    // overflow-y: auto;
+    background-color: $lightBlue100;
+  }
+
+  // 隐藏750 class
+  .bs_change_btn_750, .bs_title_750, .trade_area_btn_750, .kline_btn, .new_trade_list_750, .cancel_car_750, .buy_table_750 {
+    display: none!important;
+  }
+
+  // 更改导航背景
+  .nav_contain {
+    min-width: 1200px;
+    background-color: $deepBlue500;
+  }
+
+  // 交易中心导航
+  .trade_nav {
+    position: absolute;
+    top: 0;
+    // right: 343px;
+    right: 440px;
+    z-index: 11;
+    height: 70px;
+    width: 700px;
+    // background-color: #333;
+    // 价格区域
+    .price_list {
+      padding: 10px 0 0;
+      width: 100%;
+
+      .ratio_980 {
+        display: none;
+      }
+
+      &>div {
+        padding: 0 10px;
+        text-align: center;
+        font-size: 12px;
+        white-space: nowrap;
+
+        &>p {
+          padding: 0 0 10px;
+        }
+        &>div {
+          width: 100%;
+          height: 26px;
+          // white-space: nowrap;
+          // text-overflow: ellipsis;
+          // overflow-x: hidden;
+          // overflow-y: visible;
+        }
+      }
+      .up_down_arr {
+        position: relative;
+
+        span[class$="_icon"] {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+    }
+    // 交易区按钮
+    .trade_area_btn {
+      box-sizing: border-box;
+      padding: 25px 0 0 0;
+      width: 138px;
+      height: 100%;
+      text-align: center;
+
+      border: {
+        top: 4px solid $orange500;
+      }
+      transition: all .35s;
+
+      &:hover {
+        cursor: pointer;
+        color: $orange500;
+        transition: all .35s;
+      }
+      .ctrl_icon:after {
+        top: -3px;
+        right: -22px;
+      }
+    }
+
+    // 交易区
+    .area_win {
+      position: absolute;
+      top: 66px;
+      right: 0;
+      z-index: 3;
+      width: 572px;
+      // box-shadow: 0 0 10px $lightBlue300;
+      background-color: #212C3F;
+      // height: 328px;
+      // border: 1px solid $deepBlue400;
+
+      // &:after {
+      //   content: "" ;
+      //   display: block;
+      //   position: absolute;
+      //   top: -1px;
+      //   right: 0;
+      //   z-index: 10;
+      //   width: 136px;
+      //   height: 2px;
+      //   background-color: $deepBlue600;
+      //   // $deepBlue600;
+      // }
+
+      .tri_up, .tri_down {
+        display: inline-block;
+        position: absolute;
+        top: 2px;
+        right: -3px;
+        width: 5px;
+        height: 13px;
+        background: url('../../assets/index_order.png') center center no-repeat;
+      }
+      .tri_down {
+        transform: rotateZ(180deg);
+      }
+
+      .area_search {
+        position: absolute;
+        top: 9px;
+        right: 8px;
+
+        input {
+          box-sizing: border-box;
+          padding: 0 30px 0 10px;
+          width: 150px;
+          height: 30px;
+          line-height: 30px;
+          color: $white100;
+          border: 1px solid #374152;
+          border-radius: 15px;
+          // overflow: hidden;
+          background: transparent url('../../assets/index_search.png') 120px center no-repeat;
+          background-size: 16px;
+
+          &:focus {
+            border-color: $orange500;
+            background: transparent;
+            transition: all .35s;
+          }
+        }
+      }
+    }
+    .all_title_list {
+      padding: 0 17px;
+      height: 48px;
+      line-height: 46px;
+      border-bottom: 1px solid $deepBlue400;
+
+      &>li {
+        padding: 0 17px;
+        text-align: center;
+        white-space: nowrap;
+
+        &:first-child {
+          padding-left: 0;
+        }
+        &:hover {
+          cursor: pointer;
+          color: $orange500;
+          transition: all .3s;
+        }
+      }
+      .active_area {
+        position: relative;
+
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          bottom: -1px;
+          right: 0;
+          height: 1px;
+          background-color: $orange500;
+        }
+      }
+    }
+
+    .fine_point_start {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      background: url(../../assets/index_self_no.png) no-repeat center center;
+    }
+    .sel_start {
+      background-image: url(../../assets/index_self.png);
+    }
+    // 币列表
+    .area_coin_body {
+      // margin: 37px 0 0 0;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+
+        td {
+          box-sizing: border-box;
+          padding: 0 10px;
+          text-align: left;
+          height: 30px;
+          line-height: 30px;
+          white-space: nowrap;
+
+          &:first-child {
+            padding: 0 0 0 20px;
+          }
+        }
+
+        thead {
+          display: flex;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 49px;
+
+          td {
+            // box-sizing: border-box;
+            opacity: .3;
+            width: 25%;
+
+            &:nth-child(1) {
+              min-width: 125px;
+            }
+            &:nth-child(2) {
+              min-width: 225px;
+            }
+            &:nth-child(3) {
+              min-width: 105px;
+            }
+            &:nth-child(4) {
+              min-width: 117px;
+            }
+          }
+        }
+
+        tbody {
+
+          tr {
+
+            &:hover {
+              cursor: pointer;
+              background-color: #00182b;
+              transition: all .3s;
+            }
+          }
+        }
+      }
+      .area_table {
+        box-sizing: border-box;
+
+        height: 291px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        font-size: 12px;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+          // height:5px;
+          background: #111d30;
+          opacity: .8;
+        }
+
+        &::-webkit-scrollbar-button {
+          display: none;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          width: 2px;
+          height: 38px;
+          background: #5a6474;
+        }
+
+        .top_empty_space {
+          margin: 0;
+          padding: 0;
+          height: 34px;
+        }
+      }
+      .area_t_body li {
+        padding: 0 14px 0 4px;
+        transition: background-color .35s;
+
+        &:hover {
+          background-color: #1D2739;
+          transition: all .35s;
+        }
+      }
+      .area_t_head > li, .area_t_body li a div {
+        box-sizing: border-box;
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 0 10px;
+
+        &:first-child {
+          width: 132px;
+        }
+        &:nth-child(2) {
+          width: 190px;
+          text-align: left;
+        }
+        &:nth-child(3) {
+          width: 120px;
+        }
+        &:nth-child(3), &:last-child {
+          text-align: right;
+        }
+        &:last-child {
+          flex-grow: 1;
+          flex-shrink: 1;
+        }
+      }
+
+      .area_t_head {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 16px 14px 7px 0;
+        height: 34px;
+        line-height: 12px;
+        font-size: 12px;
+        color: #a2abb8;
+        background-color: #212c3f;
+
+        li {
+
+          &:first-child {
+            text-align: left;
+            text-indent: 32px;
+          }
+          span {
+            position: relative;
+            padding: 0 5px;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .table_self {
+      display: inline-block;
+      margin: 0 10px -2px 0;
+      width: 24px;
+      height: 14px;
+      background: url("../../assets/index_self_no.png") no-repeat center;
+      background-size: 14px;
+      &.table_self_have {
+        background: url("../../assets/index_self.png") no-repeat center;
+      }
+    }
+  }
+
+  .trade_center {
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    // right: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 1200px;
+    min-height: 700px;
+    overflow: hidden;
+    // height: 100%;
+    // width: 100%;
+    padding: 70px 0 0 0;
+
+    .trade_content {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      left: 3px;
+      top: 76px;
+      right: 6px;
+      bottom: 6px;
+      overflow: hidden;
+    }
+
+    .trade_content_top {
+      display: flex;
+      height: 64%;
+      // min-height:
+      flex-grow: 0;
+    }
+
+    .data_list_top {
+      width: 100%;
+      height: 100%;
+    }
+    .list_contain {
+      // width: 603px;
+    }
+
+    .trade_succ_list, .bs_table, .mytrust_list {
+
+      ul, table {
+        font-size: 12px;
+      }
+    }
+
+    .bor_all_gray {
+      border: 1px solid $gray500;
+    }
+
+    // k线图 外框
+    .kline_contain {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    // 买卖盘面
+    .buy_sell_area {
+      flex-shrink: 0;
+      margin: 0 6px;
+      // width: 264px;
+      min-width: 264px;
+      width: 300px;
+      height: 100%;
+    }
+
+    // 买卖  成交 table 公共样式
+    .trade_succ_list, .bs_table {
+
+      li {
+        // line-height: 25px;
+
+        div {
+          font-size: 12px;
+          white-space: nowrap;
+
+          &:first-child {
+            text-align: left;
+            text-indent: 20px;
+          }
+        }
+
+      }
+
+      .table_header {
+        // position: absolute;
+        // left: 0;
+        // right: 0;
+        // top: 0;
+        // z-index: 2;
+        height: 34px;
+        line-height: 32px;
+        border-bottom: 1px solid $deepBlue400;
+        overflow: hidden;
+
+        span {
+          box-sizing: border-box;
+          font-size: 12px;
+          white-space: nowrap;
+
+          &:first-child {
+            text-align: left;
+            text-indent: 20px;
+          }
+        }
+      }
+    }
+
+    // 买卖 表格
+    .bs_table {
+      width: 100%;
+      height: 50%;
+      overflow-y: hidden;
+      li {
+        line-height: 22px;
+      }
+
+      .table_header>span, li>div {
+        box-sizing: border-box;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .bs_body {
+        overflow-y: hidden;
+
+        li {
+          text-align: center;
+        }
+      }
+    }
+
+    .sell_list {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    // 没有header  table
+    .no_head_table {
+      box-sizing: border-box;
+      padding: 5px 0 0;
+      thead {
+        display: none;
+      }
+    }
+
+    // 最新价格 人民币
+    .table_mid {
+      height: 34px;
+      // line-height: 38px;
+      border: {
+        top: 1px solid #102333;
+        bottom: 1px solid #102333;
+      }
+
+      &>span {
+
+        &:first-child {
+          padding: 0 10px 0 16px;
+          line-height: 32px;
+          font-size: 20px;
+          text-align: left;
+        }
+        &:last-child {
+          padding: 0 10px 0 0;
+          height: 23px;
+          max-width: 135px;
+          text-align: right;
+          font-size: 14px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+          // vertical-align: baseline;
+        }
+      }
+    }
+
+    // 成交列表
+    .trade_succ_list {
+      flex-shrink: 0;
+      width: 300px;
+      height: 100%;
+      overflow-y: hidden;
+
+      li {
+        text-align: center;
+        line-height: 26.8px;
+      }
+
+      .table_header {
+        position: static;
+      }
+
+      .table_header>span, li>div {
+        width: 35%;
+        text-align: center;
+        white-space: nowrap;
+
+        &:first-child {
+          width: 30%;
+          text-align: left;
+          text-indent: 20px;
+        }
+      }
+
+    }
+    // 未登录遮罩
+    .no_login_mask {
+      position: absolute;
+      left: 0;
+      top: 6px;
+      right: -34px;
+      bottom: 0;
+      z-index: 11;
+      background: rgba(0,11,20,.6);
+    }
+
+    // 我的委托 买卖下单 form
+    .mytrust_form_contain {
+      flex-shrink: 0;
+      padding: 6px 0 0;
+      width: 100%;
+      min-height: 308px;
+      height: 308px;
+    }
+
+    // 自定义滚动条
+    .scroll_bar {
+      &::-webkit-scrollbar {
+        width: 2px;
+        // height: 44px;
+        background: $black400;
+      }
+      &::-webkit-scrollbar-button {
+        display: none;
+      }
+      &::-webkit-scrollbar-thumb {
+        width: 2px;
+        height: 40px;
+        background-color: #a2abb8;
+        // #102333;
+        // $deepBlue500;
+      }
+    }
+
+    // 我的委托
+    .mytrust_list {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      overflow-y: hidden;
+
+      .scroll_head, .scroll_body {
+        padding: 0;
+      }
+      .collapse_title  {
+        display: none;
+      }
+
+      .scroll_body {
+        min-height: 240px;
+        height: 278px;
+        overflow-y: auto;
+      }
+
+      // 撤销按钮
+      .mytrust_ca_btn {
+        box-sizing: border-box;
+        display: inline-block;
+        padding: 0 10px;
+        // width: 44px;
+        height: 22px;
+        line-height: 18px;
+        border: 1px solid #252f41;
+        border-radius: 11px;
+        // font-size: 12px;
+        text-align: center;
+        // letter-spacing: 3px;
+
+        &:hover {
+          background-color: $orange500;
+          color: $white100;
+          transition: all .35s;
+        }
+      }
+      .mytrust_ca_btn_dis {
+        color: $gray500;
+        cursor: not-allowed;
+        border-color: $gray500;
+      }
+
+      table {
+        // display: block;
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th, tbody td {
+        padding: 0 5px;
+        text-align: left;
+        white-space: nowrap;
+        width: 12.5%;
+
+        &:first-child {
+          padding: 0 5px 0 33px;
+        }
+      }
+
+      thead tr {
+        height: 30px;
+        line-height: 30px;
+      }
+
+      tbody {
+        overflow-y: visible;
+
+        tr {
+          height: 26px;
+          line-height: 26px;
+        }
+
+        td {
+          width: 12.5%;
+          word-break: break-all;
+          word-wrap:break-word;
+
+          &:last-child {
+            width: 50px;
+            max-width: 50px;
+          }
+        }
+      }
+    }
+
+    .bs_form_contain {
+      margin: 0 0 0 6px;
+      flex-shrink: 0;
+      width: 606px;
+    }
+    .amount_box {
+      line-height: 12px;
+      font-size: 12px;
+
+      p {
+        white-space: nowrap;
+
+        span {
+          padding: 0 0 10px;
+
+          &:nth-child(2) {
+            display: inline-block;
+            max-width: 123px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+    .bs_btn_group {
+      // padding: 6px 0 0;
+    }
+    .link_btn {
+      box-sizing: border-box;
+      display: inline-block;
+      margin: 0 0 12px 0;
+      min-width: 44px;
+      height: 22px;
+      padding: 0 5px;
+      line-height: 20px;
+      text-align: center;
+      border-radius: 11px;
+      background-color: #252f41;
+      &:hover {
+        background-color: $orange500;
+      }
+    }
+    // .green_link_btn {
+    //   margin: 0 0 10px;
+    //   border: 1px solid $green500;
+    //
+    //   &:hover {
+    //     background-color: $green500;
+    //     color: $black900;
+    //   }
+    // }
+    // .red_link_btn {
+    //   border: 1px solid $red500;
+    //
+    //   &:hover {
+    //     background-color: $red500;
+    //     color: $black900;
+    //   }
+    // }
+    // 买卖form
+    .bs_form {
+      box-sizing: border-box;
+      flex-shrink: 0;
+      padding: 20px 18px 0 20px;
+      // width: 264px;
+      width: 300px;
+      font-size: 12px;
+
+      &:first-child {
+        margin: 0 3px 0 0;
+      }
+
+      .input_g {
+        position: relative;
+        margin-top: 3px;
+        user-select: none;
+
+        input {
+          box-sizing: border-box;
+          padding: 0 25px 0 15px;
+          width: 100%;
+          height: 36px;
+          line-height: 36px;
+          font-size: 12px;
+          border: none;
+          border-radius: 5px;
+          border: 1px solid #374152;
+
+          &::placeholder {
+            color: $gray400;
+          }
+
+          &:focus {
+            border: 1px solid #005398;
+          }
+        }
+      }
+
+      .ext_placeholder {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        bottom: 0;
+        height: 36px;
+        line-height: 36px;
+      }
+
+      .price_rmb {
+        box-sizing: border-box;
+        padding: 5px 0 12px;
+        height: 27px;
+        text-indent: 15px;
+        // line-height: 20px;
+        // font-size: 12px;
+      }
+
+      .range_group {
+        padding: 0 0 0 15px;
+        height: 25px;
+        white-space: nowrap;
+        font-size: 12px;
+
+        label {
+          display: inline-block;
+          width: 54px;
+        }
+
+        .track_contain {
+          box-sizing: border-box;
+          margin-left: 5px;
+          display: inline-block;
+          padding: 13px 0 0;
+          width: 150px;
+          height: 20px;
+        }
+        .track_line_bg {
+          // width: 152px;
+          height: 4px;
+          border-radius: 2px;
+          background-color: #9fa3aa;
+          background-size: 0% 100%;
+          background-repeat: no-repeat;
+        }
+        .buy_track_bg {
+          background-image: linear-gradient($lightGreen500, $lightGreen500);
+        }
+        .sell_track_bg {
+          background-image: linear-gradient($lightRed500, $lightRed500);
+        }
+        .trade_dot {
+          position: absolute;
+          left: 0;
+          top: -2px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+
+        .track_line_bg, .trade_dot {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        &>span {
+          margin-left: 7px;
+          font-size: 12px;
+        }
+      }
+
+      .trade_fee {
+        margin: 0 0 18px;
+        height: 26px;
+        text-indent: 15px;
+        // line-height: 26px;
+
+        &>p>span {
+          display: inline-block;
+          position: relative;
+          bottom: -8px;
+          height: 26px;
+          line-height: 26px;
+          // width: 90px;
+          max-width: 90px;
+          text-indent: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-weight: 600;
+        }
+      }
+
+      .is_submitting {
+        position: relative;
+        background-color: $red700;
+
+        &:hover {
+          cursor: not-allowed;
+        }
+        &::before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 18px;
+          top: 16px;
+          font-size: 10px;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          box-shadow: 0px -6.5px white,
+            -4.5px -4.5px rgba(255, 255, 255, 0.875),
+            -6.5px 0 rgba(255, 255, 255, 0.75),
+            -4.5px 4.5px rgba(255, 255, 255, 0.625),
+            0 6.5px rgba(255, 255, 255, 0.5),
+            4.5px 4.5px rgba(255, 255, 255, 0.375),
+            6.5px 0 rgba(255, 255, 255, 0.25),
+            4.5px -4.5px rgba(255, 255, 255, 0.125);
+          animation: rotate 1s infinite forwards steps(32, end);
+        }
+      }
+
+      .submit_btn {
+        display: block;
+        padding: 0;
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        border: none;
+        border-radius: 3px;
+        font-size: 14px;
+        &:hover {
+          cursor: pointer;
+          transition: all .3s;
+        }
+      }
+
+      .buy_submit_btn {
+
+        &:hover {
+          background-color: #0c9573;
+        }
+      }
+
+      .sell_submit_btn {
+        &:hover {
+          background-color: #b5154a;
+        }
+      }
+
+      .tips_win {
+        box-sizing: border-box;
+        position: absolute;
+        left: 21px;
+        right: 18px;
+        // top: 168px;
+        bottom: 80px;
+        z-index: 6;
+        text-align: center;
+        background-color: transparent;
+
+        .tips_cont {
+          box-sizing: border-box;
+          display: inline-block;
+          padding: 6px 10px;
+          min-width: 150px;
+          max-width: 100%;
+          min-height: 26px;
+          border-radius: 5px;
+          background-color: #212a3b;
+          box-shadow: 0 0 15px #111518;
+        }
+
+        .err_tips_icon, .order_ok_icon, .black_Bang_icon, .line_bar_icon {
+          margin-right: 3px;
+        }
+      }
+
+    }
+  }
+  // 交易密码
+  .set_trade_pwd {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 90;
+    background-color: rgba(0,0,0,.5);
+  }
+
+  .pwd_form_contain {
+    box-sizing: border-box;
+    padding: 50px 50px 46px;
+    width: 440px;
+    height: 280px;
+    border-radius: 10px;
+  }
+
+  .pwd_title {
+    padding: 0 0 26px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #eaeaea;
+    font-size: 26px;
+    font-weight: 700;
+    z-index: 9;
+  }
+
+  .trade_pwd_form {
+
+    input {
+      box-sizing: border-box;
+      padding: 0 10px;
+      width: 100%;
+      height: 38px;
+      line-height: 38px;
+      border: none;
+      border-radius: 5px;
+      border-bottom: 1px solid #dcdcdc;
+      overflow: hidden;
+      &:focus {
+        border-bottom-color: $orange500;
+      }
+    }
+
+    .input_g {
+      // border-bottom: 1px solid $orange500;
+      // border-radius: 5px;
+    }
+
+    .is_submitting {
+      position: relative;
+      background-color: $orange600;
+
+      &:hover {
+        cursor: not-allowed;
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 18px;
+        top: 20px;
+        font-size: 10px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        box-shadow: 0px -6.5px white,
+          -4.5px -4.5px rgba(255, 255, 255, 0.875),
+          -6.5px 0 rgba(255, 255, 255, 0.75),
+          -4.5px 4.5px rgba(255, 255, 255, 0.625),
+          0 6.5px rgba(255, 255, 255, 0.5),
+          4.5px 4.5px rgba(255, 255, 255, 0.375),
+          6.5px 0 rgba(255, 255, 255, 0.25),
+          4.5px -4.5px rgba(255, 255, 255, 0.125);
+        animation: rotate 1s infinite forwards steps(32, end);
+      }
+    }
+  }
+
+  .tip_placeholder {
+    position: absolute;
+    left: 0;
+    bottom: -25px;
+    z-index: 3;
+    line-height: 14px;
+    padding: 11px 0 0;
+    text-indent: 11px;
+
+    span {
+      margin: 0 3px 0 0;
+    }
+  }
+
+  .err_tips {
+    color: $lightRed500;
+  }
+
+  .form_err {
+    border-color: $red550;
+  }
+
+  .submit_tab {
+    padding: 43px 0 0;
+
+    button {
+      height: 44px;
+      line-height: 44px;
+      font-size: 20px;
+
+      &:hover {
+        background-color: $orange600;
+        transition: all .3s;
+      }
+    }
+  }
+
+  .trade_rule_contain {
+    position: absolute;
+    bottom: 55px;
+    right: 0;
+    z-index: 100;
+    width: 26px;
+    // transition: all .35s;
+
+    &:hover {
+      .rule_context {
+        transform: translateX(0);
+        transition: all .35s;
+      }
+    }
+  }
+
+  .trade_rule_sidebar {
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px #09101d;
+    width: 26px;
+    min-height: 98px;
+    font-size: 12px;
+    line-height: 15px;
+    border-radius: 13px;
+    letter-spacing: 5px;
+    word-wrap: break-word;
+    display: flex;
+    align-items: center;
+
+    span {
+      padding: 10px 8px;
+      width: 3px;
+      text-align: center;
+      letter-spacing: 5px;
+      word-wrap: break-word;
+    }
+
+    // &:before, &:after {
+    //   content: "";
+    //   display: block;
+    //   position: absolute;
+    // }
+    //
+    // &:before {
+    //   left: 0;
+    //   top: -10px;
+    //   border: {
+    //     width: 5px 12px;
+    //     style: solid;
+    //     color: transparent $deepBlue600 $deepBlue600 transparent;
+    //   }
+    // }
+    //
+    // &:after {
+    //   left: 0;
+    //   bottom: -10px;
+    //   border: {
+    //     width: 5px 12px;
+    //     style: solid;
+    //     color: $deepBlue600 $deepBlue600 transparent transparent;
+    //   }
+    // }
+  }
+
+  .rule_context {
+    position: absolute;
+    left: -240px;
+    top: -53px;
+    box-sizing: border-box;
+    padding: 16px 21px;
+    width: 230px;
+    height: 200px;
+    border-radius: 5px;
+    font-size: 12px;
+    transform: translateX(260px);
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: -10px;
+      width: 10px;
+      height: 200px;
+      background: transparent;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      border: 6px solid transparent;
+      border-left-color: $blue800;
+    }
+    hr {
+      margin: 0;
+      border-color: $lightBlue300;
+    }
+  }
+  .rule_title {
+    font-size: 14px;
+    line-height: 32px;
+  }
+  .rule_detail {
+    box-sizing: border-box;
+    // line-height: 24px;
+    font-size: 12px;
+
+    .rule_time_rate {
+      padding: 11px 0 9px;
+    }
+
+    p {
+      height: 20px;
+      line-height: 20px;
+    }
+    div {
+      padding: 15px 0 0;
+    }
+  }
+
+  .no_active_rule {
+    transform: translateX(230px);
+  }
+// }
+
+@media screen and(min-width: 1921px) {
+  .trade_center {
+    .trade_content_top {
+      height: 80%;
+    }
+  }
+}
+
+@media screen and(max-height: 920px) and(min-height: 780px) {
+  .trade_center {
+    position: static;
+    padding: 70px 0 0 0;
+    bottom: auto;
+    height: 100%;
+    overflow-y: visible;
+
+    .trade_content {
+      bottom: auto;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .trade_content_top {
+      height: 64%;
+    }
+  }
+}
+@media screen and (max-width: 1200px) {
+  .trade_nav {
+    width: 565px;
+  }
+}
+@media screen and (width: 750px) {
+  .trade_center {
+    .trade_content_top  {
+      height: 90%;
+    }
+  }
+}
+
+@media screen and (max-height: 779px) {
+  .trade_center {
+    .trade_content_top  {
+      height: 90%;
+    }
+  }
+}

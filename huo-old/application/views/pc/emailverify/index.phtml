@@ -1,0 +1,27 @@
+<?php include PATH_TPL.'/tpl.header.phtml';?>
+<section>
+  <div class="login-contain" id="emailSucc">
+    <?php // 邮箱注册成功 ?>
+    <div class="login-form flex-middle email-succ">
+      <div class="success-img email-act-tips"></div>
+      <p><?php echo $lang['EMAIL']?></p>
+      <?php // 注册提交表单 ?>
+      <div class="succ-msg"><?php echo $lang['EMAIL_YZ']?><?php echo $_SESSION['emailactive']['email'];?><?php echo $lang['EMAIL_JX']?> </div>
+      <div class="email-down-part">
+        <p class="email-down-title"><?php echo $lang['EMAIL_YJ']?></p>
+        <ul>
+          <li><?php echo $lang['EMAIL_WQ']?><a href="/register"><?php echo $lang['EMAIL_CX']?></a></li>
+          <li><?php echo $lang['EMAIL_ZZK']?></li>
+          <li><?php echo $lang['EMAIL_CILKE']?><a href="javascript:void(0);" @click="sendEmailAgin"><?php echo $lang['EMAIL_CFYF']?></a></li>
+        </ul>
+      </div>
+    </div>
+    <?php // 重新发送邮箱 提示框 ?>
+    <div v-cloak class="resend-email-tips" v-if="resendEmail">
+      <span v-cloak v-if="!resendMsg"><?php echo $lang['EMAIL_CXYJ']?>  <i @click="resendEmail = !resendEmail"></i></span>
+      <?php // 邮件发送失败 或 发送频繁 提示 ?>
+      <span v-cloak v-else class="email-err-tips">{{resendMsg}} <i @click="resendEmail = !resendEmail"></i></span>
+    </div>
+  </div>
+</section>
+<?php include PATH_TPL.'/tpl.bodyclose.phtml';?>

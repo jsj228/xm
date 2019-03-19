@@ -1,0 +1,91 @@
+@import "./fun.scss";
+
+.mob-pwd-flex {
+  display: flex!important;
+  justify-content: center;
+  align-items: center;
+}
+
+.mob-pwd {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  // .layer {
+  //
+  // }
+
+  & > #pwd-layer {
+    position: relative;
+    left: auto;
+    top: pxToRem(-100);
+    margin: 0;
+    padding: pxToRem(30) 0;
+    height: auto;
+    width: pxToRem(640);
+
+    .close-layer {
+      left: auto;
+      top: pxToRem(10);
+      right: pxToRem(10);
+      width: pxToRem(36);
+      height: pxToRem(36);
+      background: none;
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 60%;
+        width: pxToRem(36);
+        height: 3px;
+        background: #d6d6d6;
+      }
+      &::before {
+        transform: rotate(45deg);
+      }
+      &::after {
+        transform: rotate(135deg);
+      }
+    }
+
+    .layer-title {
+      height: pxToRem(45);
+      line-height: pxToRem(45);
+      font-size: pxToRem(36);
+      box-shadow: none;
+      border: none;
+    }
+
+    .input-g {
+      margin: pxToRem(20) auto;
+      box-sizing: border-box;
+      width: pxToRem(524);
+      height: pxToRem(94);
+
+      input {
+        width: 100%;
+        height: 100%;
+      }
+
+      input[type='submit'] {
+        font-size: pxToRem(36);
+        // font-size:
+      }
+    }
+
+    .transPwd-form {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 0 pxToRem(30);
+    }
+  }
+}
+//

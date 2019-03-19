@@ -1,0 +1,263 @@
+
+@import "../config.scss";
+@import "../color.scss";
+body{
+    background: #f5f5f5;
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 6%;
+}
+.tab-content{
+   margin-top:7px;
+}
+.sel-coin ul li{
+    float:left;
+    font-size:16px;
+    
+}
+.sel-coin ul li:nth-of-type(2){
+    padding:3px;
+    background:red;
+    color:white;
+    border-radius:6px;
+}
+.sel-coin ul li:nth-of-type(3){
+    padding: 3px 14px;
+    background:red;
+    color:white;
+    border-radius:6px;
+}
+    .c2c-nav {
+    width: 200px;
+    float: left;
+    background: #FFF;
+    padding-bottom: 80px;
+}
+.page-main{
+    margin-top: 6%;
+}
+.c2c-nav .lev-1 {
+    background: #3dc18e;
+    color: #FFF;
+    line-height: 40px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 6px;
+    position: relative;
+    padding: 0 15px;
+    text-align: left;
+}
+.fa-angle-down:before {
+    content: "\f107";
+}
+.c2c-nav li li {
+    padding: 0 10px;
+    position: relative;
+}
+.c2c-nav li li a {
+    display: block;
+    border-bottom: 1px solid #EEE;
+    line-height: 45px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+}
+.c2c-nav ul ul ul {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    z-index: 100;
+    width: 300px;
+    background: #FFF;
+    margin: -20px 0 0 10px;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.3);
+}
+.c2c-nav li li a.active:before {
+    display: block;
+    content: ">";
+    font-size: 12px;
+    position: absolute;
+    top: 14px;
+    right: 5px;
+    vertical-align: top;
+    line-height: 16px;
+}
+.c2c-nav li li li {
+    float: left;
+    width: 49%;
+    border-right: 1px solid #EEE;
+}
+
+.c2c-nav li li {
+    padding: 0 10px;
+    position: relative;
+}
+ul, li, dl, dt, dd {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.lev-1 i {
+    font-size: 16px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -20px;
+}
+.page-content {
+    background: #FFF;
+    min-height: 940px;
+    margin-left: 210px;
+    padding: 5px;
+    color: #333;
+    text-align: left;
+    overflow: hidden;
+}
+
+
+.tabs.order-type a {
+    display: block;
+    text-align: center;
+    width: 50%;
+    line-height: 40px;
+    float: left;
+   
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.c2c-table thead tr td {
+    background: #faf2f2;
+    border-bottom: 3px solid #f0dede;
+    line-height: 36px;
+    padding: 0;
+    color: #4a4a4a;
+    font-size: 14px;
+}
+.c2c-index .sel-coin {
+    padding: 15px;
+}
+.c2c-index .sel-coin>div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 14px;
+}
+.c2c-index .sel-coin .title i {
+    width: 16px;
+    height: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    background: url(/statics/img/v3/c2c/title_icon.png) center center no-repeat;
+    background-size: cover;
+    margin-top: -2px;
+}
+
+
+.sel-coin .btn.active {
+    background: #de211b;
+    color: #FFF;
+}
+
+.page-content a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.publishbtn {
+    width: auto;
+    display: inline-block;
+    float: right;
+    background: #de211d;
+    color: #FFF;
+    padding: 6px 20px;
+    border-radius: 4px;
+    margin: 0 5px 0 0;
+}
+.tabs.order-type {
+    height: 40px;
+   
+}
+.sel-coin .btn {
+    background: #f5f5f5;
+    border: 1px solid #EEE;
+    color: #000;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+.btn.active, .btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.c2c-table .action .btn.btn-sell {
+    background: #3dc18e;
+}
+.table tbody tr td .btn {
+    color: #fff;
+    font-family: "Microsoft YaHei";
+}
+.table tbody tr td .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    white-space: nowrap!important;
+}
+.table thead a.sort {
+    padding: 7px 15px 0 10px;
+    color: #979ca0;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    background-image: url(/statics/img/v2/common/ico_sort.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.c2c-table a.sort {
+    cursor: pointer;
+    background: none!important;
+    color: #444!important;
+    cursor: pointer;
+}
+.c2c-table a {
+    display: block;
+    line-height: 22px;
+}
+.page-content a {
+    text-decoration: none;
+    cursor: pointer;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    font-size: 12px;
+}
+.page_nav a.num, .page_nav .Pbtn {
+    border: 1px solid #eee;
+    color: #333;
+    height: 38px;
+    line-height: 38px;
+    overflow: hidden;
+    padding: 0 15px;
+    margin: 0 5px;
+    background: #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 100px;
+    float: right;
+}

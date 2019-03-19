@@ -1,0 +1,96 @@
+#tips_win {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  overflow: visible;
+  background: rgba(0,0,0,.5);
+}
+
+#tips_win .close_cur {
+  display: block;
+  position: absolute;
+  right: 19px;
+  top: 19px;
+  width: 18px;
+  height: 18px;
+  background: url(../../assets/close_btn_icon.png) center center no-repeat;
+}
+
+#tips_win .close_cur:hover {
+  cursor: pointer;
+}
+
+#tips_win .mid_win {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -227px;
+  margin-top: -138px;
+  font-size: 16px;
+}
+
+#tips_win .tips_box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 454px;
+  /* height: 276px; */
+  padding: 60px 20px;
+
+  border-radius: 5px;
+  background: white;
+}
+
+#tips_win .alert_title {
+  display: inline-block;
+  position: absolute;
+  top: 19px;
+  left: 50%;
+  transform: translate(-50%,0);
+  font-size: 24px;
+  color: #333;
+}
+
+#tips_win .tips_header {
+  flex-shrink: 0;
+  line-height: 20px;
+}
+
+#tips_win .tips_footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+#tips_win .tips_footer .btn {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  width: 214px;
+  border: none;
+  color: #000;
+  text-align: center;
+  border-radius: 5px;
+  line-height: 45px;
+  background: #ff0000;
+}
+
+#tips_win .tips_footer .btn:hover {
+  cursor: pointer;
+}
+
+#tips_win .tips_msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  text-align: center;
+  height: 100%;
+  padding: 8px;
+}

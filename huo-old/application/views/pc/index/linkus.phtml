@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <?php isset($seot) || $seot = isset($this->layout['seot']) ? $this->layout['seot'] : '多比-区块链权益资产交易平台'; ?>
+    <title><?php echo $lang['SERVICE_SERVICE']?>-<?php  echo $seot?></title>
+    <meta name="keywords" content="<?php echo $lang['KEY_WORDS']?>" />
+    <meta name="description" content="<?php echo $lang['DESCRIPTION']?>" />
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title></title>
+  </head>
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html, body{
+      font-family: 'Microsoft YaHei', Arial;
+      width:100%;
+      height: 100%;
+    }
+    .dobi_logo {
+      margin-top: 1.18rem;
+    }
+    .dobi_logo > img {
+      display: block;
+      width: 2.8rem;
+      height: 1.0rem;
+      margin: 0 auto;
+    }
+    .dobi_logo p {
+      margin-top: 0.46rem;
+      margin-bottom: 1.39rem;
+      text-align: center;
+      font-size: 0.34rem;
+      color: #141414;
+    }
+    .dobi_tab {
+      margin: 0 0.27rem;
+      width: auto;
+      height: auto;
+      border-radius: 0.2rem;
+      border: 1px solid #E5E5E5;
+      overflow: hidden;
+    }
+    .dobi_th {
+      display: flex;
+      width: 100%;
+    }
+    .dobi_th > span {
+      /* display: inline-block; */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      white-space: normal;
+      word-break: break-word;
+      font-size: 0.28rem;
+      /* line-height: 1rem; */
+      height: 1rem;
+      border-bottom: 1px solid #E5E5E5;
+    }
+    .no_border_bot > span {
+      border-bottom: none;
+    }
+    .dobi_first {
+      flex-grow: 0;
+      padding-left: 0.59rem;
+      border-right: 1px solid #E5E5E5;
+      min-width: 37%;
+      width: 37%;
+      color: #333;
+    }
+    .dobi_second {
+      flex-grow: 2;
+      max-width: 63%;
+      padding-left: 0.28rem;
+      color: #666;
+    }
+  </style>
+  <body>
+    <div class="dobi_logo">
+      <img src="/imgs/LOGO.png" alt="">
+      <p><?php echo $lang['BANNDER_ONE_TITLE']; ?>!</p>
+    </div>
+    <div class="dobi_tab">
+      <div class="dobi_th">
+        <span class="dobi_first"><?php echo $lang['FOOTER_SERVICE_EMAIL']; ?></span>
+        <span class="dobi_second">service@dobitrade.com</span>
+      </div>
+      <div class="dobi_th">
+        <span class="dobi_first"><?php echo $lang['INDEX_TRADE_DOBI_MEDIA_EMAIL']; ?></span>
+        <span class="dobi_second">media@dobitrade.com</span>
+      </div>
+      <div class="dobi_th">
+        <span class="dobi_first"><?php echo $lang['FOOTER_BUSSINESS_EMAIL']; ?></span>
+        <span class="dobi_second">shangwu@dobitrade.com</span>
+      </div>
+      <div class="dobi_th">
+        <span class="dobi_first"><?php echo $lang['FOOTER_COMP_EMAIL']; ?></span>
+        <span class="dobi_second">listing@dobitrade.com</span>
+      </div>
+      <div class="dobi_th no_border_bot">
+        <span class="dobi_first"><?php echo $lang['INDEX_TRADE_DOBI_TOKEN']; ?></span>
+        <span class="dobi_second">dobitrade</span>
+      </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+(function (doc, win) {
+      var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function () {
+              var clientWidth = docEl.clientWidth;
+              if (!clientWidth) return;
+              if(clientWidth>=750){
+                  docEl.style.fontSize = '100px';
+              }else{
+                  docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+              }
+          };
+
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+</script>

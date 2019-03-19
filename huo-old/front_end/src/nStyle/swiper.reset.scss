@@ -1,0 +1,54 @@
+@import "swiper/dist/css/swiper.css"; // init css
+@import "./config.scss";
+
+
+.swiper-container {
+  border:1px solid #eee;
+  overflow: hidden;
+  width:100%;
+  height:calc(100% - 60px);
+  position: relative;
+  background:rgba(29, 40, 59, 0.1);
+}
+
+.swiper-slide {
+  box-sizing: border-box;
+}
+.swiper-button-prev, .swiper-button-next {
+  position: absolute;
+  z-index:100;
+  width: 46px;
+  height: 46px;
+  opacity:0.8;
+  outline: none;
+  top:53%;
+  &:hover {
+    opacity: 0.5;
+  }
+  &:active {
+    opacity: 0.2;
+  }
+}
+// reset swiper.css
+.swiper-button-prev, .news-button-prev {
+  left: 7%;
+  background: url(../assets/left_arr.png) center center no-repeat;
+  background-size:100%;
+}
+
+.news-button-next, .swiper-button-next {
+  right: 7%;
+  background: url(../assets/right_arr.png) center center no-repeat;
+  background-size:100%;
+}
+.swiper-pagination-bullet {
+  background: #00457f;
+}
+.swiper-pagination-bullet-active {
+  background: #008aff;
+}
+.swiper-container-horizontal >.swiper-pagination-bullets {
+  bottom:30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}

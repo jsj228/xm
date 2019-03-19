@@ -1,0 +1,44 @@
+<div class="rf-content mob-rf-content">
+  <div class="nav-crumbs hide-dom">
+    <?php echo $lang["USER_NAV_MY_TRADE"] ?> > <a class="active-tab" href="javascript: void(0);"><?php echo $lang['USER_NAV_DEAL'] ?></a>
+  </div>
+  <?php // 篩選條件 ?>
+  <?php  include PATH_TPL.'/user/condition.phtml';?>
+  <?php // 表格 ?>
+  <div class="coin-in-table shadow-cont">
+    <div class="t-body" id="tBody">
+      <table>
+        <thead>
+        <tr>
+          <td><?php echo $lang["TABLE_HEADER_ONE"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_TWO"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_THREE"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_FOUR"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_FIVE"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_SIX"]; ?></td>
+          <td><?php echo $lang["TABLE_HEADER_SEV"]; ?></td>
+        </tr>
+        </thead>
+        <tbody>
+        <?php // 綠色文字 class添加"green-font" ; 紅色文字 class 用 "red-font"?>
+        <?php foreach ($list as $v){ ?>
+          <tr>
+            <td><?php echo $v['id'] ?></td>
+            <td><?php echo $v['created'] ?></td>
+            <td><?php echo $v['coin_from'] ?></td>
+            <td class="<?php echo $v['flag'] == strtoupper($lang['USER_CDTION_FLAG_BUY']) ? 'red-font' : 'green-font' ?>"><?php echo $v['flag']; ?></td>
+<!--            <td class="<?php /*echo (in_array($post['flag'], [1,2]) && $v['buy_uid']==$user['uid'])?'red-font':'green-font' */?>"><?php /*echo (in_array($post['flag'], [1,2]) && $v['buy_uid']==$user['uid'])?'買入':'賣出' */?></td>
+-->            <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['price']),'.') ?></td>
+            <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['number']),'.') ?></td>
+            <td><?php $feeNum = $fee[$v['buy_uid']==$this->mCurUser['uid'] ? $v['buy_tid']: $v['sale_tid']]; echo trim(preg_replace('/(\.\d*?)0+$/', '$1', bcmul( $v['price'], bcsub($v['number'],$feeNum, 20), 20)),'.') , strtoupper($v['coin_to']) ?></td>
+          </tr>
+        <?php } ?>
+        </tbody>
+      </table>
+      <?php // 沒有數據時，顯示該元素， 設置 display: block ?>
+      <?php if(!$list){ ?>
+        <div class="no-data" id="tableNoData" style="display:block;"><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+      <?php } ?>
+    </div>
+  </div>
+</div>

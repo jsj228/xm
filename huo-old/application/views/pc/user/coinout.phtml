@@ -1,0 +1,401 @@
+<div class="rf_main gray50_bg" flex="dir:top">
+  <div class="nav-crumbs">
+    <?php echo $lang["USER_NAV_MY_ASSETS"] ?> > <a class="active-tab" id="uerList" href="javascript: void(0);" data-coinover="<?php echo $user[$coin.'_over']; ?>"><?php echo $lang['USER_NAV_COIN_OUT'] ?></a>
+  </div>
+  <?php// 已经实名认证   ?>
+  <?php if( $user['realInfo']['status'] == 2 && $user['pwdtrade'] ){ ?>
+    <?php // 筛选条件 ?>
+    <?php $cookiecoin=true;
+      for($i = 0; $i < count($coinList); $i++){
+        if(($get['coin'] && $get['coin']==$coinList[$i]['coin_from']) || (!$get['coin'] && $i==0)){
+          // out_status: 0 可以提币， 1 禁止提币
+          if($coinList[$i]['out_status']==1){
+            $cookiecoin=false;
+          }
+        }
+      }
+      ?>
+    <div class="condition_container white100_bg shadow_box">
+      <?php include PATH_TPL.'/user/condition/coin_list.phtml';?>
+      <?php // 个人资产 ?>
+      <div class="user-property">
+        <?php $coinInfo['name']?>
+        <div class="property-list">
+          <?php // 总额 ?>
+          <div class="">
+            <p class="data-tit gray400_f"><?php echo $lang['USER_CDTION_ALL_RICH'] ?></p>
+            <div class="data-tab data-max gray900_f">
+              <?php $currentCoin = current($coinInfo); echo sprintf('%.8f', Tool_Math::add($user[$currentCoin['name'].'_over'], $user[$currentCoin['name'].'_lock'])); ?>
+            </div>
+          </div>
+          <?php // 余额 ?>
+          <div class="">
+            <p class="data-tit gray400_f"><?php echo $lang['USER_CDTION_BALANCE'] ?></p>
+            <div class="data-tab green650_f" id="coinOver"><?php echo sprintf('%.8f', $user[$currentCoin['name'].'_over']); ?></div>
+          </div>
+          <?php // 冻结 ?>
+          <div class="">
+            <p class="data-tit gray400_f"><?php echo $lang['USER_CDTION_FREEZE'] ?></p>
+            <div class="data-tab foz-rich red500_f" id="fozRich">
+              <?php  echo sprintf('%.8f', $user[$currentCoin['name'].'_lock']); ?>
+            </div>
+          </div>
+
+          <?php // 提币按钮 ?>
+          <div class="">
+            <p class="data-tit"></p>
+            <?php if ($cookiecoin) { ?>
+              <a class="coin-out-btn orange500_f" href="javascript: void(0);" id="coinOutBtn"><?php echo $lang["USER_CONDITION_COIN_OUT"];?></a>
+            <?php } else { ?>
+              <span class="dis-btn"><?php echo $coinname;echo $lang['USER_CONDITION_CAN_NOT_COIN_OUT'] ?></span>
+            <?php } ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php // <p>亲爱的用户：你在2017-03-25 09:09:09第一次转入比特币，至今已累计转入12笔，共198.12个币！</p>  ?>
+    <?php if ($statistic){ ?>
+      <p class="fri_tis gray500_f upper_word"><?php echo $statistic; ?></p>
+    <?php } ?>
+    <?php include PATH_TPL.'/user/condition/time_condition.phtml'; ?>
+    <?php // table ?>
+    <div class="out_table">
+      <div class="coin-in-table shadow_box">
+        <div class="t-body" id="tBody">
+          <table>
+            <thead>
+              <tr>
+                <td><?php echo $lang['T_HEADER_ID'] ?></td>
+                <td><?php echo $lang['T_HEADER_OUT_TIME'] ?></td>
+                <td><?php echo $lang['T_HEADER_ADDR'] ?></td>
+                <td><?php echo $lang['T_HEADER_TXID'] ?></td>
+                <td><?php echo $lang['T_HEADER_ADDR_where'] ?></td>
+                <td><?php echo $lang['T_HEADER_NUM'] ?></td>
+                <td><?php echo $lang['T_HEADER_STATU'] ?></td>
+                <td><?php echo $lang['T_HEAD_CTRL'] ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"; 橙色文字 class 用 "orange-font"?>
+              <?php foreach($list as $v) { ?>
+                <tr>
+                  <td><?php echo $v['id'] ?></td>
+                  <td><?php echo $v['created'] ?></td>
+                  <td><?php echo $v['wallet'] ?></td>
+                  <td><?php echo $v['txid'] ?></td>
+                  <td><?php echo $v['is_out']; ?></td>
+                  <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['number']),'.') ?></td>
+                  <td class="<?php echo $v['statusCode'] == 2 ? 'green650_f' : (($v['statusCode'] == 0 || $v['statusCode'] == 1 || $v['statusCode'] == 4) ? 'orange500_f' : 'red500_f' ) ?>">
+                    <?php echo $v['status']; ?>
+                  </td>
+                  <td>
+                    <?php // $v['status'] > 0 正在撤销 或 已经撤销 ?>
+                    <?php if($v['statusCode'] == 0) { ?>
+                      <button class="order-btn" data-cancel='<?php echo $v['id']?>' data-cointo="<?php echo $v['coin_to']?>"><?php echo $lang['TITLE_CX']?></button>
+                      <?php } ?>
+                    </td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+              <?php // 没有数据时，显示该元素， 设置 display: block ?>
+              <?php if(!$list){ ?>
+                <div class="no-data" id="tableNoData" style="display:block;">
+                  <div class="no-data-ctx">
+                    <span class="no-data-img"></span>
+                    <span><?php echo $lang['NO_RECORD_NOW']; ?></span>
+                  </div>
+                </div>
+              <?php } ?>
+            </div>
+        </div>
+        <?php if ($pageinfo) { ?>
+          <div class="page-list" id="pageNumList">
+            <?php echo $pageinfo; ?>
+            <div class="page-form" id="goPage">
+              <input type="hidden" name="cate" value="4">
+              <?php echo $lang['TITLE_TZ']?>&nbsp;&nbsp;<input maxLength="5" type="text" name="p" value="">&nbsp;&nbsp;<?php echo $lang['NUMBER_HOME_PA'] ?>
+              <button type="submit" name="button" id="go">GO</button>
+            </div>
+          </div>
+        <?php } ?>
+    </div>
+  <?php } ?>
+  <?php // 未实名认证 ?>
+  <?php if( $user['realInfo']['status'] != 2 || !$user['pwdtrade'] ){ ?>
+    <div class="no-real-info">
+      <p class="gray500_f"><u>!</u><?php echo $lang['AUTH_TIPS'] ?></p>
+      <?php // 還未實名認證 ?>
+      <?php if( $user['realInfo']['status'] == 0 || $user['realInfo']['status'] == 3 ){ ?>
+        <div class="white_box shadow_box white100_bg" flex="cross:center main:justify">
+          <div class="left_img gray500_f">
+            <u></u> <?php echo $lang['NOT_AUTH_TIPS']; ?>
+          </div>
+          <a href="/user/realinfo"><?php echo $lang['AUTH_NOW'] ?>&gt;&gt;</a>
+        </div>
+      <?php } ?>
+      <?php // 实名认证审核中 ?>
+      <?php if( $user['realInfo']['status'] == 1 ){ ?>
+        <div class="white_box shadow_box white100_bg" flex="cross:center main:justify">
+          <div class="left_img gray500_f">
+            <u class="real_info_ing"></u> <?php echo $lang['REAL_INFO_ING']; ?>
+          </div>
+          <a href="/user/realinfo"><?php echo $lang['CHECK_NOW'] ?>&gt;&gt;</a>
+        </div>
+      <?php } ?>
+      <?php // 還未設置交易密碼 ?>
+      <?php if( !$user['pwdtrade'] ){ ?>
+        <div class="white_box shadow_box white100_bg" flex="cross:center main:justify">
+          <div class="left_img gray500_f">
+            <u class="pwd_coinout"></u> <?php echo $lang['NOT_TRADE_PWD']; ?>
+          </div>
+          <a href="/user?set=tradepwd"><?php echo $lang['SETTING_NOW'] ?>&gt;&gt;</a>
+        </div>
+      <?php } ?>
+
+    </div>
+  <?php } ?>
+</div>
+<?php // 提币 弹框 ?>
+<?php $text = $layout['lang']['JS_LANG']; ?>
+<div id="coinOutDom">
+  <?php //echo $user['email']?1:0 ?>
+  <u class="hide_dom" v-once v-cloak>{{confirmRegtype(<?php echo $user['email']?1:0 ?>)}}</u>
+  <?php //google  ?>
+  <u class="hide_dom" v-once v-cloak>{{getGoogle(<?php echo $user['google_key']?1:0 ?>)}}</u>
+  <div class="cointout_containt" v-cloak :class="{'hide_box': !containStatus && !show}" flex="main:center cross:center">
+    <div class="black_mask" v-if="containStatus"></div>
+    <?php // 提币框 ?>
+    <transition name="zoom">
+      <div class="coinout_win relative_dom white100_bg" v-if="show">
+        <span class="close_btn close_icon" @click="show=false"></span>
+        <p class="top_tit gray900_f"><span class="upper_word">{{coin.name}}</span><?php echo $text['coinOut'] ?></p>
+        <div class="form_par">
+          <?php // 余额 可用余额  冻结余额 ?>
+          <div class="accunt_part gray500_f">
+            <p><?php echo $text['nowCoin']; ?>&nbsp;<span class="upper_word">{{coin.name}}</span>&nbsp;<?php echo $text['coinBalance'] ?>: <span class="green650_f">{{coin.balance}}</span></p>
+            <p>{{fozRichText('<?php echo $text['fozRich']; ?>')}}: <span class="red500_f">{{coin.freezeBalance}}</span></p>
+          </div>
+          <?php // 提币地址 ?>
+          <div class="input_par">
+            <div class="input_dom" :class="{'err_input_par': errTips.wallet}">
+              <span class="<?php if (LANG=='cn'||LANG=='en'){ echo 'fore_word';} else{ echo "no_indent";} ?>"><?php echo $text['coinOutAddr']; ?></span>
+              <input type="text" v-model="form.wallet" @keydown.enter="submit" @blur.stop="blur('wallet')" @focus="focus('wallet')" placeholder="<?php echo $text['placeWriteAddr'] ?>"/>
+            </div>
+            <p class="err_tips" v-if="errTips.wallet == null"></p>
+            <p class="err_tips gray500_f" v-else-if="errTips.wallet == 0"><?php echo $text['regs']['wallet']['msg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.wallet == 1"><?php echo $text['regs']['wallet']['errMsg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.wallet == 2"><?php echo $text['regs']['wallet']['errMsg'] ?></p>
+            <p class="err_tips red500_f" v-else="errTips.wallet">{{errTips.wallet}}</p>
+          </div>
+          <?php // 地址标签 ?>
+          <div class="input_par" v-if="coin.name === 'EOS'">
+            <div class="input_dom" :class="{'err_input_par': errTips.label}">
+              <span class="<?php if (LANG=='cn'||LANG=='en'){ echo 'fore_word';} else{ echo "no_indent";} ?>"><?php echo $lang['COININ_LABEL']; ?></span>
+              <input type="text"
+              v-model="form.label"
+              @keydown.enter="submit"
+              @blur.stop="blur('label')"
+              @focus="focus('label')"
+              maxlength="20"
+              placeholder="<?php echo $lang['CHECK_COINOUT_LABEL']; ?>"/>
+            </div>
+            <p class="err_tips" v-if="errTips.label == null"></p>
+            <p class="err_tips gray500_f" v-else-if="errTips.label == 0"><?php echo $lang['PLZ_INPUT_LABEL']; ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.label == 1"><?php echo $lang['PLZ_INPUT_LABEL']; ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.label == 2"><?php echo $lang['LABEL_INNCONCE']; ?></p>
+            <p class="err_tips red500_f" v-else="errTips.label">{{errTips.label}}</p>
+          </div>
+
+          <?php // 转出数额 ?>
+          <div class="input_par">
+            <div class="input_dom relative_dom" :class="{'err_input_par': errTips.number}">
+              <span class="<?php if (LANG=='cn'||LANG=='en'){ echo 'fore_word';} else{ echo "no_indent";} ?>"><?php echo $text['coinOutNum']; ?></span><input
+                type="text"
+                data-type="number"
+                <?php // $nomsg: 1 需要验证码  2免验证码 ?>
+                <?php  ?>
+                <?php if($nomsg==1){ ?>
+                onpaste="return false;"
+                <?php } ?>
+                data-tips="1"
+                value=""
+                autocomplete="new-password"
+                maxlength="10"
+                v-model="form.number"
+                @keydown.enter="submit"
+                @input="numInput"
+                @blur.stop="blur('number')"
+                @focus="focus('number')"
+                placeholder="<?php echo $text['coinOutNumPHold'] ?>"/>
+            </div>
+            <p class="err_tips" v-if="errTips.number == null"></p>
+            <p class="err_tips gray500_f" v-else-if="errTips.number == 0"><?php echo $text['regs']['number']['msg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.number == 1"><?php echo $text['regs']['number']['errMsg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.number == 2"><?php echo $text['regs']['number']['overMsg'] ?></p>
+            <p class="err_tips red500_f upper_word" v-else-if="errTips.number == 3">{{coin.name}}<?php echo $text['balanceNotEnth'] ?></p>
+            <p class="err_tips red500_f" v-else="errTips.number">{{errTips.number}}</p>
+          </div>
+          <?php // 交易密码 ?>
+          <div class="input_par">
+            <div class="input_dom" :class="{'err_input_par': errTips.pwdtrade}">
+              <span class="<?php if (LANG=='cn'||LANG=='en'){ echo 'fore_word';} else{ echo "no_indent";} ?>"><?php echo $text['tradePwd']; ?></span><input
+                :type="hasFocusInp"
+                onpaste="return false;"
+                maxlength="16"
+                v-model="form.pwdtrade"
+                @keydown.enter="submit"
+                @input="spaceInput"
+                @blur.stop="blur('pwdtrade')"
+                @focus="focus('pwdtrade')"
+                placeholder="<?php echo $text['tradePwdPHold'] ?>" />
+            </div>
+            <p class="err_tips" v-if="errTips.pwdtrade == null"></p>
+            <p class="err_tips gray500_f" v-else-if="errTips.pwdtrade == 0"><?php echo $text['regs']['pwdtrade']['msg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.pwdtrade == 1"><?php echo $text['regs']['pwdtrade']['msg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.pwdtrade == 2"><?php echo $text['regs']['pwdtrade']['errMsg'] ?></p>
+            <p class="err_tips red500_f" v-else="errTips.pwdtrade">{{errTips.pwdtrade}}</p>
+          </div>
+          <?php // 图形验证码 ?>
+          <div class="input_par">
+            <div flex="">
+              <div class="input_dom short_input" :class="{'err_input_par': errTips.captcha}">
+                <span <?php if (LANG=='cn'||LANG=='en'){ echo '';} else{ echo "no_indent";} ?>><?php echo $text['imgCode']; ?></span>
+                <input type="text"
+                  @keydown.enter="submit"
+                  v-model="form.captcha" maxlength="4"
+                  @blur.stop="blur('captcha')"
+                  @keyup="focus('captcha')"
+                  @focus="focus('captcha')" placeholder="<?php echo $text['imgCodePHold'] ?>" />
+              </div>
+              <img class="short_right" @click.stop="updateCaptcha" :src="'/index/captcha?v='+timescamp" alt="" />
+            </div>
+            <p class="err_tips" v-if="errTips.captcha == null"></p>
+            <p class="err_tips gray500_f" v-else-if="errTips.captcha == 0"><?php echo $text['regs']['captcha']['msg'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.captcha == 1"><?php echo $text['regs']['captcha']['errMsgOne'] ?></p>
+            <p class="err_tips red500_f" v-else-if="errTips.captcha == 2"><?php echo $text['regs']['captcha']['errMsg'] ?></p>
+            <p class="err_tips red500_f" v-else="errTips.captcha">{{errTips.captcha}}</p>
+          </div>
+          <?php // $nomsg: 1 需要验证码  2免验证码 ?>
+          <?php if ($nomsg == 1 && !$user['google_key']){ ?>
+            <?php // 手机验证码  ?>
+            <?php if ($user['mo']){ ?>
+              <div class="input_par" v-if="form.regtype =='phone'">
+                <div flex="">
+                  <div class="input_dom short_input" :class="{'err_input_par': errTips.code}">
+                    <span <?php if (LANG=='cn'||LANG=='en'){ echo '';} else{ echo "no_indent";} ?>><?php echo $text['phoneCode']; ?>
+                    </span><input type="text"
+                      @keydown.enter="submit"
+                      v-model="form.code" maxlength="6"
+                      @blur.stop="blur('code')"
+                      @keyup="focus('code')"
+                      @focus="focus('code')" placeholder="<?php echo $text['phoneCodePHold'] ?>" />
+                  </div>
+                  <button class="short_right code_btn orange500_f dis_btn" v-if="countdown>0">{{countdown+'<?php echo $text["afterGet"] ?>'}}</button>
+                  <button class="short_right code_btn orange500_f" @click.stop="phoneCode" v-else>{{'<?php echo $text['getPhoneCode']; ?>'}}</button>
+                </div>
+                <div class="" flex="main:justify">
+                  <?php //errMsgTwo ?>
+                  <p class="err_tips" v-if="errTips.code == null"></p>
+                  <p class="err_tips gray500_f" v-else-if="errTips.code == 0"><?php echo $text['regs']['code']['msg'] ?></p>
+                  <p class="err_tips red500_f" v-else-if="errTips.code == 1"><?php echo $text['regs']['code']['msg'] ?></p>
+                  <p class="err_tips red500_f" v-else-if="errTips.code == 2"><?php echo $text['regs']['code']['errMsgTwo'] ?></p>
+                  <p class="err_tips red500_f" v-else="errTips.code">{{errTips.code}}</p>
+                  <?php // 切換 短信類型 ?>
+                  <div class="voice_code_line" v-if="getVcCode && countdown==0"><?php echo $text['clickGet'] ?><span
+                    class="blue500_f hv_btn"
+                    v-if="form.action==7"
+                    @click.stop="voiceCode"><?php echo $text['voiceCode'] ?></span><span class="blue500_f hv_btn" v-else><?php echo $text['getPhoneCode'] ?></span></div>
+                  <?php // 倒計時  可以在60s後獲取語音驗證碼 ?>
+                  <div class="red500_f" v-if="getVcCode && countdown>0"><?php echo $text['canGetAt']; ?>{{countdown}}<?php echo $text['afterGetVoiceCode'] ?></div>
+                </div>
+              </div>
+            <?php } ?>
+
+            <?php // 邮箱验证码 如果有绑定邮箱 ?>
+            <?php if($user['email']){ ?>
+              <div class="input_par" v-if="form.regtype =='email'">
+                <div flex="">
+                  <div class="input_dom short_input" :class="{'err_input_par': errTips.code}">
+                    <span <?php if (LANG=='cn'||LANG=='en'){ echo '';} else{ echo "no_indent";} ?>><?php echo $text['emailCode'] ?></span>
+                    <input type="text"
+                      v-model="form.code"
+                      @keydown.enter="submit"
+                      @blur.stop="blur('code')"
+                      @keyup="focus('code')"
+                      @focus="focus('code')"  maxlength="6" placeholder="<?php echo $lang['EMAIL_COINT_OUT'] ?>" />
+                  </div>
+                  <button class="short_right code_btn orange500_f dis_btn" v-if="countdown>0">{{countdown+'<?php echo $text["afterGet"] ?>'}}</button>
+                  <button class="short_right code_btn orange500_f" @click.stop="emailCode" v-else><?php echo $text['getPhoneCode']; ?></button>
+                </div>
+                <div class="" flex="main:justify">
+                  <p class="err_tips" v-if="errTips.code == null"></p>
+                  <?php //emailErrMsg ?>
+                  <p class="err_tips gray500_f" v-else-if="errTips.code == 0"><?php echo $text['regs']['code']['emailMsg'] ?></p>
+                  <p class="err_tips red500_f" v-else-if="errTips.code == 1"><?php echo $text['regs']['code']['emailMsg'] ?></p>
+                  <p class="err_tips red500_f" v-else-if="errTips.code == 2"><?php echo $text['regs']['code']['errMsgTwo'] ?></p>
+                  <p class="err_tips red500_f" v-else="errTips.code">{{errTips.code}}</p>
+                </div>
+              </div>
+            <?php } ?>
+          <?php } else if ($user['google_key']) { ?>
+            <?php //google 验证码 ?>
+            <div class="input_par">
+              <div class="input_dom" :class="{'err_input_par': errTips.google_code}">
+                <span><?php echo $lang['GOOGLE_CODE']['GOOGLE_CODE_VER_CODE']; ?></span><input
+                  type="text"
+                  onpaste="return false;"
+                  maxlength="6"
+                  v-model="form.google_code"
+                  @keydown.enter="submit"
+                  @input="spaceInput"
+                  @keyup="focus('google_code')"
+                  @blur.stop="blur('google_code')"
+                  @focus="focus('google_code')"
+                  placeholder="<?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?>" />
+              </div>
+              <p class="err_tips" v-if="errTips.google_code == null"></p>
+              <p class="err_tips gray500_f" v-else-if="errTips.google_code == 0"><?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></p>
+              <p class="err_tips red500_f" v-else-if="errTips.google_code == 1"><?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></p>
+              <p class="err_tips red500_f" v-else-if="errTips.google_code == 2"><?php echo $lang['GOOGLE_CODE']['GOOGLE_WARN_ERR']; ?></p>
+              <p class="err_tips red500_f" v-else="errTips.google_code">{{errTips.google_code}}</p>
+            </div>
+          <?php } ?>
+
+          <?php // 提交按钮 ?>
+          <div class="submit_par">
+            <?php // :class="{'dis_sub_btn': !fCompleted}" :disabled="!fCompleted" ?>
+            <button class="submit_btn white100_f relative_dom"  @click.stop="submit" type="button"><?php echo $text['coinOutTil'] ?><u class="loading-svg" data-loading="svg" v-if="isSubmiting"></u></button>
+          </div>
+          <?php // 切换 邮箱验证 按钮 ?>
+          <?php if($user['email'] && $user['mo']){ //?>
+            <div class="coin_type">
+              <span class="blue500_f hv_btn" @click.stop="form.regtype ='email'" v-if="form.regtype =='phone'" ><?php echo $text['emailCodeCheck']; ?></span>
+              <span class="blue500_f hv_btn" @click.stop="form.regtype ='phone'" v-else><?php echo $text['phoneCodeCheck'];; ?></span>
+            </div>
+          <?php } ?>
+        </div>
+        <hr class="dash_line">
+        <?php // 转出须知  ?>
+        <div class="transfer_rule gray500_f upper_word">
+          <p><span class="gray600_f"><?php echo $text['coinOutTipsSubTit']; ?></span></p>
+          <div>1. <?php echo $text['downTipsOne']; ?><span class="red500_f">{{coin.minout+coin.name}}</span>， <?php echo $text['downTipsTwo']; ?><span class="red500_f">{{coin.maxout + coin.name}}</span></div>
+          <div>2. <?php echo $text["tradeOut"] ?>{{coin.name}}<?php echo $text['coinFee'] ?><span class="red500_f">{{coin.rateout * 100}}%</span></div>
+          <div v-if="coin.outlimit-0>0">3. <?php echo $text['tradeOutOver']; ?><span class="red500_f">{{coin.outlimit + coin.name}}</span><?php echo $text['peopleCheck']; ?></div>
+          <div v-if="coin.name === 'EOS'">
+            4. <?php echo $lang['CHECKOUT_CLEAR']; ?>
+          </div>
+          <div v-if="coin.name === 'EOS'">
+            5. <?php echo $lang['CHECKOUT_IS_ACTIVE']; ?>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="succCallBack" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $layout['lang']['DETERMINE']; ?></span>
+  </my-alert>
+</div>
+<u id="moStyle" style="display:none;"><?php  echo $nomsg?></u>

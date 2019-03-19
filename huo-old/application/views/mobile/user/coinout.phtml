@@ -1,0 +1,91 @@
+<div class="rf-content mob-rf-content">
+  <div class="nav-crumbs" style="display:none;">
+    <?php  echo $lang["USER_NAV_MY_ASSETS"] ?> > <a class="active-tab" id="uerList" href="javascript: void(0);" data-coinover="<?php echo sprintf('%.8f', $user[$coin.'_over']); ?>"><?php echo $lang['USER_NAV_COIN_OUT'] ?></a>
+  </div>
+  <?php // 已经实名认证 ?>
+  <?php if( $user['realInfo']['status'] == 2 && $user['pwdtrade'] ){ ?>
+    <?php // 筛选条件 ?>
+    <?php  include PATH_TPL.'/user/condition.phtml';?>
+    <?php // table ?>
+    <div class="coin-in-table shadow-cont no-btm-shadow">
+      <div class="t-body" id="tBody">
+        <table>
+          <thead>
+            <tr>
+              <td><?php echo $lang['T_HEADER_ID'] ?></td>
+              <td><?php echo $lang['T_HEADER_OUT_TIME'] ?></td>
+              <td><?php echo $lang['T_HEADER_ADDR'] ?></td>
+              <td><?php echo $lang['T_HEADER_TXID'] ?></td>
+              <td><?php echo $lang['T_HEADER_ADDR_where'] ?></td>
+              <td><?php echo $lang['T_HEADER_NUM'] ?></td>
+              <td><?php echo $lang['T_HEADER_STATU'] ?></td>
+              <td><?php echo $lang['T_HEAD_CTRL'] ?></td>
+
+            </tr>
+          </thead>
+          <tbody>
+            <?php // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"; 橙色文字 class 用 "orange-font"?>
+            <?php foreach($list as $v) { ?>
+              <tr>
+                <td><?php echo $v['id'] ?></td>
+                <td><?php echo $v['created'] ?></td>
+                <td><?php echo $v['wallet'] ?></td>
+                <td><?php echo $v['txid'] ?></td>
+                <td><?php echo $v['is_out']; ?></td>
+                <td><?php echo trim(preg_replace('/(\.\d*?)0+$/', '$1', $v['number']),'.') ?></td>
+                <td class="<?php echo $v['status'] == 2 ? 'green-font' : (($v['status'] == 0 || $v['status'] == 1) ? 'orange-font' : 'red-font' ) ?>">
+                  <?php echo $v['status']; ?>
+                </td>
+                <td>
+                  <?php // $v['status'] > 0 正在撤销 或 已经撤销 ?>
+                  <?php if($v['statusCode'] == 0) { ?>
+                    <button class="order-btn" type="button" name="button" data-cancel='<?php echo $v['id']?>' data-cointo="<?php echo $v['coin_to']?>">撤销</button>
+                  <?php } ?>
+                </td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+        <?php // 没有数据时，显示该元素， 设置 display: block ?>
+        <?php if(!$list){ ?>
+          <div class="no-data" id="tableNoData" style="display:block;"><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+        <?php } ?>
+      </div>
+    </div>
+    <!-- <div class=""> -->
+  <?php } ?>
+  <?php // 未实名认证 ?>
+  <?php if( $user['realInfo']['status'] != 2 || !$user['pwdtrade'] ){ ?>
+    <div class="no-real-info">
+      <p><u>!</u><?php echo $lang['AUTH_TIPS'] ?></p>
+      <?php // 還未實名認證 ?>
+      <?php if( $user['realInfo']['status'] == 0 || $user['realInfo']['status'] == 3 ){ ?>
+        <div class="white-box shadow-cont">
+          <div class="left-img">
+            <u></u> <?php echo $lang['NOT_AUTH_TIPS']; ?>
+          </div>
+          <a href="/user/realinfo" class="red500_bg white100_f"><?php echo $lang['AUTH_NOW'] ?>>></a>
+        </div>
+      <?php } ?>
+      <?php // 实名认证审核中 ?>
+      <?php if( $user['realInfo']['status'] == 1 ){ ?>
+        <div class="white-box shadow-cont">
+          <div class="left-img">
+            <u class="real-info-ing"></u> <?php echo $lang['REAL_INFO_ING']; ?>
+          </div>
+          <a href="/user/realinfo" class="red500_bg white100_f"><?php echo $lang['CHECK_NOW'] ?>>></a>
+        </div>
+      <?php } ?>
+      <?php // 還未設置交易密碼 ?>
+      <?php if( !$user['pwdtrade'] ){ ?>
+        <div class="white-box shadow-cont">
+          <div class="left-img">
+            <u class="pwd-coinout"></u> <?php echo $lang['NOT_TRADE_PWD']; ?>
+          </div>
+          <a href="/user"><?php echo $lang['SETTING_NOW'] ?>>></a>
+        </div>
+      <?php } ?>
+    </div>
+  <?php } ?>
+</div>
+<u id="moStyle" style="display:none;"><?php  echo $nomsg?></u>

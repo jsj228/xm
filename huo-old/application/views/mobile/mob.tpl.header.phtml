@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php // 缓存控制 ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,target-densityDpi=device-dpi" />
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="expires" content="0">
+	<meta name="screen-orientation" content="portrait">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="layoutmode" content="standard">
+	<?php isset($seot) || $seot = isset($this->layout['seot']) ? $this->layout['seot'] : $layout["lang"]["TITLE_WORD"]; ?>
+	<title><?php  echo  $seot?:$layout["lang"]["TITLE_WORD"]?></title>
+	<meta name="keywords" content="<?php  echo isset($this->layout['seok'])?$this->layout['seok']:$lang['KEY_WORDS']?>" />
+	<meta name="description" content="<?php echo $lang['DESCRIPTION']?>" />
+	<link rel="shortcut icon" href="/favicon.ico">  <?php if (IS_MOBILE) {
+	    $mob = "mob.";
+	  } else {
+	    $mob = "";
+	  } ?>
+	<?php $libs = json_decode(file_get_contents(PATH_TPL.'/../../../public/libs.json'), true); ?>
+	 <link rel="stylesheet" href="<?php echo "/libs".'/'.$libs['libs']['css'] ?>">
+	<?php $statics = json_decode(file_get_contents(PATH_TPL.'/../../../public/version.json'), true); ?>
+	<link rel="stylesheet" href="<?php echo $statics['commons']['css']?>">
+	<link rel="stylesheet" href="<?php echo $statics[$mob.$layout['controller'].'.'.$layout['action']]['css']?>">
+	<script>
+		var docEl = document.documentElement, fontEl = document.createElement('style'),metaEl = document.querySelector('meta[name="viewport"]'),isAndroid = window.navigator.appVersion.match(/android/gi),isIPhone = window.navigator.appVersion.match(/(iphone|ipad)/gi),dpr = null;
+		if (isAndroid || isIPhone) { dpr = window.devicePixelRatio; } else { dpr = 1; }var scale = 1 / dpr,rem = docEl.clientWidth * (dpr / 10);
+		<?php // 设置viewport，进行缩放，达到高清效果 ?>
+		metaEl.setAttribute('content', 'width=device-width, initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ',  user-scalable=0, target-densityDpi=device-dpi');
+		docEl.setAttribute('data-dpr', dpr);docEl.setAttribute('data-rem', rem);
+		<?php // 重置 ?>
+		fontEl.innerHTML = "html{font-size: " + rem + "px!important}"; docEl.firstElementChild.appendChild(fontEl);window.onresize = function() { var rem = docEl.clientWidth / 10; fontEl.innerHTML = "html{font-size: " + rem + "px!important}";docEl.setAttribute('data-rem', rem);}
+		<?php // 重定向 登录 ?>
+		if (window.location.href.indexOf('?login') > -1) {
+      window.location.href = "/login";
+    }
+	</script>
+</head>
+<body class="mob-body default_f default_bg">
+	<nav>
+		<?php // 导航   ?>
+		<div class="flex-ai-center mo-nav">
+			<img class="logo" src="/imgs/logo.png" onclick="window.location.href='/'">
+			<div class="nav-title shadow-cont">
+				<div id="navTitle"><?php echo $layout['lang']['MOB_TOP_TITLE'] ?></div>
+			</div>
+			<div class="menu-btn" id="navMenu"></div>
+			<?php // 导航 ?>
+			<div class="nav-ver-list shadow-cont" id="navVerList">
+				<ul class="flex-col">
+					<li><a data-path="home" href="/"><?php echo $layout['lang']['HOME']; ?></a></li>
+					<!-- <li><a data-path="deving" href="javascript:void(0)"><?php echo $layout['lang']['TRADE_CENTER']; ?></a></li> -->
+					<?php //幣幣交易 ?>
+					<?php // 已经登陆 ?>
+					<?php if (isset($_SESSION['user'])){ ?>
+						<li><a href="/trade"><?php echo $layout['lang']['TRADE_CENTER']; ?></a></li>
+					<?php } else { ?>
+						<li><a href="/?login"><?php echo $layout['lang']['TRADE_CENTER']; ?></a></li>
+					<?php } ?>
+					<?php //法幣交易 ?>
+					<li><a class="white100_f" href="<?php echo Yaf_Registry::get("config")->yibi->url;?>" target="_blank"><?php echo $layout['lang']["BTC_OUT_TRADE"]; ?></a></li>
+					<li id="userCenter" class="hide-dom"><a data-path="none"><?php echo $layout['lang']['MY_ACCOUNT']; ?></a>
+						<ul class="second-nav-list">
+							<li><a href="/user"><?php echo $layout['lang']['USER_NAV_INDEX'] ?></a></li>
+							<li><a href="/user/realinfo"><?php echo $layout['lang']['USER_NAV_AUTH'] ?></a></li>
+							<li><a href="/user/candy"><?php echo $layout['lang']['USER_NAV_CANDY'] ?></a></li>
+							<li><a href="/user/coinin"><?php echo $layout['lang']['USER_NAV_COIN_IN'] ?></a></li>
+							<li><a href="/user/coinout"><?php echo $layout['lang']['USER_NAV_COIN_OUT'] ?></a></li>
+							<li><a href="/user/trust"><?php echo $layout['lang']['USER_NAV_TRUST'] ?></a></li>
+							<li><a href="/user/deal"><?php echo $layout['lang']['USER_NAV_DEAL'] ?></a></li>
+							<li><a href="/user/mplan"><?php echo $layout['lang']['USER_NAV_MPLAN'] ?></a></li>
+						</ul>
+					</li>
+					<li class="hide-dom" id="logoutBTN"><a data-path="clear" href="javascript: void(0);"><?php echo $layout['lang']['LOGOUT']; ?></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- <div class="layer-container"></div> -->
+	<span id="hahaha" style="display: none !important;"><?php echo $layout['reqToken'] ?></span>

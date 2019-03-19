@@ -1,0 +1,141 @@
+@import "../common/theme.scss";
+
+.news-win {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  top: 54px;
+  right: 0;
+  bottom: 0;
+  padding: 22px 60px 27px;
+  background: #f6f6f6;
+
+  .white-box {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.06);
+  }
+
+  .shadow {
+    box-shadow: 0 0 10px rgba(0,0,0,0.06);
+  }
+  .ns-lf, .ns-rf {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .ns-lf {
+    flex-grow: 1;
+    width: 50%;
+    justify-content: space-between;
+
+    .content {
+      height: 100%;
+    }
+  }
+
+  .ns-rf {
+    flex-shrink: 0;
+    padding-left: 48px;
+    width: 347px;
+  }
+
+  .com-titile {
+    padding-top: 19px;
+    font-size: 18px;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      margin-right: 17px;
+      position: relative;
+      bottom: -3px;
+      width: 3px;
+      height: 18px;
+      background: #ffbb03;
+    }
+  }
+
+  .con-tit {
+    flex-shrink: 0;
+    height: 52px;
+
+    a {
+      display: inline-block;
+      text-align: center;
+      padding: 0 18px;
+      margin-right: 11px;
+      width: auto;
+      line-height: 36px;
+      color: $deepBlack;
+      font-size: 14px;
+      border-radius: 3px;
+      background: #fff;
+
+      &:hover {
+
+      }
+    }
+    .act-ti {
+      color: #fff;
+      background: #4267b2;
+    }
+  }
+  .page-list {
+    box-sizing: border-box;
+    display: flex;
+    // justify-content: flex-start;
+    padding-top: 20px;
+    height: 59px;
+  }
+
+}
+.ns-btn {
+  padding: 0 15px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin-right: 11px;
+  width: auto;
+  height: 36px;
+  line-height: 36px;
+  color: $deepBlack;
+  font-size: 14px;
+  border-radius: 3px;
+  background: #fff;
+  border: none;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .9;
+    transition: all .3s;
+  }
+}
+
+.disabled-btn {
+  background-color: #e4e4e4;
+
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .news-win {
+    padding: 20px;
+
+    .ns-rf {
+      .content > ul a {
+        width: 37px;
+      }
+      .page-list {
+        display: none;
+      }
+    }
+    .page-list {
+      padding-top: 10px;
+      height: 50px;
+    }
+  }
+}

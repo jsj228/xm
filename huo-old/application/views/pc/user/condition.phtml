@@ -1,0 +1,207 @@
+<div class="cont-contain">
+  <div class="u-condition shadow-cont">
+    <div class="coin-cor">
+      <div class="cor-lf">
+        <span><?php echo $lang['USER_CONDITION_COIN_LIST']?></span><br>
+      </div>
+      <div class="cor-rf">
+        <div class="coin-list" id="coinList">
+          <?php // 这里 data-coincode= 不能省略 class=sel-coin 选中币种
+            $cookiecoin=true;
+            $coinname='';
+           ?>
+          <?php for($i = 0; $i < count($coinList); $i++){ ?>
+            <span
+            <?php // in_status == 1 充幣不顯示 ?>
+              class="<?php
+                if(($get['coin'] && $get['coin']==$coinList[$i]['coin_from']) || (!$get['coin'] && $i==0)){
+                  echo 'sel-coin';
+                  if($coinList[$i]['out_status']==1){
+                    $cookiecoin=false;
+                    $coinname=$coinList[$i]['coin_from'];
+                  }
+                }
+              ?>"
+              data-coincode="<?php echo $coinList[$i]['coin_from'] ?>"
+              data-maxout="<?php echo $coinInfo[$i]['maxout'] ?>"
+              data-minout="<?php echo $coinInfo[$i]['minout'] ?>"
+              data-rateout="<?php echo $coinInfo[$i]['rate_out'] ?>"
+              data-outlimit="<?php echo $coinInfo[$i]['out_limit'] ?>"
+              data-instatus="<?php echo $coinList[$i]['in_status'] ?>"
+              data-outstatus="<?php echo $coinList[$i]['out_status'] ?>"
+              data-nfloat="<?php echo $coinInfo[$i]['number_float'] ?>"
+              >
+              <?php echo strtoupper($coinList[$i]['coin_from']) ?>
+            </span>
+          <?php } ?>
+        </div>
+        <?php // 充币 二维码 显示 此项 ?>
+        <?php if($pageName == 'coinin'){ ?>
+        <div class="chk-addr" data-pagename="<?php echo $pageName;?>">
+          <!-- <a href="#"><?php echo $pageName == 'coinin' ? $lang["USER_CONDITION_CHK_ADDR"] : $lang["USER_CONDITION_COIN_OUT"] ;?></a> -->
+          <div class="addr-lf">
+            <div class="qr-code-img" id="qrcodeImg"><img src="/imgs/creating_qrCode.png"></div>
+            <div class="addr-show" id="addrShow">
+              <?php // 币地址，一定要放到  <span data-ccodetext> 标签内 ?>
+              <p class="code-addr-text"><span id="coinName"></span><?php echo $lang['USER_CDTION_WALLET_ADDR'] ?><span data-ccodetext='code' id="coinAddr" data-cTarget="true"></span></p>
+              <?php // 复制钱包地址 ?>
+              <p>
+                <a href="javascript: void(0);" data-copy="ele"><?php echo $lang['USER_CDTION_COPY_WALLET_ADDR']; ?></a>
+                <a class="link-to-out" id="linkToOut" target="_blank" href="<?php echo Yaf_Registry::get("config")->yibi->url; ?>"><?php echo $lang['NOBTC_LINK']; ?></a>
+              </p>
+            </div>
+            <?php // 地址生成中... ?>
+            <div class="addr-loading" id="addrLoading"><?php echo $lang['ADDR_LOADING'] ?></div>
+            <?php // 無法充幣 提示 ?>
+            <div class="addr-loading can-not-in" id="canNotIn"><p><?php echo $lang['USER_CDTION_SO_SORRY'] ?><span data-ntcoin="notecoin"></span><?php echo $lang['USER_CDTION_CAN_NOT_COIN_IN']; ?></p></div>
+          </div>
+          <div class="addr-rf">
+            <?php // 转入须知 ?>
+            <h5><?php echo $lang['USER_CDTION_COIN_IN_INSTRUCTIONS']; ?></h5>
+            <?php // 1. 此地址是您唯一且独自使用的转入地址，您可以同时进行多次转入 ?>
+            <p><?php echo $lang['USER_CDTION_TIPS_ONE']; ?></p>
+            <?php // 本地址  禁止充值除  之外的其他资产  ，任何其他资产充值将不可找回?>
+            <p><?php echo $lang['USER_CDTION_TIPS_TWO_A']; ?><span class="front-red"><?php echo $lang['USER_CDTION_TIPS_TWO_B']; ?><span data-ntcoin="notecoin"></span><?php echo $lang['USER_CDTION_TIPS_TWO_C']; ?></span><?php echo $lang['USER_CDTION_TIPS_TWO_D']; ?></p>
+          </div>
+        </div>
+        <?php } ?>
+      </div>
+    </div>
+    <?php if(false && $pageName == 'coinout'){ ?>
+    <div class="chk-coinout <?php echo $pageName == 'coinout' ? '' : 'hide-dom';?>" data-pagename="<?php echo $pageName;?>">
+      <?php if($cookiecoin){?>
+      <a href="javascript: void(0);" id="coinOutBtn"><?php echo $lang["USER_CONDITION_COIN_OUT"];?></a>
+     <?php }else{?>
+        <span><?php echo $lang['USER_CONDITION_COIN_OUT_A'].strtoupper($coinname).$lang['USER_CONDITION_COIN_OUT_B'];?></span>
+      <?php }?>
+    </div>
+    <?php } ?>
+    <?php // hide-dom 为隐藏 元素 class ?>
+    <?php // 成交查询 和 委托管理 显示 此 项 ?>
+    <?php if ($pageName == 'trust' || $pageName == 'deal') { ?>
+    <div class="coin-cor" id="coinFlag">
+      <div class="cor-lf">
+        <?php // 交易类型： ?>
+        <span><?php echo $lang["USER_CDTION_TRADE_TYPE"];?></span>
+      </div>
+      <div class="cor-rf">
+        <div class="coin-list">
+          <span class="<?php echo ($get['flag']==1||$get['flag']=='')?'sel-coin':'';?>" data-flag="1"><?php echo $lang['USER_CDTION_FLAG_ALL']; ?></span>
+          <span class="<?php echo $get['flag']==2?'sel-coin':'';?>" data-flag="2"><?php echo $lang['USER_CDTION_FLAG_BUY']; ?></span>
+          <span class="<?php echo $get['flag']==3?'sel-coin':'';?>" data-flag="3"><?php echo $lang['USER_CDTION_FLAG_SELL']; ?></span>
+          <?php if($pageName != 'deal') { ?>
+          <span class="<?php echo $get['flag']==4?'sel-coin':'';?>" data-flag="4"><?php echo $lang['USER_CDTION_FLAG_ALL_DONE']; ?></span>
+          <span class="<?php echo $get['flag']==5?'sel-coin':'';?>" data-flag="5"><?php echo $lang['USER_CDTION_FLAG_SOME_DONE']; ?></span>
+          <span class="<?php echo $get['flag']==6?'sel-coin':'';?>" data-flag="6"><?php echo $lang['USER_CDTION_FLAG_NOT_DONE']; ?></span>
+          <span class="<?php echo $get['flag']==7?'sel-coin':'';?>" data-flag="7"><?php echo $lang['USER_CDTION_FLAG_CANCEL']; ?></span>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+    <?php } ?>
+  </div>
+  <?php // 如果页面没有  ?>
+  <?php // 亲爱的用户：你在2017-03-25 09:09:09第一次转入比特币，至今已累计转入12笔，共198.12个币！ ?>
+  <?php if ($pageName == 'coinin') { ?>
+    <p class="u-riches"></p>
+  <?php } ?>
+
+  <?php // 提币显示用户资产 ?>
+  <?php if($pageName == 'coinout'){ ?>
+    <div class="user-property shadow-cont">
+      <?php $coinInfo['name']?>
+      <?php // <p>亲爱的用户：你在2017-03-25 09:09:09第一次转入比特币，至今已累计转入12笔，共198.12个币！</p>  ?>
+      <?php if ($statistic){ ?>
+        <p class=""><?php echo $statistic ?></p>
+      <?php } ?>
+      <div class="property-list">
+        <?php // 总额 ?>
+        <div class="">
+          <p class="data-tit"><?php echo $lang['USER_CDTION_ALL_RICH'] ?></p>
+          <div class="data-tab data-max">
+            <?php $currentCoin = current($coinInfo); echo Tool_Math::add($user[$currentCoin['name'].'_over'], $user[$currentCoin['name'].'_lock']); ?>
+          </div>
+        </div>
+        <?php // 余额 ?>
+        <div class="">
+          <p class="data-tit"><?php echo $lang['USER_CDTION_BALANCE'] ?></p>
+          <div class="data-tab">
+            <?php echo $user[$currentCoin['name'].'_over']; ?>
+          </div>
+        </div>
+        <?php // 冻结 ?>
+        <div class="">
+          <p class="data-tit"><?php echo $lang['USER_CDTION_FREEZE'] ?></p>
+          <div class="data-tab foz-rich" id="fozRich">
+            <?php echo $user[$currentCoin['name'].'_lock']; ?>
+          </div>
+        </div>
+        <?php // 赠送 ?>
+        <!-- <div class="">
+          <p class="data-tit"><?php echo $lang['USER_CDTION_GIVE'] ?></p>
+          <div class="data-tab">
+            <?php echo $user['giveCoin']; ?>
+          </div>
+        </div> -->
+        <?php // 提币按钮 ?>
+        <div class="">
+          <p class="data-tit"></p>
+          <?php if ($cookiecoin) { ?>
+            <a class="coin-out-btn" href="javascript: void(0);" id="coinOutBtn"><?php echo $lang["USER_CONDITION_COIN_OUT"];?></a>
+          <?php } else { ?>
+            <span class="dis-btn"><?php echo $coinname;echo $lang['USER_CONDITION_CAN_NOT_COIN_OUT'] ?></span>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+  <?php } ?>
+  <?php // 显示 亲爱的 用户那句话 ?>
+  <?php if ($pageName == 'trust' || $pageName == 'deal') { ?>
+    <div class="cond-time no-tips-cond-time" id="qkBtn">
+  <?php } else { ?>
+    <div class="cond-time <?php if(!$statistic){echo 'no-tips-cond-time'; }?>" id="qkBtn">
+  <?php } ?>
+    <?php // 提币，查询，委托, form ?>
+    <?php if ($pageName == 'trust' || $pageName == 'deal' || $pageName == 'coinout') { ?>
+      <form class="" id="coinPost" action="<?php echo preg_replace('#/page/\d+#i', '' ,REDIRECT_URL) ?>" method="GET">
+        <div class="hide-form-data">
+          <input type="text" name="coin" value="<?php echo $get['coin'] ?>">
+          <input type="text" name="flag" value="<?php echo $get['flag'] ?>">
+          <input type="text" name="days" value="<?php echo $get['days'] ? $get['days'] : '0' ?>">
+        </div>
+    <?php } ?>
+    <!-- </form> -->
+    <button
+      type="submit" data-days='0'
+      class="t-btn shadow-cont <?php echo $get['days']==0||$get['days']==-1 ? 'sel-qk-btn': '' ?>"
+      id="allCoin"><?php echo $lang["USER_CONDITION_BTN_ALL"]; ?></button>
+    <button href="javascript: void(0);" data-days='1'
+      class="t-btn shadow-cont <?php echo $get['days']==1 ? 'sel-qk-btn': '' ?>"
+      id="todayCoin"><?php echo $lang["USER_CONDITION_BTN_TODAY"]; ?></button>
+    <button href="javascript: void(0);" data-days='30'
+      class="t-btn shadow-cont <?php echo $get['days']==30 ? 'sel-qk-btn': '' ?>"
+      id="monthCoin"><?php echo $lang["USER_CONDITION_BTN_30_DAY"]; ?></button>
+    <?php echo $lang["USER_CONDITION_TIME_START"]; ?>&nbsp;&nbsp;
+    <span class="date-icon">
+      <input class="shadow-cont" type="text" name="startTime" value="<?php echo $get['startTime'] ?>" placeholder="<?php echo $lang['USER_CHOOSE_START_TIME'] ?>" id="startTime" />
+    </span>&nbsp;
+    <?php echo $lang["USER_CONDITION_TIME_TO"]; ?>&nbsp;
+    <span class="date-icon btn-r-space">
+      <input class="shadow-cont" type="text" name="endTime" value="<?php echo $get['endTime'] ?>" placeholder="<?php echo $lang['USER_CHOOSE_END_TIME'] ?>" id="endTime" />
+    </span>
+    <button type="submit" class="t-btn btn-icon shadow-cont" id="timeselect"><?php echo $lang["USER_CONDITION_BTN_FILTER"]; ?></button>
+
+    <button class="t-btn btn-icon reset-icon shadow-cont" id="reset"><?php echo $lang["USER_CONDITION_BTN_RESET"]; ?></button>
+    <button type="submit" name="excel" value="1" class="t-btn shadow-cont btn-icon output-icon" id="excel"><?php echo $lang["USER_CONDITION_BTN_OUTPUT"]; ?></button>
+    <input type="hidden" name="excel" value="1">
+    <?php if ($pageName == 'trust' || $pageName == 'deal'  || $pageName == 'coinout') { ?>
+      </form>
+    <?php } ?>
+    <input type="hidden" name="coinex" value="<?php echo $formdata['coin']; ?>">
+    <input type="hidden" name="coinType" value="<?php echo $formdata['coinType']; ?>">
+    <input type="hidden" name="type" value="<?php echo $formdata['type']; ?>">
+    <input type="hidden" name="startTimeex" value="<?php echo $formdata['startTime']; ?>">
+    <input type="hidden" name="endTimeex" value="<?php echo $formdata['endTime']; ?>">
+
+  </div>
+</div>

@@ -1,0 +1,709 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<!-- <link rel="stylesheet" href="/css/newsDefault.css"> -->
+
+<div class="page-main">
+<div class="container">
+ <div class="c2c-nav">
+ 	 <ul>
+         <li>
+             <div class="lev-1 on Retract"><span>QC/CNY </span><i class="fa fa-angle-up"></i><i class="fa fa-angle-down"></i></div>
+             <ul id="userSet" l="" style="display: block;">
+                
+                 <li><a class="lev-2" href="/otc/order/list" rel="orderList">订单管理</a></li>
+             <li><a class="lev-2" href="/otc/user/business?isSelect=true" rel="Becomebusiness">商家申请</a></li><li><a class="lev-2" href="/otc/user/" rel="businessinfo">个人信息</a></li></ul>
+         </li>
+         <li id="businessManage" class="hide">
+             <div class="lev-1 on ">商户管理<i class="fa fa-angle-up"></i><i class="fa fa-angle-down"></i></div>
+             <ul>
+             	 <li><a class="lev-2" href="/otc/user/business?isSelect=true" rel="Becomebusiness">商家申请</a></li>
+                 <li><a class="lev-2" href="/otc/mad/publishSell" rel="publishSell">发布广告</a></li>
+                 <li><a class="lev-2" href="/otc/mad/list/1" rel="tradeManage">广告管理</a></li>
+                 <li><a class="lev-2" href="/otc/mad/orderList/0" rel="buyList">商家订单</a></li>
+             	 
+                 <li><a class="lev-2" href="/otc/user/" rel="businessinfo">商家信息</a></li>
+                 <li><a class="lev-2" href="/otc/orderstats" rel="financeStatistics">财务报表</a></li>
+                 
+             </ul>
+         </li>
+         <li>
+             <div class="lev-1 on drop-down">OTC设置<i class="fa fa-angle-up"></i><i class="fa fa-angle-down"></i></div>
+             <ul id="otcSet" style="display: block;">
+                 <li><a class="lev-2" href="/otc/user/setpay" rel="setpay">支付设置</a></li>
+                 <li><a class="lev-2" href="/otc/user/settingOrder" rel="settingOrder">接单设置</a></li>
+                 
+
+                 
+             </ul>
+         </li>
+	 </ul>
+ </div>
+
+    
+
+            <div class="page-content">
+                <div class="sel-coin" style="overflow: hidden;padding: 15px">
+                    <ul>
+                        <li style="margin-top:4px;">法币分类</li>
+                        <li style=" margin-left: 10px;">CNY</li>
+                        <li style="float:right">发布广告</li>
+                    </ul>
+                    
+                    
+                    
+                </div>
+                <div class="tabs order-type">
+                    <a href="#"  class="Purchase" style="background:#f5f5f5;color: #333">我要买入QC</a>
+                    <a href="#"  class="Purchase" style="color:red;box-shadow: inset 0 0 0 1px #EEE">我要卖出QC</a>
+                </div>
+                <div class="tab-content">
+                    <div class="table-wrap">
+                        <table class="table table-noborder c2c-table   table-hover ">
+                            <thead>
+                                <tr>
+                                    <td class="user" width="18%">用户昵称(30日成单|完成率)</td>
+                                    <td class="" width="5%">广告ID</td>
+                                    
+                                    <td class="pay-method" width="10%">付款方式</td>
+                                    <td class="num" width="8%"><a class="sort " id="numsort">数量<span></span></a></td>
+                                    <td class="price" width="10%"><a class="sort down" id="priceSort">价格<span></span></a></td>
+                                    <td class="price" width="15%">备注（MEMO）</td>
+                                   
+                                    <td class="action" width="15%">操作</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                
+                                
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1028739">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    他二哥 ( 4564 |
+                                                        
+                                                        
+                                                            87.43  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>216238</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                            </td>
+                                            <td class="num">513143.58 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>3000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                他二嫂在秒付，不能及时放币的勿拍，13721928660
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/216238">卖出QC</a>
+                                                         
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1692153">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    钱到秒放币 ( 3441 |
+                                                        
+                                                        
+                                                            70.02  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>216594</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                            </td>
+                                            <td class="num">4959550.7 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>3000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                
+                                            </td>
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                             
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/216594">卖出QC</a>
+                                                            
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1619173">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    努力前行 ( 1378 |
+                                                        
+                                                        
+                                                            80.87  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>212743</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                            </td>
+                                            <td class="num">4866093.36 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>1000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                感谢下单
+认证商家
+安全速度
+资金安全
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/212743">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1786656">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    冲浪的仙人掌 ( 2943 |
+                                                        
+                                                        
+                                                            84.21  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>217064</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                            </td>
+                                            <td class="num">1989896 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>10000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                早七点至晚十一点在线，秒接秒放！
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/217064">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1065539">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    范成文 ( 3299 |
+                                                        
+                                                        
+                                                            76.65  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>217182</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                            </td>
+                                            <td class="num">898999 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>3000-100000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                本人支付宝限制收款，换家人的收付款，不能确认的别来
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/217182">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1281119">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    刘飞彪 ( 569 |
+                                                        
+                                                        
+                                                            61.51  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>219156</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                            </td>
+                                            <td class="num">988150 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>2000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                认证商家，安全可靠。
+支付宝扫码转账，快速接单
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/219156">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1784167">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    啤酒鸭 ( 2126 |
+                                                        
+                                                        
+                                                            77.79  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>219633</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                            </td>
+                                            <td class="num">4892301 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>2000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/219633">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1255125">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    七彩金刚葫芦娃 ( 5340 |
+                                                        
+                                                        
+                                                            80.54  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>220715</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                                    <i class="pm-icon pm-wechat"></i>
+                                                
+                                            </td>
+                                            <td class="num">500000 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>2000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/220715">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1124632">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    啊杜 ( 2140 |
+                                                        
+                                                        
+                                                            73.14  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>132386</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                                    <i class="pm-icon pm-wechat"></i>
+                                                
+                                            </td>
+                                            <td class="num">4935367.59 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>5000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                在线
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/132386">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                        <tr>
+
+                                            <td class="user is-auth">
+                                                
+                                                   <a href="/otc/user/1244289">
+                                                <div class="avatar"></div>
+                                                <div class="username" data-original-title="" title="">
+                                                    haipo ( 541 |
+                                                        
+                                                        
+                                                            75.24  % )
+                                                        
+                                                    
+                                                        
+                                                        <br>
+                                                        <span class="auth-band"></span>
+                                                    
+                                                </div>
+                                                </a>
+                                            </td>
+
+
+                                            <td>220836</td>
+
+                                            
+                                            <td class="pay-method">
+                                                
+                                                    <i class="pm-icon pm-unionpay"></i>
+                                                
+                                                    <i class="pm-icon pm-alipay"></i>
+                                                
+                                            </td>
+                                            <td class="num">5000000 QC</td>
+                                            <td class="price">
+                                                0.998 CNY <br>
+                                                <span>20000-1000000</span>
+                                            </td>
+                                            <td style="color: #7E7E7E;text-align: left">
+                                                ❤认证商家❤安全可靠❤在线坐等❤黑钱报警❤
+                                            </td>
+
+                                           
+
+                                            <td class="action" style="text-align: right;text-align: -webkit-right;text-align: -moz-right;">
+                                                
+                                                    
+                                                        
+                                                            
+                                                            
+                                                                <a class="btn btn-sell" style="width: 110px;" href="/otc/order/sell/220836">卖出QC</a>
+                                                            
+                                                        
+                                                    
+                                                    
+                                                
+                                            </td>
+                                        </tr>
+                                    
+                                
+                            
+                            </tbody>
+                            
+                            <tfoot>
+					            <tr>
+					                <td colspan="8">
+					                    <div id="page_navA" class="page_nav">
+					                        <div class="con">
+                                                
+
+                                                
+					                                <a class="Pbtn next" href="/otc/trade/qc_cny?type=1&amp;pageNo=2&amp;numSort=0">下一页 <i>&gt;</i></a>
+                                                
+					                        </div>
+					                    </div>
+					                </td>
+					            </tr>
+				            </tfoot>
+            
+                        </table>
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<?php  include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>
+
+<script>
+$(function(){
+      
+        $(".Retract").click(function(){
+           $("#userSet").slideToggle(1000);
+           
+        });
+        $(".drop-down").click(function(){
+           $("#otcSet").slideToggle(1000);
+           
+        });
+        $(".Purchase").click(function(){
+           $(this).css({
+            "background": "#FFF",
+            "color":" #e71f19",
+            "box-shadow": "inset 0 0 0 1px #EEE"
+           });
+           
+		   $(this).siblings().css({"background": "#f5f5f5","color": "#333"});
+
+        })
+        
+        
+
+})
+ 
+</script>
+

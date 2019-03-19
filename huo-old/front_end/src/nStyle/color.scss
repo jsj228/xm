@@ -1,0 +1,113 @@
+// 此文件包含所有的颜色  包括文字颜色，背景颜色，边框颜色
+
+// 切换颜色，通过切换 body的class 来切换颜色
+
+// 背景颜色 .颜色名_bg， 文字颜色: .颜色名_f
+
+// 颜色命名  颜色基色 + 颜色对比度
+// exp： $orange500 表示标准默认橙色
+//      $orange400 表示比基准橙色 淡一点的 橙色 数字越低，越淡
+
+// 红色
+$activeRed:#b20000;
+$red400: #e60012;
+$red500: #ee2222;
+$red550: #FF0036;
+$red560: #ff0000;
+$red600: #990033;
+$red700: #99002b;
+$red800: #a10322;
+
+$lightRed500: #dc1a5a;
+$lightRed600: rgba(220,26,90,.2); // #dc1a5a
+
+// 橙色
+$orange500: #ffbd09;
+$orange600: #ffa200;
+$hoverOrange: #eeae00;
+$disableOrange: #cc9500;
+
+// 黄色
+$yellow500: #ffbb03;
+
+// 绿色
+$green400: #25a552;
+$green500: #00F09A;
+$green650: #01b21a;
+$green600: #33A78D;
+$green700: #2ea778;
+$green800: #013926;
+$green900: #00191e;
+$green1000: #0ca476;
+
+//
+$lightGreen500: #0fbb90;
+$lightGreen600: rgba(15,187,144, .2); // #0fbb90
+
+// 青色
+$cyan500: #0f0;
+
+
+// 蓝色
+$blue50: #598aee;
+$blue100: #77baf3;
+$blue200: #008cff;
+$blue300: #00536a;
+$blue400: #005168;
+$blue500: #05599F;
+$blue600: #00203b;
+$blue800: #252f41;
+$blue900: #00111e;
+
+// 深蓝
+$deepBlue200: #2f44bc;
+$deepBlue300: #3366cc;
+$deepBlue400: #102333;
+$deepBlue500: #00111f;
+$deepBlue600: #000b14;
+$deepBlue700: #0d1e2c;
+
+// light
+$lightBlue100: #212c3f;
+$lightBlue200: #111d30;
+$lightBlue300: #0e192b;
+
+$lightBlue600: #0d1627;
+
+
+// 紫色
+$purple500: #6f6;
+
+// 灰色  a2abb8
+$gray50: #f7f7f7;
+$gray80: #d2d2d2;
+$gray90: #d4d4d4;
+$gray100: #d6d6d6;
+$gray150: #d6d6d6;
+$gray200: #f6f6f6;
+$gray250: #ededed;
+$gray300: #ccc;
+$gray350: #eee;
+$gray380: #a2abb8;
+$gray400: #999;
+$gray500: #666;
+$gray600: #333;
+$gray700: #A2ABB8;
+
+// 粉色
+$pink500: #f00;
+
+// 黑色
+$black300: #1d1d1d;
+$black400: #191919;
+$black500: #00111F;
+$black600: #0b0e10;
+$black800: #001221;
+$black900: #000000;
+
+// 白色
+$white100: #fff;
+$white500: #fff;
+
+// 棕色
+$brown500: #333;

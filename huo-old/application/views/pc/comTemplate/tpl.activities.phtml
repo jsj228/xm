@@ -1,0 +1,971 @@
+<div v-cloak id="errTips"><?php echo json_encode($layout['lang']['JS_LANG']); ?></div>
+<?php // js 公共語言包 JS_BASE_LANG ?>
+<div v-cloak id="baseLang"><?php echo json_encode($layout['lang']['JS_BASE_LANG']); ?></div>
+
+<?php // 弹框 模板 ?>
+<div id="AlertHTML" v-cloak>
+  <div class="mask_contain" flex="main:center cross:center" v-if="showStatus">
+    <div class="alert_content relative_dom" flex="dir:top main:center cross:center">
+      <span class="close_btn" @click="hide">×</span>
+      <slot name="content"></slot>
+      <div class="btn_line"><button @click="hide" class="orange500_bg white100_f"><slot name="btnTitle"></slot></button></div>
+    </div>
+  </div>
+</div>
+
+<?php //彈窗頭部 ?>
+<div id="AlertHeader" v-cloak>
+  <div class="alert_header white100_f deepblue500_bg">
+    <span class="alert_header_back" @click="alertBack"></span>
+    <slot name="content"></slot>
+  </div>
+</div>
+
+<?php // 注册 vue 模板 ?>
+
+<div id="registerDom" class="err_all" v-cloak @click.stop="closeArea">
+
+  <div class="register_dom" v-if="showAlert || googleShow">
+    <div class="reg_mask_contain_767 white100_bg"></div>
+    <div class="reg_mask_contain_1200 black900_bg"></div>
+  </div>
+  <?php //注册和登录部分 ?>
+  <transition name="zoom">
+    <div class="register_dom min_cot" v-if="showAlert">
+      <alert-header v-cloak v-on:alertback="alertfn">
+        <p slot="content">{{now_type === 'lo' ? '<?php echo $layout['lang']['LOGIN']; ?>' : '<?php echo $layout['lang']['REGISTER']; ?>' }}</p>
+      </alert-header>
+      <div class="register_pc_alert white500_bg">
+        <?php $loginLang=$layout['lang']['email_register_lang'] ?>
+        <?php //注册 手机email切换tab ?>
+        <ul class="switch-tab register_switch_phone" v-if="now_type === 're'" @click.stop="switchAccessType">
+          <li data-acctype="email" :class="[accessType === 'email' ? 'selected' : '']"><?php echo $loginLang['EMAIL_REG']?></li>
+          <li data-acctype="phone" :class="[accessType === 'phone' ? 'selected' : '']"><?php echo $loginLang['PHONE_REG']?></li>
+        </ul>
+        <?php //登录 手机email切换tab ?>
+        <ul class="switch-tab register_switch_phone" v-else @click.stop="switchAccessType">
+          <li data-acctype="email" :class="[accessType === 'email' ? 'selected' : '']"><?php echo $loginLang['EMAIL_LOGIN']?></li>
+          <li data-acctype="phone" :class="[accessType === 'phone' ? 'selected' : '']"><?php echo $loginLang['PHONE_LOGIN']?></li>
+        </ul>
+        <span class="register_alert_close" @click="close_alert"></span>
+
+        <?php //注册 ?>
+        <div class="reg_form" v-if="now_type==='re'">
+
+          <?php //手机号DOM开始 ?>
+          <div v-if="accessType == 'phone'" :class="{reigster_input_group:true, register_focus: accountFocus}"
+                flex="dir:left" flex-box="0">
+            <label flex="" class="register_label white500_bg register_two_label fn_register_label" @click="area_change">
+              <span flex-box="0" flex="main:center cross:center" class="register_phone_span">
+                <span class="register_img register_phone_img"></span>
+              </span>
+              <span flex-box="1" flex="dir:left box:mean"
+                :class="['register_area', 'register_border_div', {register_focus: accountFocus}]">
+                <span>
+                  {{area_num}}
+                </span>
+                <span flex="main:center cross:center"><img src="/imgs/reg/reg_bot.png" alt=""></span>
+              </span>
+            </label>
+            <div :class="['register_border_div',{register_focus: accountFocus}]" flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="<?php echo $loginLang['LOGIN_TEL']?>" maxlength="11"
+                :class="{register_input:true, register_input_right: errorArr.accStatus === 10 && now_type === 're'}"
+                v-model.trim ="queryRe.phone.account"
+                @blur='verify(queryRe.phone.account, "account")'
+                @focus="verify(queryRe.phone.account, 'account', 'focus')"
+                @keyup="inputcan(queryRe.phone.account, 'account')"
+                @keyup.enter="verify(queryRe.phone.account ,'account', 'enter')">
+            </div>
+            <transition name="fadeOut">
+              <ul class="register_area_list fn_register_area" v-cloak v-if="area_show">
+                <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+                  <li flex="" href="javascript:void(0);" :class="{register_font: true, register_warp: true, fn_active: register_index == <?php echo $k?>}" @click="arec_click('<?php echo $k?>, <?php echo $v['area_code'] ?>')">
+                    <span class="register_area_code gray500_f" flex-box="0"><?php echo $v['area_code'] ?></span>
+                    <span flex-box="1" class="register_area_name gray500_f"><?php echo $v['country'] ?></span>
+                  </li>
+                <?php } ?>
+              </ul>
+            </transition>
+          </div>
+          <?php //手机号DOM结束 ?>
+
+          <?php //手机号tip开始 ?>
+          <div class="tip-txt" v-if="accessType === 'phone'">
+            <p class="register_input_mes" v-if="(errorArr.accStatus === 0 || errorArr.accStatus === 10) && accessType === 'phone'"></p>
+            <p class="register_input_mes " v-if="errorArr.accStatus === 1 && accessType === 'phone'"><?php echo $layout['lang']['TEL']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 2 && accessType === 'phone'"><?php echo $layout['lang']['TEL']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 3 && accessType === 'phone'"><?php echo $layout['lang']['PHONE_INPUT_ERROR']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 4 && accessType === 'phone'">{{errMes}}</p>
+          </div>
+          <?php //手机号tip结束 ?>
+
+          <?php// 邮箱DOM开始 ?>
+          <div v-if="accessType == 'email'" :class="{reigster_input_group:true, register_focus: accountFocus}"
+              flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_email_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: accountFocus}]" flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="<?php echo $loginLang['SUGGEST_EMAIL']?>" maxlength="32"
+                :class="{register_input:true, register_input_right: errorArr.accStatus === 10 && now_type === 're'}" v-model.trim ="queryRe.email.account"
+                @blur='verify(queryRe.email.account, "account")'
+                @focus="verify(queryRe.email.account, 'account', 'focus')"
+                @keyup="inputcan(queryRe.email.account, 'account')"
+                @keyup.enter="verify(queryRe.email.account ,'account', 'enter')">
+            </div>
+          </div>
+          <?php// 邮箱DOM结束 ?>
+
+          <?php// 邮箱tip开始?>
+          <div class="tip-txt" v-if="accessType === 'email'">
+            <p class="register_input_mes" v-if="(errorArr.accStatus === 0 || errorArr.accStatus === 10) && accessType === 'email'"></p>
+            <p class="register_input_mes " v-if="errorArr.accStatus === 1 && accessType === 'email'"><?php echo $loginLang['SUGGEST_EMAIL'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 2 && accessType === 'email'"><?php echo $loginLang['SUGGEST_EMAIL'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 3 && accessType === 'email'"><?php echo $loginLang['EMAIL_FORMAT'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 4 && accessType === 'email'">{{errMes}}</p>
+          </div>
+          <?php// 邮箱tip结束?>
+
+          <?php// 密码DOM开始 ?>
+          <div :class="{reigster_input_group:true, register_focus: pwdFocus}"
+              flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_pwd_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus :pwdFocus}]" flex-box="1" flex="">
+              <input v-if="accessType === 'phone'" flex-box="1" type="password" maxlength="16" :placeholder="now_type === 're' ? '<?php echo $layout['lang']['ASSEMBLAGE']; ?>' : '<?php echo $layout['lang']['LOG_PASSWORD']?>'"
+              :class="{register_input:true, register_input_right: errorArr.pwdStatus === 6 || errorArr.pwdStatus === 7 }"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryRe.phone.pwd"
+              @blur.stop='verify(queryRe.phone.pwd, "pwd")'
+              @focus.stop="verify(queryRe.phone.pwd, 'pwd', 'focus')"
+              @keyup="inputcan(queryRe.phone.pwd, 'pwd')"
+              @keyup.enter="verify(queryRe.phone.pwd, 'pwd', 'enter')">
+              <input v-if="accessType === 'email'" flex-box="1" type="password" maxlength="16" :placeholder="now_type === 're' ? '<?php echo $layout['lang']['ASSEMBLAGE']; ?>' : '<?php echo $layout['lang']['LOG_PASSWORD']?>'"
+              :class="{register_input:true, register_input_right: errorArr.pwdStatus === 6 || errorArr.pwdStatus === 7 }"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryRe.email.pwd"
+              @blur.stop='verify(queryRe.email.pwd, "pwd")'
+              @focus.stop="verify(queryRe.email.pwd, 'pwd', 'focus')"
+              @keyup="inputcan(queryRe.email.pwd, 'pwd')"
+              @keyup.enter="verify(queryRe.email.pwd, 'pwd', 'enter')">
+            </div>
+          </div>
+          <?php// 密码DOM结束 ?>
+
+          <?php //密码校验部分  5弱 6中 7强?>
+          <div class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.pwdStatus === 0 || errorArr.pwdStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.pwdStatus === 1"><?php echo $layout['lang']['LOG_PASSWORD']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 2"><?php  echo $layout['lang']['LOG_PASSWORD']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 3"><?php echo $layout['lang']['PASSWORD_LENGTH_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 4">{{errMes}}</p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 5"><span class="min_tip"></span><?php echo $layout['lang']['ASSEMBLAGE'] ?></p>
+            <!-- <p class="register_input_mes  orange500_f" v-if="errorArr.pwdStatus === 6"><span class="middle_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_TWO'] ?></p> -->
+            <p class="register_input_mes  green500_f" v-if="errorArr.pwdStatus === 7"><span class="max_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_THREE']; ?></p>
+          </div>
+          <?php //密码tip结束?>
+
+          <?php //repwd DOM开始 ?>
+          <div :class="{reigster_input_group:true, register_focus: repwdFocus}"
+            flex="dir:left" flex-box="0" v-if="now_type === 're'">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_pwd_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: repwdFocus}]" flex-box="1" flex="">
+              <input v-if="accessType==='phone'" flex-box="1" type="password" maxlength="16" placeholder="<?php echo $layout['lang']['INPUT_AGAIN']; ?>"
+              :class="{register_input:true, register_input_right: errorArr.repwdStatus === 10 }"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryRe.phone.repwd"
+              @blur='verify(queryRe.phone.repwd, "repwd")'
+              @focus="verify(queryRe.phone.repwd, 'repwd', 'focus')"
+              @keyup="inputcan(queryRe.phone.repwd, 'repwd')"
+              @keyup.enter="verify(queryRe.phone.repwd, 'repwd', 'enter')" />
+
+              <input v-if="accessType==='email'" flex-box="1"  type="password" maxlength="16" placeholder="<?php echo $layout['lang']['INPUT_AGAIN']; ?>"
+              :class="{register_input:true, register_input_right: errorArr.repwdStatus === 10 }"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryRe.email.repwd"
+              @blur='verify(queryRe.email.repwd, "repwd")'
+              @focus="verify(queryRe.email.repwd, 'repwd', 'focus')"
+              @keyup="inputcan(queryRe.email.repwd, 'repwd')"
+              @keyup.enter="verify(queryRe.email.repwd, 'repwd', 'enter')" />
+            </div>
+          </div>
+          <?php //repwd DOM结束 ?>
+
+          <?php //校验部分 8两次输入不一致?>
+          <div class="tip-txt">
+            <p class="register_input_mes" v-if="(errorArr.repwdStatus === 0 || errorArr.repwdStatus === 10) && now_type === 're'"></p>
+            <p class="register_input_mes " v-if="errorArr.repwdStatus === 1 && now_type === 're'"><?php echo $layout['lang']['INPUT_AGAIN']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 2 && now_type === 're'"><?php echo $layout['lang']['INPUT_AGAIN']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 3 && now_type === 're'"><?php echo $layout['lang']['AGAIG_PASSWORD_LENGTH_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 4 && now_type === 're'">{{errMes}}</p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 8 && now_type === 're'"><span class="min_tip"></span><?php echo $layout['lang']['PASSWORD_LENGTH_DIFFERENT']; ?></p>
+          </div>
+          <?php //repwd tip结束?>
+
+          <?php //图形验证码DOM开始 ?>
+          <?php //pc部分 ?>
+          <div v-if="accessType==='phone'" :class="['show_pc', {reigster_input_group:true, register_focus: captchaFocus}]" flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_ver_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: captchaFocus}]" flex-box="1">
+              <input type="text" maxlength="4" placeholder="<?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?>"
+              :class="{register_input:true, register_input_right: errorArr.captchaStatus === 10 && now_type === 're' }" v-model="queryRe.phone.captcha"
+              @blur='verify(queryRe.phone.captcha, "captcha")'
+              @focus="verify(queryRe.phone.captcha, 'captcha', 'focus')"
+              @keyup="inputcan(queryRe.phone.captcha, 'captcha')"
+              @keyup.enter="verify(queryRe.phone.captcha, 'captcha', 'enter')" />
+            </div>
+            <span class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center"><img :src="ver_src" alt="" class="register_img_btn white500_bg" @click="img_ver" /></span>
+          </div>
+          <?php //pc end ?>
+          <?php //图形验证码DOM结束 ?>
+
+          <?php //captcha tip开始 ?>
+          <div v-if="accessType==='phone'" class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.captchaStatus === 0 || errorArr.captchaStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.captchaStatus === 1"><?php echo $layout['lang']['VAGUE']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 2"><?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 3"><?php echo $layout['lang']['NUMBER_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 4">{{errMes}}</p>
+          </div>
+          <?php //captcha tip结束 ?>
+
+          <?php //短信验证码DOM 开始 ?>
+          <?php //pc部分 开始 ?>
+          <div v-if="accessType==='phone'" :class="['show_pc', {reigster_input_group:true, register_focus: codeFocus}]"
+            flex="dir:left" flex-box="0" v-if="now_type === 're'" >
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_mes_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus:codeFocus }]" flex-box="1">
+              <input type="text" maxlength="6" placeholder="<?php echo $layout['lang']['PLEASE_TEL_YZM']?>" class="register_input" v-model="queryRe.phone.code"
+              @blur='verify(queryRe.phone.code, "code")'
+              @focus="verify(queryRe.phone.code, 'code', 'focus')"
+              @keyup="inputcan(queryRe.phone.code, 'code')"
+              @keyup.enter="verify(queryRe.phone.code, 'code', 'enter')">
+            </div>
+            <div class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center">
+              <button type="button" name="button" class="register_img_btn register_send orange500_f" @click="get_verify('0')" v-cloak>{{setTimes === "out" ? '<?php echo $layout['lang']["ACQUIRING"] ?>' : times+'<?php echo $layout['lang']['GET_PHONECODE_AGAING'] ?>'}}</button>
+            </div>
+          </div>
+          <?php //pc end ?>
+          <?php //短信验证码DOM 结束 ?>
+
+          <?php //短信验证码tip 开始 ?>
+          <div v-if="accessType==='phone'" class="tip-txt">
+            <p class="register_input_mes_code" flex = "main:justify" v-if="now_type === 're'">
+              <span class="register_input_code" v-if="(errorArr.codeStatus === 0 || errorArr.codeStatus === 10)"></span>
+              <span class=" register_input_code" v-if="errorArr.codeStatus === 1 && now_type === 're'"><?php echo $layout['lang']['PLEASE_TEL_YZM']; ?></span>
+              <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 2 && now_type === 're'"><?php echo $layout['lang']['PLEASE_TEL_YZM']; ?></span>
+              <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 3 && now_type === 're'"><?php echo $layout['lang']['NUMBER_UNENOUGH']; ?></span>
+              <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 4 && now_type === 're'">{{errMes}}</span>
+              <span v-if="voice_set && now_type === 're'" class="red500_f"><?php echo $layout['lang']['CANGET'] ?>{{times}}<?php echo $layout['lang']['GET_VOICE_CODE'] ?></span>
+              <span v-if="voice_warn && now_type === 're'" class="red500_f"><?php echo $layout['lang']['ATTENTION_CALLIMG'] ?></span>
+              <span v-if="voice_ver && !voice_set && now_type === 're'"><?php echo $layout['lang']['CLICK_ACQUIRING']; ?><a href="javascript:void(0);" class="blue500_f" @click="voice_verify"><?php echo $layout['lang']['PHOME_TICS']; ?></a></span>
+            </p>
+          </div>
+          <?php //短信验证码tip 结束 ?>
+
+          <!-- 用户协议 -->
+          <div class="register_user_agreement" flex="dir:left box:mean">
+            <div class="register_check" v-if="now_type === 're'">
+              <input type="checkbox" name="" value="" v-model="checkeds" :checked="checkeds" class="register_checkbox">
+              <a href="/index/policy" class="register_agreemetn_font blue500_f">《<?php echo $layout['lang']['USERS'];?>》</a>
+            </div>
+            <?php //pc端部分 ?>
+            <div class="register_check register_pc_reg" v-if="now_type === 'lo'" flex = "main:justify">
+              <span>
+                <?php echo $layout['lang']['REGISTER_NO_ACCOUT'] ?>
+                <a href="javascript:void(0);" class="register_agreemetn_font red500_f" @click="jump('reg')"><?php echo $layout['lang']['NOW_REGISTER']; ?></a>
+              </span>
+
+              <a href="javascript:void(0);" class="register_agreemetn_font orange500_f" @click="jump('forget')"><?php echo $layout['lang']['FORGET_PASSWORD']?>？</a>
+            </div>
+            <?php //未勾选提示 ?>
+            <transition name="fade" mode="out-in" appear v-if="!checkeds && now_type === 're'">
+              <div class="register_agreemt_uncheck" flex="cross:stretch">
+                <div class="register_content">
+                  <span class="register_sj gray350_f"></span>
+                  <p><?php echo $layout['lang']['YES_REGISTER']; ?></p>
+                </div>
+              </div>
+            </transition>
+          </div>
+          <!-- 用户协议 -->
+
+          <!-- 注册按钮开始 -->
+          <div flex="main:center cross:center" :class="{register_warp_btn: now_type === 'lo'}">
+            <button
+            type="button"
+            name="button"
+            :disabled="!disable"
+            class="register_login orange500_bg white100_f"
+            @click="register_submit">
+            {{now_type === 're' ? '<?php echo $layout['lang']['REGISTER']; ?>' : '<?php echo $layout['lang']['LOGIN'] ?>'}}
+              <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+            </button>
+          </div>
+          <!-- 注册按钮结束 -->
+
+          <!-- 去登录DOM 结束 -->
+          <div class="register_go_login" flex="main:center" v-if="now_type === 're'">
+            <?php //pc端 ?>
+            <div class="reg_btm_line show_pc" flex="main:justify">
+              <?php // 邀请人 ?>
+              <p>{{iviTis}}</p>
+              <?php // 已经注册 去登陆 ?>
+              <p class="gray400_f"><?php echo $lang['HAS_USER']; ?><a href="javascript:void(0);" class="blue500_f" @click="jump('lo')"><?php echo $lang['LOGIN_BTN']; ?></a></p>
+            </div>
+            <?php //pc end ?>
+          </div>
+          <!-- 去登录DOM 结束 -->
+
+        </div>
+        <?php //注册结束 ?>
+
+        <?php //登录 ?>
+        <div class="log_form" v-if="now_type==='lo'">
+
+          <?php //手机号DOM开始 ?>
+          <div v-if="accessType == 'phone'" :class="{reigster_input_group:true, register_focus: accountFocus}"
+                flex="dir:left" flex-box="0">
+            <label flex="" class="register_label white500_bg register_two_label fn_register_label" @click="area_change">
+              <span flex-box="0" flex="main:center cross:center" class="register_phone_span">
+                <span class="register_img register_phone_img"></span>
+              </span>
+              <span flex-box="1" :class="['register_area', 'register_border_div', {register_focus: accountFocus}]" flex="dir:left box:mean">
+                <span>{{area_num}}</span>
+                <span flex="main:center cross:center"><img src="/imgs/reg/reg_bot.png" alt=""></span>
+              </span>
+            </label>
+            <div :class="['register_border_div', {register_focus: accountFocus}]"  flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="<?php echo $layout['lang']['LOGIN_TEL']?>" maxlength="11"
+              :class="{register_input:true, register_input_right: errorArr.accStatus === 10}" v-model.trim ="queryLo.phone.account"
+              @blur='verify(queryLo.phone.account, "account")'
+              @focus="verify(queryLo.phone.account, 'account', 'focus')"
+              @keyup="inputcan(queryLo.phone.account, 'account')"
+              @keyup.enter="verify(queryLo.phone.account ,'account', 'enter')">
+            </div>
+            <transition name="fadeOut">
+              <ul class="register_area_list fn_register_area" v-cloak v-if="area_show">
+                <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+                  <li flex="" href="javascript:void(0);" :class="{register_font: true, register_warp: true, fn_active: register_index == <?php echo $k?>}" @click="arec_click('<?php echo $k?>, <?php echo $v['area_code'] ?>')">
+                    <span class="register_area_code gray500_f" flex-box="0"><?php echo $v['area_code'] ?></span>
+                    <span flex-box="1" class="register_area_name gray500_f"><?php echo $v['country'] ?></span>
+                  </li>
+                <?php } ?>
+              </ul>
+            </transition>
+          </div>
+          <?php //手机号DOM结束 ?>
+
+          <?php //手机号tip开始 ?>
+          <div v-if="accessType === 'phone'" class="tip-txt">
+            <p class="register_input_mes" v-if="(errorArr.accStatus === 0 || errorArr.accStatus === 10) && accessType === 'phone'"></p>
+            <p class="register_input_mes " v-if="errorArr.accStatus === 1 && accessType === 'phone'"><?php echo $layout['lang']['TEL']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 2 && accessType === 'phone'"><?php echo $layout['lang']['TEL']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 3 && accessType === 'phone'"><?php echo $layout['lang']['PHONE_INPUT_ERROR']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 4 && accessType === 'phone'">{{errMes}}</p>
+          </div>
+          <?php //手机号tip结束 ?>
+
+          <?php// 邮箱DOM开始 ?>
+          <div v-if="accessType == 'email'" :class="{reigster_input_group:true, register_focus: accountFocus}"
+              flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_email_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: accountFocus}]"  flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="<?php echo $layout['lang']['email_register_lang']['SUGGEST_EMAIL']?>" maxlength="32"
+              :class="{register_input:true, register_input_right: errorArr.accStatus === 10}" v-model.trim ="queryLo.email.account"
+              @blur='verify(queryLo.email.account, "account")'
+              @focus="verify(queryLo.email.account, 'account', 'focus')"
+              @keyup="inputcan(queryLo.email.account, 'account')"
+              @keyup.enter="verify(queryLo.email.account ,'account', 'enter')">
+            </div>
+          </div>
+          <?php// 邮箱DOM结束 ?>
+
+          <?php// 邮箱tip开始?>
+          <div v-if="accessType === 'email'" class="tip-txt">
+            <p class="register_input_mes" v-if="(errorArr.accStatus === 0 || errorArr.accStatus === 10) && accessType === 'email'"></p>
+            <p class="register_input_mes " v-if="errorArr.accStatus === 1 && accessType === 'email'"><?php echo $layout['lang']['email_register_lang']['SUGGEST_EMAIL'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 2 && accessType === 'email'"><?php echo $layout['lang']['email_register_lang']['SUGGEST_EMAIL'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 3 && accessType === 'email'"><?php echo $layout['lang']['email_register_lang']['EMAIL_FORMAT'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 4 && accessType === 'email'">{{errMes}}</p>
+          </div>
+          <?php// 邮箱tip结束?>
+
+          <?php// 密码DOM开始 ?>
+          <div :class="{reigster_input_group:true, register_focus: pwdFocus}"
+              flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_pwd_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus:pwdFocus}]" flex-box="1" flex="">
+              <input flex-box="1" v-if="accessType === 'phone'" type="password" maxlength="16" :placeholder="now_type === 're' ? '<?php echo $layout['lang']['ASSEMBLAGE']; ?>' : '<?php echo $layout['lang']['LOG_PASSWORD']?>'"
+              :class="{register_input:true, register_input_right: errorArr.pwdStatus === 6 || errorArr.pwdStatus === 7 }"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryLo.phone.pwd"
+              @blur.stop='verify(queryLo.phone.pwd, "pwd")'
+              @focus.stop="verify(queryLo.phone.pwd, 'pwd', 'focus')"
+              @keyup="inputcan(queryLo.phone.pwd, 'pwd')"
+              @keyup.enter="verify(queryLo.phone.pwd, 'pwd', 'enter')">
+
+              <input v-if="accessType === 'email'" type="password" maxlength="16" :placeholder="now_type === 're' ? '<?php echo $layout['lang']['ASSEMBLAGE']; ?>' : '<?php echo $layout['lang']['LOG_PASSWORD']?>'"
+              :class="{register_input:true, register_input_right: errorArr.pwdStatus === 6 || errorArr.pwdStatus === 7 }"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryLo.email.pwd"
+              @blur.stop='verify(queryLo.email.pwd, "pwd")'
+              @focus.stop="verify(queryLo.email.pwd, 'pwd', 'focus')"
+              @keyup="inputcan(queryLo.email.pwd, 'pwd')"
+              @keyup.enter="verify(queryLo.email.pwd, 'pwd', 'enter')">
+            </div>
+          </div>
+          <?php// 密码DOM结束 ?>
+
+          <?php //密码校验部分  5弱 6中 7强?>
+          <div class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.pwdStatus === 0 || errorArr.pwdStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.pwdStatus === 1"><?php echo $layout['lang']['LOG_PASSWORD']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 2"><?php  echo $layout['lang']['LOG_PASSWORD']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 3"><?php echo $layout['lang']['PASSWORD_LENGTH_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 4">{{errMes}}</p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 5"><span class="min_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_FIRST'] ?></p>
+            <p class="register_input_mes  orange500_f" v-if="errorArr.pwdStatus === 6"><span class="middle_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_TWO'] ?></p>
+            <p class="register_input_mes  green500_f" v-if="errorArr.pwdStatus === 7"><span class="max_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_THREE']; ?></p>
+          </div>
+          <?php //密码tip结束?>
+
+          <?php //图形验证码DOM开始 ?>
+          <?php //pc端 ?>
+          <div :class="['show_pc', {reigster_input_group:true, register_focus: captchaFocus}]" flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_ver_img"></span>
+            </label>
+            <div :class="['register_border_div',{register_focus: captchaFocus}]" flex-box="1" flex="">
+              <input v-if="accessType==='phone'" flex-box="1" type="text" maxlength="4" placeholder="<?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?>"
+              :class="{register_input:true, register_input_right: errorArr.captchaStatus === 10}" v-model="queryLo.phone.captcha"
+              @blur='verify(queryLo.phone.captcha, "captcha")'
+              @focus="verify(queryLo.phone.captcha, 'captcha', 'focus')"
+              @keyup="inputcan(queryLo.phone.captcha, 'captcha')"
+              @keyup.enter="verify(queryLo.phone.captcha, 'captcha', 'enter')" />
+
+              <input v-if="accessType==='email'" flex-box="1" type="text" maxlength="4" placeholder="<?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?>"
+              :class="{register_input:true, register_input_right: errorArr.captchaStatus === 10}" v-model="queryLo.email.captcha"
+              @blur='verify(queryLo.email.captcha, "captcha")'
+              @focus="verify(queryLo.email.captcha, 'captcha', 'focus')"
+              @keyup="inputcan(queryLo.email.captcha, 'captcha')"
+              @keyup.enter="verify(queryLo.email.captcha, 'captcha', 'enter')" />
+            </div>
+            <?php //图形验证码部分 ?>
+            <span class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center"><img :src="ver_src" alt="" class="register_img_btn white500_bg" @click="img_ver" /></span>
+          </div>
+          <?php //pc端部分结束 ?>
+          <?php //图形验证码DOM结束 ?>
+
+          <?php //captcha tip开始 ?>
+          <div class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.captchaStatus === 0 || errorArr.captchaStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.captchaStatus === 1"><?php echo $layout['lang']['VAGUE']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 2"><?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 3"><?php echo $layout['lang']['NUMBER_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 4">{{errMes}}</p>
+          </div>
+          <?php //captcha tip结束 ?>
+
+          <!-- 用户协议 -->
+          <div class="register_user_agreement" flex="dir:left box:mean">
+            <div class="register_check" v-if="now_type === 're'">
+              <input type="checkbox" name="" value="" v-model="checkeds" :checked="checkeds" class="register_checkbox">
+              <a href="/index/policy" class="register_agreemetn_font blue500_f">《<?php echo $layout['lang']['USERS'];?>》</a>
+            </div>
+            <?php //pc端部分 ?>
+            <div class="register_check register_pc_reg" v-if="now_type === 'lo'" flex = "main:justify">
+              <span>
+                <?php echo $layout['lang']['REGISTER_NO_ACCOUT'] ?>
+                <a href="javascript:void(0);" class="register_agreemetn_font red500_f" @click="jump('reg')"><?php echo $layout['lang']['NOW_REGISTER']; ?></a>
+              </span>
+
+              <a href="javascript:void(0);" class="register_agreemetn_font orange500_f" @click="jump('forget')"><?php echo $layout['lang']['FORGET_PASSWORD']?>？</a>
+            </div>
+            <?php //未勾选提示 ?>
+            <transition name="fade" mode="out-in" appear v-if="!checkeds && now_type === 're'">
+              <div class="register_agreemt_uncheck">
+                <span class="register_sj"></span>
+                <?php echo $layout['lang']['YES_REGISTER']; ?>
+              </div>
+            </transition>
+          </div>
+          <!-- 用户协议 -->
+
+          <!-- 注册按钮开始 -->
+          <div flex="main:center cross:center" :class="{register_warp_btn: now_type === 'lo'}">
+            <button
+            type="button"
+            name="button"
+            :disabled="!disable"
+            class="register_login orange500_bg white100_f"
+            @click="register_submit">
+            {{now_type === 're' ? '<?php echo $layout['lang']['REGISTER']; ?>' : '<?php echo $layout['lang']['LOGIN'] ?>'}}
+              <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+            </button>
+          </div>
+          <!-- 注册按钮结束 -->
+
+
+          <!-- 去登录DOM 结束 -->
+        </div>
+
+      </div>
+    </div>
+  </transition>
+
+
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="callfn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $layout['lang']['DETERMINE']; ?></span>
+  </my-alert>
+
+  <?php // email激活链接弹框 ?>
+  <div class="email-modal" v-if="emailStatus.showActiveModal">
+    <div class="register_success_bg register_alert_bg"></div>
+    <transition name="zoom">
+      <div class="register_success_bg modal_wrapper" flex="main:center cross:center">
+        <div class="modal_content">
+          <div :class="['modal_top',
+                    {'modal_top_email_fail': emailStatus.emailActiveLink === '0' || emailStatus.emailActiveLink === '2' || showReMail,
+                     'modal_top_email_succ': emailStatus.emailActiveLink === '1' && !showReMail || (now_type === 're' && accessType === 'email' && !showReMail),
+                     'modal_top_phone_succ': now_type === 're' && accessType === 'phone',
+                     'modal_top_repwd_succ': now_type === 'fo' && repwdSucc,
+                     'modal_top_sent_email': sentSuccess
+                    }]">
+            <div class="modal_close">
+              <i class="modal_close_btn" @click="close_btn"></i>
+            </div>
+          </div>
+          <!-- 链接激活时出现 -->
+          <div class="modal_main_con" v-if="emailStatus.emailActiveLink">
+            <p class="modal_main_txt" v-if="emailStatus.emailActiveLink === '2'"><?php echo $loginLang['ACTIVE_LINK_EXPIRED']?></p>
+            <p class="modal_main_txt" v-if="emailStatus.emailActiveLink === '0'"><?php echo $loginLang['ACTIVE_LINK_EXPIRED_FAIL']?></p>
+            <p class="modal_main_txt" v-if="emailStatus.emailActiveLink === '1'"><?php echo $loginLang['ACTIVE_LINK_SUCC']?></p>
+            <div class="modal_btn_div" flex="main:center">
+              <button v-if="emailStatus.emailActiveLink === '0' || emailStatus.emailActiveLink === '2'" type="button" name="button" @click.stop="registerAlert" class="orange500_bg"><?php echo $loginLang['GO_REG'] ?></button>
+              <button v-if="emailStatus.emailActiveLink === '1'" type="button" name="button" @click.stop="loginAlert" class="orange500_bg"><?php echo $loginLang['GO_LOGIN'] ?></button>
+            </div>
+          </div>
+          <!-- 注册后出现成功弹窗 -->
+          <div class="modal_main_con" v-if="(!emailStatus.emailActiveLink && now_type=== 're')">
+            <p v-if="accessType==='phone'" class="modal_main_txt"><?php echo $loginLang['REG_SUCC']?></p>
+            <p v-if="accessType==='email'" class="modal_main_txt"><?php echo $loginLang['EMAIL_VALIDATE']?></p>
+            <div v-if="accessType === 'phone'" class="modal_btn_div" flex="main:center">
+              <button type="button" name="button" @click.stop="loginAlert" class="orange500_bg"><?php echo $layout['lang']['GO_LOGIN'] ?></button>
+            </div>
+            <div  v-if="accessType==='email'" class="modal_btn_div">
+              <!-- <transition>
+                <div class="email_toast" v-if="emailStatus">{{email.toast}}</div>
+              </transition> -->
+              <p class="modal_main_txt modal_main_txt_b"><?php echo $loginLang['SEND_EMAIL_ONE']?>{{queryRe.email.account}} <?php echo $loginLang['SEND_EMAIL_TWO']?> </p>
+              <p class="no_email_btn" @click="toggleShowReMail"><?php echo $loginLang['NO_EMAIL_RECIEVED']?></p>
+            </div>
+            <div v-if="showReMail" class="remail_div">
+              <ul>
+                <li><?php echo $loginLang['CHECK_EMAIL_CORRECT']?> <span @click="registerAlert" class="blue_txt"><?php echo $loginLang['RE_REGISTER']?></span> </li>
+                <li><?php echo $loginLang['TRASH_EMAIL']?></li>
+                <li><?php echo $loginLang['WAIT_EMAIL']?><span @click="remail" class="blue_txt"><?php echo $loginLang['RESEND_EMAIL']?></span></li>
+              </ul>
+            </div>
+          </div>
+          <!-- <div class="modal_main_con">
+
+            <p class="modal_main_txt" v-if="emailStatus.emailActiveLink !== '1'">您訪問的鏈接已失效，請重新註冊</p>
+            <p class="modal_main_txt" v-if="emailStatus.emailActiveLink === '1'">賬號已成功激活，請重新登錄</p>
+            <div class="modal_btn_div" flex="main:center">
+              <button v-if="emailStatus.emailActiveLink !== '1'" type="button" name="button" @click.stop="registerAlert" class="orange500_bg"><?php echo '去註冊' ?></button>
+              <button v-if="emailStatus.emailActiveLink === '1'" type="button" name="button" @click.stop="loginAlert" class="orange500_bg"><?php echo '去登錄' ?></button>
+              <button v-if="now_type === 're' && accessType === 'phone'" type="button" name="button" @click.stop="loginAlert" class="orange500_bg"><?php echo '去登錄' ?></button>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </transition>
+  </div>
+
+  <?php //Google验证登录 ?>
+  <transition name="zoom">
+    <div class="google_modal register_dom" v-if="googleShow">
+      <div class="register_pc_alert white100_bg">
+        <h3 class="register_h3 gray500_f"><?php echo $layout[lang]['GOOGLE_CODE']['GOOGLE_CODE_VER']; ?>
+          <span class="register_alert_close" @click="close_alert"></span>
+        </h3>
+        <div class="">
+          <?php //google ?>
+          <div :class="{reigster_input_group:true, register_focus: codeFocus}" flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_mes_img"></span>
+            </label>
+            <div :class="['register_border_div',{register_focus: codeFocus}]"  flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="" maxlength="6"
+              :class="{register_input:true, register_input_right: errorArr.codeFocus === 10 }"
+              v-model.trim="googleData.code"
+              @blur='verify(googleData.code, "code")'
+              @focus="verify(googleData.code, 'code', 'focus')"
+              @keyup="inputcan(googleData.code, 'code')"
+              @keyup.enter="verify(googleData.code, 'code', 'enter')">
+            </div>
+          </div>
+          <?php //google over ?>
+
+          <?php //google tip ?>
+          <div class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.codeStatus === 0 || errorArr.codeStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.codeStatus === 1"><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.codeStatus === 2"><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.codeStatus === 3"><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_WARN_ERR']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.codeStatus === 4">{{errMes}}</p>
+          </div>
+          <?php //google tip over ?>
+
+        </div>
+        <p flex="main:center cross:center" class="service_goo"><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_LOST_CALL']; ?>：service@dobitrade.com</p>
+        <div flex="main:center cross:center" class="register_warp_btn">
+          <button
+          type="button"
+          name="button"
+          :disabled="!disable"
+          class="register_login orange500_bg white100_f"
+          @click="register_submit">
+            <?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_SURE']; ?>
+            <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+          </button>
+        </div>
+      </div>
+    </div>
+  </transition>
+</div>
+
+
+<?php //重置登录密码 ?>
+
+<div id="restPwd" class="err_all" v-cloak @click.stop="closeArea">
+  <div class="register_dom" v-if="forgetPwd">
+    <div class="reg_mask_contain_1200 black900_bg"></div>
+  </div>
+  <?php //找回密码 ?>
+  <transition name="zoom">
+    <div class="forget_pwd register_dom min_cot" v-if="forgetPwd">
+      <alert-header v-cloak v-on:alertback="alertfn">
+        <p slot="content"><?php echo $layout['lang']['FORGET_PWD']; ?></p>
+      </alert-header>
+      <div class="register_pc_alert forget_pwd_alert white500_bg">
+        <!-- <h3 class="register_h3 gray500_f"><?php echo $layout['lang']['FORGET_PWD']; ?>
+          <span class="register_alert_close" @click="close_alert"></span>
+        </h3> -->
+        <div v-if="(userInfo.email && userInfo.phone!= '****') || Object.keys(userInfo).length == 0">
+          <span class="register_alert_close register_alert_left" @click="close_alert"></span>
+          <ul class="switch-tab register_switch_phone" v-if="forgetStep === 1 || (noStepOne && forgetStep != 3)"  @click.stop="switchAccessType">
+            <li data-acctype="email" :class="[accessType === 'email' ? 'selected' : '']"><?php echo $loginLang['PWD_EMAIL_RESET'] ?></li>
+            <li data-acctype="phone" :class="[accessType === 'phone' ? 'selected' : '']"><?php echo $loginLang['PWD_PHONE_RESET'] ?></li>
+          </ul>
+          <ul class="switch-tab show_pc" v-else>
+            <p><?php echo $loginLang['SET_NEW_PWD']?></p>
+          </ul>
+        </div>
+        <h3 class="register_h3 gray500_f" v-if="userInfo.phone && !userInfo.email && userInfo.phone!= '****'"><?php echo $loginLang['PWD_PHONE_RESET']; ?>
+          <span class="register_alert_close" @click="close_alert"></span>
+        </h3>
+        <h3 class="register_h3 gray500_f" v-if="(!userInfo.phone || userInfo.phone== '****') && userInfo.email"><?php echo $loginLang['PWD_EMAIL_RESET']; ?>
+          <span class="register_alert_close" @click="close_alert"></span>
+        </h3>
+
+        <div class="log_form">
+          <?php //找回密碼第一步 ?>
+          <?php //手机号DOM ?>
+          <div v-if="(accessType==='phone' && forgetStep === 1) && userInfo.phone!= '****'"
+            :class="{reigster_input_group:true, register_focus: accountFocus}" flex="dir:left" flex-box="0">
+            <label v-if="accessType==='phone'" flex="" class="register_label white500_bg register_two_label fn_register_label" @click="area_change">
+              <span flex-box="0" flex="main:center cross:center" class="register_phone_span">
+                <span class="register_img register_phone_img"></span>
+              </span>
+              <span flex-box="1" :class="['register_area', 'register_border_div', {register_focus: accountFocus}]" flex="dir:left box:mean">
+                <span>{{area_num}}</span>
+                <span flex="main:center cross:center"><img src="/imgs/reg/reg_bot.png" alt=""></span>
+              </span>
+            </label>
+            <div :class="['register_border_div',{register_focus: accountFocus}]" flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="<?php echo $layout['lang']['LOGIN_TEL']?>" maxlength="11"
+              :class="{register_input:true, register_input_right: errorArr.accStatus === 10}" v-model.trim="forgetFirst.phone.account"
+              @blur='verify(forgetFirst.phone.account, "account")'
+              @focus="verify(forgetFirst.phone.account, 'account', 'focus')"
+              @keyup="inputcan(forgetFirst.phone.account, 'account')"
+              @keyup.enter="verify(forgetFirst.phone.account, 'account', 'enter')">
+            </div>
+            <transition name="fadeOut">
+              <ul class="register_area_list fn_register_area" v-cloak v-if="area_show">
+                <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+                  <li flex="" href="javascript:void(0);" :class="{register_font: true, register_warp: true, fn_active: register_index == <?php echo $k?>}"
+                    @click="arec_click('<?php echo $k?>, <?php echo $v['area_code'] ?>')">
+                    <span class="register_area_code gray500_f" flex-box="0"><?php echo $v['area_code'] ?></span>
+                    <span flex-box="1" class="register_area_name gray500_f"><?php echo $v['country'] ?></span>
+                  </li>
+                <?php } ?>
+              </ul>
+            </transition>
+          </div>
+          <?php // 手机号DOM结束?>
+          <?php //格式判断 0不显示 1普通输入提示 2为空提示 3输入格式提示 4php返回提示 ?>
+          <div v-if="forgetStep === 1 && accessType === 'phone' && userInfo.phone!= '****'" class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.accStatus === 0 || errorArr.accStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.accStatus === 1"><?php echo $layout['lang']['TEL']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 2"><?php echo $layout['lang']['TEL']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 3"><?php echo $layout['lang']['PHONE_INPUT_ERROR']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 4">{{errMes}}</p>
+          </div>
+          <?php //手机tip结束 ?>
+
+          <?php //邮箱DOM ?>
+          <div v-if="accessType==='email' && forgetStep === 1 && (Object.keys(userInfo).length == 0 || userInfo.email)"
+            :class="{reigster_input_group:true, register_focus: accountFocus}" flex="dir:left" flex-box="0">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_email_img"></span>
+            </label>
+            <div :class="['register_border_div',{register_focus: accountFocus}]"  flex-box="1" flex="">
+              <input type="text" flex-box="1" placeholder="<?php echo $layout['lang']['email_register_lang']['SUGGEST_EMAIL']?>" maxlength="32"
+              :class="{register_input:true, register_input_right: errorArr.accStatus === 10}" v-model.trim="forgetFirst.email.account"
+              @blur='verify(forgetFirst.email.account, "account")'
+              @focus="verify(forgetFirst.email.account, 'account', 'focus')"
+              @keyup="inputcan(forgetFirst.email.account, 'account')"
+              @keyup.enter="verify(forgetFirst.email.account, 'account', 'enter')">
+            </div>
+          </div>
+          <?php //邮箱DOM结束 ?>
+
+          <?php //邮箱tip ?>
+          <div v-if="forgetStep === 1 && accessType === 'email' && (Object.keys(userInfo).length == 0 || userInfo.email)" class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.accStatus === 0 || errorArr.accStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.accStatus === 1"><?php echo $layout['lang']['email_register_lang']['LOGIN_EMAIL'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 2"><?php echo $layout['lang']['EMAIL_NUMBER']  ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 3"><?php echo $layout['lang']['email_register_lang']['EMAIL_FORMAT'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.accStatus === 4">{{errMes}}</p>
+          </div>
+          <?php //邮箱tip结束 ?>
+
+
+          <?php //图形验证码 ?>
+          <?php //pc部分 ?>
+          <div :class="{reigster_input_group:true, register_focus: captchaFocus }"
+                flex="dir:left" flex-box="0" v-if="forgetStep === 1">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_ver_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: captchaFocus}]" flex-box="1">
+              <input v-if="accessType==='phone'" type="text" maxlength="4" placeholder="<?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?>"
+              :class="{register_input:true, register_input_right: errorArr.captchaStatus === 10}" v-model="forgetFirst.phone.captcha"
+              @blur='verify(forgetFirst.phone.captcha, "captcha")'
+              @focus="verify(forgetFirst.phone.captcha, 'captcha', 'focus')"
+              @keyup="inputcan(forgetFirst.phone.captcha, 'captcha')"
+              @keyup.enter="verify(forgetFirst.phone.captcha, 'captcha', 'enter')">
+              <input v-if="accessType==='email'" type="text" maxlength="4" placeholder="<?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?>"
+              :class="{register_input:true, register_input_right: errorArr.captchaStatus === 10}" v-model="forgetFirst.email.captcha"
+              @blur='verify(forgetFirst.email.captcha, "captcha")'
+              @focus="verify(forgetFirst.email.captcha, 'captcha', 'focus')"
+              @keyup="inputcan(forgetFirst.email.captcha, 'captcha')"
+              @keyup.enter="verify(forgetFirst.email.captcha, 'captcha', 'enter')">
+            </div>
+            <span class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center"><img :src="ver_src" alt="" class="register_img_btn white500_bg" @click="img_ver"></span>
+          </div>
+          <?php //pc end ?>
+
+          <?php //校验部分 ?>
+          <div v-if="forgetStep === 1" class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.captchaStatus === 0 || errorArr.captchaStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.captchaStatus === 1"><?php echo $layout['lang']['VERIFICATION_CONFIRM']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 2"><?php echo $layout['lang']['VERIFICATION_CONFIRM'] ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 3"><?php echo $layout['lang']['NUMBER_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.captchaStatus === 4">{{errMes}}</p>
+          </div>
+
+          <?php //找回密碼第二步 ?>
+          <p class="forgetTwo_phone" v-if="this.forgetStep === 2 && accessType === 'phone'"><?php echo $layout['lang']['FORGET_STEP_OVER']; ?>:
+            <span class="blue200_f">
+              {{area_num.split("+")[1] === '86' ? forgetFirst.phone.account.slice(0, 3) + '****' + forgetFirst.phone.account.slice(7, 11) : forgetFirst.phone.account.slice(0,-4) + '**' + forgetFirst.phone.account.slice(-2)}}
+            </span>
+          </p>
+          <p class="forgetTwo_phone" v-if="this.forgetStep === 2 && accessType === 'email'"><?php echo $loginLang['FILLED_EMAIL'] ?>:
+            <span class="blue200_f">
+              {{forgetFirst.email.account? forgetFirst.email.account.slice(0, 3) + '****@' + forgetFirst.email.account.split('@')[1] : ''}}
+            </span>
+          </p>
+          <?php // google 验证码 ?>
+          <div :class="{reigster_input_group:true, register_focus: googleFocus}"
+                flex="dir:left" flex-box="0" v-if="forgetStep === 2 && isGoogle">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_mes_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: googleFocus}]" flex-box="1">
+              <input type="text" maxlength="6" placeholder="<?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?>" class="register_input"
+                v-model="forgetTwo.google_code"
+                @blur='verify(forgetTwo.google_code, "google")'
+                @focus="verify(forgetTwo.google_code, 'google', 'focus')"
+                @keyup="inputcan(forgetTwo.google_code, 'google')"
+                @keyup.enter="verify(forgetTwo.google_code, 'google', 'enter')">
+            </div>
+          </div>
+
+          <p v-if="forgetStep===2 && isGoogle" class="register_input_mes_code tip-txt" flex = "main:justify">
+            <span class="register_input_code" v-if="errorArr.googleStatus === 0 || errorArr.googleStatus === 10"></span>
+            <span class=" register_input_code" v-if="errorArr.googleStatus === 1 "><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.googleStatus === 2"><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.googleStatus === 3"><?php echo $layout['lang']['GOOGLE_CODE']['GOOGLE_WARN_ERR']; ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.googleStatus === 4">{{errMes}}</span>
+          </p>
+          <?php //短信验证码 ?>
+          <?php //pc 開始 ?>
+          <div :class="{reigster_input_group:true, register_focus: codeFocus}"
+                flex="dir:left" flex-box="0" v-if="forgetStep === 2">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_mes_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: codeFocus}]" flex-box="1">
+              <input type="text" maxlength="6" placeholder="<?php echo $layout['lang']['PLS_VERIFY_CODE']?>" class="register_input"
+                v-model="forgetTwo.code"
+                @blur='verify(forgetTwo.code, "code")'
+                @focus="verify(forgetTwo.code, 'code', 'focus')"
+                @keyup="inputcan(forgetTwo.code, 'code')"
+                @keyup.enter="verify(forgetTwo.code, 'code', 'enter')">
+            </div>
+            <div class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center">
+              <button type="button" name="button" class="register_img_btn register_send orange500_f" @click="get_verify('11')" v-cloak>
+                {{setTimes === "out" ? '<?php echo $layout['lang']["ACQUIRING"] ?>' : times+'<?php echo $layout['lang']['GET_PHONECODE_AGAING'] ?>'}}
+              </button>
+            </div>
+          </div>
+          <?php //pc end ?>
+
+          <p v-if="forgetStep===2 && accessType === 'phone'" class="register_input_mes_code tip-txt" flex = "main:justify">
+            <span class="register_input_code" v-if="errorArr.codeStatus === 0 || errorArr.codeStatus === 10"></span>
+            <span class=" register_input_code" v-if="errorArr.codeStatus === 1 "><?php echo $layout['lang']['PLEASE_TEL_YZM']; ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 2"><?php echo $layout['lang']['PLEASE_TEL_YZM']; ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 3"><?php echo $layout['lang']['NUMBER_UNENOUGH']; ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 4">{{errMes}}</span>
+            <span v-if="voice_set" class="red500_f"><?php echo $layout['lang']['CANGET'] ?>{{times}}<?php echo $layout['lang']['GET_VOICE_CODE'] ?></span>
+            <span v-if="voice_warn" class="red500_f"><?php echo $layout['lang']['ATTENTION_CALLIMG'] ?></span>
+            <span v-if="voice_ver && !voice_set"><?php echo $layout['lang']['CLICK_ACQUIRING']; ?><a href="javascript:void(0);" class="blue500_f" @click="voice_verify"><?php echo $layout['lang']['PHOME_TICS']; ?></a></span>
+          </p>
+
+          <p v-if="forgetStep===2 && accessType === 'email'" class="register_input_mes_code tip-txt" flex = "main:justify">
+            <span class="register_input_code" v-if="errorArr.codeStatus === 0 || errorArr.codeStatus === 10"></span>
+            <span class=" register_input_code" v-if="errorArr.codeStatus === 1 "><?php echo $loginLang['PLZ_ENTER_VERIFY_CODE'] ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 2"><?php echo $loginLang['PLZ_ENTER_VERIFY_CODE'] ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 3"><?php echo $loginLang['NUMBER_DIGITS_INCORRECT'] ?></span>
+            <span class=" register_input_code red500_f" v-if="errorArr.codeStatus === 4">{{errMes}}</span>
+          </p>
+
+          <?php //找回密碼第三部 ?>
+          <?php //登录密码 ?>
+          <div :class="{reigster_input_group:true, register_focus: pwdFocus}"
+                flex="dir:left" flex-box="0" v-if="forgetStep === 3">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_pwd_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: pwdFocus}]"  flex-box="1" flex="">
+              <input type="password" maxlength="16" flex-box="1" placeholder="<?php echo $layout['lang']['ASSEMBLAGE']; ?>"
+                class="register_input"
+                onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="forgetThree.pwd"
+                @blur.stop='verify(forgetThree.pwd, "pwd")'
+                @focus.stop="verify(forgetThree.pwd, 'pwd', 'focus')"
+                @keyup="inputcan(forgetThree.pwd, 'pwd')"
+                @keyup.enter="verify(forgetThree.pwd, 'pwd', 'enter')">
+            </div>
+          </div>
+          <?php //校验部分  5弱 6中 7强?>
+
+          <div v-if="forgetStep === 3" class="tip-txt">
+            <p class="register_input_mes" v-if="errorArr.pwdStatus === 0 || errorArr.pwdStatus === 10"></p>
+            <p class="register_input_mes " v-if="errorArr.pwdStatus === 1"><?php echo $layout['lang']['LOG_PASSWORD']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 2"><?php  echo $layout['lang']['LOG_PASSWORD']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 3"><?php echo $layout['lang']['PASSWORD_LENGTH_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 4">{{errMes}}</p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.pwdStatus === 5"><span class="min_tip"></span><?php echo $layout['lang']['ASSEMBLAGE'] ?></p>
+            <!-- <p class="register_input_mes  orange500_f" v-if="errorArr.pwdStatus === 6"><span class="middle_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_TWO'] ?></p> -->
+            <p class="register_input_mes  green500_f" v-if="errorArr.pwdStatus === 7"><span class="max_tip"></span><?php echo $layout['lang']['PASSWORD_WARING_THREE']; ?></p>
+          </div>
+
+          <?php //再次输入登录密码 ?>
+          <div :class="{reigster_input_group:true, register_focus: repwdFocus }"
+            flex="dir:left" flex-box="0" v-if="forgetStep === 3">
+            <label flex="main:center cross:center" class="register_label white500_bg">
+              <span class="register_img register_pwd_img"></span>
+            </label>
+            <div :class="['register_border_div', {register_focus: repwdFocus}]" flex-box="1">
+              <input type="password" maxlength="16" placeholder="<?php echo $layout['lang']['INPUT_AGAIN']; ?>"
+              class="register_input"
+              onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="forgetThree.repwd"
+              @blur='verify(forgetThree.repwd, "repwd")'
+              @focus="verify(forgetThree.repwd, 'repwd', 'focus')"
+              @keyup="inputcan(forgetThree.repwd, 'repwd')"
+              @keyup.enter="verify(forgetThree.repwd, 'repwd', 'enter')">
+            </div>
+          </div>
+          <?php //校验部分 8两次输入不一致?>
+
+          <div v-if="forgetStep === 3" class="tip-txt">
+            <p class="register_input_mes" v-if="(errorArr.repwdStatus === 0 || errorArr.repwdStatus === 10)"></p>
+            <p class="register_input_mes " v-if="errorArr.repwdStatus === 1"><?php echo $layout['lang']['INPUT_AGAIN']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 2"><?php echo $layout['lang']['INPUT_AGAIN']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 3"><?php echo $layout['lang']['AGAIG_PASSWORD_LENGTH_UNENOUGH']; ?></p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 4">{{errMes}}</p>
+            <p class="register_input_mes  red500_f" v-if="errorArr.repwdStatus === 8"><span class="min_tip"></span><?php echo $layout['lang']['PASSWORD_LENGTH_DIFFERENT']; ?></p>
+          </div>
+          <div flex="main:center cross:center" class="forget_warp_btn tip-txt">
+            <button v-if="this.forgetStep !== 3"
+              type="button"
+              name="button"
+              :disabled="!disable"
+              class="register_login orange500_bg white100_f"
+              @click.stop="register_submit()">
+              <?php echo $loginLang['NEXT']?>
+              <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+            </button>
+            <button v-if="this.forgetStep === 3"
+              type="button"
+              name="button"
+              :disabled="!disable"
+              class="register_login orange500_bg white100_f"
+              @click.stop="register_submit()">
+              <?php echo $layout['lang']['FORGET_SUBMIT'] ?>
+              <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $layout['lang']['DETERMINE']; ?></span>
+  </my-alert>
+
+  <?php // 重置密碼成功彈窗 ?>
+  <div class="email-modal" v-if="showActiveModal">
+    <div class="register_success_bg register_alert_bg"></div>
+    <transition name="zoom">
+      <div class="register_success_bg modal_wrapper" flex="main:center cross:center">
+        <div class="modal_content">
+          <div :class="['modal_top',{'modal_top_repwd_succ': repwdSucc}]">
+            <div class="modal_close">
+              <i class="modal_close_btn" @click="close_btn"></i>
+            </div>
+          </div>
+          <div class="modal_main_con" v-if="repwdSucc">
+            <p class="modal_main_txt"><?php echo $loginLang['CONGRATULATE_REPWD_SUCC']?></p>
+            <div class="modal_btn_div" flex="main:center">
+              <button type="button" name="button" @click.stop="loginAlert" class="orange500_bg"><?php echo $layout['lang']['GO_LOGIN'] ?></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+
+</div>

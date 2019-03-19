@@ -1,0 +1,36 @@
+<div class="left-nav" id="userNav">
+  <dl class="">
+    <?php // 当前页面 a标签 添加 class  u-active 激活状态 ?>
+    <?php // 我的账户 ?>
+    <dt><strong><?php echo $layout['lang']['USER_NAV_TITLE'] ?></strong></dt>
+    <?php // 账户信息 ?>
+    <dd><a data-page="user" <?php echo $layout['action']=='index'?'class="u-active"':''?> href="/user"><?php echo $layout['lang']['USER_NAV_INDEX']; ?></a></dd>
+    <?php // 实名认证 ?>
+    <dd><a data-page="realinfo" <?php echo $layout['action']=='realinfo'?'class="u-active"':''?> href="/user/realinfo"><?php echo $layout['lang']['USER_NAV_AUTH']; ?></a></dd>
+  </dl>
+  <dl class="">
+
+    <?php // 我的资产 ?>
+    <dt class="my-money"><strong><?php echo $layout['lang']['USER_NAV_MY_ASSETS'] ?></strong></dt>
+    <?php // 甜品盒 ?>
+    <dd><a data-page="candy" <?php echo $layout['action']=='candy'?'class="u-active"':''?> href="/user/candy"><?php echo $layout['lang']['USER_NAV_CANDY'] ?></a></dd>
+    <?php // 充币 ?>
+    <dd><a data-page="coinin" <?php echo $layout['action']=='coinin'?'class="u-active"':''?> href="/user/coinin"><?php echo $layout['lang']['USER_NAV_COIN_IN'] ?></a></dd>
+    <?php // 提币 ?>
+    <dd><a data-page="coinout" <?php echo $layout['action']=='coinout'?'class="u-active"':''?> href="/user/coinout"><?php echo $layout['lang']['USER_NAV_COIN_OUT'] ?></a></dd>
+  </dl>
+  <dl class="">
+    <?php // 我的交易 ?>
+    <dt class="my-trade"><strong><?php echo $layout['lang']['USER_NAV_MY_TRADE'] ?></strong></dt>
+    <?php // 委托管理 ?>
+    <dd><a data-page="trust" <?php echo $layout['action']=='trust'?'class="u-active"':''?> href="/user/trust"><?php echo $layout['lang']['USER_NAV_TRUST']; ?></a></dd>
+    <?php // 成交查询 ?>
+    <dd><a data-page="deal" <?php echo $layout['action']=='deal'?'class="u-active"':''?> href="/user/deal"><?php echo $layout['lang']['USER_NAV_DEAL']; ?></a></dd>
+  </dl>
+  <dl class="">
+    <?php // 我的交易 ?>
+    <dt class="my-plan"><strong><?php echo $layout['lang']['USER_NAV_MASTER_PLAN'] ?></strong></dt>
+    <?php // 委托管理 ?>
+    <dd><a data-page="mplan" <?php echo $layout['action']=='mplan'?'class="u-active"':''?> href="/user/mplan"><?php echo $layout['lang']['USER_NAV_MPLAN']; ?></a></dd>
+  </dl>
+</div>

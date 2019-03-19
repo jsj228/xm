@@ -1,0 +1,35 @@
+@import "./config.scss";
+@import "./color.scss";
+
+@media screen and(min-width: $mdScreenMin) {
+  .alert_header {
+    display: none;
+  }
+}
+
+@media screen and(max-width: $smScreenMax) {
+  .alert_header {
+    z-index: 42;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: pxToRem(120);
+    width: 100%;
+    line-height: pxToRem(120);
+    text-align: center;
+    font-size: pxToRem(36);
+    .alert_header_back {
+      z-index: 41;
+      display: inline-block;
+      position: absolute;
+      top: pxToRem(38);
+      left: pxToRem(32);
+      width: pxToRem(46);
+      height: pxToRem(46);
+      background: url("../assets/svg/alert_back.svg") no-repeat;
+      background-size: pxToRem(46);
+      cursor: pointer;
+    }
+  }
+}

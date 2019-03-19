@@ -1,0 +1,85 @@
+@import "./config.scss";
+@import "./color.scss";
+
+.nav_contain {
+  position: relative;
+}
+.dob_contain {
+  padding: 0;
+  min-width: 800px;
+
+  &>img {
+    display: block;
+    min-width: 900px;
+    width: 100%;
+  }
+}
+.footer-content {
+  display: none;
+}
+
+.jump_top {
+  display: inline-block;
+  position: absolute;
+  top: -8px;
+  right: 58px;
+  z-index: 66;
+  width: 58px;
+  height: 58px;
+  background: #fff url('../assets/jump.png') center no-repeat;
+  box-shadow: 0 0 12px #666;
+
+  &:hover {
+    background-color: #eee;
+    transition: all .35s;
+  }
+}
+
+.index_link {
+  margin: 0 auto;
+  padding-top: 48px;
+  padding-bottom: 30px;
+  position: relative;
+  min-height: 172px;
+  width: 75%;
+  .index_link_logo {
+    font-size: 28px;
+    img {
+      margin-right: 10px;
+      width: 88px;
+      height: 100%;
+    }
+  }
+  .index_link_p {
+    font-size: 18px;
+    line-height: 60px;
+  }
+  .link_ul {
+    &.link_padd {
+      margin-right: 70px;
+    }
+    .link_title {
+      padding-bottom: 22px;
+      font-size: 16px;
+    }
+    .link_li a {
+      height: 24px;
+      line-height: 24px;
+      font-size: 14px;
+      &:hover {
+        transition: all .35;
+        color: $red500;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $bigScreenMax) {
+  .dob_contain {
+    min-width: auto;
+    overflow: auto;
+  }
+  .jump_top, .mob_hide {
+    display: none;
+  }
+}

@@ -1,0 +1,94 @@
+@import "./fun.scss";
+@import "./theme.scss";
+
+html,.mob-body {
+  font-family: 'Microsoft YaHei', "SimHei", Helvetica, Arial;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.mob-body {
+  margin: 0;
+  padding: 0;
+  font-size: pxToRem(28);
+  -webkit-overflow-scrolling: touch;
+
+  // 隐藏Safari 按钮默认样式 重置字体大小
+  button, input[type="submit"], input[type="button"], input[type="text"], input[type="number"], input[type="password"] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-size: pxToRem(30);
+  }
+  select {
+    font-size: pxToRem(30);
+  }
+  .lf {float: left;}
+  .rf {float: right;}
+  .flex {
+    display: flex;
+  }
+  .flex-jc-center {
+    display: flex;
+    justify-content: center;
+  }
+  .flex-jc-between {
+    @extend .flex;
+    justify-content: space-between;
+  }
+  .flex-ai-center {
+    display: flex;
+    align-items: center;
+  }
+  .flex-center-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .flex-col {
+    @extend .flex;
+    flex-direction: column;
+  }
+  .flex-col-center-center {
+    @extend .flex-col;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn {
+    width: pxToRem(272);
+    height: pxToRem(80);
+    line-height: pxToRem(80);
+    color: #fff;
+    text-align: center;
+    font-size: pxToRem(36);
+    border: none;
+    outline: none;
+    border-radius: pxToRem(6);
+  }
+  .btn-orang {
+    background: #ffbb03;
+  }
+  .btn-gray {
+    color: $norBlack;
+    border: 1px solid $grayBlack;
+    background: transparent;
+  }
+  .shadow-cont {
+    box-shadow: 0 0 pxToRem(20) rgba(0,0,0,0.1);
+  }
+  .hide-dom {
+    display: none;
+  }
+  .head-mar {
+    margin-top: pxToRem(105);
+  }
+  .bg-content {
+    top: pxToRem(105);
+  }
+  .mob-no-shadow {
+    box-shadow: none;
+  }
+  .mob-hide {
+    display: none!important;
+  }
+}

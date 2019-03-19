@@ -1,0 +1,96 @@
+// 0 ~ 1199
+@media screen and (max-width: $bigScreenMax) {
+  html, body {
+    width: 100%;
+    height: 100%;
+    min-width: auto;
+    min-height: auto;
+    overflow: hidden;
+  }
+  .index_link {
+    display: none;
+  }
+  //pc  新首页 下半部分
+  .index_warp {
+    width: 100%;
+    height: 100%;
+
+    .index_titles {
+      position: absolute;
+      opacity: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .ggao_top_new {
+      width: 100%;
+      height: 100%;
+
+      .img_swiper {
+        height: 100%;
+        width: 100%;
+
+        .img_contain {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          &>img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate3d(-50%, -50%, 0);
+          }
+        }
+
+      }
+    }
+  }
+  .warp_bottom {
+    display: none;
+  }
+
+  .activity_content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: pxToRem(142);
+    z-index: 5;
+
+    button, a {
+      margin: 0 pxToRem(10);
+      box-sizing: border-box;
+      display: inline-block;
+      width: pxToRem(240);
+      height: pxToRem(80);
+      line-height: pxToRem(80);
+      border-radius: pxToRem(8);
+      text-align: center;
+      font-size: pxToRem(26);
+      outline: none;
+    }
+
+    button {
+      background-color: $orange500;
+
+      &:hover {
+        background: $orange600;
+        transition: all .5s;
+      }
+    }
+    a {
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .3);
+
+      &:hover {
+        background: rgba(255, 255, 255, .3);
+        border-color: rgba(255, 255, 255, .6);
+        transition: all .3;
+      }
+    }
+
+  }
+
+  .swiper-button-next, .swiper-button-prev, .news-list, .list-data, .footer-content {
+    display: none;
+  }
+}

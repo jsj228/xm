@@ -1,0 +1,26 @@
+  <?php // $vendor = json_decode(file_get_contents(PATH_TPL.'/../../../public_dll/manifest.json'), true); ?>
+  <?php if (IS_MOBILE) {
+    $mob = "";
+  } else {
+    $mob = "";
+  } ?>
+<?php // cdn ?>
+
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+
+<?php // $libs = json_decode(file_get_contents(PATH_TPL.'/../../../public/libs.json'), true); ?>
+<?php if ($hasLibs) { ?>
+  <script src=<?php echo "/libs".'/'.$libs['libs']['js'] ?>></script>
+<?php }?>
+<?php
+$scrips = '';
+$oo = '';
+foreach ($statics[$layout['controller'].'.'.$layout['action']]['js'] as $v) {
+  if ($v)  $scrips.= "<script src=$v></script>";
+}
+echo $scrips;
+?>

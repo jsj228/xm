@@ -1,0 +1,159 @@
+<div class="coin_list_con"  flex="">
+  <div class="gray600_f list_tit" flex-box="0"><?php echo $lang['USER_CONDITION_COIN_LIST']?></div>
+  <div class="list_item" id="allCoinList" flex-box="1">
+    <?php for($i = 0; $i < count($coinList); $i++){ 
+      // var_dump($coinList)[0]['coin_from'];
+      ?>
+       <!--  -->
+      <span
+        data-coinover="<?php echo $coinList[$i]['coinover'] ?>"
+        data-coincode="<?php echo $coinList[$i]['coin_from'] ?>"
+        data-maxout="<?php echo $coinInfo[$i]['maxout'] ?>"
+        data-minout="<?php echo $coinInfo[$i]['minout'] ?>"
+        data-rateout="<?php echo $coinInfo[$i]['rate_out'] ?>"
+        data-outlimit="<?php echo $coinInfo[$i]['out_limit'] ?>"
+        data-instatus="<?php echo $coinList[$i]['in_status'] ?>"
+        data-outstatus="<?php echo $coinList[$i]['out_status'] ?>"
+        data-nfloat="<?php echo $coinInfo[$i]['number_float'] ?>"
+        data-type="<?php echo $coinList[$i]['type'] ?>"
+        
+        name="<?php if($coinList[$i]['type']=="rgb"){echo 'rgbname';}?>"
+      <?php // in_status == 1 充幣不顯示 ?>
+      class="gray500_f 
+      <?php
+       
+       if(($get['coin'] && $get['coin']==$coinList[$i]['coin_from']) || (!$get['coin'] && $i==0)){
+        echo 'sel_coin';
+      }
+      ?>" ><?php echo strtoupper($coinList[$i]['coin_from']) ?></span>
+    <?php } ?>
+  </div>
+  
+<!-- <div class="mask">
+</div>
+    <div class="elasticframe" id="action_scaleOut">
+    <div class="Secondelastic">
+    <dl>
+        <dt>您的华克金钱包地址：</dt>
+            <dd style="position: relative;">
+                <input type="text" class="texts" id="weike_dzbz" onkeyup="value=value.replace(/[^A-Za-z0-9\-]+/g,&quot;&quot;)" maxlength="24" value="" style="border: none;">
+            </dd>
+        </dl>
+    <dl>
+        <dt>转入数量：</dt>
+        <dd style="position: relative;">
+            <input type="text" class="texts" id="cny_num" maxlength="12" value="" style="height: 28px;width: 219px;border-radius: 10px; position: absolute;top: -23px;left: 84px;" style="border: none;">
+        </dd>
+    </dl>
+    <dl style="margin-top: 28px;">
+        <dt >交易密码：</dt>
+        <dd>
+            <input type="password" class="texts" id="cny_paypassword" value="" style="height: 28px;width: 219px;border-radius: 10px;position: absolute;top: 91px;left: 185px;" style="border: none;">
+        </dd>
+    </dl>
+    <dl>
+        <dt></dt>
+        <dd>
+            <div  class="coinin_up" >提交代码</div>
+        </dd>
+    </dl>
+    
+    </div>
+    <div class="bind-close">&times;</div>
+</div> -->
+
+</div>
+<!-- <style>
+  .mask{
+    opacity: 0.4;
+    filter: alpha(opacity=30);
+    background-color: gray;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display:none;
+}
+.Secondelastic dl>dt{
+  font-size: 16px;
+  color: #666;
+}
+
+
+
+.elasticframe{
+ 
+  background: #FFFFFF;
+  width: 500px;
+  height: 220px;
+  z-index: 1000;
+  position: absolute;
+  top: 30%;
+  left: 34%;
+  border-radius: 10px;
+  display:none;
+ 
+}
+.Secondelastic{
+    width: 60%;
+    padding-bottom: 13px;
+    margin: 10px auto;
+    background:	while;
+    margin-top: 43px;
+
+}
+
+.bind-close{
+   font-size: 25px;
+    z-index: 1000;
+    position: absolute;
+    top: 7px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    color: gray;
+}   
+.coinin_up{
+   line-height: 32px;
+    height: 32px;
+    width: 306px;
+    position: absolute;
+    top: 153px;
+    left: 102px;
+    background: #ffbd09;
+    text-align: center;
+} 
+
+</style> -->
+
+<!-- <script>
+$(function(){
+  $(".rgbclass").click(function(){
+   $(".mask").show();
+   $(".elasticframe").show();
+  });
+  $(".bind-close").click(function(){
+    $(".mask").hide();
+   $(".elasticframe").hide();
+  })
+  $(".coinin_up").click(function(){
+    $.ajax({
+        type: "post",
+        url: url,
+        data: {"para":1},
+        success: function (data){
+           console.log(data);
+        }, error:function (XMLHttpRequest, textStatus, errorThrown) {      
+            alert("请求失败！");
+        }
+     });
+  });
+ 
+
+})
+
+</script> -->
+

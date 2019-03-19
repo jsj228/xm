@@ -1,0 +1,357 @@
+<div id="activityCotain">
+  <!-- <div class="" id="errTips" ><?php // echo json_encode($layout['lang']); ?></div> -->
+  <?php // JavaScript 需要的語言包 ?>
+  <div class="" id="errTips" ><?php echo json_encode($layout['lang']['JS_LANG']); ?></div>
+  <?php // js 公共語言包 JS_BASE_LANG ?>
+  <div id="baseLang"><?php echo json_encode($layout['lang']['JS_BASE_LANG']); ?></div>
+  <?php // 注册模板 ?>
+  <div data-tpl="register">
+    <div class="layer-bg"></div>
+    <div class="layer <?php echo $activeButton['register'] == 1 ? 'act-reg' : ''?>" id="register-layer">
+        <div class="close-layer"></div>
+        <p class="layer-title"><?php echo $lang['REGISTER']; ?><a class="top-login" data-login="login" href="javascript:void(0);"><?php echo $lang['LOGIN_BTN']; ?></a></p>
+        <?php // $activeButton['register'] = 0 ?>z
+        <?php // 注册活动 开关?>
+        <?php if ($activeButton['register'] == 1){ ?>
+          <p class="act-reg-news"><?php echo $lang['FIRST']?><span>5MCC</span>，<?php echo $lang['AUTONYM_SEND']; ?><span>10MCC</span>！</p>
+        <?php } ?>
+        <form class="pop-form">
+        <div class="input-g">
+          <!-- <label><?php echo $lang['CHINA']; ?> +86</label> -->
+          <label id="phone_txt" class="fn_txt"><u class="phone_num" id="phone_num">+86</u>
+            <img src="/imgs/up.png" alt="" class="fn_up"><img src="/imgs/reg_down.png" alt="" class="fn_down">
+          </label>
+          <input class="white-input" type="text" maxlength="11" name="tel" placeholder="<?php echo $lang['TEL']; ?>" data-form="tel"/>
+          <p class="tip-placeholder"><?php echo $lang['TEL_NUMBER']; ?></p>
+          <i class="input-correct"></i>
+          <?php //語言選擇列表 ?>
+          <ul class="show_phoen_area" id="phone_areas">
+            <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+              <?php //默认+86 ?>
+              <?php if ($k == '0') { ?>
+                <li class="show_el fn_el show_active"><div class="show_area"><?php echo $v['country'] ?></div><div class=" show_num fn_child"><?php echo $v['area_code'] ?></div></li>
+              <?php } else { ?>
+                <li class="show_el fn_el"><div class="show_area"><?php echo $v['country'] ?></div><div class=" show_num fn_child"><?php echo $v['area_code'] ?></div></li>
+              <?php } ?>
+            <?php } ?>
+          </ul>
+        </div>
+        <div class="input-g">
+          <label><?php echo $lang['PASSWORD']; ?></label>
+          <input type="password" maxlength="16" name="pwd" placeholder="<?php echo $lang['ASSEMBLAGE']?>" data-form="pwd" maxlength="16" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false"/>
+          <p class="tip-placeholder"><?php echo $lang['LOGINTO']; ?></p>
+          <i class="input-correct"></i>
+        </div>
+        <div class="input-g">
+          <label><?php echo $lang['CONFIRM_PASSWORD']; ?></label>
+          <input type="password" maxlength="16" name="surePwd" placeholder="<?php echo $lang['INPUT_AGAIN']?>" data-form="surePwd" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false"/>
+          <p class="tip-placeholder"><?php echo $lang['CONFIRM']; ?></p>
+          <i class="input-correct"></i>
+
+        </div>
+        <div class="input-g captcha-group">
+          <label><?PHP echo $lang['VERIFICATION']?></label>
+          <input type="text" class='sm-input' name="captcha" maxlength="4" placeholder="<?php echo $lang['VERIFICATION_CONFIRM']?>" data-form="captcha"/>
+          <p class="tip-placeholder"><?php echo $lang['VAGUE']?></p>
+          <span data-pscode="code"><img src=''></span>
+        </div>
+        <div class="input-g msg-group" data-type="register">
+          <label><?php echo $lang['TEL_YZM']?></label>
+          <input type="text" class='sm-input' name="vcode" maxlength="6" placeholder="<?php echo $lang['PLEASE_TEL_YZM']?>" data-form="vcode"/>
+          <p class="tip-placeholder"><?php echo $lang['YOU_TEL_YZM']?></p>
+          <input type="button" class="xs-input" value="<?php $lang['ACQUIRING']?>" class="btn_getMsg" data-time="60"/>
+        </div>
+        <div class="mixed-text getVoice-container" data-type="register">
+          <span><?php echo $lang['CLICK_ACQUIRING']?><a href="javascript:void(0)"><?php echo $lang['PHOME_TICS']?></a></span>
+        </div>
+        <div class="checkbox-container">
+          <input type="checkbox" id="agree-check" :checked="checkeds" required/>
+          <label for="agree-check"><?php echo $lang['YES']?><a href='/policy' target="_blank">《<?php echo $lang['USERS']?>》</a></label>
+        </div>
+        <div class="input-g last-input">
+          <input type="submit" value="<?php echo $lang['REGISTER_BTN'];?>"/>
+        </div>
+        <div class="mixed-text" data-lasline="register">
+          <span><?php echo $lang['HAS_USER']?><a href="javascript:void(0)" id="link-login" data-login="login"><?php echo $lang['LOGIN_BTN']?></a></span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <?php // 登录 模板 ?>
+  <div data-tpl="login">
+    <div class="layer-bg"></div>
+    <div class="layer" id="login-layer">
+      <div class="close-layer"></div>
+      <p class="layer-title"><?php echo $lang['LOGIN_BTN']?><a class="top-login" data-register="register" href="javascript:void(0);"><?php echo $lang['REGISTER']; ?></a></p>
+      <form class="pop-form">
+        <div class="input-g">
+          <!-- <label><?php echo $lang['CHINA']?> +86</label> -->
+          <label id="phone_txt" class="fn_txt"><u class="phone_num" id="phone_num">+86</u>
+            <img src="/imgs/up.png" alt="" class="fn_up"><img src="/imgs/reg_down.png" alt="" class="fn_down">
+          </label>
+          <input class="white-input" type="text" name="tel" maxlength="11" placeholder="<?php echo $lang['LOGIN_TEL']?>" data-form="tel" />
+          <p class="tip-placeholder"><?php echo $lang['LOGIN_TEL']?></p>
+          <?php //語言選擇列表 ?>
+          <ul class="show_phoen_area" id="phone_areas">
+            <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+              <?php //默认+86 ?>
+              <?php if ($k == '0') { ?>
+                <li class="show_el fn_el show_active"><div class="show_area"><?php echo $v['country'] ?></div><div class=" show_num fn_child"><?php echo $v['area_code'] ?></div></li>
+              <?php } else { ?>
+                <li class="show_el fn_el"><div class="show_area"><?php echo $v['country'] ?></div><div class=" show_num fn_child"><?php echo $v['area_code'] ?></div></li>
+              <?php } ?>
+            <?php } ?>
+          </ul>
+        </div>
+
+        <div class="input-g">
+          <label><?php echo $lang['IMPORT_PASSWORD']?></label>
+          <input type="password" name="pwd" placeholder="<?php echo $lang['LOG_PASSWORD']?>" data-form="pwd" maxlength="16" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" />
+          <p class="tip-placeholder"><?php echo $lang['LOG_PASSWORD']?></p>
+        </div>
+
+        <div class="input-g captcha-group">
+          <label><?php echo $lang['VERIFICATION']?></label>
+          <input type="text" class='sm-input' name="captcha" maxlength="4" placeholder="<?php echo $lang['VERIFICATION_CONFIRM']?>" data-form="captcha" />
+          <p class="tip-placeholder"><?php echo $lang['VAGUE']?></p>
+          <span data-pscode="code"><img src=''></span>
+        </div>
+
+        <!-- <div class="input-g msg-group" data-type="login">
+          <label><?php echo $lang['TEL_YZM']?></label>
+          <input type="text" class='sm-input' name="vcode" maxlength="6" placeholder="<?php echo $lang['PLEASE_TEL_YZM']?>" data-form="vcode" />
+          <p class="tip-placeholder"><?php echo $lang['YOU_TEL_YZM']?></p>
+          <input type="button" class="xs-input" value="<?php echo $lang['ACQUIRING']?>" class="btn_getMsg" data-time="60" />
+        </div> -->
+
+        <div class="mixed-text getVoice-container" data-type="register">
+          <span><?php echo $lang['CLICK_ACQUIRING']?><a href="javascript:void(0)"><?php echo $lang['PHOME_TICS']?></a></span>
+        </div>
+
+        <div class="input-g">
+          <button type="submit"><?php echo $lang['LOGIN']; ?></button>
+          <?php // 忘记密码  ?>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- <a href="javascript:void(0)" class="link-register" data-register='register'><?PHP echo $lang['REGISTER_NOW']?></a> -->
+  <!-- <a class="forget-pwd" id="forgetPwd" href="javascript:void(0)"><?php echo $lang['FORGET_PASSWORD']?>?</a> -->
+  <?php // 注册成功  ?>
+  <div data-tpl="loginsucc">
+    <div class="close-layer"></div>
+    <p class="hide-dom succ-title"><?php echo $lang['REGISTER']; ?><a class="top-login" data-login="login" href="javascript:void(0);"><?php echo $lang['LOGIN_BTN']; ?></a></p>
+    <div class="reg-succ-win">
+      <div class="layer-title"><?php echo $lang['CONGRATULATIONS']?>！</div>
+      <?php if ($activeButton['register'] == 1){ ?>
+        <div class="reg-active">
+         <?php echo $lang['SEND_OUT']?><span>5<?php echo $lang['GE']?>MCC</span><?php echo $lang['ACCOUT_NUMBER']?>！<br>
+          <?php echo $lang['REAL_NUMBER']?><span>10<?php echo $lang['GE']?>MCC</span>！
+        </div>
+      <?php } ?>
+      <input type="button" value="<?php echo $lang['GO_LOGIN']?>" data-login="login" id="link-login"/>
+    </div>
+  </div>
+  <?php // 交易密码 ?>
+  <div data-tpl="pwd">
+    <div class="close-layer"></div>
+    <p class="layer-title"><?php echo $lang['REAL_PASSWORD']?></p>
+    <form class="transPwd-form">
+      <div class="input-g">
+        <input type="password" placeholder="<?php echo $lang['REAL_PASSWORD']?>" id="trans-pwd" required autofocus />
+        <p class="tip-placeholder"></p>
+      </div>
+      <div class="input-g">
+        <input type="submit" value="<?php echo $lang['DETERMINE']?>" />
+      </div>
+    </form>
+  </div>
+  <?php // 重置密码 ?>
+  <div data-tpl="repwd">
+    <div class="reset-pwd-win" id="resPhone">
+      <h3><?php echo $lang['REAL_LOG_PASSWORD']?></h3>
+      <div class="do-step" id="doStep">
+        <div class="act-step">
+          <div class="step-text">
+            <span>1</span>
+            <p><?php echo $lang['FILL_TEL']?></p>
+          </div>
+          <u class="dash-line"></u>
+        </div>
+        <div>
+          <div class="step-text">
+            <span>2</span>
+            <p><?php echo $lang['FILL_SF']?></p>
+          </div>
+          <u class="dash-line"></u>
+        </div>
+        <div>
+          <div class="step-text">
+            <span>3</span>
+            <p><?php echo $lang['SF_PASSWORD']?></p>
+          </div>
+          <u class="dash-line"></u>
+        </div>
+        <div>
+          <div class="step-text">
+            <span>4</span>
+            <p><?php echo $lang['SZ_PASSWORD']?></p>
+          </div>
+        </div>
+      </div>
+      <div class="pwd-chk-form" id="formContain">
+        <p data-form="lable">
+          <span><?php echo $lang['CHINA']?> +86</span><input type="tel" name="phone" placeholder="<?php echo $lang['SZ_TEL']?>"/>
+          <span class="warn-tips-win" data-warn="msg"></span>
+        </p>
+        <div class="short-tag">
+          <p data-form="lable">
+            <span><?php echo $lang['VERIFICATION']?></span>
+            <input type="text" name="captcha" maxlength="4" placeholder="<?php echo $lang['VERIFICATION_CONFIRM']?>">
+            <span class="warn-tips-win" data-warn="msg"></span>
+          </p>
+          <img src=''>
+        </div>
+        <p><button class="submit-btn" id="postPhone"><?php echo $lang['XYB']?></button></p>
+      </div>
+    </div>
+  </div>
+  <?php //重置交易密碼?>
+</div>
+<?php // 注册 vue 模板 ?>
+<div id="registerDom" class="register_dom white500_bg err_all" v-cloak  v-if="showAlert">
+  <transition>
+    <div>
+      <!-- <div class="register_bg"></div> -->
+      <div :class="{reigster_input_group:true, err_input: errorArr.phoneStatus === 2 || errorArr.phoneStatus === 3 || errorArr.phoneStatus === 4 }" flex="dir:left" flex-box="0">
+        <label flex="" class="register_label white500_bg register_two_label" @click="area_change">
+          <span flex-box="0" class="register_img" flex="main:center cross:center"><img src="/imgs/reg/reg_phone.png" alt=""></span>
+          <span flex-box="1" class="register_area" flex="dir:left box:mean">
+            <span>{{area_num}}</span>
+            <span flex="main:center cross:center"><img src="/imgs/reg/reg_bot.png" alt=""></span>
+          </span>
+        </label>
+        <input type="text" placeholder="建议使用您的常用手机" maxlength="11" flex-box="1"
+        :class="{register_input:true, register_input_right: errorArr.phoneStatus === 10}" v-model="queryLo.phone"
+        @blur='verify("phone")' @focus="verify('phone')" @keyup="inputcan('phone')" @keyup.enter="verify('phone')">
+        <ul class="register_area_list" v-cloak v-show="area_show">
+          <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+            <li flex="dir:left box:last" href="javascript:void(0);" :class="{register_font: true, register_warp: true, fn_active: register_index == <?php echo $k?>}" @click="arec_click('<?php echo $k?>, <?php echo $v['area_code'] ?>')">
+              <span><?php echo $v['country'] ?></span><span><?php echo $v['area_code'] ?></span>
+            </li>
+          <?php } ?>
+        </ul>
+      </div>
+      <?php //格式判断 0不显示 1普通输入提示 2为空提示 3输入格式提示 4php返回提示 ?>
+      <p class="register_input_mes" v-if="errorArr.phoneStatus === 0 || errorArr.phoneStatus === 10"></p>
+      <p class="register_input_mes err_warn" v-if="errorArr.phoneStatus === 1">请输入您的手机号</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.phoneStatus === 2">请输入您的手机号</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.phoneStatus === 3">手机号格式不正确</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.phoneStatus === 4">{{errMes}}</p>
+
+      <div :class="{reigster_input_group:true, err_input: errorArr.pwdStatus === 2 || errorArr.pwdStatus === 3 || errorArr.pwdStatus === 4 || errorArr.pwdStatus === 5 }" flex="dir:left" flex-box="0">
+        <label flex="main:center cross:center" class="register_label white500_bg">
+          <span class="register_img" flex="main:center cross:center"><img src="/imgs/reg/reg_pwd.png" alt=""></span>
+        </label>
+        <input type="password" maxlength="16" placeholder="请输入登录密码" flex-box="1"
+        :class="{register_input:true, register_input_right: errorArr.pwdStatus === 6 || errorArr.pwdStatus === 7 }"
+        onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryLo.pwd"
+        @blur.stop='verify("pwd")' @focus.stop="verify('pwd')" @keyup="inputcan('pwd')" @keyup.enter="verify('pwd')">
+      </div>
+      <?php //校验部分  5弱 6中 7强?>
+      <p class="register_input_mes" v-if="errorArr.pwdStatus === 0"></p>
+      <p class="register_input_mes err_warn" v-if="errorArr.pwdStatus === 1">请输入您的登录密码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.pwdStatus === 2">请输入您的登录密码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.pwdStatus === 3">密码不能小于6位字符</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.pwdStatus === 4">{{errMes}}</p>
+      <p class="register_input_mes min_tip red500_f" v-if="errorArr.pwdStatus === 5">有被盗风险，请使用字母、数字和符号两种及以上组合</p>
+      <p class="register_input_mes middle_tip orange500_f" v-if="errorArr.pwdStatus === 6">安全强度适中，可以使用三种以上的组合来提高安全性</p>
+      <p class="register_input_mes max_tip green500_f" v-if="errorArr.pwdStatus === 7">您的密码很安全</p>
+
+      <div :class="{reigster_input_group:true, err_input: errorArr.repwdStatus === 2 || errorArr.repwdStatus === 3 || errorArr.repwdStatus === 4 || errorArr.repwdStatus === 8 }"
+          flex="dir:left" flex-box="0" v-if="now_type === 're'">
+        <label flex="main:center cross:center" class="register_label white500_bg">
+          <span class="register_img" flex="main:center cross:center"><img src="/imgs/reg/reg_pwd.png" alt=""></span>
+        </label>
+        <input type="password" maxlength="16" placeholder="请再次输入密码" flex-box="1"
+        :class="{register_input:true, register_input_right: errorArr.repwdStatus === 10 }"
+        onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" v-model="queryRe.repwd"
+        @blur='verify("repwd")' @focus="verify('repwd')" @keyup="inputcan('repwd')" @keyup.enter="verify('repwd')">
+      </div>
+      <?php //校验部分 8两次输入不一致?>
+      <p class="register_input_mes" v-show="(errorArr.repwdStatus === 0 || errorArr.repwdStatus === 10) && now_type === 're'"></p>
+      <p class="register_input_mes err_warn" v-if="errorArr.repwdStatus === 1 && now_type === 're'">请再次输入您的登录密码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.repwdStatus === 2 && now_type === 're'">请再次输入您的登录密码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.repwdStatus === 3 && now_type === 're'">重复密码长度不能小于6位字符</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.repwdStatus === 4 && now_type === 're'">{{errMes}}</p>
+      <p class="register_input_mes min_tip red500_f" v-if="errorArr.repwdStatus === 8 && now_type === 're'">两次密码输入不一致</p>
+
+      <div :class="{reigster_input_group:true, err_input: errorArr.captchaStatus === 2 || errorArr.captchaStatus === 3 || errorArr.captchaStatus === 4 }" flex="dir:left" flex-box="0">
+        <label flex="main:center cross:center" class="register_label white500_bg">
+          <span class="register_img" flex="main:center cross:center"><img src="/imgs/reg/reg_ver.png" alt=""></span>
+        </label>
+        <input type="text" maxlength="4" placeholder="请输入图形验证码" flex-box="1"
+        :class="{register_input:true, register_input_right: errorArr.captchaStatus === 10 }" v-model="queryLo.captcha"
+        @blur='verify("captcha")' @focus="verify('captcha')" @keyup="inputcan('captcha')" @keyup.enter="verify('captcha')">
+        <span class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center"><img :src="ver_src" alt="" class="register_img_btn white500_bg" @click="img_ver"></span>
+      </div>
+      <?php //校验部分 ?>
+      <p class="register_input_mes" v-if="errorArr.captchaStatus === 0 || errorArr.captchaStatus === 10"></p>
+      <p class="register_input_mes err_warn" v-if="errorArr.captchaStatus === 1">看不清？点击图片更换验证码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.captchaStatus === 2">请输入图形验证码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.captchaStatus === 3">位数不正确</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.captchaStatus === 4">{{errMes}}</p>
+
+      <div :class="{reigster_input_group:true, err_input: errorArr.codeStatus === 2 || errorArr.codeStatus === 3 || errorArr.codeStatus === 4 }"
+          flex="dir:left" flex-box="0" v-if="now_type === 're'" >
+        <label flex="main:center cross:center" class="register_label white500_bg">
+          <span class="register_img" flex="main:center cross:center"><img src="/imgs/reg/reg_mes.png" alt="" ></span>
+        </label>
+        <input type="text" maxlength="6" placeholder="请输入手机验证码" flex-box="1" class="register_input" v-model="queryRe.code"
+        @blur='verify("code")' @focus="verify('code')" @keyup="inputcan('code')" @keyup.enter="verify('code')">
+        <div class="register_img_ver white500_bg" flex-box="0" flex="main:center cross:center">
+          <button type="button" name="button" class="register_img_btn register_send orange500_f" @click="get_verify('0')" v-cloak>{{setTimes === "out" ? '获取验证码' : times+'s后重新发送'}}</button>
+        </div>
+      </div>
+      <p class="register_mes_voice red500_f" v-if="voice_set && now_type === 're'">没有收到短信？可以在{{times}}s后获取语言验证码</p>
+      <p class="register_mes_voice red500_f" v-if="voice_warn && now_type === 're'">请注意接听来电</p>
+      <p class="register_mes_voice" v-if="voice_ver && now_type === 're'">点击获取，<a href="javascript:void(0);" class="red500_f" @click="voice_verify">语音验证码</a></p>
+      <?php //校验部分 ?>
+      <p class="register_input_mes" v-if="(errorArr.codeStatus === 0 || errorArr.codeStatus === 10) && now_type === 're'"></p>
+      <p class="register_input_mes err_warn" v-if="errorArr.codeStatus === 1 && now_type === 're'">请输入短信验证码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.codeStatus === 2 && now_type === 're'">请输入短信验证码</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.codeStatus === 3 && now_type === 're'">位数不正确</p>
+      <p class="register_input_mes err_tip red500_f" v-if="errorArr.codeStatus === 4 && now_type === 're'">{{errMes}}</p>
+
+      <div class="register_user_agreement" flex="dir:left box:mean">
+        <div class="register_check" v-if="now_type === 're'">
+          <input type="checkbox" name="" value="" v-model="checkeds" :checked="checkeds" class="register_checkbox">
+          <a href="javascript:void(0);" class="register_agreemetn_font blue500_f">《用户协议》</a>
+        </div>
+        <div class="register_check" v-if="now_type === 'lo'" flex = "main:justify">
+          <a href="/register" class="register_agreemetn_font black900_f">立即注册</a>
+          <a href="/register" class="register_agreemetn_font orange500_f">忘记密码？</a>
+        </div>
+        <div class="register_over_login" v-if="now_type === 're'">
+          <a href="/login" class="register_agreemetn_font orange500_f">已经注册，去登录</a>
+        </div>
+        <?php //未勾选提示 ?>
+        <transition name="fade" mode="out-in" appear v-if="!checkeds && now_type === 're'">
+          <div class="register_agreemt_uncheck">
+            <span class="register_sj"></span>
+            请勾选协议
+          </div>
+        </transition>
+      </div>
+      <button
+        type="button"
+        name="button"
+        :disabled="!disable"
+        class="register_login orange500_bg"
+        @click="register_submit">
+        {{now_type === 're' ? '注册' : '登录'}}
+        <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+      </button>
+    </div>
+  </transition>
+</div>

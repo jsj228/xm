@@ -1,0 +1,86 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<link rel="stylesheet" href="/css/newsDefault.css">
+  <section class="bg-content">
+    <div class="news-win">
+      <div class="ns-lf">
+
+        <div class="con-tit">
+          <?php foreach ($data['catelist'] as $k => $v) { ?>
+            <a class="<?php if($v['id']==$category) echo 'act-ti';?> shadow" href="/news?cate=<?php echo $v['id'];?>"><?php echo $v['cate_name'];?></a>
+          <?php } ?>
+        </div>
+        <div class="white-box content">
+          <ul>
+            <?php foreach ($data['list'] as $k => $v) {?>
+              <!-- /news/detail?id=<?php echo $v['id']?> -->
+            <li onclick="javascript: window.open('/news/detail?id=<?php echo $v['id']?>', '_self')">
+              <a href="javascript: void(0);">
+                <span><?php echo $k+1; ?>.</span>
+                <?php if(strlen($v['title'])>78){
+                  echo mb_substr($v['title'],0,33,'utf-8')."...";
+                } else {
+                  echo mb_substr($v['title'],0,33,'utf-8');
+                }?>
+                <?php // 置顶 ?>
+                <?php if ($v['is_top'] == 1) {?>
+                  <span class="to-top"><?php echo $lang['TO_TOP'] ?></span>
+                <?php } ?>
+              </a>
+              <div class="list-rt">
+                  <?php // 時間 ?>
+                  <span><?php echo $lang['NEWS_TIME'] ?>: <?php echo $v['created']?date("Y-m-d",$v['created']):'';?></span>
+                  <?php // 熱度 ?>
+                  <span><?php echo $lang['NEWS_HOT'] ?>: <?php echo $v['click']?$v['click']:0;?></span>
+                  <?php // 來源 ?>
+                  <span><?php echo $lang['NEWS_SOURCE'] ?>: <?php echo $v['source']?$v['source']:0;?></span>
+                </div>
+            </li>
+            <?php }?>
+          </ul>
+        </div>
+        <?php // 頁碼 ?>
+        <div class="page-list">
+          <?php  if($data['pageinfo']) {?>
+          <?php  echo $data['pageinfo']?>
+          <div class="page-form">
+            <form class="" action="/news/index" method="get" id="pageForm">
+              <input type="hidden" name="cate" value="<?php echo $category?>">
+              <?php echo $lang['JUMP_TO'] ?>&nbsp;&nbsp;<input type="text" name="p" value="<?php echo $_GET['p']?>">&nbsp;&nbsp;<?php echo $lang['PAGE_CN'] ?>
+              <button type="submit" name="button" ><?php echo $lang['PAGE_GO'] ?></button>
+            </form>
+          </div>
+        <?php }?>
+        </div>
+      </div>
+      <div class="ns-rf">
+        <?php // 标题 ?>
+        <div class="con-tit">
+          <?php // 大家都在看 ?>
+          <div class="com-titile"><?php echo $lang['PEOPLE_SEE'] ?></div>
+        </div>
+        <?php // 评论 列表 ?>
+        <div class="comments white-box">
+          <ul>
+            <?php foreach ($data['hot'] as $k => $v) { ?>
+              <li>
+                <?php // 序號 標題 ?>
+                <a class="lk" href="/news/detail?id=<?php echo $v['id']?>">
+                  <i><?php echo $k+1 ?></i><?php if(strlen($v['title'])>24) echo mb_substr($v['title'],0,13,'utf-8')."...";else echo mb_substr($v['title'],0,13,'utf-8'); ?>
+                </a>
+                <?php // 日期 ?>
+                <div class="ns-date"><?php echo $v['click'];?></div>
+              </li>
+            <?php }?>
+          </ul>
+        </div>
+        <?php // 廣告 列表 ?>
+        <div class="ns-advs white-box">
+          <img src="/imgs/news-banner.jpg" title="" onclick="window.open('http://www.mcsports.cn/', '_blank')">
+        </div>
+        <?php // 底部用于撑开空白 ?>
+        <div class="page-list"></div>
+      </div>
+    </div>
+  </section>
+  <script src="/js/newsDefault.js?v=<?php echo $clear_cache;?>" defer async='true'></script>
+<?php  include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>

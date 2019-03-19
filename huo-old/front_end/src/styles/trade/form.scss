@@ -1,0 +1,268 @@
+.br-l,
+.br-r {
+    width: 261px;
+    height: 100%;
+    color: $font-l;
+    font-size: 12px;
+    user-select: none;
+    .amount-box {
+      width: 130px;
+      height: 72px;
+      float: left;
+      padding-top: 23px;
+      box-sizing: border-box;
+      padding-left: 4px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      line-height: 20px;
+    }
+    .btn-group {
+        float: right;
+        padding-top: 22px;
+        box-sizing: border-box;
+        height: 72px;
+        a{
+          padding: 2px 11px;
+          border-radius: 10px;
+          border: 1px solid $font-d;
+          color: $font-l;
+          text-decoration: none;
+          background: transparent;
+          display: block;
+          margin-bottom: 8px;
+          &:hover{
+            background: $font-y;
+            border-color: $font-y;
+            color: $font-d;
+          }
+        }
+    }
+}
+
+.amount-box span[id$="-lock"]{
+  padding: 3px 0;
+}
+  .br-l .amount-box span#buy-availUse{
+    color: $font-r;
+    padding: 3px 0;
+  }
+  .br-r .amount-box span#sell-availUse{
+    color: $font-g;
+    padding: 3px 0;
+  }
+
+
+form[data-form="trade"]{
+  clear: both;
+  width: 100%;
+  margin-top: 88px;
+  .input-g{
+    width: 261px;
+    height: 24px;
+    position: relative;
+    margin-bottom: 19px;
+
+    &.settle-g {
+      margin-top: 0;
+      line-height: 32px;
+      cursor: default;
+      p:first-child{
+        float: left;
+        padding: 0 3px;
+        max-width: 190px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &>span {
+          padding: 3px 0 0 0;
+          // line-height: 32px;
+        }
+      }
+      p:last-child{
+        float: right;
+      }
+    }
+    &.submit-g{
+      position: relative;
+      margin-top: 19px;
+      @keyframes rotate {
+        100% {
+         transform: rotate(360deg);
+        }
+     }
+      &.is-submitting{
+        &::before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 30%;
+          top: 50%;
+          font-size: 10px;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          box-shadow: 0px -6.5px white,
+            -4.5px -4.5px rgba(255, 255, 255, 0.875),
+            -6.5px 0 rgba(255, 255, 255, 0.75),
+            -4.5px 4.5px rgba(255, 255, 255, 0.625),
+            0 6.5px rgba(255, 255, 255, 0.5),
+            4.5px 4.5px rgba(255, 255, 255, 0.375),
+            6.5px 0 rgba(255, 255, 255, 0.25),
+            4.5px -4.5px rgba(255, 255, 255, 0.125);
+          animation: rotate 1s infinite forwards steps(32, end);
+        }
+      }
+
+    }
+    input{
+      display: block;
+      box-sizing: border-box;
+      width: 261px;
+      height: 24px;
+      border: 1px solid $font-d;
+      padding-left: 12px;
+      color: #fff;
+      background: $table-bg;
+      appearance: textfield;
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+          -webkit-appearance: none !important;
+      }
+      &[type="submit"]{
+        cursor: pointer;
+        width: 261px;
+        height: 24px;
+        border: none;
+        &#btn-buy:disabled{
+          cursor: default;
+          background: #85222c;
+          color: rgba(255, 255, 255, .3);
+        }
+        &#btn-sell:disabled{
+          cursor: default;
+          background: #1c6448;
+          color: rgba(255, 255, 255, .3);
+        }
+      }
+      &#btn-buy{
+        background: $btn-r;
+        &:hover{
+          background: $btn-hover-r;
+        }
+      }
+      &#btn-sell{
+        background: $btn-g;
+        &:hover{
+          background: $btn-hover-g;
+        }
+      }
+    }
+    span.ext-placeholder{
+      position: absolute;
+      display: block;
+      width: 28px;
+      height: 24px;
+      line-height: 24px;
+      right: 13px;
+      top: 0;
+    }
+
+
+  }
+}
+
+.range {
+  position: relative;
+	width: 100%;
+	height: 16px;
+  white-space: nowrap;
+
+  .track-container {
+    display: inline-block;
+    // margin-top: -12px;
+    width: 172px;
+    // height: 30px;
+    cursor: pointer;
+  }
+
+  .track {
+    position: relative;
+    top: -2px;
+    width: 172px;
+    height: 4px;
+    background: #333;
+    border-radius: 6px;
+    cursor: pointer;
+
+    background-image: linear-gradient(#fc394c, #fc394c);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    // transform: translateY(9px);
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(#f0f0f0 , #f5f4f4 );
+      border: 1px solid #c9c8c8;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -4px;
+      top: 2px;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+  p {
+    // position: absolute;
+    display: inline-block;
+    // right: -36px;
+    // top: 10px;
+    margin-left: 5px;
+    // width: 36px;
+    // height: 16px;
+    line-height: 0px;
+    font-size: 12px;
+    text-align: right;
+    color: #999999;
+    user-select: none;
+  }
+}
+
+.br-l, .br-r{
+  form{
+    position: relative;
+    user-select: none;
+  }
+}
+.toast{
+  display: block;
+  position: absolute;
+  top: 78px;
+  left: 0;
+  width: 261px;
+  opacity: .95;
+  color: #333;
+  font-size: 12px;
+  text-indent: 10px;
+  text-align: center;
+  line-height: 26px;
+  background-color:#e6e6e6;
+
+  &.toast-ok{
+    color: #2ea778;
+    background: #e6e6e6 url('../../assets/form-ok.png') 90px center no-repeat;
+  }
+  &.toast-ban{
+    color: #dd3949;
+    background: #e6e6e6 url('../../assets/form-ban.png') 6px center no-repeat;
+  }
+}
+
+.br-r {
+  margin-left: 3px;
+  .track{
+    background-image: linear-gradient($btn-g, $btn-g);
+  }
+}

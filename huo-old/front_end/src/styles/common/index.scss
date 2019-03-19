@@ -1,0 +1,57 @@
+@import "./theme.scss";
+@import "./pure.scss";
+@import "./layout.scss";
+// @import "./navDefault.scss";
+
+html,body {
+  font-family: 'Microsoft YaHei', Helvetica, Arial;
+  font-size: 14px;
+  margin: 0;
+}
+p,h1,h2,h3,h4,h5,h6,ul,ol,dl,li,dd,dt {
+  margin: 0;
+  padding: 0;
+}
+ul,li,ol,dl,dd,dt {
+  list-style: none;
+}
+
+p {
+  word-wrap: break-word;
+}
+input{
+  padding: 0;
+  outline: none;
+}
+a{
+  text-decoration: none;
+}
+
+.clearFix {
+  &:after {
+    content: "";
+    display: table;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    clear: both;
+  }
+}
+a {
+  text-decoration: none;
+}
+.relative-dom{
+  position: relative;
+}
+.lk {
+  color: $baseWhite;
+
+  &:hover {
+    color: $baseOrangeCol;
+    transition: all .5s;
+  }
+}
+
+.shadow-cont {
+  box-shadow: 0 0 10px rgba(0,0,0,0.06);
+}

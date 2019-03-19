@@ -1,0 +1,155 @@
+@import "./theme.scss";
+@import "./fun.scss";
+
+
+.mo-nav {
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  padding: 0 pxToRem(24);
+  height: pxToRem(105);
+
+  .logo, .menu-btn {
+    position: absolute;
+    top: pxToRem(24);
+    z-index: 3;
+    height: pxToRem(59);
+  }
+  .logo {
+    left: pxToRem(24);
+  }
+
+  .menu-btn {
+    top: 0;
+    right: pxToRem(24);
+    height: pxToRem(105);
+    width: pxToRem(59);
+    background: url(../../assets/menu_btn.png) center center no-repeat;
+    background-size: 100% auto;
+  }
+  .nav-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: pxToRem(34);
+    background: #fff;
+  }
+  .nav-ver-list {
+    display: none;
+    position: absolute;
+    top: pxToRem(95);
+    right: pxToRem(-7);
+    z-index: -3;
+    padding: pxToRem(10) 0 0 0;
+    width: pxToRem(400);
+    line-height: pxToRem(102);
+    max-height: pxToRem(1000);
+    font-size: pxToRem(32);
+    color: $deepBlack;
+    text-indent: pxToRem(58);
+    background: rgba(255,255,255,.98);
+    overflow-y: auto;
+
+    li {
+      box-sizing: border-box;
+      border-bottom: 1px solid #dcdcdd;
+      // &:last-child {
+      //   border: none;
+      // }
+    }
+    a {
+      display: block;
+      width: 100%;
+      color: $deepBlack;
+      white-space: nowrap;
+    }
+    .second-nav-list {
+      text-indent: pxToRem(100);
+
+      &>li {
+        &:first-child {
+          border-top: 1px solid #dcdcdd;
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+.titlebox {
+  display: none;
+  float: left;
+  background: #fff;
+  width: 100%;
+  z-index:-1;
+  li{
+    text-indent:0.5em;
+    border-bottom:1px solid #ebebeb;
+    a {
+      font-size: 1em;
+      color: #000000;
+      line-height: 2.5;
+    }
+  }
+}
+
+.mob-footer-content {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: pxToRem(118);
+  line-height: pxToRem(28);
+  color: $grayBlack;
+  font-size: pxToRem(18);
+  background: #f9f9f9;
+
+  .f-email {
+    color: $grayBlack;
+  }
+}
+
+.m-content {
+  text-align: center;
+}
+
+.dev-ing {
+  display: none;
+  position: fixed;
+  top: pxToRem(-105);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 998;
+
+  .dev-content {
+    box-sizing: border-box;
+    flex-direction: column;
+    padding: 0 pxToRem(24);
+    height: 100%;
+    background: #fff;
+    .dev-tip {
+      padding: pxToRem(36) 0;
+      font-size: pxToRem(42);
+      line-height: pxToRem(42);
+      color: $grayBlack;
+    }
+    .btn {
+      width: 100%;
+      color: #fff;
+      background: #4267b2;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+@media screen and (max-width: $bigScreenMax) {
+
+  .candy_hide {
+    display: none;
+  }
+  .candy_choose {
+    position: relative;
+    margin-top: pxToRem(20);
+    cursor: pointer;
+  }
+
+  .choose_icon {
+    position: absolute;
+    right: pxToRem(65);
+    top: pxToRem(45);
+    width: pxToRem(30);
+    height: pxToRem(24);
+    background: url('../../../assets/user/choose_down.png') no-repeat center;
+    background-size: pxToRem(23) pxToRem(12);
+  }
+  .choose_img {
+    background-size: pxToRem(23) pxToRem(12);
+    background: url('../../../assets/user/choose_now.png') no-repeat center;
+  }
+  .candy_label {
+    display: inline-block;
+    padding-left: pxToRem(20);
+    width: 100%;
+    height: pxToRem(94);
+    line-height: pxToRem(94);
+    font-size: pxToRem(30);
+    color: $gray600;
+  }
+
+  .candy_tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: pxToRem(152);
+    .candy_li {
+      width: pxToRem(196);
+      height: pxToRem(60);
+      line-height: pxToRem(60);
+      font-size: pxToRem(24);
+      text-align: center;
+      background: $white100;
+      color: $gray600;
+      cursor: pointer;
+      border-radius: pxToRem(4);
+    }
+    .candy_active_li {
+      background: $yellow500;
+      color: $white100;
+    }
+
+    .user_tabs_th {
+      height: pxToRem(85);
+      font-size: pxToRem(26);
+    }
+  }
+  .candy_coin_list {
+    padding: 0 pxToRem(20) pxToRem(44) pxToRem(20);
+    .candy_detail_h2 {
+      position: relative;
+      padding-left: pxToRem(24);
+      margin-top: pxToRem(20);
+      height: pxToRem(96);
+      line-height: pxToRem(96);
+      font-size: pxToRem(30);
+    }
+    .candy_close {
+      position: absolute;
+      right: 0;
+      top: pxToRem(30);
+      cursor: pointer;
+      width: pxToRem(44);
+      height: pxToRem(44);
+      background: url('../../../assets/user/user_close.svg') no-repeat;
+    }
+    .candy_detail_content {
+      width: pxToRem(710);
+      padding-top: pxToRem(37);
+      padding-bottom: pxToRem(48);
+      .candy_coin_name {
+        padding-left: pxToRem(57);
+        display: inline-block;
+        width: pxToRem(167);
+        font-weight: 600;
+      }
+    }
+    .candy_list {
+      height: pxToRem(56);
+      line-height: pxToRem(56);
+    }
+  }
+  .table_btn {
+    background: $white100;
+    color: $gray500;
+  }
+  .candy_btn, .table_btn {
+    width: pxToRem(80);
+    height: pxToRem(38);
+    border: 1px solid $gray500;
+    border-radius: 2px;
+    font-size: pxToRem(20);
+  }
+}

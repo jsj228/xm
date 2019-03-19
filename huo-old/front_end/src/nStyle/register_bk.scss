@@ -1,0 +1,214 @@
+// @import "./index.scss";
+@import "./config.scss";
+@import "./color.scss";
+@import "./theme.scss";
+
+@media only screen and (max-width: $smScreenMax) {
+  .register_dom {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: pxToRem(157) pxToRem(38) 0 pxToRem(38);
+    height: 100%;
+
+    .register_bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .reigster_input_group {
+      // margin-bottom: pxToRem(20);
+      position: relative;
+      width: pxToRem(670);
+      height: pxToRem(94);
+      border: 1px solid #666;
+      border-radius: pxToRem(4);
+
+      .register_label {
+        height: 100%;
+        line-height: 100%;
+
+        .register_img {
+          padding:0 pxToRem(18);
+          width: pxToRem(32);
+          line-height: pxToRem(94);
+        }
+        .register_area {
+          text-align: center;
+          line-height: pxToRem(94);
+        }
+      }
+      .register_two_label {
+        width: pxToRem(180);
+      }
+      .register_input {
+        padding-left: pxToRem(11);
+        border: none;
+      }
+      .register_input_right {
+        background: url('../assets/reg/input-correct.png') no-repeat right center;
+        background-size: pxToRem(30) pxToRem(30);
+      }
+      .register_img_ver {
+        width: pxToRem(180);
+
+        .register_img_btn {
+          background: #fff;
+          width: pxToRem(170);
+          height: pxToRem(80);
+          font-size: pxToRem(24);
+          border: none;
+          border-radius: pxToRem(3);
+        }
+      }
+      .register_area_list {
+        z-index: 50;
+        position: absolute;
+        left: pxToRem(19);
+        top: pxToRem(69);
+        padding: pxToRem(20) pxToRem(15);
+        width: pxToRem(197);
+        background: #f6f6f6;
+        .register_font {
+          font-size: pxToRem(28);
+          line-height: pxToRem(52);
+          &:hover {
+
+          }
+        }
+      }
+    }
+    .register_mes_voice {
+      text-align: right;
+    }
+    .register_post {
+      height: pxToRem(20);
+    }
+    .register_input_mes {
+      // display: none;
+      line-height: pxToRem(30);
+      height: pxToRem(30);
+      font-size: pxToRem(20);
+    }
+    .register_mes_voice {
+      line-height: pxToRem(40);
+      height: pxToRem(40);
+      font-size: pxToRem(24);
+    }
+    .register_user_agreement {
+      position: relative;
+      padding-top: pxToRem(42);
+      line-height: pxToRem(65);
+      .register_check {
+        .register_checkbox {
+          width: pxToRem(24);
+          height: pxToRem(24);
+        }
+      }
+      .register_over_login {
+        text-align: right;
+      }
+      .register_agreemetn_font {
+        font-size: pxToRem(26);
+      }
+    }
+    .register_login {
+      position: relative;
+      width: 100%;
+      height: pxToRem(90);
+      font-size: pxToRem(36);
+      border-radius: pxToRem(3);
+      border: none;
+    }
+  }
+}
+//输入框错误class
+.err_all .err_input {
+  border: 1px solid $red500;
+}
+//错误提示
+.register_input_mes {
+  margin-top: pxToRem(10);
+  margin-bottom: pxToRem(20);
+  padding-left: pxToRem(25);
+  line-height: pxToRem(30);
+  height: pxToRem(30);
+  font-size: pxToRem(20);
+}
+//提示框部分
+.err_tip {
+  background: url('../assets/input_tips_err_icon.png') no-repeat left center;
+  background-size: pxToRem(20) pxToRem(20);
+}
+.err_warn {
+  background: url('../assets/input_tips_icon.png') no-repeat left center;
+  background-size: pxToRem(20) pxToRem(20);
+}
+//密码强弱
+.min_tip {
+  background: url('../assets/reg/weak-pwd.png') no-repeat left center;
+  background-size: pxToRem(20) pxToRem(20);
+}
+.middle_tip {
+  background: url('../assets/reg/midd-pwd.png') no-repeat left center;
+  background-size: pxToRem(20) pxToRem(20);
+}
+.max_tip {
+  background: url('../assets/reg/good-pwd.png') no-repeat left center;
+  background-size: pxToRem(20) pxToRem(20);
+}
+// 未勾选弹窗
+.register_agreemt_uncheck {
+  position: absolute;
+  z-index: 55;
+  top:pxToRem(-10);
+  left: pxToRem(0);
+  width: pxToRem(180);
+  height: pxToRem(60);
+  line-height: pxToRem(60);
+  text-align: center;
+  border: 1px solid #666;
+  border-radius: pxToRem(4);
+}
+// 协议三角
+.register_sj {
+  z-index: 56;
+  display: block;
+  position: absolute;
+  transform:rotate(-45deg) translate(-50%, 0);
+  bottom:pxToRem(-4);
+  left: 50%;
+  width: pxToRem(15);
+  height: pxToRem(15);
+  border-left: 1px solid #666;
+  border-bottom: 1px solid #666;
+  background: #fff;
+}
+// 加载
+.loading-svg {
+  display: inline-block;
+  position: absolute;
+  margin-left: pxToRem(10);
+  // left: 30%;
+  top: pxToRem(25);
+  width: pxToRem(35);
+  height: pxToRem(35);
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: pxToRem(35);
+    height: pxToRem(35);
+    background: url('../assets/loading.svg') center center no-repeat;
+    background-size: pxToRem(35) pxToRem(35);
+  }
+}
+//pc
+// 1200px 以上 使用px
+@media screen and (min-width: $mdScreenMin) {
+  .test {
+    width: 500px;
+  }
+}

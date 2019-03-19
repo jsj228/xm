@@ -1,0 +1,89 @@
+@import "../common/theme.scss";
+@import "./sureDialog.scss";
+@import '../common/index.scss';
+@import './index.scss';
+@import "./coinIn.scss";
+
+
+.no-real-info {
+  padding: 43px 0 0 0;
+
+  p {
+    font-size: 14px;
+    color: $norBlack;
+
+    u {
+      display: inline-block;
+      margin-right: 6px;
+      width: 12px;
+      height: 12px;
+      text-align: center;
+      line-height: 12px;
+      font-size: 9px;
+      color: #f00;
+      border: 1px solid #f00;
+      border-radius: 50%;
+    }
+  }
+  .white-box {
+    box-sizing: border-box;
+    margin-top: 18px;
+    padding: 0 57px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 106px;
+    width: 100%;
+    background: $baseWhite;
+
+    .left-img {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      height: 50px;
+      overflow: visible;
+
+      u {
+        display: inline-block;
+        margin-right: 37px;
+        width: 136px;
+        height: 50px;
+        border-right: 1px solid #e5e5e5;
+        background: url(../../assets/no_real_icon.png) center center no-repeat;
+        background-size: auto 100%;
+      }
+      .pwd-coinout {
+        background-image: url(../../assets/coinout_pwd_icon.png);
+      }
+      .real-info-ing {
+        background-image: url(../../assets/real_info_ing_icon.png);
+      }
+    }
+    a {
+      font-size: 16px;
+      color: #3366cc;
+      &:hover {
+        opacity: .9;
+        transition: all .3s;
+      }
+    }
+  }
+}
+.out-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.coin-in-table {
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  .t-body {
+    overflow-x: visible;
+    overflow-y: auto;
+    min-width: 632px;
+  }
+
+}

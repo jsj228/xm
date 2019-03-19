@@ -1,0 +1,458 @@
+@import "../../config.scss";
+@import "../../color.scss";
+
+// 响应式
+// @import "./user_index_767.scss";
+table {
+  border-collapse: collapse;
+}
+.user_index_dom {
+  width: 100%;
+}
+.pwd_mask_contain_980, .pwd_mask_contain_1200 {
+  width: 100%;
+  height: 100%;
+}
+
+// @media screen and(min-width: $superScreenMin) {
+  //交易密码部分
+  .user_go_1200 {
+    display: inline-block;
+  }
+  .user_go_767 {
+    display: none!important;
+  }
+
+  .pwd_mask_contain_980 {
+    display: none;
+  }
+  .pwd_mask_contain_1200 {
+    display: block;
+  }
+  .user_space_1200 {
+    display: block;
+  }
+
+  .user_index {
+    box-sizing: border-box;
+    padding: 15px 50px 45px 40px;
+    height: 100%;
+    background: $gray200;
+
+    .user_hide {
+      display: none;
+    }
+  }
+  .user_pan {
+    line-height: 30px;
+    font-size: 14px;
+    .user_gt {
+      display: inline-block;
+      margin: 0 6px;
+    }
+  }
+  .user_name {
+    font-size: 14px;
+    line-height: 41px;
+  }
+  .user_mes_list {
+    display: flex;
+    flex-wrap: wrap;
+    .user_mes_item {
+      position: relative;
+      margin-bottom: 16px;
+      flex-grow: 1;
+      max-width: 49%;
+      min-width: 49%;
+      // height: 58px;
+      min-height: 58px;
+      background: $white100;
+      box-shadow: 0px 0px 10px #f0f0f0;
+      .user_list_icon {
+        width: 62px;
+        //手机
+        .user_icon {
+          width: 24px;
+          height: 27px;
+        }
+        .user_phone_svg {
+          @extend .user_icon;
+          background: url('../../../assets/user/user_phone.svg') no-repeat center;
+        }
+        //实名认证
+        .user_real_svg {
+          @extend .user_icon;
+          background: url('../../../assets/user/user_real_name.svg') no-repeat center;
+        }
+        //登录密码
+        .user_login_svg {
+          @extend .user_icon;
+          background: url('../../../assets/user/user_login_password.svg') no-repeat center;
+        }
+        //交易密码
+        .user_pay_svg {
+          @extend .user_icon;
+          background: url('../../../assets/user/user_pay_password.svg') no-repeat center;
+        }
+        .user_yellow_warin {
+          @extend .user_icon;
+          background:  url('../../../assets/user/user_yellow_warin.png') no-repeat center;
+        }
+        //綁定郵箱
+        .user_email_svg {
+          @extend .user_icon;
+          background:  url('../../../assets/svg/input_success.svg') no-repeat center;
+        }
+        .user_no_email {
+          @extend .user_icon;
+          background:  url('../../../assets/svg/user_email.svg') no-repeat center;
+        }
+        .user_no_google {
+          @extend .user_icon;
+          background: url('../../../assets/google.png') no-repeat center;
+        }
+      }
+      .user_item_type {
+        padding-right: 26px;
+        font-size: 16px;
+        // line-height: 58px;
+      }
+      .user_item_result {
+        font-size: 16px;
+      }
+      .user_look_for {
+        font-size: 14px;
+        &:hover {
+          color: $blue50;
+          transition: all .35s;
+        }
+        margin-right: 5%;
+      }
+    }
+    .user_warin {
+      display: none;
+    }
+    .user_warin_1200 {
+      position: absolute;
+      bottom: -38px;
+      left: 0;
+      height: 38px;
+      line-height: 38px;
+      margin-left: 22px;
+      padding-left: 19px;
+      background: url('../../../assets/user/user_pc_warron.png') no-repeat center left;
+      background-size: 13px;
+    }
+
+    .user_list_pad {
+      margin-right: 2%;
+    }
+  }
+  .user_coin_list {
+    margin-top: 3px;
+    height: 50px;
+    line-height: 50px;
+  }
+  .font_size_p {
+    font-size: 14px;
+  }
+  .user_btn_group {
+    padding: 15px 0 12px 0;
+    width: 166px;
+    .user_coin_account {
+      height: 26px;
+      border:1px solid $gray600;
+      color: $gray600;
+      border-radius: 2px;
+      font-size: 13px;
+    }
+    .user_active_btn {
+      border:1px solid $blue200;
+      background: $blue200;
+      color: $white100;
+    }
+    .user_coin_first {
+      margin-right: 16px;
+    }
+  }
+  .user_coin_money {
+    margin-top: 3px;
+    height: 50px;
+    .user_coin_font {
+      margin-right: 12px;
+      font-size: 14px;
+      line-height: 50px;
+    }
+    .user_coin_swith {
+      display: inline-block;
+      position: relative;
+      width: 48px;
+      height: 19px;
+      border-radius: 9.5px;
+      user-select: none;
+      // background: #d2d2d2;
+
+      [data-b] {
+        position: absolute;
+        top: 2px;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: $white100;
+      }
+      [data-b='off'] {
+        right: 2px;
+      }
+      [data-b='on'] {
+        left: 2px;
+      }
+      [data-switch] {
+        position: absolute;
+        top: 2px;
+        font-size: 12px;
+      }
+      [data-switch = 'off'] {
+        left: 10px;
+      }
+      [data-switch = 'on'] {
+        right: 10px;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .user_coin_all {
+      margin-left: 32px;
+    }
+  }
+  .user_blue_btn {
+    padding: 0 10px;
+    margin-right: 7px;
+    height: 22px;
+    line-height: 22px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: $gray500;
+
+    &:hover {
+      cursor: pointer;
+      background: $blue500;
+      color: $white100;
+      transition: all .35s;
+    }
+  }
+  .btn_disable {
+    background: $gray350;
+    border:1px solid $gray350;
+    color: #bfbfbf;
+
+    &:hover {
+      cursor: not-allowed;
+      background: $gray350;
+      border:1px solid $gray350;
+      color: #bfbfbf;
+      transition: all .35s;
+    }
+  }
+  .pwd_mask {
+    position: absolute;
+    z-index: 41;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    opacity: .5;
+    width: 100%;
+    height: 100%;
+  }
+  .pwd_content {
+    z-index: 45;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // height: 362px;
+    border-radius: 4px;
+    background: $white100;
+    .pwd_padd {
+      padding: 0 48px 54px;
+      width: 344px;
+    }
+    .pwd_header {
+      width: 100%;
+      .pwd_pc_tab {
+        display: inline-block;
+        width: 48%;
+        border-bottom: 2px solid #dcdcdc;
+      }
+      .pwd_pc_active {
+        border-bottom: 2px solid $yellow500;
+      }
+      .pwd_pc_headers {
+        border-bottom: 2px solid #dcdcdc;
+      }
+      .pwd_pc_header {
+        position: relative;
+        padding-top: 30px;
+        width: 100%;
+        height: 70px;
+        line-height: 70px;
+        font-size: 20px;
+        text-align: center;
+        cursor: pointer;
+
+        .pwd_close {
+          position: absolute;
+          right: -27px;
+          top: 16px;
+          display: inline-block;
+          width: 26px;
+          height: 26px;
+          background: url('../../../assets/reg/register_alert_close.png') no-repeat;
+          background-size: 26px;
+          cursor: pointer;
+        }
+      }
+    }
+    .pwd_header_reset_p {
+      height: 56px;
+      line-height: 56px;
+      font-size: 18px;
+    }
+    .pwd_header_p {
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 17px;
+    }
+    .pwd_input {
+      margin-top: 20px;
+    }
+    .pwd_input_group {
+      height: 44px;
+      border-radius: 4px;
+      // border: 1px solid $gray600;
+      overflow: hidden;
+      .pwd_input_label {
+        padding-right: 13px;
+        width: 22px;
+        height: 100%;
+      }
+      .pwd_input_text {
+        padding-left: 5px;
+        width: 100%;
+        height: 98%;
+        border: none;
+        border-bottom: 1px solid #dcdcdc;
+      }
+      .pwd_div {
+        height: 100%;
+      }
+      .pwd_focus_div {
+        position: relative;
+        // border: none;
+        &::before {
+          position: absolute;
+          bottom: 0;
+          // left: 0;
+          left: 50%;
+          transform: translate(-50%, 0);
+          content: '';
+          // width: 100%;
+          animation: .3s inputFocus;
+          animation-fill-mode: forwards;
+          height: 1px;
+          background: $yellow500;
+          // box-shadow: 0px 0px 3px $yellow500;
+        }
+      }
+      .pwd_input_focus {
+        // border:none;
+      }
+      .pwd_code_get {
+        margin-left: 6px;
+        height: 44px;
+        width: 110px;
+        border: 1px solid $yellow500;
+        border-radius: 4px;
+      }
+      //设置交易密码 icon
+      .pwd_set_icon {
+        background: url('../../../assets/user/user_tradepwd.svg') no-repeat center;
+        background-size: 22px 27px;
+      }
+      .pwd_set_code {
+        background: url('../../../assets/user/user_code.svg') no-repeat center;
+        background-size: 22px 26px;
+      }
+      .pwd_set_pwd {
+        background: url('../../../assets/user/pwd_pwd.svg') no-repeat center;
+        background-size: 22px 26px;
+      }
+    }
+    .pwd_input_show {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 15px;
+      width: 100%;
+      height: 44px;
+      border-radius: 4px;
+      .pwd_input_label {
+        flex-grow: 0;
+        margin-right: 4px;
+        max-width: 105px;
+        height: 44px;
+        line-height: 44px;
+      }
+      .pwd_show_phone {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+      }
+    }
+    .user_err_mes {
+      padding-left: 38px;
+      min-height: 30px;
+    }
+    .pwd_btn {
+      position: relative;
+      margin-top: 13px;
+      width: 100%;
+      height: 44px;
+      font-size: 20px;
+      color: $white100;
+      border-radius: 4px;
+    }
+  }
+  .user_resest_success {
+    width: 438px;
+    border-radius: 4px;
+    .user_reset_top {
+      position: relative;
+      height: 190px;
+      background: url('../../../assets/repwd-succ.png') no-repeat;
+      .user_resest_close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 26px;
+        height: 26px;
+        cursor: pointer;
+        background: url('../../../assets/alert_close.png') no-repeat;
+      }
+    }
+    .user_success_mes {
+      height: 66px;
+      line-height: 66px;
+      font-size: 16px;
+      text-align: center;
+    }
+    .user_btn_div {
+      padding-bottom: 47px;
+    }
+    .user_btn_trade {
+      width: 330px;
+      height: 43px;
+      border-radius: 4px;
+    }
+  }
+// }

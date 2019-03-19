@@ -1,0 +1,51 @@
+<div class="time_condition gray500_f" flex="" id="qkBtn">
+
+  <?php if ($pageName == 'trust' || $pageName == 'deal' || $pageName == 'coinout') { ?>
+  <form class="" id="coinPost" action="<?php echo preg_replace('#/page/\d+#i', '' ,REDIRECT_URL) ?>" method="GET">
+  <?php } ?>
+  <div class="condition_list">
+    <button type="submit"
+      id="allCoin"
+      data-days='0'
+      class="<?php echo $get['days']==0||$get['days']==-1 ? 'act_btn': '' ?>"
+      name="all"><?php echo $lang["USER_CONDITION_BTN_ALL"]; ?></button>
+    <button
+      type="submit"
+      id="todayCoin"
+      data-days='1'
+      class="<?php echo $get['days']==1 ? 'act_btn': '' ?>"
+      name="todayCoin"><?php echo $lang["USER_CONDITION_BTN_TODAY"]; ?></button>
+    <button
+      type="submit"
+      id="monthCoin"
+      data-days='30'
+      class="<?php echo $get['days']==30 ? 'act_btn': '' ?>"
+      name="monthCoin"><?php echo $lang["USER_CONDITION_BTN_30_DAY"]; ?></button>
+    <span>&nbsp;&nbsp;<?php echo $lang["USER_CONDITION_TIME_START"]; ?>&nbsp;</span>
+    <span class="date_icon">
+      <input type="text" class="gray500_f" id="startTime" name="startTime" value="<?php echo $get['startTime'] ?>" placeholder="<?php echo $lang['USER_CHOOSE_START_TIME'] ?>" id="startTime" />
+    </span>
+    <span>&nbsp;<?php echo $lang["USER_CONDITION_TIME_TO"]; ?>&nbsp;&nbsp;&nbsp;</span>
+    <span class="date_icon">
+      <input class="gray500_f" type="text" id="endTime" name="endTime" value="<?php echo $get['endTime'] ?>" placeholder="<?php echo $lang['USER_CHOOSE_END_TIME'] ?>" id="endTime" />
+    </span>
+    <button type="submit" class="" id="timeselect"><?php echo $lang["USER_CONDITION_BTN_FILTER"]; ?></button>
+    <button type="button" class="reset-icon" id="reset"><?php echo $lang["USER_CONDITION_BTN_RESET"]; ?></button>
+    <button type="button" name="excel" value="1" class="t-btn shadow-cont btn-icon output-icon" id="excel"><?php echo $lang["USER_CONDITION_BTN_OUTPUT"]; ?></button>
+  </div>
+  <?php if ($pageName == 'trust' || $pageName == 'deal' || $pageName == 'coinout') { ?>
+  <?php // 提币，查询，委托, form ?>
+    <div class="hide-form-data hide_dom">
+      <input type="text" name="coin" value="<?php echo $get['coin'] ?>">
+      <input type="text" name="flag" value="<?php echo $get['flag'] ?>">
+      <input type="text" name="days" value="<?php echo $get['days'] ? $get['days'] : '0' ?>">
+      <input type="text" name="excel" value="0">
+    </div>
+  </form>
+  <?php } ?>
+  <input type="hidden" name="coinex" value="<?php echo $formdata['coin']; ?>">
+  <input type="hidden" name="coinType" value="<?php echo $formdata['coinType']; ?>">
+  <input type="hidden" name="type" value="<?php echo $formdata['type']; ?>">
+  <input type="hidden" name="startTimeex" value="<?php echo $formdata['startTime']; ?>">
+  <input type="hidden" name="endTimeex" value="<?php echo $formdata['endTime']; ?>">
+</div>

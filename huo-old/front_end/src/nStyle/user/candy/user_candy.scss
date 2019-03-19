@@ -1,0 +1,81 @@
+@import "../../config.scss";
+@import "../../color.scss";
+
+// 响应式
+// @import "./user_candy_767.scss";
+.user_index_dom {
+  width: 100%;
+}
+.dis_btn {
+  color: #bfbfbf;
+  background: $gray350;
+}
+
+// @media screen and(min-width: $superScreenMin) {
+
+
+  .candy_pc_hide {
+    display: none;
+  }
+  .user_index {
+    padding: 0 50px 0 40px;
+    background: $gray200;
+    margin-top: 15px;
+  }
+  .user_pan {
+    line-height: 30px;
+    font-size: 14px;
+    .user_gt {
+      display: inline-block;
+      margin: 0 6px;
+    }
+  }
+  .candy_choose {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 38px;
+    margin-top: 18px;
+    margin-bottom: 20px;
+    height: 70px;
+    box-shadow: 0px 0px 5px #f0f0f0;
+    background: #fff;
+    .candy_label {
+      display: inline-block;
+      flex-shrink: 0;
+      font-size: 14px;
+      line-height: 70px;
+    }
+    .candy_tabs {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-left: 10px;
+      flex-shrink: 1;
+      .candy_li {
+        padding: 0 15px;
+        height: 24px;
+        line-height: 24px;
+        border:1px solid transparent;
+        border-radius: 2px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .candy_active_li {
+        background: $yellow500;
+        border:1px solid $yellow500;
+        border-radius: 2px;
+        color: $white100;
+      }
+    }
+  }
+  .table_btn {
+    width: 50px;
+    height: 24px;
+    line-height: 24px;
+    background: $blue500;
+    color: $white100;
+  }
+  .user_tabs_div {
+    height: 608px;
+  }
+// }

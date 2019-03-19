@@ -1,0 +1,316 @@
+@import "../config.scss";
+@import "../color.scss";
+
+// 980px ~ 1190px; 使用px
+@media screen and (max-width: $mdScreenMax) {
+  .nav_contain {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    // bottom: 0;
+    z-index: 40;
+    padding: 0 pxToRem(20);
+    height: pxToRem(120);
+
+    // .dobi_logo_icon {
+    //   font-size: pxToRem(120);
+    //   height: pxToRem(120);
+    //   line-height: pxToRem(120);
+    // }
+
+    .nav_left {
+      &>* {
+        display: inline-block;
+      }
+    }
+
+    .main_link {
+      flex-shrink: 0;
+      width: pxToRem(200);
+      height: pxToRem(60);
+      line-height: pxToRem(60);
+
+      // font-size: pxToRem(30);
+
+      &>span {
+        font-size: pxToRem(120);
+
+        &:before {
+          position: relative;
+          top: 0;
+          display: inline-block;
+          // width: pxToRem(60);
+          height: pxToRem(60);
+          line-height: pxToRem(60);
+        }
+
+        &:last-child {
+          display: none;
+          // font-size: pxToRem(30);
+        }
+      }
+    }
+    .nav_right {
+      display: none;
+    }
+    .row_menu_contain {
+      box-sizing: border-box;
+      position: fixed;
+      right: 0;
+      top: pxToRem(120);
+      bottom: 0;
+      z-index: 10;
+      padding: 0 pxToRem(60) pxToRem(60);
+      width: pxToRem(483);
+
+    }
+    .user_img {
+      height: pxToRem(200);
+      text-align: center;
+
+      &> p {
+        line-height: pxToRem(75);
+        font-size: pxToRem(30);
+      }
+
+      .user_icon {
+        display: inline-block;
+        width: pxToRem(100);
+        height: pxToRem(100);
+        line-height: pxToRem(100);
+        font-size: pxToRem(100);
+      }
+    }
+
+    .svg_icon {
+      position: relative;
+      bottom: pxToRem(-3);
+      margin: 0 pxToRem(16) 0 0;
+      width: pxToRem(30);
+      height: pxToRem(30);
+    }
+
+    .row_menu_list_ctx {
+      position: absolute;
+      top: pxToRem(200);
+      bottom: pxToRem(200);
+      left: pxToRem(60);
+      right: pxToRem(60);
+    }
+
+    .row_menu_list {
+      height: 100%;
+      overflow-y: auto;
+
+      .more_icon {
+
+        &:after {
+          position: relative;
+          left: pxToRem(-8);
+          font-size: pxToRem(18);
+          // position: static;
+          // transform: scaleX(1);
+        }
+      }
+
+      &>li {
+        // width: 3pxToRem(75);
+        text-indent: pxToRem(10);
+        text-align: left;
+        height: pxToRem(82);
+        line-height: pxToRem(82);
+        font-size: pxToRem(28);
+        border: {
+          // top: 1px solid $gray500;
+          bottom: 1px solid #00536a;
+        }
+
+        // &:first-child {
+        //   border-top: none;
+        // }
+        // &:last-child {
+        //   border-bottom: none;
+        // }
+
+        &:hover {
+          cursor: pointer;
+          background: #001a32;
+          // border-color: transparent;
+          transition: all .5s;
+
+          a {
+            color: $white100;
+          }
+        }
+        &>a {
+          display: block;
+          height: pxToRem(82);
+          line-height: pxToRem(82);
+          white-space: nowrap;
+        }
+      }
+
+      .second_menu_list, .lang_list {
+        height: auto;
+        &:hover {
+          cursor: default;
+          background-color: $deepBlue600;
+        }
+      }
+
+      .second_menu_list {
+        text-indent: 0;
+
+        &>ul {
+          padding: pxToRem(30) pxToRem(20) pxToRem(6);
+          flex-wrap: wrap;
+          justify-content: space-around;
+
+          &>li {
+            box-sizing: border-box;
+            margin: 0 0 pxToRem(24);
+            padding: 0 pxToRem(5);
+            width: pxToRem(140);
+            height: pxToRem(50);
+            line-height: pxToRem(48);
+            text-align: center;
+            font-size: pxToRem(24);
+            border: 1px solid #005398;
+            border-radius: pxToRem(5);
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .lang_list {
+        padding: 0 0 0 pxToRem(63);
+
+        line-height: pxToRem(54);
+        font-size: pxToRem(24);
+
+        a {
+          display: block;
+
+          &>label {
+            width: pxToRem(160);
+            white-space: nowrap;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+
+    .logout_part {
+      margin: pxToRem(50) 0 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: pxToRem(100);
+      text-align: center;
+
+      &>a {
+        display: inline-block;
+        width: pxToRem(140);
+        height: pxToRem(50);
+        line-height: pxToRem(46);
+        font-size: pxToRem(30);
+        letter-spacing: pxToRem(5);
+        border-radius: pxToRem(5);
+      }
+    }
+    .page_title {
+      width: 100%;
+      text-align: center;
+
+      h2 {
+        font-weight: 500;
+        font-size: pxToRem(36);
+      }
+    }
+    .menu_part {
+      flex-shrink: 0;
+      width: pxToRem(200);
+      text-align: right;
+    }
+
+    .menu_btn {
+      display: inline-block;
+      padding: 0;
+      width: pxToRem(70);
+      height: pxToRem(60);
+      background: url(../../assets/menu_btn_icon.png) center center no-repeat;
+      background-size: pxToRem(60) pxToRem(60);
+    }
+  }
+ 
+  .user_account_contain {
+    position: absolute;
+    top: pxToRem(28);
+    left: 0;
+    z-index: 5;
+    padding: pxToRem(10) 0;
+    width: pxToRem(120);
+    border-radius: pxToRem(5);
+
+    li {
+      a {
+        box-sizing: border-box;
+        display: block;
+        padding: 0 pxToRem(18);
+        line-height: pxToRem(24);
+        height: pxToRem(24);
+        width: 100%;
+        font-size: pxToRem(12);
+        text-align: left;
+
+        &:before {
+          margin-right: pxToRem(5);
+        }
+
+        &:hover {
+          color: #008fff;
+          background-color: #0d1e2c;
+          transition: all .3s;
+        }
+      }
+    }
+  }
+
+  // 未登录
+  .register_btn, .login_btn {
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    width: 60px;
+    height: pxToRem(30);
+    line-height: pxToRem(30);
+    font-size: 12px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  //
+  .login_btn {
+    // margin-right: 7px;
+    color: $white100;
+    border: 1px solid $white100;
+  }
+
+  .login_btn_top {
+    box-sizing: border-box;
+    display: inline-block;
+    width: pxToRem(100);
+    height: pxToRem(56);
+    padding: pxToRem(10) 0;
+    // line-height: pxToRem(54);
+    font-size: pxToRem(26);
+    text-align: center;
+    white-space: nowrap;
+    border-radius: pxToRem(5);
+  }
+}

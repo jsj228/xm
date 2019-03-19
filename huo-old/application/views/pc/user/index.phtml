@@ -1,0 +1,983 @@
+
+<!-- <div class="erwei" style="display: none;"> -->
+  <?php //$qrimages = urlencode('otpauth://totp/'.$email.'%20-%20morecoin.com?secret='.$secret.'&issuer='.$email);?>
+  <!-- <img src="/ajax_Base/qrimages?text=<?php  //echo $qrimages?>"> -->
+  <?php //echo $secret;?>
+<!-- </div> -->
+
+<?php // 以上是谷歌验证码调试用?>
+<div class="user_index_dom gray200_bg" id="user">
+  <?php //面包屑 ?>
+  <?php //我的账户首页 ?>
+  <u class="hide_dom" v-once>{{getUserInfo("<?php echo  $userInfo['mo']?>","<?php echo  $userInfo['email']?>")}}</u>
+  <?php //google  ?>
+  <u class="hide_dom" v-once v-cloak>{{getGoogle(<?php echo $user['google_key']?1:0 ?>)}}</u>
+  <div class="user_index " flex="dir:top" v-cloak>
+    <ul class="user_pan" flex="main:left">
+      <li> <?php echo $lang['USER_NAV_TITLE'] ?>&gt;</li>
+      <li><span href="javascript: void(0);" class="blue200_f"><?php echo $lang['USER_NAV_INDEX'] ?></span></li>
+    </ul>
+    <p class="user_name gray200_bg gray600_f"><?php echo $lang['DEAR'],$userInfo['realInfo']?$userInfo['realInfo']['name']:$lang['USER'] ?></p>
+    <ul class="user_mes_list">
+
+      <?php //绑定手机 ?>
+
+      <li class="user_mes_item border_bot user_list_pad" flex="">
+        <div flex-box="0" flex="main:left">
+          <span class="user_list_icon" flex="main:center cross:center">
+            <?php if ($userInfo['mo']) {?>
+              <span class="user_phone_svg"></span>
+            <?php } else { ?>
+              <span class="user_yellow_warin"></span>
+            <?php } ?>
+          </span>
+          <p class="user_item_type gray600_f" flex="cross:center"><?php echo $lang['BIND_PHONE'] ?></p>
+        </div>
+
+        <p class="user_item_result gray400_f" flex-box="1" flex="main:justify cross:center">
+          <?php if($userInfo['mo']) {?>
+            <span>
+              <?php if($userInfo['area']=='+86'){
+                  echo $lang['BINDED_PHONE'].substr_replace($_SESSION['user']['mo'], '****', 3, 4);}else{
+                  echo $lang['BINDED_PHONE'].substr_replace($_SESSION['user']['mo'], '**', -4, 2);}?>
+            </span>
+          <?php } else { ?>
+            <span><?php echo $lang['BIND_PHONE_NO'] ?></span>
+            <a name="button" class="user_look_for blue200_f" href="javascript:void(0);" @click="bindInfo('mo')">
+              <?php echo $lang['GO_TO_BLIND'] ?><span class="user_go_1200">&gt;&gt;</span>
+            </a>
+          <?php } ?>
+        </p>
+
+      </li>
+
+      <?php //绑定邮箱 ?>
+
+      <li class="user_mes_item border_bot" flex="">
+        <div flex-box="0" flex="main:left">
+          <span class="user_list_icon" flex="main:center cross:center">
+            <?php if ($userInfo['email']) { ?>
+              <span class="user_email_svg"></span>
+            <?php } else {?>
+              <span class="user_no_email"></span>
+            <?php } ?>
+          </span>
+          <p class="user_item_type gray600_f" flex="cross:center"><?php echo $lang['BIND_EMAIL'] ?></p>
+        </div>
+
+        <?php if ($userInfo['email']) { ?>
+          <p class="user_item_result gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $userInfo['email']?></span>
+          </p>
+        <?php } else { ?>
+
+          <?php //pc端 ?>
+          <p class="user_item_result user_go_1200 gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['BIND_EMAIL_NO'] ?></span>
+            <a type="button" name="button" class="user_look_for blue200_f" href="javascript:void(0);" @click="bindInfo('email')">
+              <?php echo $lang['GO_TO_BLIND'] ?><span class="user_go_1200">&gt;&gt;</span>
+            </a>
+          </p>
+        <?php } ?>
+      </li>
+
+      <?php //绑定google ?>
+
+      <li class="user_mes_item border_bot user_list_pad" flex="">
+        <div flex-box="0" flex="main:left">
+          <span class="user_list_icon" flex="main:center cross:center">
+            <?php if ($userInfo['google_key']) { ?>
+              <span class="user_email_svg"></span>
+            <?php } else {?>
+              <span class="user_no_google"></span>
+            <?php } ?>
+          </span>
+          <p class="user_item_type gray600_f" flex="cross:center"><?php echo $lang['GOOGLE_CODE']['GOOGLE_CODE_VER']; ?></p>
+        </div>
+
+        <?php if ($userInfo['google_key']) { ?>
+          <p class="user_item_result gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['GOOGLE_CODE']['GOOGLE_BIND_DONE']; ?></span>
+            <a type="button" name="button" class="user_look_for blue200_f" href="javascript:void(0);" @click="bindInfo('del')">
+              <?php echo $lang['GOOGLE_CODE']['GOOGLE_BIND_OVAER_SHORT']; ?><span class="user_go_1200">&gt;&gt;</span>
+            </a>
+          </p>
+        <?php } else { ?>
+
+          <?php //pc端 ?>
+          <p class="user_item_result user_go_1200 gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['GOOGLE_CODE']['GOOGLE_NO_BIND']; ?></span>
+            <a type="button" name="button" class="user_look_for blue200_f" href="javascript:void(0);" @click="bindInfo('google')">
+              <?php echo $lang['GO_TO_BLIND'] ?><span class="user_go_1200">&gt;&gt;</span>
+            </a>
+          </p>
+        <?php } ?>
+      </li>
+
+      <?php //实名认证 ?>
+      <li class="user_mes_item border_bot" flex="">
+        <div flex-box="0" flex="main:left">
+          <span class="user_list_icon" flex="main:center cross:center">
+            <?php if ($userInfo['realInfo']) { ?>
+              <span class="user_real_svg"></span>
+            <?php } else { ?>
+              <span class="user_yellow_warin"></span>
+            <?php } ?>
+          </span>
+          <p class="user_item_type gray600_f" flex="cross:center"><?php echo $lang['AUTH_CHECK'] ?></p>
+        </div>
+        <?php if ($userInfo['realInfo']) { ?>
+          <p class="user_item_result gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['VER_PASS'] ?></span>
+            <a type="button" name="button" class="user_look_for blue200_f" href="/user/realinfo"><?php echo $lang['CHECK'] ?></a>
+          </p>
+        <?php } else { ?>
+          <?php //手机端 ?>
+          <p class="user_item_result user_go_767 gray400_f" flex-box="1" flex="dir:right cross:center">
+            <a type="button" name="button" class="user_look_for blue200_f" href="/user/realinfo"><?php echo $lang['GO_TO_VER'] ?><span class="user_go_1200">&gt;&gt;</span></a>
+          </p>
+
+          <?php //pc端 ?>
+          <p class="user_item_result user_go_1200 gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['REAL_INFO_TIPS'] ?></span>
+            <a type="button" name="button" class="user_look_for blue200_f" href="/user/realinfo">
+              <?php echo $lang['GO_TO_VER'] ?><span class="user_go_1200">&gt;&gt;</span>
+            </a>
+          </p>
+        <?php } ?>
+
+      </li>
+
+      <?php //登录密码 ?>
+      <li class="user_mes_item border_bot user_list_pad" flex="">
+        <div flex-box="0" flex="main:left">
+           <span class="user_list_icon" flex="main:center cross:center">
+            <span class="user_login_svg"></span>
+          </span>
+          <p class="user_item_type gray600_f" flex="cross:center"><?php echo $lang['LOGIN_PWD'] ?></p>
+        </div>
+        <p class="user_item_result gray400_f" flex-box="1" flex="main:justify cross:center">
+          <span><?php echo $lang['LOGIN_USE'] ?></span>
+          <button type="button" name="button" class="user_look_for blue200_f" @click="showLoginChange"><?php echo $lang['CHANGE_LOGIN_PWD'] ?></button>
+        </p>
+      </li>
+
+      <?php //交易密码 ?>
+      <li class="user_mes_item" flex="">
+        <div flex-box="0" flex="main:left">
+          <span class="user_list_icon" flex="main:center cross:center">
+            <?php if(!$userInfo['pwdtrade']){ ?>
+              <span class="user_yellow_warin"></span>
+            <?php } else { ?>
+              <span class="user_pay_svg"></span>
+            <?php } ?>
+          </span>
+          <p class="user_item_type gray600_f" flex="cross:center"><?php echo $lang['TRADE_PWD'] ?></p>
+        </div>
+        <?php if(!$userInfo['pwdtrade']){ ?>
+
+          <?php //pc端 ?>
+          <p class="user_item_result user_go_1200 gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['TRADE_PWD_TIPS'] ?></span>
+            <button type="button" name="button" class="user_look_for blue200_f" @click="setPwdGo"><?php echo $lang['TRADE_SETTING'] ?><span class="user_go_1200">&gt;&gt;</span></button>
+          </p>
+        <?php } else { ?>
+          <p class="user_item_result gray400_f" flex-box="1" flex="main:justify cross:center">
+            <span><?php echo $lang['TRDE_PWD_SET'] ?></span>
+            <button type="button" name="button" class="user_look_for blue200_f" @click="resetPwdGo"><?php echo $lang['TRADE_RESET_SETTING'] ?></button>
+          </p>
+        <?php } ?>
+
+      </li>
+    </ul>
+
+    <?php //資產展示部分 ?>
+    <?php //pc版 ?>
+    <div flex="dir:right box:first" class="user_con">
+      <div class="user_btn_group">
+        <button type="button" name="button" :class="['user_coin_account','user_coin_first', { user_active_btn: accountBi == 1}]" @click="tabAccount(1)"><?php echo $lang['BIBI_ACCOUNT']; ?></button>
+        <button type="button" name="button" :class="['user_coin_account', { user_active_btn: accountBi == 2}]" @click="tabAccount(2)"><?php echo $lang['FABI_ACCOUNT']; ?></button>
+      </div>
+      <div class="user_coin_money" flex=" cross:center">
+        <span class="user_coin_font gray600_f"><?php echo $lang['SHOW_USEFUL_COIN'] ?></span>
+        <span :class="[{blue200_bg:!nonelist, gray80_bg:nonelist}, 'user_coin_swith']" @click='showHave'>
+          <b v-bind="{'data-b': nonelist? 'off': 'on'}" class="white100_bg"></b>
+          <span v-bind="{'data-switch': nonelist? 'off': 'on'}" class="white100_f user_switch">{{nonelist? '<?php echo $lang['SWITCH_OFF'] ?>': '<?php echo $lang['SWITCH_ON'] ?>'}}</span>
+        </span>
+        <span class="user_coin_all " v-if="accountBi == 1">
+          <span class="gray400_f"><?php echo $lang['T_COIN_TO_PRICE']; ?></span>
+          <span class="green650_f" data-old="bi" :data-tormb = "compPrice('<?php echo sprintf('%.8f', $allToBtc) ?>', 'btc')"><?php echo sprintf('%.8f', $allToBtc) ?></span>BTC
+        </span>
+        <span class="user_coin_all " v-if="accountBi == 2">
+          <span class="gray400_f"><?php echo $lang['T_COIN_TO_PRICE']; ?></span>
+          <span class="green650_f" data-old="fa" :data-tormb = "compPrice('<?php echo sprintf('%.8f', $yibiallToBtc) ?>')"><?php echo sprintf('%.8f', $yibiallToBtc) ?></span>BTC
+        </span>
+      </div>
+    </div>
+
+    <?php //币币账户 ?>
+    <div class="" v-show="accountBi == 1">
+      <scroll-table ref="scrollTabbi" flex-box="2" flex="dir:top">
+        <div slot="thead">
+          <table class="user_tabs border_top_one" rules='none'>
+            <?php //手机端展示用 ?>
+            <tr class="user_tabs_tr white100_bg">
+              <th><?php echo $lang['T_HEAD_TYPE']; ?></th>
+              <th><?php echo $lang['T_HEAD_BALANCE']; ?></th>
+              <th class="user_con"><?php echo $lang['T_HEAD_FORZEN_MONEY']; ?></th>
+              <th class="user_con"><?php echo $lang['T_HEAD_TOTAL']; ?></th>
+              <th><?php echo $lang['T_HEAD_CTRL']; ?></th>
+              <th class="user_hide"></th>
+            </tr>
+          </table>
+        </div>
+        <div slot="tbody" class="user_tabs_div" flex-box="2" id="dataTablebi">
+          <table class="user_tabs border_top_one" >
+            <?php //币币账户 ?>
+            <?php //有资金币种列表 ?>
+            <tr v-for="(item, index) in coinListbiHave" v-show="havelist"
+                :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point', {gray50_bg: index%2 == 0, white100_bg: index%2 != 0 }]"
+                @touchstart="coin_detail('start', item)"
+                @touchmove="coin_detail('over')"
+                @touchend="coin_detail('end')">
+              <td class="upper_word">{{item.name}}</td>
+              <td :data-tormb="compPrice(toFixedNums(userInfo[item.name + '_over']), item.name)">{{userInfo[item.name + '_over']}}</td>
+              <td class="user_con" :data-tormb="compPrice(toFixedNums(userInfo[item.name + '_lock']), item.name)">{{userInfo[item.name + '_lock']}}</td>
+              <td class="user_con" :data-tormb="compPrice(item.sum, item.name)">{{item.sum}}</td>
+              <td>
+                <div class="user_td_div" flex="cross:center">
+                  <?php //充币 ?>
+                  <button type="button"
+                    :disabled="item.in_status ==1" @click.stop="jumpCoin(item, 'in')"
+                    :class="['user_blue_btn', 'user_btn_mg', {btn_disable:item.in_status == 1}]"
+                    >{{item.in_status == 1?'<?php echo $lang['T_BODY_STOP'].$lang['T_BODY_COIN_IN'] ?>':'<?php echo $lang['T_BODY_COIN_IN'] ?>'}}</button>
+                  <?php //提币 out_status: 1暂停提币， 0 提币 ?>
+                  <button type="button" @click.stop="jumpCoin(item, 'out')"
+                    :disabled="item.out_status==1"
+                    :class="['user_blue_btn', 'user_btn_mg', {btn_disable:item.out_status == 1}]"
+                    >{{item.out_status == 1?'<?php echo $lang['T_BODY_STOP'].$lang['T_BODY_COIN_OUT'] ?>':'<?php echo $lang['T_BODY_COIN_OUT'] ?>'}}</button>
+                  <?php //币币互转 ?>
+                  <button type="button" name="button" class="user_blue_btn gray500_f user_order_btn"
+                    v-if="item.otc == 0 && item.coin_transfer == 0" @click="userAlert(item.name)"
+                    ><?php echo $lang['T_BODY_EXCHANGE_FABI']; ?></button>
+                </div>
+              </td>
+              <td class="user_hide"> <img src="/imgs/phone_right.png" alt=""></td>
+            </tr>
+
+            <?php //币币账户 ?>
+            <?php //无金币种列表 ?>
+            <tr v-for="(item, index) in coinListbiNo" v-show="nonelist"
+                :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point',
+                {gray50_bg: coinListbiHave.length % 2 == 0 ? index%2 ==0 :index%2 != 0, white100_bg: coinListbiHave.length % 2 == 0 ? index%2 !=0 :index%2 == 0 }]"
+                @touchstart="coin_detail('start', item)"
+                @touchmove="coin_detail('over')"
+                @touchend="coin_detail('end')">
+              <td class="upper_word">{{item.name}}</td>
+              <td :data-tormb="compPrice(toFixedNums(userInfo[item.name + '_over']), item.name)">{{userInfo[item.name + '_over']}}</td>
+              <td class="user_con" :data-tormb="compPrice(toFixedNums(userInfo[item.name + '_lock']), item.name)">{{userInfo[item.name + '_lock']}}</td>
+              <td class="user_con" :data-tormb="compPrice(item.sum, item.name)">{{item.sum}}</td>
+              <td>
+                <div class="user_td_div" flex="cross:center">
+                  <?php //充币 ?>
+                  <button type="button" name="button" :disabled="item.in_status == 1" @click.stop="jumpCoin(item, 'in')"
+                    :class="['user_blue_btn', 'user_btn_mg', {btn_disable:item.in_status == 1}]"
+                    >{{item.in_status == 1?'<?php echo $lang['T_BODY_STOP'].$lang['T_BODY_COIN_IN'] ?>':'<?php echo $lang['T_BODY_COIN_IN'] ?>'}}</button>
+                  <?php //提币 ?>
+                  <button type="button" name="button" :disabled="item.out_status == 1" @click.stop="jumpCoin(item, 'out')"
+                    :class="['user_blue_btn', 'user_btn_mg', {btn_disable:item.out_status == 1}]"
+                    >{{item.out_status == 1?'<?php echo $lang['T_BODY_STOP'].$lang['T_BODY_COIN_OUT'] ?>':'<?php echo $lang['T_BODY_COIN_OUT'] ?>'}}</button>
+                  <?php //币币互转 ?>
+                  <button type="button" name="button" class="user_blue_btn gray500_f user_order_btn"
+                    v-if="item.otc == 0 && item.coin_transfer == 0" @click="userAlert(item.name)"
+                    ><?php echo $lang['T_BODY_EXCHANGE_FABI']; ?></button>
+                </div>
+              </td>
+              <td class="user_hide"> <img src="/imgs/phone_right.png" alt=""></td>
+            </tr>
+
+            <div class="user_tabs_span white100_bg" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+              <span :class="{loding: tabLoging, no_data: no_data}"></span>
+              <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+            </div>
+          </table>
+        </div>
+      </scroll-table>
+    </div>
+    <div class="" v-show="accountBi == 2">
+      <scroll-table ref="scrollTabfa" flex-box="2" flex="dir:top">
+        <div slot="thead">
+          <table class="user_tabs border_top_one" rules='none'>
+            <?php //手机端展示用 ?>
+            <tr class="user_tabs_tr white100_bg">
+              <th><?php echo $lang['T_HEAD_TYPE']; ?></th>
+              <th><?php echo $lang['T_HEAD_BALANCE']; ?></th>
+              <th class="user_con"><?php echo $lang['T_HEAD_FORZEN_MONEY']; ?></th>
+              <th class="user_con"><?php echo $lang['T_HEAD_TOTAL']; ?></th>
+              <th><?php echo $lang['T_HEAD_CTRL']; ?></th>
+              <th class="user_hide"></th>
+            </tr>
+          </table>
+        </div>
+        <?php //法币账户 ?>
+        <div slot="tbody" class="user_tabs_div" flex-box="2" id="dataTablefa">
+          <table class="user_tabs border_top_one" >
+            <?php //有资金币种列表 ?>
+
+            <tr v-for="(item, index) in coinListfaHave" v-show="havelist"
+              :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point', {gray50_bg: index%2 == 0, white100_bg: index%2 != 0 }]"
+              @touchstart="coin_detail('start', item)"
+              @touchmove="coin_detail('over')"
+              @touchend="coin_detail('end')">
+              <td class="upper_word">{{item.name}}</td>
+              <td :data-tormb="compPrice(userfabi[item.name + '_over'], item.name)">{{userfabi[item.name + '_over']}}</td>
+              <td class="user_con" :data-tormb="compPrice(toFixedNums(userInfo[item.name + '_lock']), item.name)">{{userfabi[item.name + '_lock']}}</td>
+              <td class="user_con" :data-tormb="compPrice(item.sum, item.name)">{{item.sum}}</td>
+              <td>
+                <div class="user_td_div" flex="cross:center" php-url="<?php echo Yaf_Registry::get("config")->yibi->url;?>">
+                  <?php //去法币交易 ?>
+                  <button type="button" name="button" @click.stop="faJump('<?php echo Yaf_Registry::get("config")->yibi->url;?>')"
+                    class="user_blue_btn user_btn_mg">
+                    <?php echo $lang['T_BODY_GO_FA'] ?>
+                  </button>
+
+                  <?php //币币互转 ?>
+                  <button type="button" name="button" class="user_blue_btn gray500_f user_order_btn"
+                    v-if="item.otc == 0 && item.coin_transfer == 0" @click="userAlert(item.name)">
+                    <?php echo $lang['T_BODY_EXCHANGE_BIBI']; ?>
+                  </button>
+                </div>
+              </td>
+              <td class="user_hide"> <img src="/imgs/phone_right.png" alt=""></td>
+            </tr>
+
+            <?php //法币账户 ?>
+            <?php //无金币种列表 ?>
+            <tr v-for="(item, index) in coinListfaNo" v-show="nonelist"
+              :class="['user_tabs_tr', 'border_top_one', 'gray600_f', 'cursor_point',
+              {gray50_bg: coinListfaHave.length % 2 == 0 ? index%2 ==0 :index%2 != 0, white100_bg: coinListfaHave.length % 2 == 0 ? index%2 !=0 :index%2 == 0 }]"
+              @touchstart="coin_detail('start', item)"
+              @touchmove="coin_detail('over')"
+              @touchend="coin_detail('end')">
+              <td class="upper_word">{{item.name}}</td>
+              <td :data-tormb="compPrice(userfabi[item.name + '_over'], item.name)">{{userfabi[item.name + '_over']}}</td>
+              <td class="user_con" :data-tormb="compPrice(toFixedNums(userInfo[item.name + '_lock']), item.name)">{{userfabi[item.name + '_lock']}}</td>
+              <td class="user_con" :data-tormb="compPrice(item.sum, item.name)">{{item.sum}}</td>
+              <td>
+                <div class="user_td_div" flex="cross:center"  php-url="<?php echo Yaf_Registry::get("config")->yibi->url;?>">
+                  <?php //去法币交易 ?>
+                  <button type="button" name="button" @click.stop="faJump('<?php echo Yaf_Registry::get("config")->yibi->url;?>')"
+                    class="user_blue_btn user_btn_mg">
+                    <?php echo $lang['T_BODY_GO_FA'] ?>
+                  </button>
+                  <?php //币币互转 ?>
+                  <button type="button" name="button" class="user_blue_btn gray500_f user_order_btn"
+                    v-if="item.otc == 0 && item.coin_transfer == 0" @click="userAlert(item.name)">
+                    <?php echo $lang['T_BODY_EXCHANGE_BIBI']; ?>
+                  </button>
+                </div>
+              </td>
+              <td class="user_hide"> <img src="/imgs/phone_right.png" alt=""></td>
+            </tr>
+            <div class="user_tabs_span white100_bg" v-show="tabLoging || no_data" v-cloak flex="dir:top cross:center main:center">
+              <span :class="{loding: tabLoging, no_data: no_data}"></span>
+              <u class="no_data_font" v-if="no_data"><?php echo $lang['NO_RECORD_NOW']; ?></u>
+            </div>
+          </table>
+        </div>
+      </scroll-table>
+    </div>
+    <?php //币种详情 ?>
+    <div class="coin_detail_dispaly gray200_bg" v-if="!coin_show_btn">
+      <p class="coin_detail_p" flex="">
+        <span class="coin_detail_type" flex-box="0"><?php echo $lang['T_HEAD_TYPE'] ?>:</span>
+        <span class="coin_detail_content" flex-box="1">{{coin.detail}}</span>
+      </p>
+      <p class="coin_detail_p" flex="">
+        <span class="coin_detail_type" flex-box="0"><?php echo $lang['T_HEAD_BALANCE'] ?>:</span>
+        <span class="coin_detail_content" flex-box="1">{{coin.over}}</span>
+      </p>
+      <p class="coin_detail_p" flex="">
+        <span class="coin_detail_type" flex-box="0"><?php echo $lang['T_HEAD_FORZEN_MONEY'] ?>:</span>
+        <span class="coin_detail_content" flex-box="1">{{coin.lock}}</span>
+      </p>
+      <p class="coin_detail_p" flex="">
+        <span class="coin_detail_type" flex-box="0"><?php echo $lang['T_HEAD_TOTAL'] ?>:</span>
+        <span class="coin_detail_content" flex-box="1">{{coin.all}}</span>
+      </p>
+      <p class="coin_detail_p" flex="">
+        <span class="coin_detail_type" flex-box="0"><?php echo $lang['T_HEAD_CTRL'] ?>:</span>
+        <span class="coin_detail_content" flex-box="1">
+          <button type="button" name="button" class="user_blue_btn blue200_bg white100_f" :disabled="disableIn">{{disableIn?'<?php echo $lang['T_BODY_COIN_STOP_IN'] ?>':'<?php echo $lang['T_BODY_COIN_IN'] ?>'}}</button>
+          <button type="button" name="button" class="user_blue_btn" :disabled="disableOut">{{disableOut?'<?php echo $lang['T_BODY_COIN_STOP_OUT'] ?>':'<?php echo $lang['T_BODY_COIN_OUT'] ?>'}}</button>
+          <button type="button" name="button" class="user_blue_btn user_order_btn" @click="userAlert(coin.detail)" v-if="disableChange"><?php echo $lang['T_BODY_EXCHANGE_BIBI']; ?></button>
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <?php //交易密码 ?>
+  <div v-cloak >
+    <div class="pwd_dom pwd_mask" v-if="showPwd">
+      <div class="pwd_mask_contain_980 white100_bg"></div>
+      <div class="pwd_mask_contain_1200 black900_bg"></div>
+    </div>
+
+    <transition name="zoom">
+      <div class="pwd_dom pwd_content" v-if="showPwd">
+        <div class="pwd_padd" v-if="!resest_success && showPwd">
+          <alert-header v-cloak v-on:alertback="alertfn">
+            <p slot="content"><?php echo $lang['TRADE_PWD'] ?></p>
+          </alert-header>
+          <?php //设置交易密码 頭部?>
+          <div class="pwd_header" v-if="setPwd || showResetTwo">
+            <h2 class="user_go_1200 pwd_pc_header gray600_f"><?php echo $lang['SET_TRADE_PWD_PLEASE'] ?><span class="pwd_close" @click="alertfn"></span></h2>
+            <!-- <p class="pwd_header_p gray600_f">您尚未设置交易密码，请先设置！（交易密码是在币交所进行交易时需要输入的密码，不同于登录密码。为确保您的财产安全，请牢记交易密码，防止丢失！）</p> -->
+          </div>
+          <?php //重置交易密碼 頭部 ?>
+          <div class="pwd_header user_go_1200" v-if="showReset && !showResetTwo">
+
+            <?php if ($userInfo['mo'] && $userInfo['email']){ ?>
+              <div class="user_go_1200 pwd_pc_header pwd_pc_headers gray600_f" v-if="!resest_success">
+                <span :class="['pwd_pc_tab', {pwd_pc_active: tabIndex == 2}]" @click="tabChange(2)"><?php echo $lang['RESER_TRADE_BY_EMAIL'] ?></span>
+                <span :class="['pwd_pc_tab', {pwd_pc_active: tabIndex == 1}]" @click="tabChange(1)"><?php echo $lang['RESER_TRADE_BY_PHONE'] ?></span>
+                <span class="pwd_close" @click="alertfn"></span>
+              </div>
+            <?php } else if ($userInfo['mo'] && !$userInfo['email']){ ?>
+              <div class="user_go_1200 pwd_pc_header gray600_f" ref="phone">
+                <?php echo $lang['RESER_TRADE_BY_PHONE'] ?>
+                <span class="pwd_close" @click="alertfn"></span>
+              </div>
+            <?php } else if (!$userInfo['mo'] && $userInfo['email']){ ?>
+              <div class="user_go_1200 pwd_pc_header gray600_f" ref="emai;">
+                <?php echo $lang['RESER_TRADE_BY_EMAIL'] ?>
+                <span class="pwd_close" @click="alertfn"></span>
+              </div>
+            <?php }?>
+          </div>
+          <div class="pwd_space gray200_bg"></div>
+          <?php //设置交易密码 输入框部分 ?>
+          <?php //輸入交易密碼 ?>
+          <div class="pwd_input" v-if="setPwd">
+            <div :class="{pwd_input_group:true, pwd_input_group_top:true, err_input: errorArr.p1 === 2 || errorArr.p1 === 3 || errorArr.p1 === 4}" flex="">
+              <?php //pc端 ?>
+              <label class="user_go_1200 pwd_input_label pwd_set_icon" flex-box="0"></label>
+              <div :class="{pwd_focus_div: inputFocusPwd}" flex-box="1">
+                <input type="password" name="" v-model="setPwdData.p1" placeholder="<?php echo $lang['REAL_PASSWORD'] ?>"
+                :class="['pwd_input_text', {pwd_input_focus: inputFocusPwd}]" maxlength="16"
+                onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false"
+                @blur="verifyVal('p1', setPwdData.p1)"
+                @focus="verifyVal('p1', setPwdData.p1, 'focus')"
+                @keyup="noSpace(setPwdData.p1, 'p1')"
+                @keyup.enter="verifyVal('p1', setPwdData.p1, 'enter', 'set')">
+              </div>
+            </div>
+            <?php //错误提示 ?>
+            <p class="user_err_mes" v-if="errorArr.p1 === 0 || errorArr.p1 === 10"></p>
+            <p class="user_err_mes" v-if="errorArr.p1 === 1"><?php echo $lang['REAL_PASSWORD'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 2"><?php echo $lang['REAL_PASSWORD'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 3"><?php echo $lang['PASSWORD_LENGTH_UNENOUGH'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 5"><?php echo $lang['USER_PWD_THREE'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 4">{{errorMes}}</p>
+            <?php //再次輸入交易密碼 ?>
+            <div :class="{pwd_input_group:true, err_input: errorArr.p2 === 2 || errorArr.p2 === 3 || errorArr.p2 === 4}"  flex="">
+              <?php //pc端 ?>
+              <label class="user_go_1200 pwd_input_label pwd_set_icon" flex-box="0"></label>
+              <div :class="{pwd_focus_div: inputFocusRePwd}" flex-box="1">
+                <input type="password" name="" v-model="setPwdData.p2" flex-box="1" placeholder="<?php echo $lang['INPUT_AGAIN'] ?>"
+                :class="['pwd_input_text', {pwd_input_focus: inputFocusRePwd}]" maxlength="16"
+                onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false"
+                @blur="verifyVal('p2', setPwdData.p2)"
+                @focus="verifyVal('p2', setPwdData.p2, 'focus')"
+                @keyup="noSpace(setPwdData.p2, 'p2')"
+                @keyup.enter="verifyVal('p2', setPwdData.p2, 'enter', 'set')">
+              </div>
+            </div>
+            <?php //錯誤提示 ?>
+            <p class="user_err_mes" v-if="errorArr.p2 === 0 || errorArr.p2 === 10"></p>
+            <p class="user_err_mes" v-if="errorArr.p2 === 1"><?php echo $lang['SURE_PWD_HOLDER_1'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p2 === 2"><?php echo $lang['SURE_PWD_HOLDER_1'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p2 === 3"><?php echo $lang['SURE_PWD_HOLDER_3'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p2 === 4">{{errorMes}}</p>
+            <button type="button" name="button" class="pwd_btn orange500_bg white100_f" :disabled="!disable" @click="setPwdSubmit('set')">
+              <?php echo $lang['USER_INDEX_SAVING'] ?>
+              <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+            </button>
+          </div>
+          <?php //重置交易密码 第一步?>
+          <div class="pwd_input" v-if="showReset">
+
+            <?php if ($userInfo['mo'] && $userInfo['email']){ //?>
+              <?php //手机号 邮箱号都有的情况 ?>
+              <p class="pwd_input_show" v-if= "tabIndex == 1">
+                <span class="pwd_input_label gray600_f user_go_767"><?php echo $lang['YOUR_PHONE_NO'] ?>:</span>
+                <span class="pwd_input_label user_go_1200"><?php echo $lang['FORGET_STEP_OVER'] ?>:</span>
+                <span class="pwd_show_phone blue200_f"><?php echo $userInfo['mo']; ?></span>
+              </p>
+              <p class="pwd_input_show" v-if= "tabIndex == 2">
+                <span class="pwd_input_label user_go_1200"><?php echo $lang['FORGET_STEP_OVER_EMAIL'] ?>:</span>
+                <span class="pwd_show_phone blue200_f"><?php echo $userInfo['email']; ?></span>
+              </p>
+            <?php } else if ($userInfo['mo'] && !$userInfo['email']){ //?>
+              <?php //只有手机号 ?>
+              <p class="pwd_input_show">
+                <span class="pwd_input_label user_go_1200"><?php echo $lang['FORGET_STEP_OVER'] ?>:</span>
+                <span class="pwd_show_phone blue200_f"><?php echo $userInfo['mo']; ?></span>
+              </p>
+            <?php } else if (!$userInfo['mo'] && $userInfo['email']){ //?>
+              <?php //只有邮箱号 ?>
+              <p class="pwd_input_show">
+                <span class="pwd_input_label user_go_1200"><?php echo $lang['FORGET_STEP_OVER_EMAIL'] ?>:</span>
+                <span class="pwd_show_phone blue200_f"><?php echo $userInfo['email']; ?></span>
+              </p>
+            <?php } ?>
+
+            <?php //google ?>
+            <div
+              :class="{pwd_input_group:true,
+                      pwd_input_group_top:true,
+                      err_input: errorArr.google === 2 || errorArr.google === 3 || errorArr.google === 4}"
+                      flex="" v-if="isGoogle">
+              <label class="pwd_input_label gray600_f user_go_767" flex-box="0"><?php echo $lang['SET_TRADE_PWD'] ?>:</label>
+              <?php //pc端 ?>
+              <label class="user_go_1200 pwd_input_label pwd_set_code" flex-box="0"></label>
+
+              <div :class="['pwd_div', {pwd_focus_div: inputFocusGoogle}]" flex-box="1">
+                <input type="text" name="" v-model="stepOneData.google_code" placeholder="<?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE'] ?>"
+                :class="['pwd_input_text', {pwd_input_focus: inputFocusGoogle}]" maxlength="6"
+                @blur="verifyVal('google', stepOneData.google_code)"
+                @focus="verifyVal('google', stepOneData.google_code, 'focus')"
+                @keyup="codeInput(stepOneData.google_code, 'google')"
+                @keyup.enter="verifyVal('google', stepOneData.google_code, 'enter', 'reset')">
+              </div>
+            </div>
+            <div v-if="isGoogle">
+              <p class="user_err_mes" v-if="errorArr.google === 0 || errorArr.google === 10"></p>
+              <p class="user_err_mes" v-if="errorArr.google === 1"><?php  echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE'] ?></p>
+              <p class="user_err_mes red500_f" v-if="errorArr.google === 2"><?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE'] ?></p>
+              <p class="user_err_mes red500_f" v-if="errorArr.google === 3"><?php echo $lang['GOOGLE_CODE']['GOOGLE_WARN_ERR'] ?></p>
+              <p class="user_err_mes red500_f" v-if="errorArr.google === 4">{{errorMes}}</p>
+            </div>
+
+
+            <div :class="{pwd_input_group:true, err_input: errorArr.code === 2 || errorArr.code === 3 || errorArr.code === 4}" flex="dir:left box:justify cross:center">
+              <?php //pc端 ?>
+              <label class="user_go_1200 pwd_input_label pwd_set_code" flex-box="0"></label>
+              <?php //验证码 ?>
+              <div :class="['pwd_div', {pwd_focus_div: inputFocusCode}]" flex-box="1">
+                  <?php //手机号 邮箱号都有的情况 ?>
+                  <input type="text" v-model="stepOneData.code"
+                  <?php if ($userInfo['mo'] && $userInfo['email']){ ?>
+                  :placeholder="tabIndex == 1 ? '<?php echo $lang['PLEASE_ENTER_PHONE_CODE']; ?>' : '<?php echo $lang['PLEASE_ENTER_EMAIL_CODE']; ?>'"
+                  <?php } else if ($userInfo['mo'] && !$userInfo['email']){ ?>
+                  placeholder="<?php echo $lang['PLEASE_ENTER_PHONE_CODE']; ?>"
+                  <?php } else if (!$userInfo['mo'] && $userInfo['email']){ ?>
+                  placeholder="<?php echo $lang['PLEASE_ENTER_EMAIL_CODE']; ?>"
+                  <?php } ?>
+                  :class="['pwd_input_text', {pwd_input_focus: inputFocusCode}]" maxlength="6"
+                  @blur="verifyVal('code', stepOneData.code)"
+                  @focus="verifyVal('code', stepOneData.code, 'focus')"
+                  @keyup.enter="verifyVal('code', stepOneData.code)"
+                  @keyup="codeInput(stepOneData.code)">
+              </div>
+              <button type="button" name="button" class="pwd_code_get orange500_f" @click="getVerCode(7)">{{setTimes === "out" ? '<?php echo $lang['ACQUIRING'] ?>' : times+'<?php echo $lang['AFTER_REGET_CODE'] ?>'}}</button>
+            </div>
+            <p  flex = "main:justify" class="user_err_mes">
+              <span v-if="errorArr.code === 0 || errorArr.code === 10"></span>
+              <?php if($userInfo['mo'] && $userInfo['email']){ //?>
+                <span :class="{red500_f: errorArr.code == 2}" v-if="(errorArr.code === 2 || errorArr.code === 1) && tabIndex == 1">
+                  <?php echo $lang['PLEASE_ENTER_PHONE_CODE']; ?>
+                </span>
+                <span :class="{red500_f: errorArr.code == 2}" v-if="(errorArr.code === 2 || errorArr.code === 1) && tabIndex == 2">
+                  <?php echo $lang['PLEASE_ENTER_EMAIL_CODE']; ?>
+                </span>
+              <?php } else if($userInfo['mo'] && !$userInfo['email']){ //?>
+                <span :class="{red500_f: errorArr.code == 2}" v-if="errorArr.code === 2 || errorArr.code === 1">
+                  <?php echo $lang['PLEASE_ENTER_PHONE_CODE']; ?>
+                </span>
+              <?php } else { ?>
+                <span :class="{red500_f: errorArr.code == 2}" v-if="errorArr.code === 2 || errorArr.code === 1">
+                  <?php echo $lang['PLEASE_ENTER_EMAIL_CODE']; ?>
+                </span>
+              <?php } ?>
+              <span class="red500_f" v-if="errorArr.code === 3"><?php echo $lang['NUMBER_UNENOUGH'] ?></span>
+              <span class="red500_f" v-if="errorArr.code === 4">{{errorMes}}</span>
+              <span v-if="voice_set && !emailVer" class="red500_f"><?php echo $lang['CAN_GET_AT']; ?>{{times}}<?php echo $lang['AFTER_GET_VOICE_CODE']; ?></span>
+              <span v-if="voice_warn && !emailVer" class="red500_f"><?php echo $lang['PLEASE_NOTE_THE_CALL']; ?></span>
+              <span v-if="voice_ver && !voice_set && !emailVer"><?php echo $lang['CLICK_GET']; ?><a href="javascript:void(0);" class="blue200_f" @click="getVerCode(8)"><?php echo $lang['VOICE_CODE']; ?></a></span>
+            </p>
+            <button type="button" name="button" class="pwd_btn orange500_bg white100_f" @click="stepTwo">
+              <?php echo $lang['NEXT_STEP']; ?>
+              <u class="loading-svg" data-loading="svg" v-if="submit_now"></u>
+            </button>
+          </div>
+          <?php //重置交易密码第二步 ?>
+          <div class="pwd_input" v-if="showResetTwo">
+            <div :class="{pwd_input_group:true, pwd_input_group_top:true, err_input: errorArr.p1 === 2 || errorArr.p1 === 3 || errorArr.p1 === 4}" flex="">
+              <label class="pwd_input_label gray600_f user_go_767" flex-box="0"><?php echo $lang['SET_TRADE_PWD'] ?>:</label>
+              <?php //pc端 ?>
+              <label class="user_go_1200 pwd_input_label pwd_set_pwd" flex-box="0"></label>
+
+              <div :class="['pwd_div', {pwd_focus_div: inputFocusPwd}]" flex-box="1">
+                <input type="password" name="" v-model="setPwdData.p1" placeholder="<?php echo $lang['TRADE_PWD_PLACEHOLDER_1'] ?>"
+                :class="['pwd_input_text', {pwd_input_focus: inputFocusPwd}]" maxlength="16"
+                onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" maxlength="16"
+                @blur="verifyVal('p1', setPwdData.p1)"
+                @focus="verifyVal('p1', setPwdData.p1, 'focus')"
+                @keyup="noSpace(setPwdData.p1, 'p1')"
+                @keyup.enter="verifyVal('p1', setPwdData.p1, 'enter', 'reset')">
+              </div>
+            </div>
+            <p class="user_err_mes" v-if="errorArr.p1 === 0 || errorArr.p1 === 10"></p>
+            <p class="user_err_mes" v-if="errorArr.p1 === 1"><?php echo $lang['REAL_PASSWORD'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 2"><?php echo $lang['REAL_PASSWORD'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 3"><?php echo $lang['TRADE_PWD_PLACEHOLDER'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 5"><?php echo $lang['USER_PWD_THREE'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p1 === 4">{{errorMes}}</p>
+
+            <div :class="{pwd_input_group:true, err_input: errorArr.p2 === 2 || errorArr.p2 === 3 || errorArr.p2 === 4}" flex="">
+              <label class="pwd_input_label gray600_f user_go_767" flex-box="0"><?php echo $lang['SURE_PWD_HOLDER_1'] ?>:</label>
+              <?php //pc端 ?>
+              <label class="user_go_1200 pwd_input_label pwd_set_pwd" flex-box="0"></label>
+
+              <div :class="['pwd_div', {pwd_focus_div: inputFocusRePwd}]" flex-box="1">
+                <input type="password" v-model="setPwdData.p2" name="" value="" flex-box="1" placeholder="<?php echo $lang['SURE_PWD_HOLDER_1'] ?>"
+                :class="['pwd_input_text', {pwd_input_focus: inputFocusRePwd}]" maxlength="16"
+                onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false" maxlength="16"
+                @blur="verifyVal('p2', setPwdData.p2)"
+                @focus="verifyVal('p2', setPwdData.p2, 'focus')"
+                @keyup="noSpace(setPwdData.p2, 'p2')"
+                @keyup.enter="verifyVal('p2', setPwdData.p2, 'enter', 'reset')">
+              </div>
+            </div>
+            <p class="user_err_mes" v-if="errorArr.p2 === 0 || errorArr.p2 === 10"></p>
+            <p class="user_err_mes" v-if="errorArr.p2 === 1"><?php echo $lang["SURE_PWD_HOLDER_1"] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p2 === 2"><?php echo $lang["SURE_PWD_HOLDER_1"] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p2 === 3"><?php echo $lang['SURE_PWD_HOLDER_3'] ?></p>
+            <p class="user_err_mes red500_f" v-if="errorArr.p2 === 4">{{errorMes}}</p>
+            <button type="button" name="button" class="pwd_btn orange500_bg white100_f" @click="setPwdSubmit('reset')">
+              <?php echo $lang['SURE_PWD_CHANGE'] ?>
+              <u class="loading-svg" data-loading="svg" v-if="submit_now" ></u>
+            </button>
+          </div>
+        </div>
+
+        <?php //交易密码修改成功  ?>
+        <div class="user_resest_success" v-if="resest_success">
+          <div class="user_reset_top">
+            <span class="user_resest_close" @click="closeAlert"></span>
+          </div>
+          <div class="user_success_mes">
+            <p class="user_success_mes_p gray500_f">
+              {{pwdType === 'set'? '<?php echo $lang['RESER_TRADE_SUCC'] ?>': '<?php echo $lang['RESER_TRADE_CHANGE_SUCC'] ?>'}}
+            </p>
+          </div>
+          <div class="user_btn_div" flex="main:center">
+            <button type="button" name="button" class="user_btn_trade orange500_bg white100_f" @click="jumpTrade"><?php echo $lang['GO_TO_TRADE'] ?></button>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="callfn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $lang['DETERMINE'] ?></span>
+  </my-alert>
+</div>
+
+<?php //綁定郵箱和手機  google?>
+<div id="bindInfo" @click="closeArea">
+  <?php //幕布 ?>
+  <div class="bind_curtain black900_bg" v-if="showAlert || successGoo" v-cloak></div>
+  <?php //內容部分 ?>
+  <transition name="zoom" v-cloak>
+    <div class="bind_content white100_bg" v-if="showAlert">
+      <?php // echo $lang['BIND'] ?>
+      <h3 class="bind_title gray600_f" v-cloak v-if="showType != 'google' && showType != 'del' ">
+        {{showType == 'mo'? '<?php echo $lang['PHONE_NO'] ?>' :'<?php echo $lang['EMAIL_NO'] ?>'}}
+        <span class="bind_close" @click="closeAlert"></span>
+      </h3>
+      <?php //google title ?>
+      <h3 class="bind_title bind_title_goo gray600_f" v-cloak v-if="showType == 'google' ">
+        <?php echo $lang['GOOGLE_CODE']['GOOGLE_BIND']; ?>
+        <span class="bind_close" @click="closeAlert"></span>
+      <?php //google title ?>
+      <h3 class="bind_title bind_title_goo gray600_f" v-cloak v-if="showType == 'del' ">
+        <?php echo $lang['GOOGLE_CODE']['GOOGLE_BIND_OVAER']; ?>
+        <span class="bind_close" @click="closeAlert"></span>
+      </h3>
+      <?php //google 文字部分 ?>
+      <?php //绑定google验证码 第一步 ?>
+      <p v-if="showType == 'google' &&  showStep == 1" class="bind_go_title gray500_f" flex="cross:center main:center"><?php echo $lang['GOOGLE_CODE']['GOOGLE_FIRST_STEP']; ?></p>
+      <p v-if="showType == 'google' &&  showStep == 1" class="bind_go_title gray500_f" flex="cross:center main:center">（Google Authenticator）</p>
+      <?php //google 第二步 ?>
+      <p v-if="showType == 'google' &&  showStep == 2" class="bind_go_title gray500_f" flex="cross:center main:center"><?php echo $lang['GOOGLE_CODE']['GOOGLE_KEY_VER']; ?>,</p>
+      <p v-if="showType == 'google' &&  showStep == 2" class="bind_go_title gray500_f" flex="cross:center main:center"><?php echo $lang['GOOGLE_CODE']['GOOGLE_DEFEND_LOST']; ?>.</p>
+
+      <?php //google 图片部分 ?>
+      <?php //google 第一步验证码部分 ?>
+      <div class="bind_google_q" v-if="showType == 'google' &&  showStep == 1"></div>
+      <?php //google 第二步验证码部分  二维码?>
+      <div class="bind_google_two" v-if="showType == 'google' &&  showStep == 2">
+        <?php if ($userInfo['mo']){ ?>
+          <?php $qrimages = urlencode('otpauth://totp/'.$userInfo['mo'].'%20-%20www.dobitrade.com?secret='.$secret.'&issuer='.$userInfo['mo']);?>
+        <?php } else { ?>
+          <?php $qrimages = urlencode('otpauth://totp/'.$userInfo['email'].'%20-%20www.dobitrade.com?secret='.$secret.'&issuer='.$userInfo['email']);?>
+        <?php } ?>
+        <img src="/ajax_Base/qrimages?text=<?php  echo $qrimages?>">
+      </div>
+      <?php //google 第二步 goole key部分 ?>
+      <p v-if="showType == 'google' &&  showStep == 2" class="bind_key">
+        <span id="bind_copy"><?php echo $secret;?></span> {{getKey('<?php echo $secret;?>')}}
+        <?php //復制 ?>
+        <button type="button" name="button" class="bind_copy" @click="copyClikc"><?php echo $lang['GOOGLE_CODE']['GOOGLE_KEY_COPY']; ?></button>
+      </p>
+
+      <?php //邮箱绑定时显示手机号 ?>
+      <div class="bind_group" flex="" v-if="showType == 'email' && showStep == 1" v-cloak>
+        <span class="bind_label bind_mo" flex-box="0"></span>
+        <div class=""><?php echo $userInfo['mo']; ?></div>
+      </div>
+      <?php //手机绑定时显示邮箱号 ?>
+      <div class="bind_group" flex="" v-if="showType == 'mo' && showStep == 1" v-cloak>
+        <span class="bind_label bind_email" flex-box="0"></span>
+        <div class=""><?php echo $userInfo['email']; ?></div>
+      </div>
+      <?php //google 第三部 密码部分 ?>
+      <div class="bind_group top_group" flex="" v-if="threeStep" v-cloak>
+        <span class="bind_label bind_pwd" flex-box="0"></span>
+        <div :class="{bind_input_div: focusGoogle}"  flex-box="1">
+          <input type="password" name="" value=""
+          v-model.trim="googleData.pwd"
+          :class="['bind_input', {focus_input: focusGoogle}]"
+          placeholder="<?php echo $lang['GOOGLE_CODE']['GOOGLE_PLEASE_ACCOUNT_PASS']; ?>" maxlength="16"
+          @focus="verify('pwd', 'focus')" @blur="verify('pwd', 'blur')" @keyup ="inputVer('pwd')">
+        </div>
+      </div>
+      <?php //pwd tips ?>
+      <div class="bind_err" v-if="threeStep">
+        <p v-if="verifyType.pwd == 0" class="bind_warin"></p>
+        <p v-if="verifyType.pwd == 1 || verifyType.pwd == 2"
+        :class="['bind_warin', {red500_f: verifyType.pwd == 2}]"><?php echo $lang['GOOGLE_CODE']['GOOGLE_PLEASE_ACCOUNT_PASS']; ?></p>
+        <p v-if="verifyType.pwd == 4" class="bind_warin red500_f">{{errPhpMes}}</p>
+      </div>
+
+      <?php //google 第三部 验证码 or 解除绑定?>
+      <div class="bind_group" flex="" v-if="threeStep" v-cloak>
+        <span class="bind_label bind_code" flex-box="0"></span>
+        <div :class="{bind_input_div: focusInputCode}"  flex-box="1">
+          <input type="text" name="" value=""
+          v-model.trim="googleData.code" maxlength="6"
+          :class="['bind_input', {focus_input: focusInputCode}]"
+          placeholder="<?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?>" maxlength="6"
+          @focus="verify('code', 'focus')" @blur="verify('code', 'blur')" @keyup ="inputVer('code')">
+        </div>
+      </div>
+      <?php //pwd tips ?>
+      <div class="bind_err" v-if="threeStep">
+        <p v-if="verifyType.code == 0" class="bind_warin"></p>
+        <p v-if="verifyType.code == 1 || verifyType.code == 2"
+        :class="['bind_warin', {red500_f: verifyType.code == 2}]"><?php echo $lang['GOOGLE_CODE']['GOOGLE_INPUT_CODE']; ?></p>
+        <p v-if="verifyType.code == 3" class="bind_warin red500_f"><?php echo $lang['GOOGLE_CODE']['GOOGLE_WARN_ERR']; ?></p>
+        <p v-if="verifyType.code == 4" class="bind_warin red500_f">{{errPhpMes}}</p>
+      </div>
+      <?php //解除谷歌验证码底部提示?>
+      <p v-if="threeStep" class="bind_go_title gray500_f" flex="cross:center main:center"><?php echo $lang['GOOGLE_CODE']['GOOGLE_LOST_CALL']; ?>：service@dobitrade.com.</p>
+
+      <?php //郵箱 ?>
+      <div class="bind_group" flex="" v-if="showType == 'email' && showStep == 2" v-cloak>
+        <span class="bind_label bind_email" flex-box="0"></span>
+        <div :class="{bind_input_div: focusInputEmail}"  flex-box="1">
+          <input type="text" maxlength="32"
+            :class="['bind_input', {focus_input: focusInputEmail}]"
+            v-model.trim="emailData.email" placeholder="<?php echo $lang['PL_INTER_U_EMAIL']; ?>"
+            @focus="verify('email', 'focus')"
+            @blur="verify('email', 'blur')">
+        </div>
+      </div>
+      <?php //手機 ?>
+      <div class="bind_group bind_input" flex="" v-if="showType == 'mo' && showStep == 2" v-cloak>
+        <span class="bind_label bind_mo" flex-box="0"></span>
+        <div :class="['bind_input', 'relative_dom', {bind_input_div: focusInputEmail}]"  flex-box="1">
+          <span class="bind_area fn_bind_label" flex-box="0" @click="chooseArea = !chooseArea">{{area}}</span>
+          <transition name="fadeOut">
+            <ul class="bind_choose white100_bg fn_bind_area" v-cloak v-show="chooseArea">
+              <?php foreach ($this->layout['areadata'] as $k => $v) { ?>
+                <li flex="" href="javascript:void(0);" :class="['bind_li', {fn_active: index == <?php echo $k?>}]"
+                  @click="areaClick('<?php echo $k?>, <?php echo $v['area_code'] ?>')">
+                  <span class="bind_area_code gray500_f" flex-box="0"><?php echo $v['area_code'] ?></span>
+                  <span flex-box="1" class="bind_area_name gray500_f"><?php echo $v['country'] ?></span>
+                </li>
+              <?php } ?>
+            </ul>
+          </transition>
+          <input type="text" flex-box="1" maxlength="11"
+            :class="['bind_input_phone', {focus_input: focusInputEmail}]"
+            v-model.trim="phoneData.phone" placeholder="<?php echo $lang['PL_INTER_U_PHONE']; ?>"
+            @focus="verify('mo', 'focus')"
+            @blur="verify('mo', 'blur')"
+            @keyup="inputVer('mo')">
+        </div>
+      </div>
+      <?php //錯誤提示 ?>
+        <div class="bind_err" v-cloak v-if="showType === 'email'">
+          <p v-if="verifyType.email == 0" class="bind_warin"></p>
+          <p v-if="verifyType.email == 1" :class="['bind_warin', {red500_f: verifyType.email == 2}]"><?php echo $lang['PL_INTER_U_EMAIL'] ?></p>
+          <p v-if="verifyType.email == 2" :class="['bind_warin', {red500_f: verifyType.email == 2 || verifyType.email == 3}]"><?php echo $lang['PL_INTER_U_EMAIL'] ?></p>
+          <p v-if="verifyType.email == 3" :class="['bind_warin', {red500_f: verifyType.email == 2 || verifyType.email == 3}]"><?php echo $lang['EMAIL_ERR_2'] ?></p>
+          <p v-if="verifyType.email == 4" :class="['bind_warin', {red500_f: verifyType.email == 4}]">{{errPhpMes}}</p>
+        </div>
+        <div class="bind_err" v-cloak v-if="showType === 'mo'">
+          <p v-if="verifyType.mo == 0" class="bind_warin"></p>
+          <p v-if="verifyType.mo == 1" :class="['bind_warin', {red500_f: verifyType.mo == 2}]"><?php echo $lang['PL_INTER_U_PHONE'] ?></p>
+          <p v-if="verifyType.mo == 2" :class="['bind_warin', {red500_f: verifyType.mo == 2 || verifyType.mo == 3}]"><?php echo $lang['PL_INTER_U_PHONE'] ?></p>
+          <p v-if="verifyType.mo == 3" :class="['bind_warin', {red500_f: verifyType.mo == 2 || verifyType.mo == 3}]"><?php echo $lang['THE_FORMAT_ERR'] ?></p>
+          <p v-if="verifyType.mo == 4" :class="['bind_warin', {red500_f: verifyType.mo == 4}]">{{errPhpMes}}</p>
+        </div>
+      <?php //驗證碼 ?>
+      <div class="bind_group" flex="" v-if="showType != 'google' && showType != 'del'">
+        <span class="bind_label bind_code" flex-box="0"></span>
+
+        <div :class="{bind_input_div: focusInputCode}"  flex-box="1">
+          <input type="text" name="" value="" v-model.trim="emailData.code" :class="['bind_input', {focus_input: focusInputCode}]" placeholder="<?php echo $lang['PLS_INT_CODE'] ?>" maxlength="6"
+          @focus="verify('code', 'focus')" @blur="verify('code', 'blur')" @keyup ="inputVer('code')">
+        </div>
+        <button type="button" name="button" flex-box="0" class="bind_btn yellow500_f"
+        @click="getVerCode">
+          {{overClick ?  times + '<?php echo $lang['S_AFTER_GET'] ?>': '<?php echo $lang['GET_CHECK_CODE'] ?>'}}
+        </button>
+      </div>
+      <div class="bind_err" v-cloak flex="main:justify" v-if="showType != 'google' && showType != 'del'">
+        <?php //錯誤提示 ?>
+        <div class="">
+          <p v-if="verifyType.code == 0" class="bind_warin"></p>
+          <?php if($userInfo['mo']){ ?>
+            <p v-if="verifyType.code == 1" :class="['bind_warin', {red500_f: verifyType.code == 2}]">{{showStep === 1 ? '<?php echo $lang['INTER_PHONE_CODE']; ?>' : '<?php echo $lang['INTER_EMAIL_CODE']; ?>'}}</p>
+            <p v-if="verifyType.code == 2" :class="['bind_warin', {red500_f: verifyType.code == 2 || verifyType.code == 3}]">{{showStep === 1 ? '<?php echo $lang['INTER_PHONE_CODE']; ?>' : '<?php echo $lang['INTER_EMAIL_CODE']; ?>'}}</p>
+          <?php } else { ?>
+            <p v-if="verifyType.code == 1" :class="['bind_warin', {red500_f: verifyType.code == 2}]">{{showStep === 1 ? '<?php echo $lang['INTER_EMAIL_CODE']; ?>' : '<?php echo $lang['INTER_PHONE_CODE']; ?>'}}</p>
+            <p v-if="verifyType.code == 2" :class="['bind_warin', {red500_f: verifyType.code == 2 || verifyType.code == 3}]">{{showStep === 1 ? '<?php echo $lang['INTER_EMAIL_CODE']; ?>' : '<?php echo $lang['INTER_PHONE_CODE']; ?>'}}</p>
+          <?php } ?>
+          <p v-if="verifyType.code == 3" :class="['bind_warin', {red500_f: verifyType.code == 2 || verifyType.code == 3}]"><?php echo $lang['LENGTH_ERR'] ?></p>
+          <p v-if="verifyType.code == 4" :class="['bind_warin', {red500_f: verifyType.code == 4}]">{{errPhpMes}}</p>
+        </div>
+        <?php //语言验证码 ?>
+        <div class="">
+          <p class="bind_voice" v-if="voice"><?php echo $lang['CLICK_GET'] ?><a href="javaScript:void(0);" class="blue200_f" @click="getVerCode('voice')"><?php echo $lang['VOICE_CODE'] ?></a></p>
+          <p class="bind_voice red500_f" v-if="voiceTimes"><?php echo $lang['U_CAN_GET'] ?>{{times}}<?php echo $lang['S_AFTER_GET_VOICE_CODE'] ?></p>
+          <p class="bind_voice" v-if="phoneWarin"><?php echo $lang['PLS_MA_THE_CALL']; ?></p>
+        </div>
+      </div>
+      <button type="button" name="button" class="bind_submit yellow500_bg white100_f" @click="submit">
+        <u class="loading-svg" data-loading="svg" v-if="submit_now" v-cloak></u>
+        {{showType == 'google' && (showStep == 1 || showStep == 2) ? '<?php echo $lang['GOOGLE_CODE']['GOOGLE_NEXT_STEP']; ?>' : '<?php echo $lang['SURE_FIX'] ?>'}}
+      </button>
+    </div>
+  </transition>
+
+
+  <?php //google 绑定成功 ?>
+  <transition name="zoom" v-cloak>
+    <div class="bind_alert white100_bg" v-if="successGoo" flex="dir:top cross:center">
+      <div class="bind_succ_header"><i class="bind_succ_closed" @click="closeAlert"></i></div>
+      <h3 class="bind_h3 gary500_f" v-if="showType === 'google'"><?php echo $lang['GOOGLE_CODE']['GOOGLE_BIND_SUCCESS']; ?></h3>
+      <h3 class="bind_h3 gary500_f" v-if="showType === 'del'"><?php echo $lang['GOOGLE_CODE']['GOOGLE_UNBIND_SUCCESS']; ?></h3>
+      <button type="button" name="button" class="bind_succ_btn yellow500_bg white100_f" @click="reloadW"><?php echo $lang['GOOGLE_CODE']['GOOGLE_SURE']; ?></button>
+    </div>
+  </transition>
+
+  <?php // 弹框?>
+  <my-alert v-cloak v-on:callback="callfn" :show-status.sync="nowStatus">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $lang['DETERMINE'] ?></span>
+  </my-alert>
+</div>
+
+<?php //法币转币弹窗 ?>
+<div id="userAlert" class="user_alert" v-if="userShow" v-cloak>
+  <div class="user_alert_contain user_curtain" v-if="userShow"></div>
+  <div class="user_alert_contain user_cointain" v-if="userShow">
+    <alert-header v-cloak v-on:alertback="alertfn">
+      <p slot="content"><?php echo $lang['ALERT_EXCHANGE_FIRST']; ?></p>
+    </alert-header>
+    <div class="user_title">
+      <span class="user_close" @click="closeFn"></span>
+      <p><?php echo $lang['ALERT_EXCHANGE_FIRST']; ?> <span class="user_subtitle"><?php echo $lang['ALERT_NO_MONEY']; ?></span></p>
+    </div>
+    <div class="user_content">
+      <div class="user_group">
+        <label class="user_group_label"><?php echo $lang['COIN_TYPE']; ?></label>
+        <input type="text" name="" :value="alertData.coin" readonly class="user_group_inputs">
+      </div>
+
+      <?php //币币到法币 ?>
+      <div class="user_group" v-if = 'outShow'>
+        <label class="user_group_label"><?php echo $lang['ON_FOR']; ?><span class="user_group_nums"><?php echo $lang['BIBI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverbi}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['BIBI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+      <div class="user_group" v-if = 'outShow'>
+        <label class="user_group_label"><?php echo $lang['ON_TO']; ?><span class="user_group_nums"><?php echo $lang['FABI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverfa}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['FABI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+
+      <?php //法币到币币 ?>
+      <div class="user_group" v-if = 'inShow'>
+        <label class="user_group_label"><?php echo $lang['ON_FOR']; ?><span class="user_group_nums"><?php echo $lang['FABI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverfa}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['FABI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+      <div class="user_group" v-if = 'inShow'>
+        <label class="user_group_label"><?php echo $lang['ON_TO']; ?><span class="user_group_nums"><?php echo $lang['BIBI_ACCOUNT_LAST']; ?>: <span class="user_red">{{alertData.priceoverbi}}</span></span></label>
+        <input type="text" name="" value="<?php echo $lang['BIBI_BUY_ACCOUNT']?>" readonly class="user_group_inputs">
+      </div>
+
+      <?php //图形验证码 ?>
+      <div class="user_group">
+        <label class="user_group_label"><?php echo $lang['EXCHANG_CAPTHA']; ?>:</label>
+        <input type="text" name="" v-model="changeCaptcha" placeholder="<?php echo $lang['EXCHANG_CAPTHA']; ?>"
+        :class="{user_group_inputs:true, user_group_btns:true, err_input: verifyCaptcha === 2 || verifyCaptcha === 4 || verifyCaptcha === 3}"
+        maxlength="4"
+        @focus="verifyType('captcha', 'focus')"
+        @blur="verifyType('captcha', 'blur')"
+        @keyup.enter="verifyType('captcha', 'enter')"
+        @keyup="OnlyNum(changeCaptcha)">
+        <img :src="imgSrc" alt="" class="user_group_btn" @click="img_ver">
+      </div>
+      <p class="user_warn_mes" v-if="verifyCaptcha === 0"></p>
+      <p :class="['user_warn_mes', {user_warn_mes_red: verifyCaptcha === 3}]"
+        v-if="verifyCaptcha === 1 || verifyCaptcha === 5 || verifyCaptcha === 3 "><?php echo $lang['EXHCANGE_CAPTHA_CAN']; ?></p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyCaptcha === 2"><?php echo $lang['NUMBER_UNENOUGH']; ?></p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyCaptcha === 4">{{errMes}}</p>
+
+      <?php // 划转数量?>
+      <div class="user_group">
+        <label class="user_group_label no_top"><?php echo $lang['EXCHANG_NUMS']; ?><span class="user_group_nums"><?php echo $lang['ONCE_MAX']; ?>:
+          <span class="user_red" v-if="outShow">{{parseFloat(alertData.maxrange) > parseFloat(alertData.priceoverbi)? parseFloat(alertData.priceoverbi) : parseFloat(alertData.maxrange)}}</span>
+          <span class="user_red" v-if="inShow">{{parseFloat(alertData.maxrange) > parseFloat(alertData.priceoverfa)? parseFloat(alertData.priceoverfa) : parseFloat(alertData.maxrange)}}</span></span>
+        </label>
+        <input type="text" name="" v-model="changeNums" placeholder="<?php echo $lang['EXCHANG_NUMS']; ?>"
+        :class="{user_group_inputs:true, user_group_btns:true, err_input: verifyNums === 2 || verifyNums === 4}"
+        :maxlength="maxlength"
+        @focus="verifyType('nums', 'focus')"
+        @blur="verifyType('nums', 'blur')"
+        @keyup.enter="verifyType('nums', 'enter')"
+        @keyup="inputVer(changeNums)">
+        <button type="button" name="button" class="user_group_btn" @click="allexchange"><?php echo $lang['ALL_EXCHANGE']; ?></button>
+      </div>
+      <p class="user_warn_mes" v-if="verifyNums === 0 || verifyNums === 5"></p>
+      <p class="user_warn_mes" v-if="verifyNums === 1"><?php echo $lang['EXHCANGE_NUMS_CAN']; ?></p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 2"><?php echo $lang['EXHCANGE_NUMS_CAN']; ?></p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 4">{{errMes}}</p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 6"><?php echo $lang['EXHCANGE_NUMS_MAX']; ?>{{errNum}}</p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 7"><?php echo $lang['EXHCANGE_NUMS_MIN']; ?>{{errNum}}</p>
+      <p class="user_warn_mes user_warn_mes_red" v-if="verifyNums === 8"><?php echo $lang['EXHCANGE_NUMS_UNENOUGHT']; ?></p>
+
+    </div>
+    <div class="user_btn_div">
+      <button type="button" name="button" class="user_submit_btn" @click="goChange" :disabled="stopClick">
+        <?php echo $lang['NOW_EXCHANGE']; ?>
+        <u class="loading-svg" data-loading="svg" style="left:206px;" v-if="loading"></u>
+      </button>
+    </div>
+  </div>
+</div>

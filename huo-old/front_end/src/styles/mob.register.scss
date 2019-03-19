@@ -1,0 +1,85 @@
+@import "./mob/fun.scss";
+
+.mob-layer {
+  position: absolute;
+  // height: 100%;
+  bottom: 0;
+  z-index: 10;
+
+  .layer {
+    bottom: 0;
+    height: auto;
+
+    .layer-title {
+      color: #fff;
+      height: 0;
+      overflow-y: hidden;
+      padding-top: pxToRem(105);
+      a {
+        color: #fff;
+      }
+    }
+
+    .close-layer {
+      width: 0;
+      height: 0;
+    }
+  }
+}
+// 手機號選擇樣式
+.phone_num {
+  font-size: pxToRem(30);
+  text-decoration: none;
+}
+.fn_up {
+  display: none;
+}
+.show_phoen_area {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: pxToRem(93);
+  z-index: 100;
+  background: #f6f6f6;
+  box-sizing: border-box;
+  width: pxToRem(250);
+
+  .show_el {
+    box-sizing: border-box;
+    display: flex;
+    padding: 0 pxToRem(5);
+    width: 100%;
+    height: pxToRem(93);
+    text-align: left;
+    font-size: pxToRem(28);
+    line-height: pxToRem(93);
+
+    cursor: pointer;
+
+    &:hover {
+      background: #dcdada;
+    }
+
+    .show_area {
+      display: inline-block;
+      margin: 0;
+      width: pxToRem(150);
+      height: 100%;
+      // font-size: 12px;
+      // line-height: 16px;
+      // transform: scale(0.8);
+    }
+    .show_num {
+      display: inline-block;
+      margin: 0;
+      font-size: pxToRem(22);
+      width: pxToRem(86);
+      height: 100%;
+      // line-height: 16px;
+      // transform: scale(0.8);
+    }
+  }
+  .show_active {
+    background: #dcdada;
+  }
+}

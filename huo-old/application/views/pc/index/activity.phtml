@@ -1,0 +1,46 @@
+<?php // /?alert=register // ?login ?>
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<div class="body_container" id="activity">
+  <div class="activit_container relative_dom" flex="dir:top">
+    <div class="img_contain" flex="main:center">
+      <img src="/imgs/read-bg.jpg?v=1234" alt="" />
+    </div>
+    <div class="activity_content">
+      <?php // title ?>
+      <p class="tab_tit">您的交易：<b>{{my_total||'--'}}READ</b> &nbsp;&nbsp;&nbsp;&nbsp;<span class="white100_f">您的排名： <span v-cloak v-if="my_order&&my_order<=100">{{my_order}}名</span><span v-cloak v-else>100名以外</span></span></p>
+      <?php // 数据表格 ?>
+      <div class="ranking_list white100_f">
+        <div class="thead">
+          <div class="tr" flex="box:mean">
+            <span>排名</span>
+            <span>賬號</span>
+            <span>凈充值量+凈買入量</span>
+          </div>
+        </div>
+        <div class="tbody" v-cloak>
+          <div v-for="(item, idx) in list" class="tr" flex="box:mean">
+            <span>{{idx + 1}}</span>
+            <span>{{item.mo}}</span>
+            <span :class="list.length>10?'mo_ind':''">{{item.total}}READ</span>
+          </div>
+          <div class="get_btn" flex="main:center" v-if="hasMore">
+            <span class="" @click="getData">獲取更多數據</span>
+          </div>
+          <div class="no_data" flex="main:center" v-if="noMore && list.length>10">
+            <span>沒有更多數據</span>
+          </div>
+        </div>
+      </div>
+      <?php // 活动 ?>
+      <a class="at_btn" href="/trade/read_dob"></a>
+      <a class="at_btn at_bs_btn reg_btn white100_f" href="/?alert=register">註冊多比</a>
+      <a class="at_btn at_bs_btn reg_read white100_f" href="https://lz.bendixing.net/shareMiningEnter?ruid=3196499833&mineType=1">註冊連載閱讀</a>
+      <a class="at_btn at_bs_btn abort_read white100_f" href="https://www.dobitrade.com/news/detail/497.html">關於READ</a>
+    </div>
+  </div>
+  <my-alert v-cloak v-on:callback="alertCallBack" :show-status.sync="showAlert">
+    <div class="alert_contents black900_f" slot="content">{{errMesAlert}}</div>
+    <span slot="btnTitle" class="black900_f"><?php echo $lang['DETERMINE']; ?></span>
+  </my-alert>
+</div>
+<?php  include PATH_TPL.'/tpl.footer.phtml';?>

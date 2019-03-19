@@ -1,0 +1,396 @@
+@import "../common/theme.scss";
+@import "../animation/transition.scss";
+@import "flatpickr/dist/flatpickr.min.css";
+
+.cont-contain {
+  margin-top: 21px;
+  .hide-dom {
+    display: none!important;
+  }
+  .front-red {
+    color: #eb2422;
+  }
+  .u-condition {
+    padding: 29px 29px 19px 29px;
+    background: $baseWhite;
+    .chk-coinout {
+      padding-top: 20px;
+
+      a {
+        display: inline-block;
+        width: 132px;
+        line-height: 39px;
+        text-align: center;
+        color: $baseWhite;
+        border-radius: 3px;
+        background: #4267b2;
+
+        &:hover {
+          background: #3057a1;
+          @include transition(all, .3s);
+        }
+      }
+    }
+    .coin-cor {
+      display: flex;
+      flex-wrap: nowrap;
+
+      &:nth-child(2) {
+        margin-top: 15px;
+      }
+
+      .cor-lf {
+        flex-shrink: 0;
+        padding-right: 18px;
+      }
+      .cor-rf {
+        width: 100%;
+
+        .coin-list {
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+          flex-shrink: 0;
+          span {
+            flex-shrink: 0;
+            margin: 0 5px;
+            padding: 0 13px;
+            line-height: 24px;
+            color: $norBlack;
+            border-radius: 4px;
+
+            &:hover {
+              cursor: pointer;
+              color: $baseWhite;
+              background: #ffbd09;
+              @include transition(all, .3s);
+            }
+          }
+          .sel-coin {
+            color: $baseWhite;
+            background: #ffbd09;
+          }
+        }
+        .chk-addr {
+          display: flex;
+          justify-content: space-between;
+          padding: 30px 0 0 0;
+
+          &>div {
+            width: 50%;
+            flex-shrink: 0;
+          }
+
+          .qr-code-img  {
+
+            flex-shrink: 0;
+            margin-right: 31px;
+            position: relative;
+            width: 99px;
+            height: 99px;
+            overflow: hidden;
+            // border: 1px solid red;
+            // background: red;
+            .succ-img {
+              position: absolute;
+              left: -13px;
+              top: -12px;
+              width: 123px;
+              height: 123px;
+            }
+          }
+          .addr-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $norBlack;
+          }
+          // .can-not-in {
+          //   display: none;
+          // }
+          .addr-show {
+            display: none;
+          }
+        }
+
+        .addr-lf {
+          display: flex;
+
+          .code-addr-text {
+            color: $norBlack;
+            line-height: 44px;
+
+          }
+          a {
+            display: inline-block;
+            width: 132px;
+            line-height: 39px;
+            text-align: center;
+            color: $baseWhite;
+            border-radius: 3px;
+            background: #4267b2;
+
+            &:hover {
+              background: #3057a1;
+              @include transition(all, .3s);
+            }
+          }
+          // 跳转场外连接
+          .link-to-out {
+            display: none;
+            width: 200px;
+            color: #3366cc;
+            background: none;
+            &:hover{
+              background: none;
+            }
+          }
+        }
+
+        .addr-rf {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 0 0 28px;
+          font-size: 12px;
+          border-left: 1px dashed #ccc;
+
+          h5 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: $norBlack;
+          }
+          p {
+            line-height: 21px;
+            color: $grayBlack;
+          }
+        }
+      }
+    }
+  }
+  .no-tips-cond-time {
+    padding-top: 22px;
+  }
+  .u-riches {
+    height: 56px;
+    color: $norBlack;
+    line-height: 56px;
+  }
+  .user-property {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    background: #fff;
+    padding: 20px 30px;
+
+    &>p {
+      color: $norBlack;
+      margin-bottom: 28px;
+    }
+    .u-riches {
+
+    }
+    .property-list {
+      display: flex;
+      justify-content: space-between;
+
+      &>div {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 19%;
+        height: 52px;
+        padding: 0 0 0 23px;
+        border-left: 1px dashed #c5c4c4;
+        &:first-child {
+          width: 25%;
+          padding: 0;
+          border: none;
+        }
+        // &:last-child {
+        //   align-self: flex-end;
+        // }
+      }
+      .coin-out-btn {
+        display: inline-block;
+        width: 132px;
+        line-height: 39px;
+        font-size: 14px;
+        text-align: center;
+        color: $baseWhite;
+        border-radius: 3px;
+        background: #4267b2;
+
+        &:hover {
+          background: #3057a1;
+          @include transition(all, .3s);
+        }
+      }
+      .data-tit {
+        font-size: 14px;
+        color: $grayBlack;
+      }
+      .data-tab {
+        // padding-top: 20px;
+        font-size: 18px;
+        height: 18px;
+        line-height: 18px;
+        font-weight: 500;
+        color: #01b21a;
+      }
+      .foz-rich {
+        color: #e22;
+      }
+      .data-max {
+        height: 27px;
+        line-height: 27px;
+        font-size: 27px;
+      }
+      .dis-btn {
+        width: 134px;
+        line-height: 40px;
+        border-radius: 5px;
+        color: #9a9a9a;
+        text-align: center;
+        text-transform: uppercase;
+        background: #f1f1f1;
+
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+  .cond-time {
+    margin-top: 16px;
+    color: $norBlack;
+
+    .t-btn, input {
+      line-height: 36px;
+      height: 36px;
+      border-radius: 3px;
+      background: $baseWhite;
+    }
+    .t-btn {
+      margin-right: 12px;
+      display: inline-block;
+      color: $norBlack;
+      padding: 0;
+      border: none;
+      // width: 91px;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .sel-qk-btn {
+      color: red;
+      color: $baseWhite;
+      background: #4168b2;
+      &:hover {
+        background: #4168b2;
+      }
+    }
+    input {
+      box-sizing: border-box;
+      padding: 0 31px 0 20px;
+      width: 203px;
+      border: none;
+    }
+    button {
+      outline: none;
+    }
+    a, button {
+      &:hover {
+        cursor: pointer;
+        background: #e4e4e4;
+        @include transition(all, .3s);
+      }
+    }
+  }
+  .date-icon {
+    display: inline-block;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 12px;
+      display: inline-block;
+      width: 18px;
+      height: 36px;
+      background: url("../../assets/date_icon.png") center center no-repeat;
+    }
+  }
+  .btn-icon {
+    &:before {
+      content: "";
+      position: relative;
+      bottom: -1px;
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: middle;
+      width: 13px;
+      height: 13px;
+      background: url(../../assets/filter_icon.png) center center no-repeat;
+    }
+  }
+  .reset-icon {
+    &:before {
+      background-image: url(../../assets/reset_icon.png);
+    }
+  }
+  .output-icon {
+    &:before {
+      background-image: url(../../assets/output_icon.png);
+    }
+  }
+  .hide-form-data {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+  }
+}
+
+@media screen and (min-width: $minMidScreenWidth) and (max-width: $maxMidScreenWidth) {
+  .cont-contain {
+    margin-top: 10px;
+    .u-condition {
+      padding: 15px;
+
+      .coin-cor {
+        .cor-rf {
+          .chk-addr {
+            padding-top: 10px;
+            .qr-code-img  {
+              margin-right: 12px;
+            }
+          }
+          .addr-lf {
+            .code-addr-text {
+              line-height: 22px;
+            }
+          }
+        }
+      }
+    }
+    .no-tips-cond-time {
+      padding-top: 10px;
+    }
+    .cond-time {
+
+      .t-btn,input {
+        line-height: 26px;
+      }
+      .t-btn {
+        margin-bottom: 5px;
+      }
+
+      .date-icon {
+        &:after {
+          height: 26px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="rf-content mob-rf-content">
+  <div class="cont-contain mob-cont-contain">
+    <div class="u-condition shadow-cont">
+      <div class="coin-cor">
+        <div class="cor-rf">
+          <div class="mob-sel-coin" id="changeCoin">
+            BTC<?php echo $lang['CANDY_FC_COIN']?>
+          </div>
+          <div class="coin-list" id="coinList">
+            <span class="sel-coin" data-coincode="BTC">BTC<?php echo $lang['CANDY_FC_COIN']?></span>
+            <span data-coincode="ETH">ETH<?php echo $lang['CANDY_FC_COIN']?></span>
+            <span data-coincode="3"><?php echo $lang['CANDY_ACTIVE_COIN']?></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="coin-in-table shadow-cont no-btm-shadow">
+    <div class="t-body" id="tBody" data-tbody="table">
+      <table id="tableContent">
+        <thead>
+          <tr>
+            <td><?php echo $lang['CANDY_TH_COIN']?></td>
+            <td><?php echo $lang['CANDY_TH_HEIGHT']?></td>
+            <td><?php echo $lang['CANDY_TH_RATIO']?></td>
+            <td><?php echo $lang['CANDY_TH_DATA']?></td>
+            <td><?php echo $lang['CANDY_TH_GOT']?></td>
+            <td><?php echo $lang['CANDY_TH_OPERA']?></td>
+          </tr>
+        </thead>
+        <tbody id="dataBody">
+          <?php // 绿色文字 class添加"green-font" ; 红色文字 class 用 "red-font"?>
+        </tbody>
+      </table>
+      <?php // 没有数据时，显示该元素， 设置 display: block ?>
+      <div class="no-data" id="tableNoData" style=""><span><?php echo $layout['lang']['NO_RECORD_NOW'] ?></span></div>
+      <div class="no-data table-loading" id="tableLoading"></div>
+    </div>
+  </div>
+</div>

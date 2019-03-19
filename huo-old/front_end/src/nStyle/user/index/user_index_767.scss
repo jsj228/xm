@@ -1,0 +1,391 @@
+
+@media screen and (max-width: $bigScreenMax) {
+  .user_go_1200 {
+    display: none!important;
+  }
+  .user_go_767 {
+    display: inline-block;
+  }
+  .user_warin_1200 {
+    display:  none;
+  }
+
+
+  .user_mes_list {
+    background: $white100;
+  }
+  .user_index {
+    //内容部分
+    .user_con {
+      display: none;
+    }
+    .user_pan {
+      display: none;
+    }
+    .user_name {
+      padding: 0 pxToRem(20);
+      line-height: pxToRem(82);
+      font-size: pxToRem(34);
+    }
+    .user_mes_item {
+      height: pxToRem(94);
+      .user_list_icon {
+        width: pxToRem(71);
+        //手机
+        .user_phone_svg {
+          width: pxToRem(30);
+          height: pxToRem(36);
+          background: url('../../../assets/user/user_phone.svg') no-repeat center;
+        }
+        //实名认证
+        .user_real_svg {
+          width: pxToRem(29);
+          height: pxToRem(35);
+          background: url('../../../assets/user/user_real_name.svg') no-repeat center;
+        }
+        //登录密码
+        .user_login_svg {
+          width: pxToRem(29);
+          height: pxToRem(35);
+          background: url('../../../assets/user/user_login_password.svg') no-repeat center;
+        }
+        //交易密码
+        .user_pay_svg {
+          width: pxToRem(29);
+          height: pxToRem(35);
+          background: url('../../../assets/user/user_pay_password.svg') no-repeat center;
+        }
+        .user_yellow_warin {
+          width: pxToRem(22);
+          height: pxToRem(20);
+          background: url('../../../assets/user/user_yellow_warin.png') no-repeat center;
+          background-size: pxToRem(22) pxToRem(20);
+        }
+      }
+      .user_item_type {
+        padding-right: pxToRem(24);
+        line-height: pxToRem(94);
+        font-size: pxToRem(30);
+      }
+      .user_item_result {
+        padding-right: pxToRem(20);
+        line-height: pxToRem(94);
+        font-size: pxToRem(22);
+      }
+    }
+    .user_warin_p {
+      padding-left: pxToRem(71);
+      font-size: pxToRem(20);
+      font-weight: lighter;
+      line-height: pxToRem(40);
+    }
+    .user_pwd_warin {
+      background: url('../../../assets/user/user_setpwd.svg') no-repeat pxToRem(32) pxToRem(10);
+      background-size: pxToRem(20);
+    }
+    .user_real_warin {
+      background: url('../../../assets/user/user_warin.svg') no-repeat pxToRem(32) pxToRem(10);
+      background-size: pxToRem(20);
+    }
+    .user_space {
+      height: pxToRem(30);
+    }
+    .user_warin {
+      height: pxToRem(50);
+    }
+    .user_coin_list {
+      padding: 0 pxToRem(20) 0;
+      line-height: pxToRem(80);
+      height: pxToRem(80);
+      border-top: 1px solid $gray300;
+      .user_coin_font {
+        margin-right: pxToRem(32);
+        font-size: pxToRem(24);
+      }
+      .user_coin_swith {
+        position: relative;
+        width: pxToRem(82);
+        height: pxToRem(45);
+        display: inline-block;
+        border-radius: pxToRem(22.5);
+        [data-b] {
+          position: absolute;
+          top: pxToRem(4.5);
+          right: pxToRem(4);
+          width: pxToRem(36);
+          height: pxToRem(36);
+          border-radius: pxToRem(18);
+          transition: right  .5;
+        }
+        [data-b="off"] {
+          right: pxToRem(4);
+        }
+        [data-b="on"] {
+          left: pxToRem(4);
+        }
+      }
+    }
+    .user_coin_tab {
+      width: pxToRem(335);
+      .user_coin_btn {
+        width: pxToRem(138);
+        height: pxToRem(50);
+        border: 1px solid $gray600;
+        color: $gray600;
+        border-radius: pxToRem(4);
+        font-size: pxToRem(24);
+      }
+      .user_active_btn {
+        background: $blue200;
+        border: 1px solid $blue200;
+        color: $white100;
+      }
+      .user_coin_btn_first {
+        margin: pxToRem(62) pxToRem(15) pxToRem(34) pxToRem(21);
+      }
+    }
+    .user_coin_all {
+      display: inline-block;
+      padding-top: pxToRem(25);
+      padding-left: pxToRem(20);
+      width: 100%;
+      height: pxToRem(48);
+      line-height: pxToRem(48);
+      font-size: pxToRem(26);
+    }
+    .user_coin_num {
+      display: inline-block;
+      padding-bottom: pxToRem(23);
+      padding-left: pxToRem(20);
+      width: 100%;
+      height: pxToRem(51);
+      line-height: pxToRem(51);
+      font-size: pxToRem(38);
+    }
+
+    .coin_detail_dispaly {
+      padding: pxToRem(29) pxToRem(57);
+      margin: 0 pxToRem(20) pxToRem(10);
+      // width: pxToRem(711);
+      height: pxToRem(347);
+      .coin_detail_p {
+        height: pxToRem(56);
+        line-height: pxToRem(56);
+        font-size: pxToRem(26);
+        .coin_detail_type {
+          width: pxToRem(179);
+        }
+        .coin_detail_content {
+          font-weight: lighter;
+        }
+      }
+    }
+    //按钮
+    .user_look_for {
+      padding: 0 pxToRem(12);
+      vertical-align: text-bottom;
+      height: pxToRem(48);
+      line-height: pxToRem(48);
+      font-size: pxToRem(30);
+      border: 1px solid $blue200;
+      border-radius: 4px;
+    }
+
+    .user_blue_btn {
+      padding: 0 pxToRem(18);
+      height: pxToRem(44);
+      border: 1px solid $blue200;
+      border-radius: 4px;
+    }
+    .btn_disable {
+      background: $gray350;
+      border:1px solid $gray350;
+      color: #bfbfbf;
+    }
+    .user_btn_mg {
+      margin-right: pxToRem(17);
+    }
+    .btn_blue {
+      background: $blue200;
+      color: $white100;
+    }
+    .user_order_btn {
+      border: 1px solid $gray500;
+    }
+    .user_close {
+      width: pxToRem(44);
+      height: pxToRem(44);
+      background: url('../../../assets/user/user_close.svg') no-repeat center;
+      background-size: pxToRem(44);
+    }
+  }
+
+  //交易密码部分
+  .pwd_mask_contain_980 {
+    display: block;
+  }
+  .pwd_mask_contain_1200 {
+    display: none;
+  }
+
+  .pwd_dom {
+    display: block;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .pwd_header {
+      padding: pxToRem(145) pxToRem(40) 0 pxToRem(84);
+      height: pxToRem(173);
+      background: url('../../../assets/user/user_warin.svg') no-repeat pxToRem(41) pxToRem(30);
+      background-size: pxToRem(24);
+      .pwd_header_p{
+        line-height: pxToRem(40);
+        font-size: pxToRem(24);
+      }
+    }
+    .pwd_header_reset {
+      padding-left: pxToRem(45);
+      .pwd_header_reset_p {
+        height: pxToRem(113);
+        line-height: pxToRem(113);
+        font-size: pxToRem(34);
+        .pwd_step_num {
+          padding-right: pxToRem(20);
+        }
+      }
+    }
+    .pwd_input_group_top {
+      margin-top: pxToRem(52);
+    }
+    .pwd_input_group {
+      // margin-top: pxToRem(52);
+      height: pxToRem(92);
+      line-height: pxToRem(92);
+      border: 1px solid $gray600;
+      border-radius: pxToRem(4);
+      .pwd_input_label {
+        text-align: right;
+        width: pxToRem(209);
+        height: 100%;
+        font-size: pxToRem(30);
+      }
+      .pwd_input_text {
+        padding-left: pxToRem(22);
+        margin-right: pxToRem(4);
+        border: none;
+        font-size: pxToRem(22);
+      }
+      .pwd_code_get {
+        margin-right: pxToRem(10);
+        padding: 0;
+        width: pxToRem(190);
+        height: pxToRem(50);
+        font-size: pxToRem(26);
+        border: 1px solid $orange500;
+        border-radius: pxToRem(4);
+      }
+    }
+    //输入框错误class
+    .err_input {
+      border: 1px solid $red500;
+    }
+    //错误提示
+    .user_err_mes {
+      margin-top: pxToRem(10);
+      margin-bottom: pxToRem(12);
+      padding-left: pxToRem(25);
+      line-height: pxToRem(30);
+      height: pxToRem(30);
+      font-size: pxToRem(20);
+    }
+    .pwd_input_show {
+      padding-top: pxToRem(78);
+      height: pxToRem(86);
+      line-height: pxToRem(86);
+      .pwd_input_label {
+        display: inline-block;
+        text-align: right;
+        width: pxToRem(209);
+        height: 100%;
+        font-size: pxToRem(30);
+      }
+      .pwd_show_phone {
+        padding-left: pxToRem(20);
+      }
+    }
+    //交易密码成功
+    .user_success_mes {
+      margin: pxToRem(120) auto 0;
+      width: pxToRem(560);
+      height: pxToRem(395);
+      background: $gray200 url('../../../assets/user/user_success.svg') no-repeat center pxToRem(120);
+      background-size: pxToRem(91);
+      border-radius: pxToRem(8);
+      .user_success_mes_p {
+        padding-top: pxToRem(286);
+        text-align: center;
+        font-size: pxToRem(40);
+      }
+    }
+    .user_btn_trade {
+      margin:pxToRem(52) auto 0;
+      width: pxToRem(644);
+      height: pxToRem(90);
+      font-size: pxToRem(36);
+      border-radius:  pxToRem(4);
+      border: 1px solid $orange500;
+    }
+    .pwd_btn {
+      position: relative;
+      margin-top: pxToRem(28);
+      height: pxToRem(90);
+      width: 100%;
+      border-radius: 4px;
+      font-size: pxToRem(36);
+    }
+    .pwd_space {
+      height: pxToRem(20);
+    }
+    .pwd_input {
+      padding: pxToRem(12) pxToRem(40) 0;
+    }
+  }
+  // 加载
+  .loading-svg {
+    display: inline-block;
+    position: absolute;
+    margin-left: pxToRem(10);
+    // left: 30%;
+    top: pxToRem(25);
+    width: pxToRem(35);
+    height: pxToRem(35);
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: pxToRem(35);
+      height: pxToRem(35);
+      background: url('../../../assets/loading.svg') center center no-repeat;
+      background-size: pxToRem(35) pxToRem(35);
+    }
+  }
+  .font_size_p {
+    font-size: pxToRem(30);
+  }
+}
+
+
+.border_bot {
+  border-bottom: 2px solid $gray200;
+}
+
+.border_bottom_one {
+  border-bottom: 1px solid $gray300;
+}
+
+.hide {
+  visibility: hidden;
+}

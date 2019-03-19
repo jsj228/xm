@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <title>開放API文檔</title>
+  <link rel="stylesheet" href="/api/css/BtaEfYHtphgltgktNhDK.css">
+  <link href="/api/css/RMLtWSlYhzZYyCKAoTgq.css" rel="stylesheet">
+  
+  <link href="/api/css/bEVJXLztGUIPHtXFwmDW.css" rel="stylesheet">
+  <link href="/api/css/eTjtvRbEEqQVJyXsrXGK.css" rel="stylesheet">
+  
+
+</head>
+<body class="open-wrapper ">
+<div class="page-wrapper">
+
+<header class="header" id="header">
+  <div class="container">
+    <a class="logo" href="https://api.dobitrade.com/">
+      <img src="/svg/dobi_logo.svg" alt="logo">
+    </a>
+
+     <ul class="nav">
+      <li class="">
+        <a href="/">Home</a>
+      </li>
+    </ul>
+
+    <ul class="user-menu">
+      <li class="has-submenu menu-login" id="nLogin">
+        <a href="https://www.dobitrade.com?login" class="btn-login"><?php echo $lang['LOGIN'] ?></a>
+      </li>
+
+      <li class="has-submenu" id="hLogin" style="display:none;">
+        <a class="menu-active" href="#"></a>
+        <ul class="sub-menu" style="width: 159px;">
+          <li>
+            <a href="/m"><?php echo $lang['DEVELOPER'] ?></a>
+            <a href="https://www.dobitrade.com/user/logout"><?php echo $lang['LOGOUT'] ?></a>
+          </li>
+        </ul>
+      </li>  
+    </ul>
+  </div>
+</header>
+
+<div class="wrapper api-wrapper">
+  <div class="container">
+    <div class="main-wrapper">
+      
+<div class="sidebar-wrapper fixed">
+
+  <div class="sidebar" style="height: 838px;">
+      <div style="height: 50px;"></div>
+      <h3 class="sidebar-title" id="active-menu">    
+          <?php echo $lang['DEVELOPER'] ?>
+      </h3>
+      <ul class="menu-group" id="normal-catalog">
+        <li class="menu-item menu-item-1" data-api="">
+          <a href="#" >API <?php echo $lang['AUTH'] ?></a>
+        </li> 
+      </ul>
+
+    
+  </div>
+</div>
+
+
+      <div class="breadcrumb has-content" style="position: fixed; top: 0px; left: 331.5px; right: 691.5px;">
+    
+
+<div class="breadcrumb-anchor">
+  
+</div>
+
+      </div>
+
+      <div class="main-container">
+        <div class="markdown">
+          
+
+
+
+
+<div id="ant-api">
+
+
+  
+  <h3><?php echo $lang['ACCESS_KEY'] ?></h3>
+  <div class="code" ><pre><?php echo $openapi['access_key']?></pre></div>
+
+
+  <h3><?php echo $lang['SECRET_KEY'] ?></h3>
+  <p><?php echo $lang['SECRET_KEY_DESC'] ?></p>
+  <div class="code">
+    <pre id="secretkey">******************** <a href="javascript:;" id="reset_btn" style="float: right;"><?php echo $lang['CREATE_OR_RESET'] ?></a></pre>
+  </div>
+  <div id="sms_block" style="display: none;">
+      <label><?php echo $lang['SMS_CODE'] ?> ：<input id="vcode" name="vcode" type="text" maxlength="6" style="width: 80px;" /></label>
+      &nbsp;<a href="javascript:;" id="skey_btn"><?php echo $lang['SUBMIT'] ?></a>
+  </div>
+  
+  <h3><?php echo $lang['IP_WHITE_LIST'] ?></h3>
+  <p><?php echo $lang['IP_WHITE_LIST_DESC'] ?>111.111.111.111,222.222.222.222</p>
+  <div class="code">
+    <pre id="iplist"><span id="ip_readonly"><span><?php echo $openapi['ip'] ?></span><a href="javascript:;" id="mod_ip_btn" style="float: right;"><?php echo $lang['ADD_OR_EDIT'] ?></a></span><div id="ip_mod" style="display: none;"><textarea style="width:100%;height:90px;"><?php echo $openapi['ip'] ?></textarea><br><a href="javascript:;" style="float:right;" id="updateip_btn"><?php echo $lang['SUBMIT'] ?></a></div>
+    </pre>
+  </div>
+  <div id="sms_ip_block" style="display: none;">
+      <label><?php echo $lang['SMS_CODE'] ?> ：<input id="vcode2" type="text" maxlength="6" style="width: 80px;" /></label>
+      &nbsp;<a href="javascript:;" id="ip_btn"><?php echo $lang['SUBMIT'] ?></a>
+  </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div id="footer" style="position: relative; z-index: 100">
+
+
+  <div class="body-footer" id="footer-full">
+    <div>
+  
+  <style>
+    .nav{
+      color:#fff;
+      float: left;
+      margin-left: 50px;
+      line-height: 50px;
+    }
+    .api-block{
+      padding: 30px 0;
+    }
+    .footer-box-content * {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    .site-footer{
+      background-color: #232940!important;
+    }
+    .footer-box{
+      width: 100%;
+      background-color: #232940;
+    }
+    .footer-box-content{
+      width:1240px;
+      margin: 0 auto;
+      padding: 50px 0px 30px;
+    }
+    .footer-box-left{
+      float:left;
+      width:1020px;
+    }
+    .footer-box-content-li{
+      float: left;
+      width: 25%;
+      padding-right: 10px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .footer-box-content ul li:last-child{
+      margin-right: 0px;
+    }
+    .footer-box-content-item{
+      width: 208px;
+    }
+    .footer-box-content-name {
+      font-size: 22px;
+      color: #FFFFFF;
+      padding-bottom: 20px;
+    }
+    .footer-box-content-subli{
+      padding-top: 14px;
+      white-space: normal;
+      word-break: break-all;
+      overflow: hidden;
+    }
+    .footer-box-content-subli a, .footer-box-content-subli span{
+      font-size: 16px;
+      color: #FFFFFF;
+      opacity: 0.6;
+      text-decoration: none;
+    }
+    .footer-box-content-subli a:hover{
+      color: #108ee9;
+    }
+
+    .footer-box-right{
+      float: right;
+      width: 220px;
+      padding-left: 80px;
+      border-left: 1px solid rgba(151,151,151,0.4);
+    }
+    .footer-box-right-title{
+      padding-bottom:16px;
+      font-size: 22px;
+      color: #FFFFFF;
+    }
+    .footer-box-right-item{
+      padding-top:12px;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    .footer-box-right-item.footer-box-right-item-opacity{
+      opacity: 0.6;
+    }
+    .footer-box-right-item img{
+      width:97px;
+      height:97px;
+    }
+
+    .body-footer{
+      clear: both;
+    }
+
+    .site-footer{
+      padding: 16px 0 12px 0;
+      font-size: 12px;
+      clear: both;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    .site-footer .copyright{
+      text-align: center;
+      opacity: 0.8
+    }
+
+    .site-footer.complete .site-footer-links {
+      display: block;
+      padding-bottom: 2px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+
+    .site-footer-links{
+      display: none;
+      text-align: center;
+    }
+
+    .site-footer-links li {
+      display: inline-block;
+    }
+    .site-footer-links a {
+      padding: 0 4px;
+      color: #FFFFFF;
+      opacity: .8;
+      text-decoration: none;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    .site-footer-links a:hover {
+      color: #108ee9;
+    }
+
+    .site-footer-links li:after {
+      content: '｜';
+      display: inline;
+      color: #ffffff;
+    }
+
+    .site-footer-links li:last-child:after{
+      display: none;
+    }
+    .isHome, .complete{
+      box-shadow: none;
+    }
+    .isHome .copyright, .complete .copyright{
+      color: #FFFFFF;
+    }
+    .isHome .server, .complete .server{
+      color: #232940;
+    }
+    #sms_block,#sms_ip_block{padding:10px;background:#ccc; display:inline;border-radius: 4px}
+  </style>
+  <div class="footer-box">
+    
+    <div class="site-footer complete">
+      <div class="copyright">
+        Copyright @2018 dobitrade.com ｜ 多比
+      </div>
+    </div>
+    
+    
+  </div>
+
+  
+</div>
+</div>
+
+</div>
+
+<div id="zoom-img"></div>
+
+<link rel="stylesheet" href="/api/css/OgPAgbONDiKhITIVYmdn.css">
+
+
+  
+
+
+
+
+
+</div>
+<style type="text/css">
+  #api_block_req_param .hljs-string{color:#c82829}
+  #api_block_req_param pre{border:0}
+</style>
+
+<script type="text/javascript" src="https://api.dobitrade.com/js/jquery.min.js"></script>
+  <script type="text/javascript">
+      var user={};
+      $(function(){
+        //是否登錄
+        $.get('/m/userinfo', function(rep){
+          if(rep && rep.status==1)
+          {
+             window.user['account'] = rep.data.account;
+             var $hLogin = $('#hLogin');
+             $hLogin.find('.menu-active').text(rep.data.account);
+             $hLogin.show();
+             $('#nLogin').remove();
+          }
+        })
+        //重置
+        var smsSending = false;
+        $('#reset_btn').click(function(){
+          $('#sms_block').show();
+
+          //發送短信驗證碼
+          if(smsSending)
+           {
+              return false;
+           }
+           $this = $(this);
+           smsSending = true;
+           $.get('/m/sms',function(data){
+              if(data.status==1)
+              {
+                alert('<?php echo $lang['SMS_CODE_SENT'] ?>'+'('+user.account+')')
+              }
+              else
+              {
+                alert(data.msg)
+              }
+              smsSending = false;
+           })
+        })
+
+        //獲取skey
+        $('#skey_btn').click(function(){
+          $.post('/m/secretkey',{code:$('#vcode').val()}, function(data){
+              if(data.status==1)
+              {
+                $('#secretkey').html(data.data);
+                $('#vcode').val('');
+                $('#sms_block').hide();
+              }
+              else
+              {
+                alert(data.msg)
+              }
+              
+          });
+        })
+
+        //修改ip按鈕
+        $('#mod_ip_btn').click(function(){
+          var $iplist = $('#iplist');
+          var oldVal = $iplist.find('span').text();
+          $('#ip_readonly').hide();
+          $('#ip_mod').show();
+        })
+
+        //校驗ip格式和驗證身份
+        $('#updateip_btn').click(function(){
+          var $iplist = $('#ip_mod');
+          var val = $iplist.find('textarea').val();
+          if(!val.match(/^[\d\.\,]+$/))
+          {
+            alert('<?php echo $lang['ERROR_FORMAT'] ?>')
+            return false;
+          }
+          $('#sms_ip_block').show();
+          
+          //發送短信驗證碼
+          if(smsSending)
+           {
+              return false;
+           }
+           $this = $(this);
+           smsSending = true;
+           $.get('/m/sms',function(data){
+              if(data.status==1)
+              {
+                alert('<?php echo $lang['SMS_CODE_SENT'] ?>'+'('+user.account+')');
+                $('#vcode2').focus();
+              }
+              else
+              {
+                alert(data.msg)
+              }
+              smsSending = false;
+           })
+        })
+
+        //修改ip確認
+        $('#ip_btn').click(function(){
+          $.post('/m/ipmod', {code:$('#vcode2').val(),iplist:$('#ip_mod textarea').val()}, function(data){
+              if(data.status==1)
+              {
+                var $ip_mod = $('#ip_mod');
+                var $ip_readonly = $('#ip_readonly');
+
+                $ip_readonly.show();
+                $ip_readonly.find('span').text($ip_mod.find('textarea').val());
+                $('#sms_ip_block').hide();
+                $ip_mod.hide();
+              }
+              else
+              {
+                 alert(data.msg)
+              }
+          })
+        })
+      })
+  </script>
+</body>
+
+</html>
+

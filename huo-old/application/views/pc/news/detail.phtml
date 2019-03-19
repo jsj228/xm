@@ -1,0 +1,113 @@
+<?php  include PATH_TPL.'/tpl.header.phtml';?>
+<!-- <link rel="stylesheet" href="/css/newsDetails.css"> -->
+  <section class="bg-content" >
+    <div class="news-win" id="detailid" data-dds="<?php echo $id; ?>">
+      <div class="ns-lf">
+        <?php // 二级导航 ?>
+        <div class="con-tit">
+          <?php foreach ($category as $k => $v) { ?>
+            <a class="<?php if($data['category'] ==$v['id']) echo 'act-ti';?> shadow" href="/news/category/<?php echo $v['id'];?>"><?php echo $v['cate_name'];?></a>
+          <?php } ?>
+        </div>
+        <?php // 內容 ?>
+        <div class="white-box content">
+          <div class="ns-det-header">
+            <?php // 標題 ?>
+            <h1><?php echo $data['title'] ?></h1>
+            <?php //  ?>
+            <div class="ns-det-des">
+              <?php // 日期 ?>
+              <span><?php echo $lang['NEWS_TIME'] ?>: <?php echo $data['created']?date("Y-m-d",$data['created']):'';?></span>
+              <?php // 評論數量 ?>
+              <span><?php echo $lang['NEWS_HOT'] ?>: <?php echo $data['click'] ?></span>
+              <?php // 來源 ?>
+              <span><?php echo $lang['NEWS_SOURCE'] ?>: <?php echo $data['source'] ?></span>
+            </div>
+          </div>
+          <?php // 詳情內容 ?>
+          <div class="ns-detail-content">
+            <?php echo $data['content'] ?>
+          </div>
+        </div>
+        <div class="page-list">
+          <?php // 禁用按鈕 添加class disabled-btn, 同時添加屬性 disabled="disabled" ?>
+          <?php //  返回列表 ?>
+          <a class="ns-btn" id="backToNewsList" href="javascript:void(0);" name="button"><?php echo $lang['RETURN_BACK']; ?></a>
+          <?php // 前一篇 ?>
+          <!-- <a href="/news/detail?id=<?php echo $data['id']?>&c=prev&n=<?php echo $data['category']?>"> -->
+         <!-- <a
+            class="ns-btn disabled-btn"
+            href="/news/detail/<?php /*echo $prev;*/?>.html"
+            <?php /*if(isset($prev_disabled)&&$prev_disabled==1) echo 'disabled="disabled"';*/?>
+            type="button" name="button">
+            <?php /*echo $lang['PRE_PAGE'] */?>
+          </a>-->
+          <?php if ($prev == 0) {?>
+          <button class="ns-btn disabled-btn" type="button" disabled="disabled" > <?php echo $lang['PRE_PAGE'] ?></button>
+          <?php }else{ ?>
+            <a class="ns-btn" href="/news/detail/<?php echo $prev; ?>.html" ><?php echo $lang['PRE_PAGE'] ?></a>
+          <?php }?>
+          <!-- </a> -->
+          <?php //下一篇 ?>
+         <!-- <a
+            class="ns-btn"
+            type="button"
+            href='/news/detail/<?php /*echo $next;*/?>.html'
+            <?php /*if(isset($next_disabled)&&$next==1) echo 'disabled="disabled"';*/?>>
+            <?php /*echo $lang['NEXT_PAGE'] */?>
+          </a>-->
+          <?php if ($next == 0)
+          { ?>
+            <button class="ns-btn disabled-btn" type="button" disabled="disabled"> <?php echo $lang['NEXT_PAGE'] ?></button>
+          <?php }else{ ?>
+            <a class="ns-btn" href="/news/detail/<?php echo $next; ?>.html"><?php echo $lang['NEXT_PAGE'] ?></a>
+          <?php } ?>
+          <!-- <a href="/news/detail?id=<?php echo $data['id']?>&c=next&n=<?php echo $data['category']?>"><?php echo $lang['NEXT_PAGE'] ?></a> -->
+        </div>
+      </div>
+      <div class="ns-rf">
+        <?php // 标题 ?>
+        <div class="con-tit">
+          <?php // 說點什麼 ?>
+          <div class="com-titile"><?php echo $lang['SAY_SAMETHING'] ?></div>
+        </div>
+        <?php // 评论 輸入框 ?>
+        <div class="iss-area white-box">
+          <div class="op-to-show" id="issDom" style="display:none;">
+            <textarea name="name" id="newsIsset" maxlength="140" placeholder="<?php echo $lang['PLEASE_ENTER']?>"></textarea>
+            <div class="iss-length">
+              <span id="issLength">0</span>/140
+            </div>
+          </div>
+          <?php // 未登錄 評論顯示 iss-area white-box  ?>
+          <div class="no-loginin" id="issNLG">
+            <span><a href="javascript: void(0);" data-login="login" id="loginBtn"><?php echo $lang['LOGIN_BTN'] ?></a><?php echo $lang['AFTER_ISS'] ?></span>
+          </div>
+        </div>
+        <?php if (false) {?>
+        <?php } ?>
+        <?php // 發表 ?>
+        <div class="">
+          <button id="seedIss" class="ns-btn" type="button" name="button"><?php echo $lang['SEED_OUT'] ?></button>
+        </div>
+        <?php // 看看评论 ?>
+        <div class="com-titile"><?php echo $lang['SEE_ISS'] ?></div>
+        <?php // 評論 列表 ?>
+        <ul class="iss-list white-box" id="issListShow">
+          <?php // 沒有評論顯示 ?>
+          <li id="noIssData">
+            <div class="no-iss-tab"></div>
+            <div class="no-iss-text">
+              <span><?php echo $lang['NO_ISSS'] ?></span>
+            </div>
+          </li>
+          <?php if (false) { ?>
+          <?php } ?>
+        </ul>
+        <?php // 底部用于撑开空白 ?>
+        <div class="page-list"></div>
+      </div>
+    </div>
+  </section>
+  <!-- <script src="/js/newsDetails.js?v=<?php echo $clear_cache;?>" defer async='true'></script> -->
+<?php  include PATH_TPL.'/tpl.noCopyRightFooter.phtml';?>

@@ -1,0 +1,111 @@
+{include file="Public:header"/}
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">交易市场</span>
+        </div>
+
+        <div class="cf">
+            <div class="fl">
+                <a class="btn btn-success " href="{:url('Trade/marketControlEdit','','')}">新 增</a>
+                <button class="btn ajax-post btn-info" url="{:url('Trade/marketControlStatus',array('type'=>'resume'))}" target-form="ids">开 启</button>
+                <button class="btn ajax-post btn-warning " url="{:url('Trade/marketControlStatus',array('type'=>'forbid'))}" target-form="ids">禁 用</button>
+                {eq name="group_id" value="3"}
+                <button class="btn ajax-post confirm btn-danger "
+                        url="{:url('Trade/marketControlStatus',array('type'=>'del'))}" target-form="ids">删 除
+                </button>
+                {/eq}
+            </div>
+            <div class="search-form fr cf">
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1" >
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="name" {eq name="Think.get.field" value="name"}selected{/eq}>市场名</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">市场名称</th>
+                    <th class="">最低价</th>
+                    <th class="">最高价</th>
+                    <th class="">参考接口地址</th>
+                    <th class="">接口最低价</th>
+                    <th class="">接口最高价</th>
+                    <th class="">状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="vo"}
+                        <tr>
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.min_price} {$vo.unit}</td>
+                            <td>{$vo.max_price} {$vo.unit}</td>
+                            <td>{$vo.api_url}</td>
+                            <td>{$vo.api_min_price} {$vo.api_unit}</td>
+                            <td>{$vo.api_max_price} {$vo.api_unit}</td>
+
+                            <td>
+                                {eq name="vo.type" value="0"}
+                                    手动交易
+                                {else/}
+                                    自动交易
+                                {/eq}
+                            </td>
+
+                            <td>
+                                {neq name="vo.name" value="cny"}
+                                    <a href="{:url('Trade/marketControlEdit', ['id' => $vo['id']])}" class="btn btn-primary btn-xs">编辑</a>
+                                {/neq}
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+                {/notempty}
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$list->render()}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="Public:footer"/}
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('Trade/marketControl')}");
+    </script>
+</block>

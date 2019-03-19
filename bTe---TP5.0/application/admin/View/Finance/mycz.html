@@ -1,0 +1,427 @@
+{include file="Public:header"/}
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">充值</span>
+		</div>
+		<div class="cf">
+			<div class="fl">
+				{eq name="group_id" value="3"}
+					<button class="btn ajax-post confirm btn-danger" url="{:url('Finance/myczStatus',array('type'=>'chexiao'))}" target-form="ids">撤销</button>
+				{/eq}
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+							<option value="" {empty name="Think.get.status"}selected{/empty} >全部状态</option>
+							<option value="1" {eq name="Think.get.status" value="1"}selected{/eq} >未付款</option>
+							<option value="2" {eq name="Think.get.status" value="2"}selected{/eq} >充值成功</option>
+							<option value="3" {eq name="Think.get.status" value="3"}selected{/eq} >人工到账</option>
+							<option value="4" {eq name="Think.get.status" value="4"}selected{/eq} >处理中</option>
+							<option value="5" {eq name="Think.get.status" value="5"}selected{/eq} >已撤销</option>
+							<option value="6" {eq name="Think.get.status" value="6"}selected{/eq} >花呗到账</option>
+						</select>
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="field" id="selected_type" class="form-control">
+							<option value="tradeno" 
+							  {eq name="Think.get.field" value="tradeno"}selected{/eq} >订单号</option>
+							<option value="username" {eq name="Think.get.field" value="username"}selected{/eq} >用户名</option>
+						</select>
+
+						<input type="text" id="selected_value" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+						//搜索功能
+						$(function () {
+							$('#search').click(function () {
+								$('#formSearch').submit();
+							});
+						});
+						//回车搜索
+						$(".search-input").keyup(function (e) {
+							if (e.keyCode === 13) {
+								$("#search").click();
+								return false;
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="">
+				<thead>
+				<tr >
+					<th colspan="2" style="background-color:#009200">
+						共{$weike_count}条记录
+					</th>
+					<th colspan="2" style="background-color:#009200">
+						充值总金额{$weike_sum|default="0"}元
+					</th>
+					<th colspan="2" style="background-color:#009200">
+						到账总金额{$weike_num|default="0"}元
+					</th>
+				</tr>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+					<th class="">用户名</th>
+					<th class="">充值金额</th>
+					<th width="">到账金额</th>
+					<th width="">充值方式</th>
+					<th width="">平台账号</th>
+					{eq name="group_id" value="3"}<th width="">充值订单</th>{/eq}
+					<th class="">充值时间</th>
+					<th width="">状态</th>
+					<th width="">操作人</th>
+					<th width="">操作</th>
+					<th width="">备注</th>
+					<th width="">订单号</th>
+				</tr>
+				</thead>
+				<tbody>
+				{notempty name="list"}
+					{volist name="list" id="vo"}
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>{$vo.id}</td>
+							<td>{$vo['username']}</td>
+							<td>{$vo.num}</td>
+							<td>{$vo.mum}</td>
+							<td>{$vo.type}</td>
+							<td>{$vo.bankcard}</td>
+							{eq name="group_id" value="3"}
+								<td>{$vo.tradeno}</td>
+							{/eq}
+							<td>{$vo.addtime|addtime}</td>
+							<td>
+								{eq name="vo.status" value="0"}未付款{/eq}
+								{eq name="vo.status" value="1"}充值成功{/eq}
+								{eq name="vo.status" value="2"}人工到账{/eq}
+								{eq name="vo.status" value="3"}处理中{/eq}
+								{eq name="vo.status" value="4"}已撤销{/eq}
+								{eq name="vo.status" value="5"}花呗到账{/eq}
+							</td>
+							<td>{$vo.czr}</td>
+							<td>
+								{eq name="vo.status" value="0"}
+									{eq name="vo.type" value="微信转账支付"}
+										<a onclick="qrcz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+									{else/}
+										<a onclick="qrcz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+										<a onclick="hbcz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">花呗到账 </a> 
+									{/eq}
+								{/eq}
+								{eq name="vo.status" value="3"}
+									{eq name="vo.type" value="微信转账支付"}
+										<a onclick="qrcz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+									{else/}
+										<a onclick="qrcz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+										<a onclick="hbcz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">花呗到账 </a>
+									{/eq}
+								{/eq}
+								<input type="hidden" id="success_{$vo['id']}" value="{$vo['tradeno']}">
+							</td>
+							<td>
+								{eq name="vo.beizhu" value=""}
+									<a onclick="czbz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">备注</a>
+									{else/}
+									{$vo.beizhu}
+								{/eq}
+							</td>
+							{eq name="group_id" value="3"}
+								<td>{$vo.tradeno}</td>
+							{/eq}
+						</tr>
+					{/volist}
+					{else/}
+					<td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+				{/notempty}
+				</tbody>
+			</table>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<form class="form-horizontal" role="form" onsubmit="return false;">
+  					<div class="form-group">
+    					<div class="col-sm-2">
+	      					<select name="status" class="form-control" id='outputselect'>
+								<option value="1">全部导出</option>
+								<option value="2">选择导出</option>
+							</select>
+    					</div>
+    					<div class="col-sm-8">
+      						<input type="text" class="form-control" id="checkedid" disabled placeholder="请选择导出记录">
+    					</div>
+    					<div class="col-sm-1">
+      						<button type="button" id='output' class="btn btn-info">excel</button>
+    					</div>
+    					<div class="col-sm-1">
+      						<a type="button" id='download' disabled class="btn btn-info">下载</a>
+    					</div>
+  					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="Public:footer"/}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:url('Finance/mycz')}");
+
+		//人工充值
+        function qrcz(id) {
+        	var selected_type = $('#selected_type option:selected').val();
+        	if(selected_type != 'tradeno'){
+        		layer.msg('请输入订单号！',{icon:2});
+        	}else{
+        		var selected_value = $.trim($('#selected_value').val());
+        		var success_value = $('#success_'+id).val();
+        		if(selected_value == success_value){
+		            layer.confirm('是否成功操作充值？', {
+		                btn: ['确定','还未充值'] //按钮
+		            }, function(){
+		                $.get("{:url('Finance/myczQueren')}", {
+		                    id: id,
+		                }, function (data) {
+		                    if (data.code == 1) {
+		                        layer.msg( data.msg , {icon: 1});
+		                        window.location.reload();
+		                    } else {
+		                        layer.msg( data.msg , {icon: 2});
+		                        if (data.url) {
+		                            window.location = data.url;
+		                        }
+		                    }
+		                }, "json");
+
+		            }, function(){
+		                layer.msg('请充值后再确认充值', {
+		                    time: 3000, //3s后自动关闭
+		                });
+		            });
+        		}else{
+        			layer.msg('订单号输入错误',{icon:2});
+        		}
+        	}
+        }
+
+        //花呗充值
+        function hbcz(id) {
+        	var selected_type = $('#selected_type option:selected').val();
+        	if(selected_type != 'tradeno'){
+        		layer.msg('请输入订单号！',{icon:2});
+        	}else{
+        		var selected_value = $.trim($('#selected_value').val());
+        		var success_value = $('#success_'+id).val();
+        		if(selected_value == success_value){
+					layer.confirm('是否成功操作充值？', {
+		                btn: ['确定','还未充值'] //按钮
+		            }, function(){
+		                $.get("{:url('Finance/myczhb')}", {
+		                    id: id,
+		                }, function (data) {
+		                    if (data.code == 1) {
+		                        layer.msg( data.msg , {icon: 1});
+		                        window.location.reload();
+		                    } else {
+		                        layer.msg( data.msg , {icon: 2});
+		                        if (data.url) {
+		                            window.location = data.url;
+		                        }
+		                    }
+		                }, "json");
+
+		            }, function(){
+		                layer.msg('请充值后再确认充值', {
+		                    time: 3000, //3s后自动关闭
+		                });
+		            });
+        		}else{
+        			layer.msg('订单号输入错误',{icon:2});
+        		}
+        	}
+        }
+
+        function czbz(id) {
+            layer.prompt({title: '备注完，并确认', formType: 2}, function(text, index){
+                $.post("{:url('Finance/czbz')}",{
+                    id:id,
+                    text:text
+                },function (data) {
+                    if (data.code == 200){
+                        layer.msg(data.msg, {icon: 1});
+                        layer.close(index);
+                        window.location.reload();
+
+                    }else{
+                        layer.msg(data.msg, {icon: 2});
+                    }
+
+                },'json');
+
+
+            });
+        }
+	</script>
+<script type="text/javascript">
+window.onload=(function(){
+    var forms={};
+    //初始化缓存
+    forms.init=(function(){
+        if(window.localStorage.getItem('myczselect')==null || window.localStorage.getItem('mycz')==null){
+            window.localStorage.setItem('myczselect',1);
+            window.localStorage.setItem('mycz','total');
+        }
+        //初始化form
+        $('#outputselect').find("option").each(function(index){
+            if(window.localStorage.getItem('myczselect')==this.value){
+                this.setAttribute('selected',true);
+            }   
+        });
+            $('#checkedid').val(window.localStorage.getItem('mycz'));
+        })();
+
+    forms.change = (function(){
+        //设置值
+        $('#outputselect').on('change',function(e){
+            if($(this).find("option:selected").val()==1){
+                window.localStorage.setItem('myczselect',1);
+                window.localStorage.setItem('mycz','total');
+                $('#checkedid').val(window.localStorage.getItem('mycz'));
+                $('#download').attr('disabled',true);
+                $('#output').attr('disabled',false);
+            }else{
+                window.localStorage.setItem('myczselect',2);
+                window.localStorage.setItem('mycz','');
+                $('#checkedid').val('请选择需要导出的记录');
+                $('#download').attr('disabled',true);
+                $('#output').attr('disabled',false);
+            }
+        });
+    })();
+
+    forms.isselected = (function(){
+        if(!$('#output').attr('disabled')){
+            var storage = window.localStorage.getItem('mycz').split(',');
+            if(window.localStorage.getItem('myczselect')!=1 && storage){
+                $(":checkbox","td").each(function(){
+                    //arr.push(this.value);
+                    for(var i=0;i<storage.length;i++){
+                        if(this.value == storage[i]){
+                            this.setAttribute('checked',true);
+                        }
+                    }
+                });
+            }
+        }
+    })();
+
+    forms.unique = function(){
+        //检查excel状态
+        if(!$('#output').attr('disabled')){
+            //当前页选中的列
+            var arr = strarr = storage_arr = new Array();
+            var new_arr = '';
+            var str = '';
+            $(":checkbox:checked","td").each(function(){
+                arr.push(this.value);
+            });
+            str = window.localStorage.getItem('mycz');
+            if(str){
+                strarr = str.split(",");
+            }
+            new_arr =  strarr.concat(arr);
+            storage_arr=Array.from(new Set(new_arr));
+            window.localStorage.setItem('mycz',storage_arr.join(','));            
+        }
+    }
+
+    forms.request = (function(){
+        $('#output').on('click',function(){
+            var outputselect,outputoption;
+            outputselect = window.localStorage.getItem('myczselect');
+            if(outputselect==1){
+                 window.localStorage.setItem('mycz','total');
+            }else{
+                forms.unique();
+            }
+            outputoption = window.localStorage.getItem('mycz');
+            if(outputoption=='total'){
+                $.post("{:url('Finance/excel')}",{option:'',total:1},function(data){
+                    forms.clearstorage(data);
+                });
+            }else if(!outputoption){
+                layer.msg('请选择后导出', {icon: 2});
+            }else{
+                $.post("{:url('Finance/excel')}",{option:outputoption,total:0},function(data){
+                    forms.clearstorage(data);
+                });
+            }
+        });
+    })();
+
+
+    forms.clearstorage = function(data){
+        d = JSON.parse(data);
+        $('#output').attr("disabled", true);
+        $('#download').html('excel生成中');
+        if(window.localStorage.getItem('myczselect')==2){
+            window.localStorage.setItem('mycz','');
+            //清空当前页面被选中记录
+            $(":checkbox:checked","td").each(function(){
+                $(this).attr('checked',false);
+            });
+        }
+        $('#download').attr('disabled',true);
+        for (var i = 5; i >= 0; i--) {
+        	var t = window.setTimeout(forms.geturl,3000);
+        	if(t) break;
+        }
+    }
+
+    forms.geturl = function(){
+        $.post('{:url('Finance/is_excel')}',{name:'mycz'},function(data){
+	        if(data.code == 200){
+	        	$('#download').html(data.msg);
+	        	$('#download').attr('href',data.data.url);
+	        	$('#download').attr('disabled',false);
+	        	return true;
+	        }else{
+	        	$('#download').html(data.msg);
+	        	return false;
+	        }
+        },'json');
+    }
+
+    forms.download=(function(){
+        $('#download').on('click',function(){
+            window.location.reload();
+            $(this).attr('disabled',true);
+            $('#output').attr('disabled',false);
+        })
+    })();
+
+    forms.close=(function(){
+        //页面关闭
+        window.onbeforeunload=function(){
+            if(window.localStorage.getItem('myczselect')==2){
+                forms.unique();                 
+            }
+        }
+    })();
+});
+</script>
+</block>

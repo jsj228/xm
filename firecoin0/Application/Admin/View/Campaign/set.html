@@ -1,0 +1,113 @@
+<include file="Public:header"/>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">活动-用户认证设置</span>
+        </div>
+            
+
+        <div class="tab-wrap">
+            <div class="tab-content">
+                <form id="form" action="" onsubmit="javascript:return false;" method="post" class="form-horizontal">
+                    <div id="tab" class="tab-pane in tab">
+                        <div class="form-item cf">
+                            <table>
+                                <tr class="controls">
+                                    <td class="item-label">活动状态:</td>
+                                    <td id='open_status'>
+                                        <?php print((int)$data['status']==0 ? '<button id="close" class="btn ajax-post btn-warning ">禁 用</button>' : '<button id="open" class="btn  ajax-post btn-info ">启 用</button>'); ?>
+                                    </td>
+                                    <td class="item-note"></td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label">币种选择 :</td>
+                                    <td>
+                                        <select class="form-control input-10x" name='coin' id='coin'>
+                                        <?php foreach($coin as $k =>$v){
+                                            if($v[id] == $data['coin']){
+                                                print("<option selected value='".$v['id']."'>".$v['title']."&nbsp;&nbsp;|&nbsp;max&nbsp;|&nbsp;&nbsp;".$v['zc_min']."</option>");
+                                            }else{
+                                                print("<option value='".$v['id']."'>".$v['title']."&nbsp;&nbsp;|&nbsp;max&nbsp;|&nbsp;&nbsp;".$v['zc_min']."</option>");
+                                            }
+                                        } ?>
+                                        </select>
+                                    </td>
+                                    <td class="item-note">币种名称 | 最小转出数量</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label">奖励数量 :</td>
+                                    <td>
+                                        <input type="text" class="form-control input-10x" id="number" name="num" value="{$data['num']}">
+                                    </td>
+                                    <td class="item-note">数量不能超过最小转出数量</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label">开始时间 :</td>
+                                    <td>
+                                        <input type="datetime-local" class="form-control input-10x" min="{:date('Y-m-d',time())}T{:date('H:i',time())}" value="{:date('Y-m-d',$data['start_time'])}T{:date('H:i',$data['start_time'])}" name="start_time">
+                                    </td>
+                                    <td class="item-note">开始时间不小于当前时间</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label">结束时间 :</td>
+                                    <td>
+                                        <input type="datetime-local" class="form-control input-10x" min="{:date('Y-m-d',time())}T{:date('H:i',time())}" value="{:date('Y-m-d',$data['end_time'])}T{:date('H:i',$data['end_time'])}" id="end_time" name="end_time" >
+                                    </td>
+                                    <td class="item-note">结束时间不小于开始时间</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label"></td>
+                                    <td>
+                                        <div class="form-item cf">
+                                            <button <?php print((int)$data['status'] == 0 ? '' : 'disabled'); ?> class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                                            <a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+                                            <notempty name="data.id"><input type="hidden" name="campaign_id" id = 'campaign_id' value="{$data['id']}"/>
+                                            </notempty>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                    $(function(){
+                        var forms = {};
+                        forms.status = (function(){
+                            $('#open_status').children('button').on('click',function(){
+                                var status = this.id == 'open' ? 0 : 1;
+                                var id = $('#campaign_id').val();
+                                console.log({status:status,id:id});
+                                $.post('{:U("Campaign/set_status")}',{status:status,id:id},function(data){
+                                    if(data.code != 200){
+                                        layer.msg(data.msg);
+                                    }else{
+                                        window.location.reload();
+                                    } 
+                                },'json');
+                            });
+                        })();
+
+                        forms.submit = (function(){
+                            $('#submit').on('click',function(){
+                                var form = $('#form').serializeArray();
+                                var obj = {};
+                                $(form).each(function(){
+                                    obj[this.name] = this.value;
+                                });
+                                $.post('{:U("Campaign/set_value")}',obj,function(data){
+                                    console.log(data);
+                                },'json');
+                            });
+                        })();
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer"/>

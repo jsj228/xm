@@ -1,0 +1,114 @@
+<include file="Public:header" />
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('INVITE_FRIENDS')}	</div>
+	<div class="main-content">
+<include file="Finance:left" />
+
+		<div class="tag-list-content assets_content bg_w">
+			<h1 class="safe_center clear">
+				<span>{:L('INVITE_FRIENDS')}</span>
+			</h1>
+			<div id="hints" class="mytips" style="display:none;">
+				<p>
+					<notempty name="prompt_text">
+						{$prompt_text}
+					</notempty>
+				</p>
+			</div>
+            <div class="tg_rule" style="">
+                <!--<img style="width: 100%;" src="/comfile/images/yqlayer.png" alt="">-->
+            </div>
+			<div id="qrcode-wallet" style="display: inline-block;margin-top: 60px;float: right;margin-right: 100px;background: #fff;padding: 20px;" width="100">
+				<saon id="codeaa"></saon>
+				<p id="qrcode-t" style="font-size: 16px;margin-top: 10px;text-align: center;" class="move">{:L('UR_Q_R_CODE')}</p>
+			</div>
+			<div class="tg_rule" style="display: none;">
+				<p>{:L('HDGUIZE')}</p>
+				<p>1、{:L('HD_ONE')}</p>
+				<p>2、{:L('HD_TWO')}</p>
+				<p>3、{:L('HD_THREE')}</p>
+				<p>4、{:L('HD_FOUR')}</p>
+				<p>5、{:L('HD_FIVE')}</p>
+			</div>
+			<div class="quicklink invite-content" style="margin-top: 15px;">
+				<h4>{:L('INVITAIION_CODE')}</h4>
+				<p class="tip">{:L('INVITAIION_CODE_TIP')}</p>
+				<p>
+					<input type="text" value="{$user['invit']}" ><input type="button" value="{:L('COPY')}"  style="min-width:85px;">
+				</p>
+			</div>
+			<div class="quicklink invite-content">
+				<h4>{:L('EXCLUSIVE_LINK')}</h4>
+				<p class="tip">{:L('EXCLUSIVE_LINK_TIP')}</p>
+				<p>
+					<input type="text"  value="https://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}" ><input type="button" value="{:L('COPY')}" style="min-width:85px;">
+				</p>
+			</div>
+			<div class="quicklink invite-content">
+				<h4>{:L('EXCLUSIVE_ADVERTISE')}</h4>
+				<p class="tip">{:L('EXCLUSIVE_ADVERTISE_TIP')}：</p>
+				<p>
+					<textarea type="text" id="invite-textarea" style="width: 350px;height: 100px;line-height: 25px;" >{$C['invit_text_txt']} https://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}</textarea><input type="button" value="{:L('COPY')}"  id="copy_button3" style="min-width:85px;">
+				</p>
+			</div>
+			<div class="quicklink">
+				<h4>{:L('SHARE_PLATFORM')}</h4>
+				<div class="reward-share">
+					<a href="javascript:;" title="{:L('SHARE_SINA')}" class="wlb_tsina"> <span class="icon icon-sina"></span> <b class="eee">{:L('SINA')}</b> </a>
+					<a href="javascript:;" title="{:L('SHARE_DOUBAN')}" class="wlb_douban"> <span class="icon icon-douban"></span> <b class="eee">{:L('DOUBAN')}</b> </a>
+					<a href="javascript:;" title="{:L('SHARE_QQ_ZONE')}" class="wlb_qzone"> <span class="icon icon-qzone"></span> <b class="eee">{:L('QQ_ZONE')}</b> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" >
+	$('#codeaa').qrcode({
+		 render: "table", //table方式
+		 size:200,
+		 text: "http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}" //任意内容
+	}); //任意字符串
+</script>
+
+<!-- <script type="text/javascript" src="__PUBLIC__/Home/js/ZeroClipboard.min.js"></script> -->
+<script>
+	var _share_title = encodeURI("{:L('INVITE_FRIENDS')}");
+	var _share_content = encodeURI("{$C['invit_text_txt']}");
+	var _share_url = encodeURIComponent("http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['id']}");
+	var _share_pic = '/';
+	$(document).ready(function () {
+		// 复制js
+		$('[type="button"]').click(function(){
+      		//选择文本
+			$(this).siblings().select()
+     		 //执行复制命令
+			document.execCommand('Copy');
+			layer.msg('{:L("COPY_SUCCESS")}！', {icon: 1});
+		});
+
+		// 分享按钮
+		$(".wlb_tsina").click(function () {
+			window.open("http://v.t.sina.com.cn/share/share.php?url=" + _share_url + "&title=" + _share_content);
+		});
+		$(".wlb_douban").click(function () {
+			window.open("http://www.douban.com/recommend/?url=" + _share_url + "&title=" + _share_content);
+		});
+		$(".wlb_qzone").click(function () {
+			window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + _share_url + "&title=" + _share_title + "&pics=" + _share_pic + "&desc=" + _share_content);
+		});
+	});
+</script>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_invit').addClass('active');
+</script>
+<include file="Public:footer" />

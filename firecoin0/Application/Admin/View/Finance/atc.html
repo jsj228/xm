@@ -1,0 +1,178 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">用户抽奖记录</span>
+		</div>
+		<div class="cf">
+
+			<div class="search-form fr cf">
+				<div class="sleft">
+
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<input type="text" class="search-input form-control  " name="addtime" value="{$Think.get.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+						<input type="text" class="search-input form-control  " name="endtime" value="{$Think.get.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+							<option value="">请选择</option>
+							<option value="0" <eq name="status" value="0">selected</eq>>未中奖</option>
+							<option value="1" <eq name="status" value="1">selected</eq>>已中奖</option>
+						</select>
+						<select id='select_type' style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+							<option value="username" <eq name="Think.get.field" value="username">selected</eq>>用户名</option>
+						</select>
+						<input type="text" id="select_value" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+
+					<script>
+						//搜索功能
+						$(function () {
+							$('#search').click(function () {
+								$('#formSearch').submit();
+							});
+						});
+						//回车搜索
+						$(".search-input").keyup(function (e) {
+							if (e.keyCode === 13) {
+								$("#search").click();
+								return false;
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="">
+				<thead
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+					<th class="">用户名</th>
+					<th class="">姓名</th>
+					<th class="">币种</th>
+					<th width="">时间</th>
+					<!--<th width="">操作人</th>-->
+					<th width="">状态</th>
+				</tr>
+				</thead>
+				<tbody>
+				<notempty name="list">
+					<volist name="list" id="vo">
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>{$vo.id}</td>
+							<td>{$vo['usernamea']}</td>
+							<td>{$vo['truename']}</td>
+							<td>{$vo.prize}</td>
+							<td>{$vo.addtime|addtime}</td>
+							<!--<td>{$vo['czr']}</td>-->
+							<eq name="vo['xm_status']" value="1">
+								<td>
+									<eq name="vo['is_take']" value="1">奖励已领取</eq>
+									<eq name="vo['is_take']" value="0">奖励未领取</eq>
+								</td>
+							</eq>
+							<eq name="vo['xm_status']" value="0">
+								<td>
+									<eq name="vo['xm_status']" value="0">未中奖</eq>
+								</td>
+							</eq>
+						</tr>
+					</volist>
+					<else/>
+					<td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+				</notempty>
+				</tbody>
+			</table>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:U('Finance/atc')}");
+
+        //货币转出
+        function qrzr(id, type) {
+
+        	var select_type=$('#select_type option:selected').val();
+        	if(type == 1){
+                if(select_type!='sb_code'){
+                    layer.msg('请输入识别码', {icon: 2});
+                    return false;
+                }else{
+                    // var select_value = $('#select_value').val();
+                    // var success_value = $('#tradeno_'+id).val();
+
+                    // if(select_value != success_value){
+                    //     layer.msg('识别码输入错误', {icon: 2});
+                    // }else{
+                        layer.confirm('是否确定本次操作？', {
+                            btn: ['确定','取消'] //按钮
+                        }, function(){
+                            var tradeID = $('#tradeid').val();
+                            $.get("{:U('Finance/myzrQueren')}", {
+                                id: id,
+                                type: type,
+                                tradeid: tradeID,
+                            }, function (data) {
+                                if (data.status == 1) {
+                                    layer.msg(data.info, {icon: 1});
+                                    window.location.reload();
+                                } else {
+                                    layer.msg(data.info, {icon: 2});
+                                    if (data.url) {
+                                        window.location = data.url;
+                                    }
+                                }
+                            }, "json");
+
+                        }, function(){
+                            layer.msg('已取消本次操作', {
+                                time: 3000, //3s后自动关闭
+                            });
+                        });
+                    // }
+                }
+			}else {
+                layer.confirm('是否确定本次操作？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    var tradeID = $('#tradeid').val();
+                    $.get("{:U('Finance/myzrQueren')}", {
+                        id: id,
+                        type: type,
+                        tradeid: tradeID,
+                    }, function (data) {
+                        if (data.status == 1) {
+                            layer.msg(data.info, {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg(data.info, {icon: 2});
+                            if (data.url) {
+                                window.location = data.url;
+                            }
+                        }
+                    }, "json");
+
+                }, function(){
+                    layer.msg('已取消本次操作', {
+                        time: 3000, //3s后自动关闭
+                    });
+                });
+			}
+
+
+        }
+	</script>
+</block>

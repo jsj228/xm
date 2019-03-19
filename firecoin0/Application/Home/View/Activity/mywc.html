@@ -1,0 +1,174 @@
+<include file="Public:header" />
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('REWARDS')}	</div>
+    <div class="main-content">
+        <style>
+            .nav-tab-list .nav-tab-hover{
+                width:100%;
+                top:60px;
+                height:50px;
+                line-height:50px;
+                background:#EAEDF4;
+                position:absolute;
+                box-sizing:content-box;
+                z-index:1;
+                transition:all 0.5s;
+                -webkit-transition:all 0.5s;
+                display:none;
+            }
+        </style>
+
+        <include file="Finance:left" />
+
+        <div class="tag-list-content">
+            <div class="assets_content ">
+                <h1  style="width:915px;margin-left: 20px;height:80px;border-bottom: 1px solid #fff">
+                    <div style="margin-left: -25px">
+                        <div style="float: left;margin-right: 10px">
+                            <p class="inter"><a href="{:U('Activity/mywc/',array('type'=>'wc'))}" style="color: #fff" class="active">我的WC(云尊币)</a></p>
+                            <p  style="margin-top: 15px;"><button onclick="jiedong('wc')" class="minBtn bg_red">{:L('Clickinginterest')}</button></p>
+                        </div>
+                        <div style="float: left;margin-right: 10px">
+                            <p class="inter"><a href="{:U('Activity/mywc/',array('type'=>'wcg'))}" style="color: #fff">我的WCG(华克金)</a></p>
+                            <p  style="margin-top: 15px;"><button onclick="jiedong('wcg')" class="minBtn bg_red">{:L('Clickinginterest')}</button></p>
+                        </div>
+                        <div style="float: left;margin-right: 10px">
+                            <p class="inter"><a href="{:U('Activity/mywc/',array('type'=>'mtr'))}" style="color: #fff">我的MTR(摩态链)</a></p>
+                            <p style="margin-top: 15px;"><button onclick="jiedong('mtr')" class="minBtn bg_red">{:L('Clickinginterest')}</button></p>
+                        </div>
+                        <div style="float: left;margin-right: 10px">
+                            <p class="inter"><a href="{:U('Activity/mywc/',array('type'=>'wos'))}" style="color: #fff">我的WOS(分享通证)</a></p>
+                            <p style="margin-top: 15px;"><button onclick="jiedong('wos')" class="minBtn bg_red">{:L('Clickinginterest')}</button></p>
+                        </div>
+                        <div style="float: left;margin-right: 10px">
+                            <p class="inter"><a href="{:U('Activity/mywc/',array('type'=>'unih'))}" style="color: #fff">我的UNIH(尤里米)</a></p>
+                            <p style="margin-top: 15px;"><button onclick="jiedong('unih')" class="minBtn bg_red">{:L('Clickinginterest')}</button></p>
+                        </div>
+                    </div>
+
+                    <!--<a href="/Activity/mywc.html" class="active">我的WC(云尊币)</a>-->
+                    <!--<p><button onclick="jiedong()" class="minBtn bg_red" style="margin-left:15px;">{:L('Clickinginterest')}</button></p>-->
+
+                    <!--<a href="/Activity/mywcg.html" style="margin-left:15px">我的WCG(华克金)</a>-->
+                    <!--<a href="/Activity/mywcg.html" style="margin-left:15px">我的MTR(摩态链)</a>-->
+                    <!-- <a class="right" onclick="$('#hints').slideToggle();">
+                        <i class="fa fa-hand-o-right move fz_14 mr5"></i>
+                        <span class="fz_12 move">{:L('DETAILED_INFO')}</span>
+                    </a> -->
+                </h1>
+
+                <div id="hints" class="mytips" style="display:none;">
+                    <notempty name="prompt_text">{$prompt_text}</notempty>
+                </div>
+
+                <div class="mytable-body">
+                    <div class="f_body  step2">
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:L('USER_ID')}</th>
+                                <th>{:L('Currencytype')}</th>
+                                <th>{:L('Abbreviationcurrency')}</th>
+                                <th>{:L('Availablequantity')}</th>
+                                <th>{:L('Freezingquantity')}</th>
+                                <th>{:L('Gaininterest')}</th>
+                                <th>{:L('Operationtimes')}</th>
+                                <th>{:L('ADDTIME')}</th>
+                                <th>{:L('STATE')}</th>               
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td>{$vo.username|substr_replace='****',3,4}</td>
+                                    <td>{$vo['name']}</td>
+                                    <td>{$vo['coinname']}</td>
+                                    <td>{$vo['num'] * 1}</td>
+                                    <td>{$vo['freeze'] * 1}</td>
+                                    <td>{$vo['interest']}</td>
+                                    <td>{$vo['count'] * 1}</td>
+                                    <td>{$vo.addtime|date='m-d H:i:s',###}</td>
+                                    <td>
+                                        <eq name="vo.status" value="1"><font color="#0096dd">{:L('Completed')}</font><else/><font color="#23a800">{:L('Hangair')}</font></eq>
+                                    </td>
+                                </tr>
+                            </volist>
+
+                            </tbody>
+                        </table>
+                        <div class="pages">{$page}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .active{color: red}
+</style>
+
+<script>
+    $('.finan_myfww').addClass('active');
+    $('#finance_box').addClass('active');
+    var str = window.location.href;
+    var index = str .lastIndexOf("\/");
+    var str  = str .substring(index + 1, str .length);
+    var index = str .lastIndexOf(".");
+    var str  = str .substring(0, index);
+
+    $('.inter').children().removeClass('active');
+    if(str == 'wc' || str == 'mywc') $('.inter').eq(0).children().addClass('active').css('color','#e3493c');
+    if(str == 'wcg') $('.inter').eq(1).children().addClass('active').css('color','#e3493c');
+    if(str == 'mtr') $('.inter').eq(2).children().addClass('active').css('color','#e3493c');
+    if(str == 'wos') $('.inter').eq(3).children().addClass('active').css('color','#e3493c');
+    if(str == 'unih') $('.inter').eq(4).children().addClass('active').css('color','#e3493c');
+
+    // var num=0;
+    function jiedong(type) {
+        // num++;
+        // if(num==1){
+            $.post("/Activity/accrual",{'type':type}, function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, {icon: 1});
+                    window.location.reload();
+
+
+                } else {
+                    layer.msg(data.info, {icon: 2});
+                }
+            }, "json");
+        // }else{
+        //     layer.msg("不能重复点击", {icon: 2});
+        // }
+    }
+
+    // var hints = "0";
+    // if(hints == 1){
+    //     $('#hints').show();
+    // }
+    // $('#finance_box').addClass('active');
+    // $('.finan_myfww').addClass('active');
+    // var num=0;
+    // function jiedong() {
+    //     num++;
+    //     if(num==1){
+    //         $.post("/Activity/mywc", {}, function (data) {
+    //             if (data.status == 1) {
+    //                 layer.msg(data.info, {icon: 1});
+    //                 window.location.reload();
+    //             } else {
+    //                 layer.msg(data.info, {icon: 2});
+    //             }
+    //         }, "json");
+    //     }else{
+    //         layer.msg("不能重复点击", {icon: 2});
+    //     }
+    // }
+
+</script>
+
+<include file="Public:footer" />

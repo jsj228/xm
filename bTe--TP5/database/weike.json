@@ -1,0 +1,10 @@
+{
+	"auth" : "weike",
+	"weike_indexcat" : ["港币交易区"], /*用于交易市场的分类*/
+	"weike_userTradeNum" : 20, /*普通用户组交易市场可以浏览显示买入卖出数据信息条数*/
+	"weike_specialUserTradeNum": 20,/*特殊用户组交易市场可以浏览显示买入卖出数据信息条数  只支持20 */
+	"weike_userTradeDetailNum" : 50,/*普通用户组市场行情页面可以浏览显示买入卖出数据信息条数*/
+	"weike_specialUserTradeDetailNum": 500,/*普通用户组行情页面可以浏览显示买入卖出数据信息条数*/
+
+	"weike_opencoin": 1 /*是否开启钱包对接服务器模式*/
+}

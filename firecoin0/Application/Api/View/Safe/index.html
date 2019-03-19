@@ -1,0 +1,27 @@
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/layer/layer.js"></script>
+
+
+<div>
+    用户名：<input id="uname"><br/>
+    备注：<input id="name"><br/>
+    绑定IP地址：<input id="ips"> <i>多个IP用半角逗号（,）分割</i><br/>
+
+    <hr/>
+    创建:<button id="add">创建</button>
+</div>
+
+<script>
+    $('#add').click(function () {
+        var uname = $("#uname").val(),
+            name = $("#name").val(),
+            ips = $("#ips").val();
+
+        $.post('/api/safe/register',{'uname':uname,'name':name,'ips':ips},function () {
+
+        })
+
+
+
+    })
+</script>

@@ -1,0 +1,191 @@
+{include file="public:header" /}
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i>
+		<a href="/" class="">{:lang('ADDRESS')} </a> &gt;
+		<a href="/user/index.html" class="">{:lang('SAFE')} </a> &gt;{:lang('ACCOUNT_INFO')}
+		</div>
+	<div class="main-content">
+		<style>
+	.nav-tab-list .nav-tab-hover{
+		width:100%;
+		top:60px;
+		height:50px;
+		line-height:50px;
+		background:#EAEDF4;
+		position:absolute;
+		box-sizing:content-box;
+		z-index:1;
+		transition:all 0.5s;
+		-webkit-transition:all 0.5s;
+		display:none;
+	}
+</style>
+<script type="text/javascript">
+	$(function () {
+		(function () {
+			var tab   = $('.nav-tab-list dd');
+			var hover = $('.nav-tab-hover');
+			var pos   = 0;
+			tab.each(function (index) {
+				var $this = $(this);
+				if ($this.hasClass('active')) {
+					pos = index;
+				}
+				$this.hover(function () {
+					_moveTo(index);
+				}, function () {
+					_moveTo(pos);
+				});
+			});
+			_moveTo(pos);
+			$('.nav-tab-hover').show();
+			function _moveTo(index) {
+				hover.css("top", 0 + 50 * index);
+				tab.removeClass('active');
+				tab.eq(index).addClass('active');
+			}
+		})();
+	});
+	$(window).on('scroll resize', function () {
+		if (document.body.scrollTop < 100) {
+			$('#left-nav-bar').css("top", 0);
+		} else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+			$('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+		} else {
+			$('#left-nav-bar').css("top", document.body.scrollTop - 100);
+		}
+	});
+</script>
+
+{include file="user:left" /}
+
+<script>
+	if ($("#user_box").length > 0) {
+		$('#user_box').addClass('active');
+	} else {
+		$('#index_box').addClass('active');
+	}
+</script>
+		<div class="tag-list-content assets_content bg_w">
+			<div class="safe_center clear">
+				<h1>
+					<span>{:lang('ACCOUNT_INFO')}</span>
+					<span>
+						<a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i><span class="fz_12 move">{:lang('DETAILED_INFO')}</span></a>
+					</span>
+				</h1>
+			</div>
+			<div id="hints" class="mytips" style="display:none;">
+				<script>
+					var hints = "0";
+					if(hints == 1){
+						$('#hints').show();
+					}
+				</script>
+				{notempty name="prompt_text"}
+					<p>{$prompt_text}</p>
+				{/notempty}
+			</div>
+			<ul class="sc_statu">
+				
+				<li>
+					<dl>
+						<dt>{:lang('USER_NAME')}:{$user['truename']}</dt>
+						<dt>{:lang('EMAIL')}:{$user['username']}</dt>
+					</dl>
+				</li>
+			
+				<li>
+					<em class="sc_statu_type_1"></em>
+					<dl>
+						<dt>{:lang('REAL_NAME_VERIFY')}</dt>
+
+						{eq name="user['idcardauth']" value='0'>
+							<dd class="nopass">{:lang('UNVERIFIED')}{else/}<dd class="alpass">{:lang('VERIFIED')}{/eq}
+						<a href="/user/nameauth.html">{:lang('VERIFY_NOW')}</a>
+						</dd>
+					</dl>
+				</li>
+
+				<li>
+					<em class="sc_statu_type_2"></em>
+					<dl>
+						<dt>{:lang('MOBILE_AUTHENTICATION')}</dt>
+							{empty name="user['moble']"}
+							<dd class="alpass">已通过{else/}
+							<dd class="alpass">{:lang('VERIFIED')}{/empty}
+							<!--<a href="/user/moble.html">{:lang('VERIFY_NOW')}</a>-->
+						</dd>
+					</dl>
+				</li>
+
+			</ul>
+			<div class="sc_info_list" id="sc_info_list">
+				<dl>
+					<dt>{:lang('LOGIN_PWD')}</dt>
+					<dd>
+						<p>{:lang('LOGIN_PSW_DETAIL')}</p>
+					</dd>
+					<dd>
+						<div class="changepw">
+							<a href="/user/password.html">{:lang('MODIFY_PSW')}</a>
+						</div>
+					</dd>
+				</dl>
+				<dl>
+					<dt>{:lang('TRAN_PWD')}</dt>
+					<dd>
+						<p>{:lang('TRAN_PSW_DETAIL')}</p>
+					</dd>
+					<dd>
+						<div class="changepw">
+							<a href="/user/paypassword.html">
+								{:lang('MODIFY_PSW')}
+							</a>
+						</div>
+					</dd>
+				</dl>
+				<dl>
+					<dt>{:lang('REAL_NAME_VERIFY')}</dt>
+					<dd>
+						<p>{:lang('REAL_NAME_DETAIL')}</p>
+					</dd>
+					<dd>
+						<div class="changepw">
+						
+							<a href="/user/nameauth.html">
+								{eq name="user['idcardauth']" value='0'>
+									<font color='#ff0000'>{:lang('VERIFY_NOW')}</font>
+								{else/}
+									{:lang('MODIFY_REAL_NAME_AUTH')}
+								{/eq}
+							</a>
+						</div>
+					</dd>
+				</dl>
+
+				<dl style="display: none;">
+					<dt>{:lang('EMAIL_AUTHENTICATION')}</dt>
+					<dd>
+						<p>{:lang('WITHDRAW_DETAIL')}</p>
+					</dd>
+					<dd>
+						<div class="changepw">
+							<div><a href="/user/moble.html">{:lang('MODIFY_PHONE')}</a></div>
+						</div>
+					</dd>
+				</dl>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('.finan_index').addClass('active');
+</script>
+
+
+{include file="public:footer" /}

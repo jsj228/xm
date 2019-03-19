@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="/comfile/css/play.css"/>
+<script type="text/javascript" src="/comfile/js/jquery.min.js"></script>
+<!--<script src="/comfile/js/play.js"></script>-->
+<script type="text/javascript" src="/comfile/js/layer.js"></script>
+<div id="dialog_ali" class="mana-app styled-pane">
+	<div class="mana-app-title">
+		{:L('ALIPAY_REMITTANCE')} 
+		<span id="wait">
+			<eq name="mycz.status" value="0">
+				（ {:L('UNPAID')} |
+				<a  class="bg_red minBtn"  onclick="myczHuikuan({$mycz['id']})" href="javascript:void(0)">{:L('REMITTED')} 
+				</a>)
+			</eq>
+			<eq name="mycz.status" value="1">( {:L('RECHARGE_SUCCESSFUL')} )</eq>
+			<eq name="mycz.status" value="2">( {:L('MANUAL_PRO')} )</eq>
+			<eq name="mycz.status" value="3">( {:L('IN_PROCESS')} )</eq>
+		</span>
+	</div>
+	<div class="lighttips">{:L('ALIPAY_ASK')}
+		<!--<a href="http://wpa.qq.com/msgrd?v=3&amp;uin={$C['contact_qq'][0]}&amp;site=qq&amp;menu=yes" target="_blank">{:L('CONTACT_SERVICE')}</a>-->
+		<a href="/Order/index" target="_blank" class="bg_red minBtn" >{:L('CONTACT_SERVICE')}</a>
+	</div>
+	<div class="tableParent">
+		<div class="mana-app-table info">
+			<div>
+				<b>{:L('OFFICIAL_ACCOUNT')}：</b>
+				<span>{$myczType.username}</span>
+			</div>
+			<div>
+				<b>{:L('NAME_ACCOUNT')}：</b>
+				<span>{$myczType.truename}</span>
+			</div>
+			<div>
+				<b>{:L('ADDRESS_ACCOUNT')}：</b>
+				<span>{$myczType.kaihu}</span>
+			</div>
+			<div>
+				<b>{:L('PAYMENT_AMOUNT')}：</b>
+				<span id="right_cny">{$mycz.num}</span>
+			</div>
+			<div>
+				<b>{:L('ORDER_NUM')}：</b>
+				<span class="cnyin_msg">{$mycz.tradeno}</span>
+			</div>
+		</div>
+		<notempty name="myczType['img']">
+			<div class="pay_code">
+				<img src="__DOMAIN____UPLOAD__/public/{$myczType['img']}">
+				<!--<p style="font-size: 14px; margin-top: 8px;">{:L('ONLINE_ALI_ACCOUNT')}</p>-->
+				<!--<p style="font-size: 14px; line-height: 30px;">{:L('CODE_FOR_TRANSFER')}</p>-->
+			</div>
+		</notempty>
+	</div>
+	<div class="pay_con">
+		<!-- <h4>({:L('HUABEI')})</h4> -->
+		<p>{:L('ORDER_NUM_TIP')}：
+			<b class="cnyin_msg">{$mycz.tradeno}</b>.
+			<br> {:L('ORDER_NUM_TIP2')}<br> {:L('ORDER_NUM_TIP3')}
+		</p>
+	</div>
+</div>
+<script>
+	function myczHuikuan(id) {
+	$.post("{:U('Finance/myczHuikuan')}", {id: id}, function (data){
+		if (data.status == 1) {
+			layer.msg(data.info, {icon: 1});
+			window.location.reload();
+		} else {
+			layer.msg(data.info, {icon: 2});
+		}
+	}, "json");
+}
+</script>

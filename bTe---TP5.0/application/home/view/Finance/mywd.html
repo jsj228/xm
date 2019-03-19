@@ -1,0 +1,156 @@
+{include file="Public:header" /}
+
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('RECOMMENDATION')}</div>
+	<div class="main-content">
+{include file="Finance:left" /}
+
+		<div class="tag-list-content">
+				<div class="assets_content bg_w">
+					<div class="safe_center clear ">
+						<h1>{:lang('RECOMMENDATION')}
+							<!--<a class="right" onclick="$('#hints').slideToggle();"> <i class="fa fa-hand-o-right move fz_14 mr5"></i> <span class="fz_12 move">{:lang('DETAILED_INFO')}</span> </a> 	-->
+						</h1>
+					</div>
+					<div id="hints" class="mytips" style="display:none;">
+
+						<p>
+             {notempty name="prompt_text"}
+				 {$prompt_text}
+			 {/notempty}
+						</p>
+					</div>
+					<div class="mytable-body ">
+						<div class="f_body  step2">
+							<table class="f_table" id="investLog_content">
+								<thead>
+								<tr>
+									<th width="180" style="text-align: left; padding-left: 30px;">{:lang('REFERRER')}</th>
+									<th>{:lang('USER_ID')}</th>
+									<th>{:lang('REGISTRATION_TIME')}</th>
+									<th>{:lang('AUTHENTICATION_Y_N')}</th>
+								</tr>
+								</thead>
+								<tbody>
+
+      
+         {volist name="list" id="v"}
+          <tr>
+           <td style="text-align: left; padding-left: 20px;">
+			   <a href="javascript:void(0)" onclick="Address({$v['id']})" class="eee">
+             		<img class="invit_img_{$v['id']}" src="/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:lang('REFERRAL_TOP')}({$v.invitss})
+            	</a>
+		   </td>
+		   <td>{$v.username|substr_replace='****',3,6}</td>
+           <td>{$v.addtime|addtime}</td>
+           <td>
+			{eq name="v.idcardauth" value='0'} 
+			   <font class="buy">{:lang('UNVERIFIED')} </font> 
+			   {else /}
+			    <font class="green"> {:lang('VERIFIED')}({$v.invitss})</font>
+			{/eq}
+		   </td>
+          </tr>
+
+          {notempty name="v['invits']"}
+          {volist name="v.invits" id="vv"}
+          <tr class="invit_{$v['id']}" style="display: none;">
+			   <td style="text-align: left; padding-left: 40px;">
+				   <a href="javascript:void(0)" onclick="Address({$vv['id']})">
+				 		<img class="invita_img_{$v['id']} invit_img_{$vv['id']}" src="/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:lang('REFERRAL_SEC')}({$vv.invitss})
+					</a>
+			   </td>
+			   <td>{$vv.username|substr_replace='****',3,6}</td>
+			   <td>{$vv.addtime|addtime}</td>
+			   <td>
+				   {empty name="vv.moble"}
+				   		<font class="buy">{:lang('UNVERIFIED')} </font>
+				     	{else /} 
+				     	<font class="green">{:lang('VERIFIED')} </font>
+				   {/empty}
+			   </td>
+          </tr>
+
+          {notempty name="vv['invits']"} 
+          {volist name="vv.invits" id="vvv"}
+          <tr class="invita_{$v['id']} invit_{$vv['id']} " style="display: none;">
+			   <td style="text-align: left; padding-left: 60px;">
+				   <a href="javascript:void(0)" onclick="Address({$vvv['id']})">
+				 		<img class="invita_img_{$v['id']} invit_img_{$vvv['id']}" src="/Home/images/jian.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:lang('REFERRAL_THIRD')}
+				   </a>
+			   </td>
+			   <td>{$vvv.username|substr_replace='****',3,6}</td>
+			   <td>{$vvv.addtime|addtime}</td>
+			   <td>
+				   {empty name="vvv.moble"}
+					    <font class="buy">{:lang('UNVERIFIED')} </font>
+					     {else /}
+					     <font class="green">{:lang('VERIFIED')} </font>
+				     {/empty}
+			   </td>
+          </tr>
+          {/volist}
+		  {/notempty}
+		  {/volist}
+		  {/notempty}
+		 {/volist}
+
+								</tbody>
+							</table>
+							<div class="pages">{$list->render()}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+
+	function Address(id){
+		var img1="__PUBLIC__/Home/images/jia.png";
+		var img2="__PUBLIC__/Home/images/jian.png";
+		var img=$(".invit_img_"+id).attr("src");
+
+
+		//alert(img)
+		if(img==img1){
+			$(".invit_img_"+id).attr("src",img2);
+
+			$(".invit_"+id).show();
+		}else{
+			$(".invit_img_"+id).attr("src",img1);
+			$(".invita_img_"+id).attr("src",img1);
+			$(".invit_"+id).hide();
+			$(".invita_"+id).hide();
+		}
+	}
+
+	function Addressb(id){
+		var img1="__PUBLIC__/Home/images/jia.png";
+		var img2="__PUBLIC__/Home/images/jian.png";
+		var img=$(".invit_img_"+id).attr("src");
+
+
+		//alert(img)
+		if(img==img1){
+			$(".invit_img_"+id).attr("src",img2);
+
+			$(".invit_"+id).show();
+		}else{
+			$(".invit_img_"+id).attr("src",img1);
+			$(".invit_"+id).hide();
+			$(".invita_"+id).hide();
+		}
+	}
+
+	$('#finance_box').addClass('active');
+	$('.finan_invitlog').addClass('active');
+</script>
+
+{include file="Public:footer" /}

@@ -1,0 +1,142 @@
+{include file="public:header" /}
+
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">首页</a> &gt; 历史请求
+    </div>
+    <div class="assets_content bg_w">
+
+
+        <div class="form-con" style="width: 90%;">
+
+
+            <div class="search-form fr cf">
+                <div class="sleft form-field">
+                    <form name="formSearch" id="formSearch" method="post">
+                        <select name="request_type" id="request_type" class="orderType" style="width: 30%;">
+                            <option value="" selected="selected">全部分类</option>
+                            {volist name="types" id="type"}
+                                <option value="{$type.type}">{$type.type}</option>
+                            {/volist}
+
+                        </select>
+                        <select name="reply_type" id="reply_type" class="orderType" style="width: 10%;">
+                            <option value="0" selected="selected">全部</option>
+                            <option value="1">等待处理</option>
+                            <option value="2">已回复</option>
+                        </select>
+
+                        <input type="text" name="name" id="name" class="search-input form-control  "
+                               value="{$Request.param.name}" placeholder="请输入查询内容" style="width: 55%;">
+                        <a class="sch-btn" href="javascript:;" id="sousuo"><i class="fa fa-search fa-lg fa-fw mr5"></i></a>
+                    </form>
+                </div>
+            </div>
+
+
+            <!--*************工单历史列表**************-->
+            <div class="requests">
+                <table id="table1" class="table my-activities-table requests-table my-requests">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>标题</th>
+                        <th>
+                            提问类型
+                        </th>
+                        <!--<th>-->
+
+                        <!--<a class="requests-link" href="/hc/zh-cn/requests?query=&amp;sort_by=created_at&amp;sort_order=asc&amp;status=">创建于</a>-->
+
+                        <!--</th>-->
+                        <th><a class="requests-link"
+                               href="/hc/zh-cn/requests?query=&amp;sort_by=updated_at&amp;sort_order=asc&amp;status=">提问时间<span
+                                class="requests-sort-symbol">▼</span></a></th>
+                        <th>
+                            状态
+                        </th>
+                        <th>
+                            查看
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {volist name='list' id='vo'}
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td class="request-info requests-table-info">
+
+                                <a href="{:url('Order/reply','id='.$vo['id'])}" class="striped-list-title">
+
+                                    {$vo.title}
+                                </a>
+                            </td>
+                            <td>{$vo.type}</td>
+                            <td>
+                                <time datetime="2017-09-09T13:01:19+00:00" title="2017-09-09 21:01"
+                                      data-datetime="relative">{$vo.addtime.0}
+                                </time>
+                            </td>
+                            <td class="requests-table-status">
+                                {eq name="vo.wt_type" value="0"}
+                                    <span class="status-label status-label" title="此请求未解决">未解决</span>
+                                {else/}
+                                    <span class="status-label status-label" title="此请求未解决">已回复</span>
+                                {/eq}
+
+                            </td>
+                            <td>
+                                <a href="{:url('Order/reply','id='.$vo['id'])}" class="status-label status-label" title="点击查看">查看回复</a>
+                            </td>
+                        </tr>
+                    {/volist}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" charset="utf-8">
+    $("#request_type,#reply_type").change(function () {
+        var type = $("#request_type").val();
+        var huifu = $("#reply_type").val();
+        var name = $("#name").val();
+
+        $.ajax({
+            url: "{:url('Order/order_history')}",
+            type: "POST",
+            data: {type: type, huifu: huifu},
+            success: function (data) {
+                $("#table1 tr:not(:first)").remove();
+                $("#table1").append(data);
+            },
+            error: function () {
+                alert(2);
+            }
+
+        });
+    });
+
+    $("#sousuo").click(function () {
+        var type = $("#request_type").val();
+        var huifu = $("#reply_type").val();
+        var name = $("#name").val();
+
+        $.ajax({
+            url: "{:url('Order/order_history')}",
+            type: "POST",
+            data: {type: type, huifu: huifu, name: name},
+            success: function (data) {
+                $("#table1 tr:not(:first)").remove();
+                $("#table1").append(data);
+            },
+            error: function () {
+                alert(2);
+            }
+
+        });
+    });
+</script>

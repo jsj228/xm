@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>{:config('web_title')}</title>
+<meta name="Keywords" content="{:config('web_keywords')}">
+<meta name="Description" content="{:config('web_description')}">
+
+<meta name="author" content="">
+<meta name="coprright" content="">
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="stylesheet" href="/home/css/font-awesome.min.css">
+<link rel="stylesheet" href="/comfile/css/style.css" id="theme"/>
+<link rel="stylesheet" href="/comfile/css/common.css"/>
+<link rel="stylesheet" href="/comfile/css/slider.css">
+<link rel="stylesheet" href="/home/css/intlTelInput.css"/>
+<script type="text/javascript" src="/comfile/js/jquery.min.js"></script>
+<script type="text/javascript" src="/comfile/js/jquery.cookies.2.2.0.js"></script>
+<script type="text/javascript" src="/home/js/intlTelInput.js"></script>
+<script type="text/javascript" src="/home/js/utils.js"></script>
+<script type="text/javascript" src="/comfile/js/layer.js"></script>
+<script type="text/javascript" src="/comfile/js/posfixed.js"></script>
+<script type="text/javascript" src="/comfile/js/dot.min.js"></script>
+<script type="text/javascript" src="/comfile/js/slider.js"></script>
+<script type="text/javascript" src="/home/other/js/index.js"></script>
+
+</head>
+<body lang="zh-CN" class="bg_index">
+<!--弹框和登陆-->
+<div id="roebx_header" style="z-index: 999;min-width: 1200px;width:100%; display: none;" >
+    <div class="header">
+        <div class="header-content">
+            <ul class="trade-status">
+                <li style="padding: 0px 10px 0px 0px;">
+                    <i class="fa fa-home fa-lg left move mr5"></i> 
+                    <span>{:config('top_name')}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="nav-bar common-nav">
+    <!-- <a href="/" class=" icon-logoFont"></a> -->
+    <a href="/" class="logo"><img src="/picture/logo.png" alt="logo"></a>
+
+    <div class="nav-content">
+        <ul class="common-nav-list">
+            <li id="index_box">
+                <a href="/">{:lang('ADDRESS')}</a>
+            </li>
+            <li id="trade_box">
+                <a href="/trade/index/market/doge_cny" id="trade_top" class="darker">{:lang('TRADE')}
+                    <!-- <i class="fa fa-angle-down"></i>  -->
+                </a>
+               <script id="trade_list_tpl" type="text/x-dot-template">
+                  <ul id="trade-nav-tabs" style="display: none;">
+                        {{ for(var k in it) { }}
+                        <li class="trade-tab {{? k == 0}}current{{?}}">
+                            {{=it[k]['title']}}
+                        </li>
+                        {{ } }}
+                    </ul>
+                    <div id="trade-nav-body">
+                        {{ for(var k in it) { }} {{? k == 0}}
+                        <dl style="display: block">
+                            {{??}}
+                            <dl style="display: none">
+                                {{?}} {{ for(var kk in it[k]['data']) { }}
+                                <dd>
+                                    <a href="/trade/index/market/{{=kk}}">
+                                        <img src="__DOMAIN__/Upload/coin/{{=it[k]['data'][kk]['img']}}" style="width: 18px;vertical-align: -4px;margin-right: 5px;">
+                                        <span><b>{{=it[k]['data'][kk]['title']}}</b>
+                                            <b>当前价:{{=it[k]['data'][kk]['new_price']}}</b>
+                                        </span>
+                                    </a>
+                                </dd>
+                                {{ } }}
+                            </dl>
+                            {{ } }}
+                        </dl>
+                    </div>
+                    <i class="fa fa-caret-up move" style="position: absolute;top: -21px;left: 18px;font-size: 28px;"></i>
+                    <div class="nocontent"></div>
+                </script>
+
+                <div id="trade_list" class="deal_list " style="left:1px;top:70px;"></div>
+            </li>
+           {volist name="daohang" id="vo"}
+                <li id="{$vo['name']}_box">
+                    <a href="/{$vo['url']}">{$vo['title']}</a>
+                    {eq name="vo.name" value="order"}
+                        <div  class="deal_list tel_list" style="display: none;">
+                            <a href="/Order/index" class="contact_us_text3">联系电话(香港)：00852-65292365‬</a>
+                            <a href="/Order/index" class="contact_us_text3">联系电话(香港)：00852-67493962‬</a>
+                            {volist name=":config('contact_qqun')" id="v"}
+                                <a href="#" class="contact_us_text3"><span>{:lang('MEMBER_GROUP')} :{$i}{:lang('GROUP')}：{$v}</span></a>
+                            {/volist}
+                            <i class="fa fa-caret-up move" style="position: absolute;top: -21px;left: 18px;font-size: 28px;"></i>
+                            <div class="nocontent"></div>
+                        </div>
+
+                    {/eq}
+                </li>
+            {/volist}
+        </ul>
+    </div>
+    <ul class="user-status">
+        <!-- <li style="color: #fff;font-weight: bold;font-size: 13px;">QQ群：693158105(满)</li> -->
+        {gt name="Think.session.userId" value="0"}
+            <li id="user_top">
+                <i class="fa fa-user fa-lg left move"></i>
+                <a href="/finance/"  class="move nav-username">{$Think.session.userName}</a>
+                <div id="mywallet_list" class="mywallet_list" style="display:none;">
+                    <div class="clear">
+                        <div>
+                            <h4>{:lang('AVAILABLE_HKD')}:</h4>
+                            <a href="javascript:void(0)">{$userCoin_top['cny']}</a>
+                        </div><div>
+                            <h4>{:lang('AVAILABLE_HKD')}:</h4>
+                            <a href="javascript:void(0)">{$userCoin_top['cny']}</a>
+                        </div><div>
+                            <h4>{:lang('AVAILABLE_HKD')}:</h4>
+                            <a href="javascript:void(0)">{$userCoin_top['cny']}</a>
+                        </div>
+    
+                    </div>
+                    <div class="mywallet_btn_box">
+                        <!--<a href="/Finance/mycz.html" class="texts">{:lang('DEPOSIT_COIN')}</a>-->
+                        <a href="/Finance/myzr.html" class="mywallet_btn">{:lang('DEPOSIT_COIN')}</a>
+                        <!--<a href="/Finance/mytx.html" class="texts">{:lang('WITHDRAWAL_COIN')}</a>-->
+                        <a href="/Finance/myzc.html" class="mywallet_btn">{:lang('WITHDRAWAL_COIN')}</a>
+                        <a href="/Finance/index.html" class="mywallet_btn">{:lang('FINANCE')}</a>
+                        <a href="/User/index.html" class="mywallet_btn">{:lang('SAFE')}</a>
+                    </div>
+                    <i class="fa fa-caret-up move" style="position: absolute;top: -21px;right: 34px;font-size: 28px;"></i>
+                    <div class="nocontent"></div>
+                </div>
+            </li>
+            <li>
+                <a href="{:url('/Login/loginout')}" class="">{:lang('SIGN_OUT')}</a>
+            </li>
+        {else /}
+
+            <li>
+                <i class="fa fa-user left move fz_16"></i> <a href="{:url('/Login/register','','')}"> {:lang('REGISTER')}</a>
+            </li>
+
+            <li>
+                <a href="javascript:loginpop();" class="">{:lang('LOGIN')}</a>
+            </li>
+        {/gt}
+        <li class="lang-option">
+            <div class="more-lan"><a id="zh-cn" href="?lang=zh-cn" title="中文版">中文版</a></div>
+        </li>
+        <li class="lang-option">
+            <div class="more-lan"><a id="en-us" style="margin-top: 1px;" href="?lang=en-us" title="English">English</a></div>
+        </li>
+         <li class="lang-option">
+            <div class="more-lan"><a id="ko" style="margin-top: 1px;" href="?lang=ko" title="한국어">한국어</a></div>
+        </li>
+    </ul>
+</div>
+<!--登陆框背景 -->
+<div id="all_mask" class="all_mask" style="display: none;"></div>
+<!--登陆框 -->
+<div id="all_mask_loginbox" class="all_mask_loginbox" onkeyup="keyLogin();">
+    <div class="login_title">
+        <span onclick="saoma()" style="text-align: center;margin-left: 15px;color: #FB1D1D;cursor:pointer;">{:lang('MEMBER_LOGIN')}</span>
+        <span style="font-size: 12px;margin-left: 10px;">官方QQ群：535997102</span>
+
+        <!-- <eq name="Think.session.weike_already" value="1"><font color="#ff0000" size="1px;">{:lang('LOGIN_REPEAT')}</font></eq> -->
+    </div>
+    <form id="form-login" class="mask_wrap login-fb">
+        <p class="login_text">
+            <span class="mask_wrap_title">{:lang('USER_ID')}：</span>
+            <input type="text" id="login_moble"  placeholder="{:lang('MOBLE_INPUT')}" value=""/>
+
+        </p>
+        <p class="login_text">
+            <span class="mask_wrap_title">{:lang('PWD')}：</span>
+            <input id="login_password"  type="password" placeholder="{:lang('LOGIN_PWD_INPUT')}">
+        </p>
+        <!--手机验证码-->
+        <!--<div class="login_text zin80">-->
+            <!--<div class="mask_wrap_title">手机验证吗：</div>-->
+            <!--<input type="text" id="code" value="" class="texts hg40 w250" style="width:200px!important;" placeholder="请输入验证码"/><a class="codeImg reloadverify hg40 w100" id="vifcode" onclick="send_moble('sms')" style="background: #e3493c;line-height: 40px;-->
+                <!--display: inline-block;-->
+                <!--vertical-align: bottom;-->
+                <!--text-align: center;-->
+                <!--width:50px!important;;-->
+                <!--font-size: 16px;-->
+    <!--color: #fff;">获取</a>-->
+        <!--</div>-->
+        <p class="login_text">
+            <span class="mask_wrap_title">{:lang('VERIFICATION_CODE')}：</span>
+            <input type="text" id="login_verify" value="" placeholder="{:lang('VERIFICATION_CODE_INPUT')}"/>
+            <img id="login_verify_up"
+
+             src="{:captcha_src()}"
+                 title="{:lang('CHANGE_IT')}" onclick="this.src='{:captcha_src()}?'+Math.random();" width="100" height="34">
+        </p>
+        <p class="login_button">
+            <input type="button" value="{:lang('LOGIN')}" onclick="footer_login();" >
+        </p>
+        <div class="login-footer" style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+            <span>
+            <a style="font-size: 14px;" href="{:url('/Login/register','','')}">{:lang('REGISTER_FREE')}</a>｜<a href="{:url('/Login/findpwd','','')}" style="font-size: 14px;">{:lang('FORGET_PWD')}</a>
+            </span>
+        </div>
+
+    </form>
+    <div class="mask_wrap_close" onclick="wrapClose()"><i class="fa fa-times fz_20 move" aria-hidden="true"></i></div>
+</div>
+<div class="alert_layer" style="display: none;">
+    <div class="alert_layer_">
+        <!-- 弹框内容-->
+        <div style="padding: 20px;line-height: 25px;font-size: 15px;">{article_66 | htmlspecialchars_decode}</div>
+    </div>
+</div>
+<script>
+    function loginpop() {
+        window.location.href = "<?php echo url('Index/index') . '#login';?>";
+    }
+    $.post("/ajax/top_coin_menu?t=" + Math.random(), function (data) {
+        if (data) {
+            var interText = doT.template($("#trade_list_tpl").text());
+            var interTexts = doT.template($("#trade_list_tpls").text());
+            $("#trade_list").html(interText(data));
+            $("#trade_lists").html(interTexts(data));
+            var $li = $('#trade-nav-tabs > li');
+            var $lis = $('#trade-nav-tabss > li');
+            var $ul = $('#trade-nav-body > dl');
+            var $uls = $('#trade-nav-bodys > dl');
+            $li.mouseover(function () {
+                var $this = $(this);
+                var $t = $this.index();
+                $li.removeClass();
+                $this.addClass('current');
+                $ul.css('display', 'none');
+                $ul.eq($t).css('display', 'block');
+            })
+        }
+    }, "json");
+</script>
+<script>
+    $(document).ready(function () {
+        var lan = getCookie('small_tip');
+        if(lan === undefined || lan === '') {
+            layer.open({
+                title:['最新公告'],
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                shadeClose: true,
+                area: ['800px', '600px'], //宽高
+                content: $('.alert_layer_').html()
+            });
+
+            SetCookie('small_tip', 'something.')
+        }
+    });
+ function footer_login() {
+        var moble = $("#login_moble").val();
+        var password = $("#login_password").val();
+        var verify = $("#login_verify").val();
+        if (moble == "" || moble == null) {
+            layer.tips('{:lang(\'MOBILE_NUM_INPUT\')}', '#login_moble', {tips: 2});
+            return false;
+        }
+        if (password == "" || password == null) {
+            layer.tips('{:lang(\'LOGIN_PWD_INPUT\')}', '#login_password', {tips: 2});
+            return false;
+        }
+        if (verify == "" || verify == null) {
+            layer.tips('{:lang(\'VERIFICATION_CODE_INPUT\')}', '#login_verify', {tips: 2});
+            return false;
+        }
+        $.post("{:url('login/submit')}", {
+            moble: moble,
+            password: password,
+            verify: verify,
+            login_token: "",
+        }, function (data) {
+            if (data.status == 1) {
+                $.cookies.set('move_moble', moble);
+                layer.msg(data.msg, {icon: 1,offset: '400px'});
+                if (data.url) {
+                    window.location = data.url;
+                } else {
+                    window.location = "/";
+                }
+            } else {
+                $("#login_verify_up").click();
+                layer.msg(data.msg, {icon: 2,offset: '400px'});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+</script>

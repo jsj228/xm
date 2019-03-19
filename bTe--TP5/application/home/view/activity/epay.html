@@ -1,0 +1,280 @@
+{include file="public:header" /}
+<script type="text/javascript" src="/comfile/js/md5.js" charset="UTF-8"></script>
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt;
+        <a href="/finance/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; 易派充值</div>
+    <div class="main-content">
+        <style>
+            .nav-tab-list .nav-tab-hover{
+                width:100%;
+                top:60px;
+                height:50px;
+                line-height:50px;
+                background:#EAEDF4;
+                position:absolute;
+                box-sizing:content-box;
+                z-index:1;
+                transition:all 0.5s;
+                -webkit-transition:all 0.5s;
+                display:none;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                (function () {
+                    var tab   = $('.nav-tab-list dd');
+                    var hover = $('.nav-tab-hover');
+                    var pos   = 0;
+                    tab.each(function (index) {
+                        var $this = $(this);
+                        if ($this.hasClass('active')) {
+                            pos = index;
+                        }
+                        $this.hover(function () {
+                            _moveTo(index);
+                        }, function () {
+                            _moveTo(pos);
+                        });
+                    });
+                    _moveTo(pos);
+                    $('.nav-tab-hover').show();
+                    function _moveTo(index) {
+                        hover.css("top", 0 + 50 * index);
+                        tab.removeClass('active');
+                        tab.eq(index).addClass('active');
+                    }
+                })();
+            });
+            $(window).on('scroll resize', function () {
+                if (document.body.scrollTop < 100) {
+                    $('#left-nav-bar').css("top", 0);
+                } else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+                    $('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+                } else {
+                    $('#left-nav-bar').css("top", document.body.scrollTop - 100);
+                }
+            });
+        </script>
+
+        {include file="finance:left" /}
+
+        <div class="tag-list-content assets_content bg_w">
+            <div class="safe_center clear">
+                <h1>
+                    <span>{:lang('RECHARGE')}</span>
+                    <span>
+						<a class="right" onclick="$('#hints').slideToggle();">
+							<i class="fa fa-hand-o-right move fz_14 mr5"></i>
+						<span class="fz_12 move">{:lang('DETAILED_INFO')}</span></a>
+					</span>
+                </h1>
+            </div>
+            <div id="hints" class="mytips" style="display:none;">
+                <p>{notempty name="prompt_text"}{$prompt_text}{/notempty}</p>
+            </div>
+            <style>
+                [name="form1"] tr{margin-bottom:10px;}
+                [name="form1"] td{width:154px!important;line-height:40px;}
+                [name="form1"] td>input{
+                    border: 1px solid #ddd !important;
+                    padding: 6px 10px;
+                    border-radius: 3px;
+                    margin-left:8px;
+                }
+            </style>
+            <div class="mytable-body ">
+                <div class="step1   pwtrade  pw  mt50">
+                    <form name="form1" method="post" action="https://api.epay.com/paymentApi/merReceive" >
+                        <table>
+                            <tr style="display: none">
+                                <td align="right" style="width:50%;height: 25px;font-size: 14px">平台账号:</td>
+                                <td><input name="PAYEE_ACCOUNT" type="text" value="{$mer_account}" size="40" readonly/></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right">收款人:</td>
+                                <td><input name="PAYEE_NAME" type="text" value="{$mer_name}" size="40" readonly/></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td align="right">{:lang('EPAY_CZ_NUM')}:</td>
+                                <td><input name="PAYMENT_AMOUNT" type="text" value="" size="40" placeholder="{:lang('EPAY_CZ_PL')}"/></td>
+                            </tr>
+                            <tr>
+                                <td align="right">{:lang('EPAY_CZ_TYPE')}:</td>
+                                <td><input name="PAYMENT_UNITS" type="text" value="USD" size="40" readonly/></td>
+                            </tr>
+                            <tr>
+                                <td align="right">{:lang('EPAY_CZ_MUM')}:</td>
+                                <td><input name="in_hkd" type="text" value="" size="40" readonly/><input name="rate" type="hidden" value="{$rate}" size="40" readonly/></td>
+                            </tr>
+                            <tr>
+                                <td align="right"></td>
+                                <td><span style="margin-left: 15px;color: #fe334d">{:lang('EPAY_CZ_TS')}</span></td>
+                            </tr>
+                            <tr>
+                                <td align="right">{:lang('EPAY_CZ_ORDER')}:</td>
+                                <td><input name="PAYMENT_ID" type="text" value="{$tradeno}" size="40" readonly/></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >支付结果返回地址:</td>
+                                <td><input name="STATUS_URL" type="text" value="http://epay.btchkgj.com/Activity/addOrder" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right">支付成功跳转页面:</td>
+                                <td><input name="PAYMENT_URL" type="" value="https://www.btchkgj.com/Activity/epay.html" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >支付失败跳转页面:</td>
+                                <td><input name="PAYMENT_URL_METHOD" type="text" value="" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >NOPAYMENT_URL:</td>
+                                <td><input name="NOPAYMENT_URL" type="text" value="" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >NOPAYMENT_URL_METHOD:</td>
+                                <td><input name="NOPAYMENT_URL_METHOD" type="text" value="post" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >SUGGESTED_MEMO:</td>
+                                <td><input name="SUGGESTED_MEMO" type="text" value="123qwe" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right">用户易派账号:</td>
+                                <td><input name="FORCED_PAYER_ACCOUNT" type="text" value="" size="40"  placeholder="请输入您的易派账号"/></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >INTERFACE_LANGUAGE:</td>
+                                <td><input name="INTERFACE_LANGUAGE" type="text" value="zh_CN" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >CHARACTER_ENCODING:</td>
+                                <td><input name="CHARACTER_ENCODING" type="text" value="UTF-8" size="40" /></td>
+                            </tr>
+                            <tr style="display: none">
+                                <td align="right" >签名:</td>
+                                <td><input name="V2_HASH" type="text" value="" size="40" /></td>
+                            </tr>
+                        </table>
+                        <p style="text-align:center;width:29%;margin:0 auto">
+                            <input type="submit" name="button" class="btnreg" id="button" value="{:lang('EPAY_CZ_BUT')}" onclick="md5()">
+                        </p>
+                    </form>
+                    <script>
+                        $('input[name = PAYMENT_AMOUNT]').blur(function () {
+                            var num = parseFloat($('input[name = PAYMENT_AMOUNT]').val());
+                            var rate = parseFloat($('input[name = rate]').val());
+                            var mum = num * rate;
+                            $('input[name = in_hkd]').val(mum);
+                        })
+                        function md5(){
+                            var mer_account = document.getElementsByName("PAYEE_ACCOUNT")[0].value;
+                            var mer_name = document.getElementsByName("PAYEE_NAME")[0].value;
+                            var trans_amount = document.getElementsByName("PAYMENT_AMOUNT")[0].value;
+                            var currcy_code = document.getElementsByName("PAYMENT_UNITS")[0].value;
+                            var sign=mer_account+":"+trans_amount+":"+currcy_code+":"+"d2f044f3cd23c209535fa04e1edb77d7";
+                            sign=hex_md5(sign);
+                            document.getElementsByName("V2_HASH")[0].value=sign;
+                            form1.submit();
+                            var order_num = $('input[name = PAYMENT_ID]').val();
+                            var userepay = $('input[name = FORCED_PAYER_ACCOUNT]').val();
+                            var btc_epay = $('input[name = PAYEE_ACCOUNT]').val();
+                            $.post('/Activity/addRecord',{
+                                num : trans_amount,
+                                order_num : order_num,
+                                userepay : userepay,
+                                btc_epay : btc_epay
+                            },function (data) {
+                                if (data.code == 1){
+                                    layer.msg(data.msg,{icon:1});
+                                }else{
+                                    layer.msg(data.msg,{icon:2});
+                                }
+                            },'json');
+                        }
+                    </script>
+                </div>
+                <div class="step2 f_body">
+                    <table class="f_table" id="investLog_content">
+                        <thead>
+                        <tr>
+                            <th width="">充值时间</th>
+                            <th width="">订单号</th>
+                            <th width="">充值USD数量</th>
+                            <th width="">汇率</th>
+                            <th width="">到账金额</th>
+                            <th width="">状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {volist name="list" id="vo"}
+                            <tr>
+                                <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                                <td>{$vo.order_num}</td>
+                                <td>{$vo.num}</td>
+                                <td>{$vo.rate}</td>
+                                <td>￥{$vo['mum']|default="0.00"}</td>
+                                <td>
+
+                                    {eq name="vo.status" value="0"}
+                                        未付款
+                                    {/eq}
+                                    {eq name="vo.status" value="1"}
+                                        充值失败
+                                    {/eq}
+                                    {eq name="vo.status" value="2"}
+                                        充值成功
+                                    {/eq}
+                                </td>
+                            </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    <div class="pages"> {$page}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#status-select").val("{//$status}");
+    $("#status-select").change(function () {
+        var status = $("#status-select option:selected").val();
+        var url = '/Finance/mycz';
+        if (status) {
+            url += '/status/' + status+'.html';
+        }
+        window.location = url;
+    });
+    // $('inout[name = button]').click(function () {
+    //     var num = $('input[name = PAYMENT_AMOUNT]').val();
+    //     var order_num = $('input[name = PAYMENT_ID]').val();
+    //     var userepay = $('input[name = FORCED_PAYER_ACCOUNT]').val();
+    //     var btc_epay = $('input[name = PAYEE_ACCOUNT]').val();
+    //     $.post('/Activity/addRecord',{
+    //         num : num,
+    //         order_num : order_num,
+    //         userepay : userepay,
+    //         btc_epay : btc_epay
+    //     },function (data) {
+    //         if (data.code == 1){
+    //             layer.msg(data.msg,{icon:1});
+    //         }else{
+    //             layer.msg(data.msg,{icon:2});
+    //         }
+    //     },'json')
+    // })
+</script>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_epay').addClass('active');
+</script>
+
+{include file="public:footer" /}

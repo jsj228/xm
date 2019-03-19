@@ -1,0 +1,122 @@
+
+<include file="Public:header"/>
+
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:L('ADDRESS')}</a> &gt; {:L('PROBLEM_SOLUTION')}	</div>
+    <div class="assets_content bg_w">
+
+
+        <div class="form-con" style="width: 90%;">
+
+
+            <h2 class="request-title" style="color: #fff;">{$data.title}</h2>
+
+            <div class="request-container">
+                <section class="request-main">
+                    <ul class="comment-list">
+                        <volist name="data.msg" id="vo" key="k" >
+                            <?php if($data['msg'][$key]['type']===0){ ?>
+                            <li id="request_comment_45226335562" class="comment">
+                                <div class="comment-wrapper">
+                                    <div class="comment-info">
+                                        <div class="comment-author">
+                                            <div class="avatar comment-avatar">
+                                                <img src="https://secure.gravatar.com/avatar/70a8aabccdcf4f7a89f62606b741c942?default=https%3A%2F%2Fassets.zendesk.com%2Fhc%2Fassets%2Fdefault_avatar.png&amp;r=g" alt="Avatar" class="user-avatar">
+                                            </div>
+                                            <div class="comment-meta">
+                                                <span title="310224">{$uname}</span>
+                                                <ul class="meta-group">
+                                                    <li class="meta-data">{:date('Y-m-d H:i:s',$data['msg'][$key]['addtime'])}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <section class="comment-body"><div class="zd-comment"><p dir="auto">{$data['msg'][$key]['description']}</p></div></section>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php }else{ ?>
+                            <li id="request_comment_45226335562" class="comment">
+                                <div class="comment-wrapper">
+                                    <div class="comment-info">
+                                        <div class="comment-author">
+                                            <div class="avatar comment-avatar">
+                                                <img src="https://secure.gravatar.com/avatar/70a8aabccdcf4f7a89f62606b741c942?default=https%3A%2F%2Fassets.zendesk.com%2Fhc%2Fassets%2Fdefault_avatar.png&amp;r=g" alt="Avatar" class="user-avatar">
+                                            </div>
+                                            <div class="comment-meta">
+                                                <span title="310224">客户服务</span>
+                                                <ul class="meta-group">
+                                                    <li class="meta-data">{:date('Y-m-d H:i:s',$data['msg'][$key]['addtime'])}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <section class="comment-body"><div class="zd-comment"><p dir="auto">{$data['msg'][$key]['description']}</p></div></section>
+                                    </div>
+                                </div>
+                            </li>
+                            <?php } ?>
+                        </volist>
+                    </ul>
+                    <div class="request-follow-up">
+                        {:L('QUERY_CLOSE')}<a href="/Order/index?id={$data.id}">{:L('FOLLOW_UP')}</a>。
+                    </div>
+                </section>
+                <section class="request-sidebar collapsible-sidebar">
+                    <h5 class="collapsible-sidebar-title">{:L('ORDER_DETAIL')}</h5>
+
+                    <dl class="request-details">
+                        <dt>{:L('REQUESTER')}</dt>
+                        <dd>{$uname}</dd>
+
+                        <dt>{:L('QUERY_TIME')}</dt>
+                        <!--<dd><time datetime="2017-09-05T06:54:26+00:00" title="2017-09-05 14:54" data-datetime="calendar">{$data.addtime.0|date="y-m-d h:i:s",###}</time></dd>-->
+                        <dd>{:date('Y-m-d H:i:s',$data['msg'][0]['addtime'])}</dd>
+
+                        <!--<dt>{:L('PUBLISH_IN')}</dt>-->
+                        <!--<dd><time datetime="2017-09-09T13:01:19+00:00" title="2017-09-09 21:01" data-datetime="calendar">{:formatTime($data['addtime'])}</time></dd>-->
+                    </dl>
+
+                    <dl class="request-details">
+
+                        <dt>{:L('ASSIGNED_IN')} </dt>
+                        <dd>
+                            {:L('SERVICE')}
+                        </dd>
+                        <dt>Id</dt>F
+                        <dd>{$data.id}</dd>
+                        <dt>{:L('STATE')}</dt>
+                        <dd>
+                      <span class="status-label status-label-solved" title="{:L('QUERY_RESOLVED')}">
+                          <eq name="data.wt_type" value="0">
+                              未解决
+                              <else/>
+                              已解决
+                          </eq>
+                      </span>
+                        </dd>
+                        <dt>{:L('PRIORITY')}</dt>
+                        <dd>
+                            —
+                        </dd>
+                        <dt>Question Type/问题类型(务必准确选择类型，以免延误处理)</dt>
+                        <dd>
+                            {$data.type}
+                        </dd>
+
+                    </dl>
+
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+
+</script>
+
+<include file="Public:footer" />

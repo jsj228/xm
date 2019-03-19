@@ -1,0 +1,238 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">数字资产转出</span>
+        </div>
+
+        <div class="cf">
+            <div class="search-form fr cf">
+                <input type="password" id="trade_pass" class="search-input form-control" placeholder="请输入确认转出的密码" style="margin-right: 10px;">
+                <button class="search-input" id="trade_pass_submit" style="width: 60px;">确定</button>
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1">
+                        <input type="text" class="search-input form-control  " name="addtime" value="{$Think.get.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+                        <input type="text" class="search-input form-control  " name="endtime" value="{$Think.get.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="coinname" class="form-control">
+                            <option value=""
+                            <empty name="Think.get.coinname">selected</empty>
+                            >交易币种</option>
+                            <volist name="C['coin']" id="vo">
+                                <option value="{$vo['name']}"
+                                <eq name="vo['name']" value="$Think.get.coinname">selected</eq>
+                                >{$vo['title']}</option>
+                            </volist>
+                        </select>
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="username"
+                            <eq name="Think.get.field" value="username">selected</eq>
+                            >用户名</option>
+                        </select>
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="0" <eq name="status" value="0">selected</eq>>等待处理</option>
+                            <option value="1" <eq name="status" value="1">selected</eq>>处理成功</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr >
+                    <th colspan="2" style="background-color:#009200">
+                        共{$count}条记录
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        转出总数量{$summum|default="0"}元
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        实际转出总数量{$sum|default="0"}元
+                    </th>
+                    <!--<th colspan="2" style="background-color:#009200">-->
+                        <!--转态转出总数量{$status|default="0"}元-->
+                    <!--</th>-->
+                </tr>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">用户名</th>
+                    <th class="">真实姓名</th>
+                    <th class="">币种</th>
+                    <th width="">申请时间</th>
+                    <th width="">转出地址</th>
+                    <th width="">转出数量</th>
+                    <th class="">提现手续费</th>
+                    <th>实际转出数量</th>       
+                    <th width="">状态</th>
+                    <th width="">操作</th>
+                    <th width="">操作人</th>
+                    <th width="">华克金榴莲币公钥</th>
+                </tr>
+                </thead>
+                <tbody>
+                <notempty name="list">
+                    <volist name="list" id="vo">
+                        <tr>
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo['usernamea']} </td>
+                            <td>{$vo['truename']} </td>
+                            <td>{$vo.coinname}</td>
+                            <td>
+                                <empty name="vo['addtime']">
+                                        ---
+                                <else />
+                                    {$vo.addtime|addtime}
+                                </empty>
+                            </td>
+                            <td>{$vo.username}</td>
+
+                            <empty name="vo['num']">
+                                    <td style="color: yellowgreen">({$vo['num']})手续费</td>
+                                <else />
+                                    <td>{$vo['num']}</td>
+                            </empty>
+
+                            <empty name="vo['num']">
+                                <td style="color: yellowgreen">入账:{$vo['fee']}</td>
+                                <else />
+                                <td>{$vo['fee']}</td>
+                            </empty>
+                            <td>{$vo['num']-$vo['fee']}</td>
+                            <td>
+                                <eq name="vo.status" value="0">等待处理</eq>
+                                <eq name="vo.status" value="1">转出成功</eq>
+                                <eq name="vo.status" value="2">已经撤销</eq>
+                            </td>
+                            <td>
+                                <?php if ($vo['status'] == 1) { ?>
+                                    转出成功
+                                <?php } elseif ($vo['status'] == 2) { ?>
+                                    已经撤销
+                                <?php } else { ?>
+                                <empty name="vo['num']">
+                                    不用操作
+                                    <else />
+                                    <a onclick="qrzc({$vo['id']}, 1)" href="#" class="ajax-get btn btn-primary btn-xs">确认转出</a>
+                                    <a onclick="cxzc({$vo['id']}, 2)" href="#" class="ajax-get btn btn-primary btn-xs">撤销</a>
+                                </empty>
+                                <?php } ?>
+                            </td>
+                            <td>{$vo['czr']}</td>
+                            <td>{$vo['wcgkey']}</td>
+                        </tr>
+                    </volist>
+                    <else/>
+                    <td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+                </notempty>
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:U('Finance/myzc')}");
+        
+        $("#trade_pass_submit").click(function () {
+            var trade_pass = $("#trade_pass").val();
+
+            $.post("{:U('Finance/validate_trade_pass')}",{'trade_pass':trade_pass},function(data){
+                if(data.status){
+                    layer.msg(data.info, {time: 1000,icon: 1});
+                }else {
+                    layer.msg(data.info, {time: 3000,icon: 2});
+                }
+            });
+
+
+        });
+        
+        function qrzc(id, type) {
+            var pass = $('#pass').val();
+            layer.confirm('是否成功操作转出？', {
+                btn: ['确定','还未转出'] //按钮
+            }, function(){
+                $.get("{:U('Finance/myzcQueren')}", {
+                    id: id,
+                    pass: pass,
+                    type: type,
+                }, function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.info, {icon: 2});
+                        if (data.url) {
+                            window.location = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('请转出后再确认转出', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+
+        }
+        function cxzc(id, type) {
+            var pass = $('#pass').val();
+            layer.confirm('是否撤销转出？', {
+                btn: ['确定','还未转出'] //按钮
+            }, function(){
+                $.get("{:U('Finance/myzcQueren')}", {
+                    id: id,
+                    pass: pass,
+                    type: type,
+                }, function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.info, {icon: 2});
+                        if (data.url) {
+                            window.location = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('请转出后再确认转出', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+
+        }
+    </script>
+</block>

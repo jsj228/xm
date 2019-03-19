@@ -1,0 +1,143 @@
+{include file="public:header" /}
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/finan/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('REWARDS')}	</div>
+    <div class="main-content">
+        <style>
+            .nav-tab-list .nav-tab-hover{
+                width:100%;
+                top:60px;
+                height:50px;
+                line-height:50px;
+                background:#EAEDF4;
+                position:absolute;
+                box-sizing:content-box;
+                z-index:1;
+                transition:all 0.5s;
+                -webkit-transition:all 0.5s;
+                display:none;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                (function () {
+                    var tab   = $('.nav-tab-list dd');
+                    var hover = $('.nav-tab-hover');
+                    var pos   = 0;
+                    tab.each(function (index) {
+                        var $this = $(this);
+                        if ($this.hasClass('active')) {
+                            pos = index;
+                        }
+                        $this.hover(function () {
+                            _moveTo(index);
+                        }, function () {
+                            _moveTo(pos);
+                        });
+                    });
+                    _moveTo(pos);
+                    $('.nav-tab-hover').show();
+                    function _moveTo(index) {
+                        hover.css("top", 0 + 50 * index);
+                        tab.removeClass('active');
+                        tab.eq(index).addClass('active');
+                    }
+                })();
+            });
+            $(window).on('scroll resize', function () {
+                if (document.body.scrollTop < 100) {
+                    $('#left-nav-bar').css("top", 0);
+                } else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+                    $('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+                } else {
+                    $('#left-nav-bar').css("top", document.body.scrollTop - 100);
+                }
+            });
+        </script>
+
+        {include file="finance:left" /}
+
+        <div class="tag-list-content">
+            <div class="assets_content bg_w">
+                <div class="safe_center clear ">
+                    <h1>{:lang('REWARDS')}  <a class="right" onclick="$('#hints').slideToggle();"> <i class="fa fa-hand-o-right move fz_14 mr5"></i> <span class="fz_12 move">{:lang('DETAILED_INFO')}</span> </a> 					</h1>
+                </div>
+                <div id="hints" class="mytips" style="display:none;">
+                    <p>
+                        {notempty name="prompt_text"}
+                            {$prompt_text}
+                        {/notempty}
+                    </p>
+                </div>
+                <div class="mytable-body ">
+                    <div class="f_body  step2">
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:lang('USER_ID')}</th>
+                                <th>币种类型</th>
+                                <th>币种简称</th>
+                                <th>转入数量</th>
+                                <th>转入时间</th>
+                                <th>上次解冻</th>
+                                <th>解冻次数</th>
+                                <th>剩余解冻</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {volist name="list" id="vo"}
+                                <tr>
+                                    <td>{$vo.username|substr_replace='****',3,4}</td>
+                                    <td>{$vo['name']}</td>
+                                    <td>{$vo['coinname']}</td>
+                                    <td>{$vo['num'] * 1}</td>
+                                    <td>{$vo.addtime|date='m-d H:i:s',###}</td>
+                                    <td>{$vo.endtime|date='m-d H:i:s',###}</td>
+                                    <td>{$vo['unlock']}/{$vo['ci']}</td>
+                                    <td>{$vo['shen'] * 1}</td>
+                                    <td>
+                                        {eq name="vo.status" value="1"}<font color="#0096dd"}已完成</font>{else/}<font color="#23a800">解冻中</font>{/eq}
+                                    </td>
+                                    <td>
+                                        {eq name="vo.status" value="0"}
+                                            <a onclick="jiedong({$vo['id']})" href="javascript:void(0)" class="cur" style="color: #E55600!important;">{:lang('THAW')}</a>
+                                        {/eq}
+                                    </td>
+                                </tr>
+                            {/volist}
+
+                            </tbody>
+                        </table>
+                        <div class="pages">{$page}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_myfhh').addClass('active');
+
+    function jiedong(id) {
+        $.post("/Activity/myejf", {id: id}, function (data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1});
+                window.location.reload();
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        }, "json");
+    }
+</script>
+
+{include file="public:footer" /}

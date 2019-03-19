@@ -1,0 +1,96 @@
+{include file="Public:header" /}
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i>
+		<a href="/" class="">{:lang('ADDRESS')} </a> &gt;
+		<a href="/user/index.html" class="">{:lang('SAFE')} </a> &gt;{:lang('ACCOUNT_INFO')}
+		</div>
+	<div class="main-content">
+{include file="User:left" /}
+<script>
+	if ($("#user_box").length > 0) {
+		$('#user_box').addClass('active');
+	} else {
+		$('#index_box').addClass('active');
+	}
+	$('.user_index').addClass('active');
+</script>
+
+	<div class="tag-list-content assets_content bg_w">
+		<h1 class="safe_center clear">
+			<span>{:lang('ACCOUNT_INFO')}</span>
+		</h1>
+		<ul class="sc_statu">
+			<li>
+				{:lang('USER_NAME')}:{$user['truename']}<br>
+				{:lang('EMAIL')}:{$user['username']}
+			</li>
+			<li class="iconfont icon-identity ">
+				<p>
+					{:lang('REAL_NAME_VERIFY')}<br>
+					{eq name="user['idcardauth']" value='0'}
+						<a class="minBtn bg_red iconfont icon-warning" href="/user/nameauth.html">{:lang('UNVERIFIED')}</a>
+						{else/}
+							<span class="iconfont icon-ok">{:lang('VERIFIED')}</span>
+					{/eq}
+				</p>
+			</li>
+			<li class="iconfont icon-bindPhone">
+				<p>
+					{:lang('MOBILE_AUTHENTICATION')}<br>
+						<empty name="user['moble']">
+						<span class="iconfont icon-ok">已通过<else/>
+						<span class="iconfont icon-ok">{:lang('VERIFIED')}</empty>
+				</p>
+			</li>
+		</ul>
+		<div class="sc_info_list eee" id="sc_info_list">
+			<p>
+				<span>{:lang('LOGIN_PWD')}</span>
+				{:lang('LOGIN_PSW_DETAIL')}
+				<a class="minBtn bg_red right" href="/user/password">{:lang('MODIFY_PSW')}</a>
+			</p>
+
+			<p>
+				<span>{:lang('TRAN_PWD')}</span>
+				{:lang('TRAN_PSW_DETAIL')}
+				<a class="minBtn bg_red right" href="/user/paypassword">{:lang('MODIFY_PSW')}</a>
+			</p>
+			<p>
+				<span>{:lang('REAL_NAME_VERIFY')}</span>
+				{:lang('REAL_NAME_DETAIL')}
+				<a class="minBtn bg_red right" href="/user/nameauth">
+					{eq name="user['idcardauth']" value='0'}
+						<font class="eee">{:L('VERIFY_NOW')}</font>
+					{else/}
+						{:lang('MODIFY_REAL_NAME_AUTH')}
+					{/eq}
+				</a>
+			</p>
+			<p style="display: none;">
+				<span>{:lang('EMAIL_AUTHENTICATION')}</span>
+				{:lang('WITHDRAW_DETAIL')}
+				<a  class="minBtn bg_red right"  href="/user/moble.html">{:lang('MODIFY_PHONE')}</a>
+			</p>
+		</div>
+	</div>
+	</div>
+</div>
+<style>
+.sc_statu,.sc_info_list{width: 95%;margin:20px auto;}
+.sc_statu {width: 95%;margin:20px auto;border: 1px solid #EFEFEF;}
+.sc_statu li{width:33%;padding:30px 0 30px 50px;height:auto;color: #fff;font-size:14px;}
+ .sc_statu p,.sc_statu li:before,.sc_statu li,.sc_info_list span{display:inline-block;vertical-align:middle;line-height:26px}
+.sc_statu li:before{color:#e3493c;font-size:50px;margin-right:5px;}
+.sc_info_list span{width:300px;}
+
+.sc_info_list {
+	margin-top:50px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 12px;
+}
+</style>
+
+
+{include file="Public:footer" /}

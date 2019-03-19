@@ -1,0 +1,70 @@
+<include file="Trade:header" />
+<div class="trade_autobox" >
+    <div id="kline">
+        <iframe style="border-style: none;" border="0" width="100%" height="705" id="market_chart kline" src="/weike/weike_pro?market={$market}" >
+        </iframe>
+    </div>   
+    <div class="tables" style="height:805px;overflow-y:auto;overflow-x:hidden;padding: 0 5px;background: #181b2a;width:29.6%;min-width:355px;">
+
+    <!--     <table class="Transaction ">
+           <thead>
+            <tr>
+             <th width="50">{:L('BUY')}</th>
+             <th width="80">{:L('PRICE')}</th>
+             <th width="120">{:L('QUANTITY')}</th>
+             <th width=""><span>{:L('PROPORTION')}</span></th>
+            </tr>
+           </thead>
+            <tbody id="marketbuylist">
+            </tbody>
+           <tbody id="marketselllist">
+           </tbody>
+        </table>  -->
+        <table class="Transaction">
+             <thead>
+              <tr>
+               <th width="65">{:L('TIME')}</th>
+               <th width="65">{:L('PRICE')}</th>
+               <th width="75">{:L('QUANTITY')}</th>
+               <th width="115"><span>{:L('AMOUNT')}</span></th>
+              </tr>
+             </thead>
+             <tbody id="marketorderlist">
+             </tbody>
+        </table>
+    </div>
+</div>
+<include file="Public:footer" />
+<script type="text/javascript">
+	var market="{$market}";
+
+	function getJsonData(){
+		$.getJSON("/Chart/getJsonData?market="+market+"&t="+10,function(data){
+			if(data){
+				if(data[0]){
+					$("#marketbuylist").html(data[0]);
+				}
+				if(data[1]){
+					$("#marketselllist").html(data[1]);
+				}
+				if(data[2]){
+					$("#marketorderlist").html(data[2]);
+				}
+			}
+		});
+	}
+	getJsonData();
+	// 倒计时
+	var wait=second=5;
+	var go=setInterval(function(){
+		wait--;
+		if(wait<0){
+			getJsonData();
+			wait=second;
+		}
+	},1000);
+</script>
+<script>
+	//菜单高亮
+	$('#list-tab_chart').addClass('on').siblings().removeClass('on');
+</script>

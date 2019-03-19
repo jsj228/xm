@@ -1,0 +1,241 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('User/index')}">用户管理</a> >></span>
+			 <span class="h1-title"><empty name="data">添加用户
+				 <else/>
+			                                           编辑用户
+			 </empty></span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="{:U('User/edit')}" method="post" enctype="multipart/form-data" class="form-horizontal">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">用户名 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="username" value="{$data.username}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								
+                                <tr class="controls">
+                                    <td class="item-label">所属组别 :</td>
+                                    <td><select name="usertype" class="input-small">
+                                        <option value="0"
+                                        <eq name="data.usertype" value="0">selected</eq>
+                                        >普通用户组</option>
+                                        <option value="1"
+                                        <eq name="data.usertype" value="1">selected</eq>
+                                        >特殊用户组</option>
+                                    </select></td>
+                                    <td class="item-note"></td>
+                                </tr>
+								
+								<tr class="controls">
+									<td class="item-label">用户密码 :</td>
+									<td><input type="text" class="form-control input-10x" name="password" value=""></td>
+									<td class="item-note">留空不更新</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">交易密码 :</td>
+									<td><input type="text" class="form-control input-10x" name="paypassword" value="">
+									</td>
+									<td class="item-note">留空不更新</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">手机 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="moble" value="{$data.moble}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">手机认证时间 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="mobletime" value="{$data['mobletime']|addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+
+								
+								<tr class="controls">
+									<td class="item-label">一代 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="invit_1" value="{$data.invit_1}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">二代 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="invit_2" value="{$data.invit_2}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">三代 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="invit_3" value="{$data.invit_3}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">真实姓名 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="truename" value="{$data.truename}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">身份证 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="idcard" value="{$data.idcard}">
+										<if condition="$userimg">
+										{$userimg}
+										<else />
+											<tr class="controls">
+												<td class="item-label">正面 :</td>
+												<td>
+													<div id="addpicContainer1">
+														<img id="up_img1" onclick="getElementById('inputfile1').click()" style="cursor:pointer;max-width:500px;" title="点击添加图片" alt="点击添加图片" src="__PUBLIC__/Admin/images/addimg.png">
+														<input type="hidden" id="idcard1" name="img1" value="{$data.img}">
+														<input type="file" id="inputfile1" style="height:0;width:0;z-index: -1; position: absolute;left: 10px;top: 5px;" value=""/>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="controls">
+												<td class="item-label">背面 :</td>
+												<td>
+													<div id="addpicContainer2">
+														<img id="up_img2" onclick="getElementById('inputfile2').click()" style="cursor:pointer;max-width:500px;" title="点击添加图片" alt="点击添加图片" src="__PUBLIC__/Admin/images/addimg.png">
+														<input type="hidden" id="idcard2" name="img2" value="{$data.img}">
+														<input type="file" id="inputfile2" style="height:0;width:0;z-index: -1; position: absolute;left: 10px;top: 5px;" value=""/>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="controls">
+												<td class="item-label">整体 :</td>
+												<td>
+													<div id="addpicContainer3">
+														<img id="up_img3" onclick="getElementById('inputfile3').click()" style="cursor:pointer;max-width:500px;" title="点击添加图片" alt="点击添加图片" src="__PUBLIC__/Admin/images/addimg.png">
+														<input type="hidden" id="idcard3" name="img3" value="{$data.img}">
+														<input type="file" id="inputfile3" style="height:0;width:0;z-index: -1; position: absolute;left: 10px;top: 5px;" value=""/>
+													</div>
+												</td>
+											</tr>
+										</if>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								
+								<neq name="data.idcardauth" value="1">
+								<tr class="controls">
+									<td class="item-label">未通过原因:</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="idcardinfo" value="{$data.idcardinfo}">
+									</td>
+									<td class="item-note">填写未通过认证原因</td>
+								</tr>
+								</neq>
+
+								<neq name="data.status" value="1">
+									<tr class="controls">
+										<td class="item-label">冻结原因:</td>
+										<td>
+											<input type="text" class="form-control input-10x" name="statusinfo" value="{$data.statusinfo}">
+										</td>
+										<td class="item-note">填写冻结原因</td>
+									</tr>
+								</neq>
+								
+								<tr class="controls">
+									<td class="item-label">状态 :</td>
+									<td><select name="status" class="form-control input-10x">
+										<option value="1"
+										<eq name="data.status" value="1">selected</eq>
+										>正常</option>
+										<option value="0"
+										<eq name="data.status" value="0">selected</eq>
+										>冻结</option>
+									</select></td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/>
+											</notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//提交表单
+	$('#submit').click(function () {
+		$('#form').submit();
+	});
+</script>
+
+
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            //响应文件添加成功事件
+            $("#inputfile1,#inputfile2,#inputfile3").change(function () {
+                var _that = $(this)
+                //创建FormData对象
+                var data = new FormData();
+                //为FormData对象添加数据
+                $.each($(this)[0].files, function (i, file) {
+                    data.append('upload_file' + i, file);
+                });
+
+                //发送数据
+                $.ajax({
+                    url: '__MODULE__/User/userImage',
+                    type: 'POST',
+                    data: data,
+                    cache: false,
+                    contentType: false,		//不可缺参数
+                    processData: false,		//不可缺参数
+                    success: function (data) {
+                        if (data) {
+                            _that.prev().prev().attr("src", '__DOMAIN__/Upload/idcard/' + data);
+                            _that.prev().val(data);
+                            _that.prev().prev().show();
+                        }
+                    },
+                    error: function () {
+                        alert('上传出错');
+                        $(".loading").hide();	//加载失败移除加载图片
+                    }
+                });
+
+            });
+        });
+		//导航高亮
+		highlight_subnav("{:U('User/index')}");
+	</script>
+</block>

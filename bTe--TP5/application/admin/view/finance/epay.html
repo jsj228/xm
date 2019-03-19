@@ -1,0 +1,137 @@
+{include file="public:header" /}
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">Epay充值</span>
+        </div>
+        <div class="cf">
+            <div class="fl">
+                <button class="btn ajax-post confirm btn-danger" url="{:url('Finance/myczStatus',array('type'=>'chexiao'))}" target-form="ids">撤销</button>
+            </div>
+            <div class="search-form fr cf">
+                <div class="sleft">
+
+                    <form name="formSearch" id="formSearch" method="get" name="form1">
+                        <input type="text" class="search-input form-control  " name="addtime" value="{$Request.param.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+                        <input type="text" class="search-input form-control  " name="endtime" value="{$Request.param.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+
+                        <!--<select style=" width: 160px; float: left; margin-right: 10px;" name="payment" class="form-control">-->
+                            <!--<option value="" {empty name="$Request.param.payment"}selected{/empty} >请选择支付方式</option>-->
+                            <!--<option value="weixin" {eq name="$Request.param.payment" value="weixin"}selected{/eq} >微信</option>-->
+                            <!--<option value="alipay" {eq name="$Request.param.payment" value="alipay"}selected{/eq} >支付宝</option>-->
+                        <!--</select>-->
+
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+                            <option value="" {empty name="$Request.param.status"}selected{/empty} >全部状态</option>
+                            <option value="1" {eq name="$Request.param.status" value="1"}selected{/eq} >未付款</option>
+                            <option value="2" {eq name="$Request.param.status" value="2"}selected{/eq} >充值失败</option>
+                            <option value="3" {eq name="$Request.param.status" value="3"}selected{/eq} >充值成功</option>
+                        </select>
+
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="username" {eq name="$Request.param.field" value="username"}selected{/eq} >用户名</option>
+                        </select>
+
+                        <input type="text" name="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr >
+                    <th colspan="2" style="background-color:#009200">
+                        共{$weike_count}条记录
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        USD充值总额{$weike_sum|default="0"}元
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        到账总金额{$weike_num|default="0"}元
+                    </th>
+                </tr>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">用户名</th>
+                    <th class="">USD充值数量</th>
+                    <th class="">汇率</th>
+                    <th width="">到账金额</th>
+                    <th width="">充值订单</th>
+                    <th width="">易派账号</th>
+                    <th class="">平台账号</th>
+                    <th class="">充值时间</th>
+                    <th class="">到账时间</th>
+                    <th width="">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="vo"}
+                        <tr>
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo['username']}</td>
+                            <td>{$vo.num}</td>
+                            <td>{$vo.rate}</td>
+                            <td>{$vo.mum}</td>
+                            <td>{$vo.order_num}</td>
+                            <td>{$vo.user_epay}</td>
+                            <td>{$vo.btc_epay}</td>
+                            <td>{$vo.addtime|addtime}</td>
+                            <td>{$vo.endtime|addtime}</td>
+                            <td class="sell_td">{eq name="vo.status" value="0"}未付款{/eq}{eq name="vo.status" value="1"}充值失败{/eq}{eq name="vo.status" value="2"}充值成功{/eq}</td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="20" class="text-center">Oh! 暂时还没有内容!</td>
+                {/notempty}
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+
+        //支付宝微信区分颜色
+        $(".sell_td").each(function () {
+            if($(this).html() == "充值失败"){
+                $(this).parent().css({"background":"rgba(46, 204, 113, 0.11)"});
+            }else if($(this).html() == "充值成功"){
+                $(this).parent().css({"background":"rgba(255, 2, 2, 0.11)"});
+            }else{
+                $(this).parent().css({"background":"rgba(255, 255, 255, 0.11)"});
+            }
+        });
+
+        //导航高亮
+        highlight_subnav("{:url('Finance/epay')}");
+    </script>
+</block>

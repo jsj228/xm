@@ -1,0 +1,162 @@
+{include file="public:header" /}
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/finance/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('INVITE_FRIENDS')}	</div>
+	<div class="main-content">
+		<style>
+	.nav-tab-list .nav-tab-hover{
+		width:100%;
+		top:60px;
+		height:50px;
+		line-height:50px;
+		background:#EAEDF4;
+		position:absolute;
+		box-sizing:content-box;
+		z-index:1;
+		transition:all 0.5s;
+		-webkit-transition:all 0.5s;
+		display:none;
+	}
+</style>
+<script type="text/javascript">
+	$(function () {
+		(function () {
+			var tab   = $('.nav-tab-list dd');
+			var hover = $('.nav-tab-hover');
+			var pos   = 0;
+			tab.each(function (index) {
+				var $this = $(this);
+				if ($this.hasClass('active')) {
+					pos = index;
+				}
+				$this.hover(function () {
+					_moveTo(index);
+				}, function () {
+					_moveTo(pos);
+				});
+			});
+			_moveTo(pos);
+			$('.nav-tab-hover').show();
+			function _moveTo(index) {
+				hover.css("top", 0 + 50 * index);
+				tab.removeClass('active');
+				tab.eq(index).addClass('active');
+			}
+		})();
+	});
+	$(window).on('scroll resize', function () {
+		if (document.body.scrollTop < 100) {
+			$('#left-nav-bar').css("top", 0);
+		} else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+			$('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+		} else {
+			$('#left-nav-bar').css("top", document.body.scrollTop - 100);
+		}
+	});
+</script>
+
+{include file="finance:left" /}
+		<div class="tag-list-content assets_content bg_w">
+			<div class="safe_center clear">
+				<h1>
+					<span>{:lang('INVITE_FRIENDS')}</span>
+					<span>
+					  <a href="/Finance/mywd" class="step fz_12 ml20 pd6 active">{:lang('RECOMMENDATION')}</a>
+					  <a href="/Finance/myjp" class="step fz_12 ml20 pd6 active">{:lang('REWARDS')}</a>
+				   </span>
+				</h1>
+			</div>
+			<div id="hints" class="mytips" style="display:none;">
+				<p>
+					{notempty name="prompt_text"}{$prompt_text}</notempty}
+				</p>
+			</div>
+			<div id="qrcode-wallet" style="display: inline-block;margin-top: 60px;float: right;margin-right: 30px;" width="100">
+				<saon id="codeaa"></saon>
+				<p id="qrcode-t" style="font-size: 22px;text-align: center;margin-top: 30px;" class="move">{:lang('UR_Q_R_CODE')}</p>
+			</div>
+			<div class="quicklink invite-content" style="margin-top: 15px;">
+				<h4>{:lang('INVITAIION_CODE')}</h4>
+				<p class="tip">{:lang('INVITAIION_CODE_TIP')}</p>
+				<p>
+					<input type="text" class="area texts" id="invite-input" value="{$user['invit']}" style="width: 100px;vertical-align: bottom;"><input type="button" value="{:lang('COPY')}" data-clipboard-target="invite-input" class="ml20  btn-quick inviteCopyButton  btns2" id="copy_button1" style="width:100px;">
+
+				</p>
+			</div>
+			<div class="quicklink invite-content">
+				<h4>{:lang('EXCLUSIVE_LINK')}</h4>
+				<p class="tip">{:lang('EXCLUSIVE_LINK_TIP')}</p>
+				<p>
+					<input type="text" class="area texts" id="invite-inputa" value="http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}" style="width: 250px;vertical-align: bottom;"><input type="button" value="{:lang('COPY')}" data-clipboard-target="invite-inputa" class="ml20 btn-quick inviteCopyButton btns2" id="copy_button2" style="width:100px;">
+				</p>
+			</div>
+			<div class="quicklink invite-content">
+				<h4>{:lang('EXCLUSIVE_ADVERTISE')}</h4>
+				<p class="tip">{:lang('EXCLUSIVE_ADVERTISE_TIP')}：</p>
+				<p>
+					<textarea type="text" class="area texts" id="invite-textarea" style="width: 350px;height: 100px;line-height: 25px;" >{$C['invit_text_txt']} http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}</textarea>
+					<input type="button" value="{:lang('COPY')}" data-clipboard-target="invite-textarea" class="ml20 btn-quick inviteCopyButton zeroclipboard-is-hover btns2 " id="copy_button3" style="width:100px;">
+				</p>
+			</div>
+			
+			<div class="quicklink">
+				<h4>{:lang('SHARE_PLATFORM')}</h4>
+				<div class="reward-share">
+					<a href="javascript:;" title="{:lang('SHARE_SINA')}" class="wlb_tsina"> <span class="icon icon-sina"></span> <i>{:lang('SINA')}</i> </a>
+					<a href="javascript:;" title="{:lang('SHARE_DOUBAN')}" class="wlb_douban"> <span class="icon icon-douban"></span> <i>{:lang('DOUBAN')}</i> </a>
+					<a href="javascript:;" title="{:lang('SHARE_QQ_ZONE')}" class="wlb_qzone"> <span class="icon icon-qzone"></span> <i>{:lang('QQ_ZONE')}</i> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/home/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" >
+$('#codeaa').qrcode({
+ 	render: "table", //table方式
+ 	size:200,
+ 	text: "http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}" //任意内容
+}); //任意字符串
+</script>
+	   
+<script type="text/javascript" src="__PUBLIC__/home/js/ZeroClipboard.min.js"></script>
+<script>
+    var _share_title = encodeURI("{:lang('INVITE_FRIENDS')}");
+    var _share_content = encodeURI("{$C['invit_text_txt']}");
+    var _share_url = encodeURIComponent("http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['id']}");
+    var _share_pic = '/';
+    $(document).ready(function () {
+        // 复制js
+        $('[type="button"]').click(function(){
+            //选择文本
+            $(this).siblings().select()
+            //执行复制命令
+            document.execCommand('Copy');
+            layer.msg('{:lang("COPY_SUCCESS")}！', {icon: 1});
+        });
+
+        // 分享按钮
+        $(".wlb_tsina").click(function () {
+            window.open("http://v.t.sina.com.cn/share/share.php?url=" + _share_url + "&title=" + _share_content);
+        });
+        $(".wlb_douban").click(function () {
+            window.open("http://www.douban.com/recommend/?url=" + _share_url + "&title=" + _share_content);
+        });
+        $(".wlb_qzone").click(function () {
+            window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + _share_url + "&title=" + _share_title + "&pics=" + _share_pic + "&desc=" + _share_content);
+        });
+    });
+</script>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_invit').addClass('active');
+</script>	
+	
+{include file="public:footer" /}

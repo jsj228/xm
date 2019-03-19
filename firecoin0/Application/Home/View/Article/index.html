@@ -1,0 +1,105 @@
+<include file="Public:header" />
+
+<link rel="stylesheet" href="/comfile/css/article.css"/>
+<div id="all_mask" class="all_mask" style="/* height: 0px;  */display: none;"></div>
+<div id="all_mask_loginbox" class="all_mask_loginbox" style="display: none;width:500px;" onkeyup="keyLogin();">
+    <div class="login_title pl20">
+        <span onclick="saoma()" style="text-align: center;margin-left: 15px;color: #FB1D1D;cursor:pointer;">{:L('MEMBER_LOGIN')}</span>
+        <span style="font-size: 12px;margin-left: 10px;">官方QQ群：535997102</span>
+        <eq name="Think.session.weike_already" value="1"><font color="#ff0000" size="1px;">{:L('LOGIN_REPEAT')}</font></eq>
+    </div>
+    <form id="form-login" class="mask_wrap login-fb" style="padding-left: 140px;">
+        <div class="login_text zin90">
+            <div class="mask_wrap_title">{:L('USER_ID')}：</div>
+            <input type="text" id="login_moble" class="texts hg40 w250" placeholder="{:L('MOBLE_INPUT')}" value=""/>
+        </div>
+        <div class="login_text zin80">
+            <div class="mask_wrap_title">{:L('PWD')}：</div>
+            <input id="login_password" class="texts hg40 w250" type="password" placeholder="{:L('LOGIN_PWD_INPUT')}">
+        </div>
+        <!--手机验证码-->
+        <!--<div class="login_text zin80">-->
+        <!--<div class="mask_wrap_title">手机验证吗：</div>-->
+        <!--<input type="text" id="code" value="" class="texts hg40 w250" style="width:200px!important;" placeholder="请输入验证码"/><a class="codeImg reloadverify hg40 w100" id="vifcode" onclick="send_moble('sms')" style="background: #e3493c;line-height: 40px;-->
+        <!--display: inline-block;-->
+        <!--vertical-align: bottom;-->
+        <!--text-align: center;-->
+        <!--width:50px!important;;-->
+        <!--font-size: 16px;-->
+        <!--color: #fff;">获取</a>-->
+        <!--</div>-->
+        <div class="login_text zin80">
+            <div class="mask_wrap_title">{:L('VERIFICATION_CODE')}：</div>
+            <input type="text" id="login_verify" value="" class="texts w145 hg40" placeholder="{:L('VERIFICATION_CODE_INPUT')}"/>
+            <span style="vertical-align: -17px;line-height: 20px;">
+                <img id="login_verify_up" class="codeImg reloadverify hg40 w100" src="{:U('Verify/code')}"
+                     title="{:L('CHANGE_IT')}" onclick="this.src=this.src+'?t='+Math.random()" width="100" height="34">
+            </span>
+        </div>
+
+        <div class="login_button">
+            <input type="button" value="{:L('LOGIN')}" onclick="footer_login();" class="btns2  hg40 w250">
+        </div>
+        <div class="login-footer wwxwwx" style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+            <span style="color: #CCC;">
+            <a style="font-size: 14px;" href="{:U('Login/register')}">{:L('REGISTER_FREE')}</a>｜<a href="{:U('Login/findpwd')}" style="font-size: 14px;">{:L('FORGET_PWD')}</a>
+            </span>
+        </div>
+
+    </form>
+    <div class="mask_wrap_close" onclick="wrapClose()"><i class="fa fa-times fz_20 move" aria-hidden="true"></i></div>
+</div>
+
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:L('ADDRESS')}</a> &gt;
+        <a href="{:U('Article/index',array('id'=>$shang['id']))}" class=""> {$shang.title} </a>   </div>
+    <div class="assets_center clear po_re ">
+        <div class="left-nav-bar" id="left-nav-bar">
+            <div class="left-nav-slider">
+                <dl class="nav-tab-list">
+                    <dt class="nav-tab-hover hover1"></dt>
+					<volist name="ArticleTypeList" id="vo">
+						<dd <eq name="shang['name']" value="$key">class="active"</eq> >
+							 <a href="{:U('Article/index',array('id'=>$vo['id']))}">
+								 <i class="fa fa-tasks fa-lg fa-fw mr5"></i>{$vo.title}
+								 <!--<i class="fa fa-angle-right fa-lg right mr10 mt17"></i> -->
+							 </a>
+						</dd>
+					</volist>
+                    <dd>
+                        <a href="{:U('/Article/type/id/17.html')}">
+                            <i class="fa fa-tasks fa-lg fa-fw mr5"></i>钱包下载
+                        </a>
+                    </dd>
+                    <dd>
+                        <a href="{:U('/Article/type/id/28.html')}">
+                            <i class="fa fa-tasks fa-lg fa-fw mr5"></i>各币区块浏览器
+                        </a>
+                    </dd>
+                    <dd>
+                        <a href="{:U('/Article/type/id/29.html')}">
+                            <i class="fa fa-tasks fa-lg fa-fw mr5"></i>费用说明
+                        </a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="assets_content right bg_w">
+            <h1 >{$shang['title']}</h1>
+            <ul class="new_list">
+                <volist name="list" id="vo">   
+                <li><a href="{:U('Article/detail','id='.$vo['id'])}" class="title">{$vo.title}</a>
+                    <span class="list_time right" style="color: #00bdef">{$vo.addtime|addtime}</span>
+                </li>
+                </volist>   
+            </ul>
+            <div class="pages"> {$page}</div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#article_box').addClass('active');
+</script>
+
+<include file="Public:footer" />

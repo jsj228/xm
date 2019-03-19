@@ -1,0 +1,158 @@
+<include file="Public:header" />
+<style>
+    .div-bts{max-width:1136px;margin:80px auto 20px;position:relative;}
+    #userprice{position:absolute;left:0;top:0;width:250px;text-align:center;color:#eee;}
+    #userprice>dt{background:#e3493c;line-height:100px}
+    #userprice>dt,#userprice>dd{font-size:18px;margin-bottom:10px;min-height:100px;padding:10px;}
+    #userprice>dd b{margin-top:15px;display:inline-block;}
+    #userprice>dd:last-child{font-size:14px;text-align:left;}
+
+    #userprice h2{font-size:18px;font-weight:bold;line-height:30px;padding-bottom:10px ;}
+    #userprice p{line-height:24px}
+    ul#mmzq{background:#0075a9;max-width:400px;margin-left:270px;}
+    ul#mmzq>li{display:inline-block;width:50%;line-height:40px;text-align:center; cursor:pointer;font-weight:600;font-size:16px;color:#eee;}
+    ul#mmzq>li:hover,ul#mmzq>li.actives,#userprice>span:hover
+    {background:#e3493c;color:#fff;transition:all 1.2s;}
+    #sell p{position: absolute;left: -270px;color: #fff;font-size:18px;color:#fd9868;width:250px;text-align:center;}
+    #sell p.mum{top: 130px;}
+    #sell p.fee{top: 240px;}
+
+</style>
+<!-- 会员登陆 -->
+<div id="all_mask" class="all_mask" style="/* height: 0px;  */display: none;"></div>
+<div id="all_mask_loginbox" class="all_mask_loginbox" style="display: none;" onkeyup="keyLogin();">
+    <div class="login_title pl20">
+        <span onclick="saoma()" style="text-align: center;margin-left: 15px;color: #FB1D1D;cursor:pointer;">{:L('MEMBER_LOGIN')}</span>
+        <span style="font-size: 12px;margin-left: 10px;">官方QQ群：535997102</span>
+
+        <eq name="Think.session.weike_already" value="1"><font color="#ff0000" size="1px;">{:L('LOGIN_REPEAT')}</font></eq>
+    </div>
+    <form id="form-login" class="mask_wrap login-fb"">
+        <p class="login_text zin90">
+            <span class="mask_wrap_title">{:L('USER_ID')}：</span>
+            <input type="text" id="login_moble" class="texts hg40 w250" placeholder="{:L('MOBLE_INPUT')}" value=""/>
+
+        </p>
+        <p class="login_text">
+            <span class="mask_wrap_title">{:L('PWD')}：</span>
+            <input id="login_password" class="texts hg40 w250" type="password" placeholder="{:L('LOGIN_PWD_INPUT')}">
+        </p>
+        <!--手机验证码-->
+        <!--<div class="login_text">-->
+        <!--<div class="mask_wrap_title">手机验证吗：</div>-->
+        <!--<input type="text" id="code" value="" class="texts hg40 w250" style="width:200px!important;" placeholder="请输入验证码"/><a class="codeImg reloadverify hg40 w100" id="vifcode" onclick="send_moble('sms')" style="background: #e3493c;line-height: 40px;-->
+        <!--display: inline-block;-->
+        <!--vertical-align: bottom;-->
+        <!--text-align: center;-->
+        <!--width:50px!important;;-->
+        <!--font-size: 16px;-->
+        <!--color: #fff;">获取</a>-->
+        <!--</div>-->
+        <p class="login_text">
+            <span class="mask_wrap_title">{:L('VERIFICATION_CODE')}：</span>
+            <input type="text" id="login_verify" value="" placeholder="{:L('VERIFICATION_CODE_INPUT')}"/>
+            <span>
+                <img id="login_verify_up" class="codeImg reloadverify" src="{:U('Verify/code')}"
+                     title="{:L('CHANGE_IT')}" onclick="this.src=this.src+'?t='+Math.random()" width="100" height="34">
+            </span>
+        </p>
+
+        <p class="login_button">
+            <input type="button" value="{:L('LOGIN')}" onclick="footer_login();" >
+        </p>
+        <div class="login-footer wwxwwx" style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+            <span style="color: #CCC;">
+            <a style="font-size: 14px;" href="{:U('Login/register')}">{:L('REGISTER_FREE')}</a>｜<a href="{:U('Login/findpwd')}" style="font-size: 14px;">{:L('FORGET_PWD')}</a>
+            </span>
+        </div>
+
+    </form>
+    <div class="mask_wrap_close" onclick="wrapClose()"><i class="fa fa-times fz_20 move" aria-hidden="true"></i></div>
+</div>
+
+<div class="div-bts">
+    <dl id="userprice">
+        <dt class="bg_w">{:L('TRANSACTION_TITLE')}</dt>
+        <dd class="bg_w" id="mum"><b>{:L('TOTAL_AMOUNT')}</b>:</dd>
+        <dd class="bg_w" id="fell"><b>{:L('TRANSACTION_FEE')}</b>: </dd>
+        <dd class="bg_w">
+            <h2>{:L('TRANSACTION_RULE')}：</h2>
+            <p>{:L('RULE')}</p>
+
+
+        </dd>
+    </dl>
+    <ul id="mmzq" >
+        <li class="actives" data-type = "2" >{:L('SUM_RANKINGS')}</li><li data-type = "1" >{:L('D_RANKINGS')}</li>
+    </ul>
+    <div class="assets_content bg_w" style="margin:20px 0 25px 270px;min-height:470px;">
+        <!-- 总排行table -->
+        <div class="mytable-body ">
+            <div class="f_body  step2" >
+                <table id="sell" class="f_table"></table>
+            </div>
+        </div>
+    </div>
+</div> 
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('ranking');
+    $('.finan_awardd').addClass('ranking');
+
+    function jiedong(id) {
+        $.post("/user/ranking", {id: id}, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location.reload();
+            } else {
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+    }
+    function SChange(){
+        var type = $('#mmzq .actives').data('type')
+        console.log(type)
+        $.ajax({
+            type:"get",
+            url:"{:U('user/rankingajax')}",
+            data:{type:type},
+            success:function(data){
+                $('#sell').html(data);
+                if(type==1){
+                    $('.yanse').addClass('mychus').removeClass('mygoum');
+                }else{
+                    $('.yanse').addClass('mygoum').removeClass('mychus')
+                      // 清楚前三名的内容
+                    $('.f_table tr:nth-child(1) td:nth-child(1)').html('').addClass('iconfont icon-one');
+                    $('.f_table tr:nth-child(2) td:nth-child(1)').html('').addClass('iconfont icon-two');
+                    $('.f_table tr:nth-child(3) td:nth-child(1)').html('').addClass('iconfont icon-three');
+                }
+
+            }
+        });
+    }
+    SChange();
+    $('#mmzq li').click(function(){
+        $(this).addClass('actives').siblings().removeClass('actives')
+        SChange();
+    })
+    setInterval(function(){
+        SChange()
+    },600000)
+
+
+</script>
+<script>
+    function user(id){ //user函数名 一定要和action中的第三个参数一致上面有
+        var type = $('#mmzq .actives').data('type');
+        $.get("{:U('user/rankingajax')}", {name:name}, function(data){ //用get方法发送信息到UserAction中的user方法
+            $("#user").replaceWith("<div id='user'>"+data+"</div>"); //user一定要和tpl中的一致
+        });
+    }
+</script>
+<include file="Public:footer"/>
+
+

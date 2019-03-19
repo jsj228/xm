@@ -1,0 +1,318 @@
+{include file="public:header" /}
+<script src="__PUBLIC__/Admin/js/layer/laydate/laydate.js"></script>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">C2c 交易</span>
+        </div>
+
+        <div class="cf">
+            <div class="fl">
+                <!--<a class="btn btn-success " href="{:url('Trade/c2cEdit')}">新 增</a>-->
+                <!--<button class="btn ajax-post btn-warning " url="{:url('Trade/c2cStatus',array('type'=>'resume'))}" target-form="ids">开 启</button>-->
+                <!--<button class="btn ajax-post btn-info" url="{:url('Trade/c2cStatus',array('type'=>'forbid'))}" target-form="ids">关 闭</button>-->
+                <!--{eq name="group_id" value="3"}-->
+                <!--<button class="btn ajax-post confirm btn-danger "-->
+                        <!--url="{:url('Trade/c2cStatus',array('type'=>'del'))}" target-form="ids">删 除-->
+                <!--</button>{/eq}-->
+            </div>
+            <div class="search-form fr cf">
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1" >
+                        <input type="text" class="search-input form-control  " name="addtime" value="{$Request.param.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+                        <input type="text" class="search-input form-control  " name="endtime" value="{$Request.param.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+
+                        <!--<input type="text" id="tradeno" name="tradeno" value="{$Request.param.tradeno}" class="search-input form-control" placeholder="请输入订单编号" style="margin-right: 10px;"/>-->
+                        <!--<input type="text" id="bankcard" name="bankcard" value="{$Request.param.bankcard}" class="search-input form-control" placeholder="请输入银行卡号" style="margin-right: 10px;"/>-->
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="type" class="form-control">
+                            <option value="0">买卖类型</option>
+                            <option value="1" {eq name="$Request.param.type" value="1"}selected{/eq}>买单</option>
+                            <option value="2" {eq name="$Request.param.type" value="2"}selected{/eq}>卖单</option>
+                        </select>
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+                            <option value="0" {empty name="$Request.param.status"}selected</empty>>全部状态</option>
+                            <option value="1" {eq name="$Request.param.status" value="1"}selected{/eq}>未成交</option>
+                            <option value="2" {eq name="$Request.param.status" value="2"}selected{/eq}>已成交</option>
+                            <option value="3" {eq name="$Request.param.status" value="3"}selected{/eq}>已撤销</option>
+                            <option value="4" {eq name="$Request.param.status" value="4"}selected{/eq}>已付款</option>
+                        </select>
+                        <!--<select style="width: 160px; float: left; margin-right: 10px;" name="businessid" class="form-control">-->
+                            <!--<option value="" >匹配状态</option>-->
+                            <!--<option value="0" {eq name="$Request.param.businessid" value="0"}selected{/eq}>未匹配</option>-->
+                            <!--<option value="1" {neq name="$Request.param.businessid" value="0"}selected{/neq}>已匹配</option>-->
+                        <!--</select>-->
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="username" {eq name="$Request.param.field" value="name"}selected{/eq}>用户名</option>
+                            <option value="tradeno" {eq name="$Request.param.field" value="tradeno"}selected{/eq}>订单编号</option>
+                            <option value="czr" {eq name="$Request.param.field" value="czr"}selected{/eq}>操作人</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr >
+                    <th colspan="2" style="background-color:#009200">
+                        共{$weike_count}条记录
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        买入总金额{$weike_buy|default="0"}元
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        卖出总金额{$weike_sell|default="0"}元
+                    </th>
+                </tr>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">用户名</th>
+                    <th class="">真实姓名</th>
+                    <th class="">交易币种</th>
+                    <th class="">价格</th>
+                    <th class="">数量</th>
+                    <th class="">已成交数量</th>
+                    <th class="">总金额</th>
+                    <th class="">订单号</th>
+                    <th class="">添加时间</th>
+                    <th class="">确认时间</th>
+                    <th class="">用户银行卡</th>
+                    <th class="">交易类型</th>
+                    <th class="">支付类型</th>
+                    <th class="">状态</th>
+                    <th class="">操作</th>
+                    <th class="">操作人</th>
+                    <th class="">备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="vo"}
+                        <tr class="list_tr">
+                            <td><input class="ids" type="checkbox" name="id" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.username}</td>
+                            <td>{$vo.truename}</td>
+                            <td>{$vo.coin}</td>
+                            <td>{$vo.price}</td>
+                            <td>{$vo.num}</td>
+                            <td>{$vo.deal}</td>
+                            <td>{$vo['mum']}</td>
+                            <td class="deal_num">{$vo.tradeno}</td>
+                            <td>{$vo.addtime|addtime}</td>
+                            <td>{$vo.endtime|addtime}</td>
+                            <td>{$vo.bank_name}</td>
+                            <td class="sell_td">{eq name="vo.type" value="1"}买入{/eq}{eq name="vo.type" value="2"}卖出{/eq}</td>
+                            <td>
+                                <?php if($vo['bank'] === '微信' || $vo['bank'] === '支付宝'){ ?><a href="{:url('User/bankEdit', ['id' => $vo['bid']])}">{$vo.bank}</a><?php }else{ echo $vo['bank']; } ?>
+                            </td>
+                            <td>
+                                {eq name="vo.status" value="0"}
+                                    {eq name="vo.businessid" value="0"}正在匹配{else/}匹配成功{/eq}
+                                {/eq}
+                                {eq name="vo.status" value="2"}已撤销{/eq}
+                                {eq name="vo.status" value="1"}已成交{/eq}
+                                {eq name="vo.status" value="3"}已付款{/eq}
+                            </td>
+                            <td>
+                                {eq name="vo.type" value="1"}
+                                    {eq name="vo.status" value="0"}
+                                        {eq name="vo.businessid" value="0"}
+                                            <a onclick="chexiao({$vo.id})"  class="btn btn-primary btn-xs">撤销</a>
+                                            {else/}
+                                        {/eq}
+                                    {/eq}
+                                {/eq}
+                                {eq name="vo.type" value="2"}
+                                    {eq name="vo.status" value="0"}
+                                        {eq name="vo.businessid" value="0"}
+                                            <a onclick="chexiao({$vo.id})"  class="btn btn-primary btn-xs">撤销</a>
+                                            {else/}
+                                        {/eq}
+                                    {/eq}
+                                {/eq}
+                            </td>
+
+
+                            <td>
+                                {$vo['czr']}
+                            </td>
+                            <td>
+                                {eq name="vo.beizhu" value=""}
+                                    <a onclick="c2cbz({$vo.id})"  class="btn btn-primary btn-xs">备注</a>
+                                    {else/}
+                                    {$vo.beizhu}
+                                {/eq}
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="20" class="text-center">Oh! 暂时还没有内容!</td>
+                {/notempty}
+                </tbody>
+            </table>
+            <div class="page">
+                <div>
+                    <!--<a style="margin-right: 10px;" href="#" onclick="yjcd();" class="ajax-get btn btn-primary btn-xs"> 一键撤销 </a>-->
+                    {$page}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+
+        $(".sell_td").each(function () {
+            if($(this).html() == "买入"){
+                $(this).parent().css({"background":"rgba(46, 204, 113, 0.11)"});
+                {neq name="group_id" value="3"}$(this).parent().find(".deal_num").html("请查询");{/neq}
+            }else{
+                $(this).parent().css({"background":"rgba(255, 2, 2, 0.11)"});
+            }
+        });
+
+        $(".list_tr>td").each(function () {
+            $(this).mouseenter(function () {
+                $(this).parent().css({"border-bottom":"3px solid #ccc"});
+            }).mouseout(function () {
+                $(this).parent().css({"border-bottom":"none"});
+            })
+        });
+
+        //导航高亮
+        highlight_subnav("{:url('Trade/c2cTrade')}");
+
+        //一键撤单
+        function yjcd(){
+            var ids = '';
+            $('input:checkbox[name=id]:checked').each(function(i){
+                if(i==0){
+                    ids = $(this).val();
+                }else{
+                    ids += (","+$(this).val());
+                }
+            });
+            //return console.log(ids);
+            $.get("{:url('Trade/autochexiao')}", {
+                ids: ids,
+                trade: 2,
+            }, function (data) {
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon: 1});
+                    window.location.reload();
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                    if (data.url) {
+                        window.location = data.url;
+                    }
+                }
+            }, "json");
+        }
+
+        //处理 交易
+        function chuli(id) {
+            var tradeno = $('#tradeno').val();
+            layer.confirm('是否成功操作处理？', {
+                btn: ['确定','还未处理'] //按钮
+            }, function(){
+                $.ajax({
+                    url: "{:url('Trade/c2cOperate')}",
+                    type: "POST",
+                    data: {id: id, tradeno: tradeno},
+                    success: function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                            if (data.url) {
+                                window.location = data.url;
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert('出现未知错误！');
+                    }
+
+                });
+            }, function(){
+                layer.msg('请处理后再确认处理', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+
+        }
+
+
+        //港币撤销
+        function chexiao(id) {
+            layer.confirm('是否成功操作撤销？', {
+                btn: ['确定','还未撤销'] //按钮
+            }, function(){
+                $.get("{:url('Trade/c2cCancel')}", {
+                    id: id,
+                    type:'trade'
+                }, function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                        if (data.url) {
+                            window.location = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('请撤销后再确认撤销', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        }
+        //c2c备注
+        function c2cbz(id) {
+            layer.prompt({title: '备注完，并确认', formType: 2}, function(text, index){
+                $.post("{:url('Trade/c2cbz')}",{
+                    id:id,
+                    text:text,
+                    type:'trade'
+                },function (data) {
+                    if (data.code == 200){
+                        layer.msg(data.msg, {icon: 1});
+                        layer.close(index);
+                        window.location.reload();
+
+                    }else{
+                        layer.msg(data.msg, {icon: 2});
+                    }
+
+                },'json');
+            });
+        }
+    </script>
+</block>

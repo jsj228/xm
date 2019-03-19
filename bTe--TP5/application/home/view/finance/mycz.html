@@ -1,0 +1,367 @@
+{include file="public:header" /}
+
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt;
+		<a href="/finance/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('RECHARGE')}	</div>
+	<div class="main-content">
+		<style>
+	.nav-tab-list .nav-tab-hover{
+		width:100%;
+		top:60px;
+		height:50px;
+		line-height:50px;
+		background:#EAEDF4;
+		position:absolute;
+		box-sizing:content-box;
+		z-index:1;
+		transition:all 0.5s;
+		-webkit-transition:all 0.5s;
+		display:none;
+	}
+</style>
+<script type="text/javascript">
+	$(function () {
+		(function () {
+			var tab   = $('.nav-tab-list dd');
+			var hover = $('.nav-tab-hover');
+			var pos   = 0;
+			tab.each(function (index) {
+				var $this = $(this);
+				if ($this.hasClass('active')) {
+					pos = index;
+				}
+				$this.hover(function () {
+					_moveTo(index);
+				}, function () {
+					_moveTo(pos);
+				});
+			});
+			_moveTo(pos);
+			$('.nav-tab-hover').show();
+			function _moveTo(index) {
+				hover.css("top", 0 + 50 * index);
+				tab.removeClass('active');
+				tab.eq(index).addClass('active');
+			}
+		})();
+	});
+	$(window).on('scroll resize', function () {
+		if (document.body.scrollTop < 100) {
+			$('#left-nav-bar').css("top", 0);
+		} else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+			$('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+		} else {
+			$('#left-nav-bar').css("top", document.body.scrollTop - 100);
+		}
+	});
+</script>
+
+{include file="finance:left" /}
+
+        <div class="tag-list-content assets_content bg_w">
+            <div class="safe_center clear">
+                <h1>
+					<span>{:lang('RECHARGE')}</span>
+					<span>
+						<a class="right" onclick="$('#hints').slideToggle();">
+							<i class="fa fa-hand-o-right move fz_14 mr5"></i>
+						<span class="fz_12 move">{:lang('DETAILED_INFO')}</span></a>
+					</span>
+                </h1>
+            </div>
+            <div id="hints" class="mytips" style="display:none;">
+	            <p>{notempty name="prompt_text"}{$prompt_text}{/notempty}</p>
+			</div>
+            <div class="mytable-body ">
+                <div class="step1   pwtrade  pw  mt50">
+	                <div class="weituo_bizhong" style="margin-left: 149px; margin-bottom: 10px;display: none; ">
+		                <div class="bizhong_select">
+			                <div class="bz_btn">
+				              <img src="__DOMAIN__/Upload/coin/20e58f7436685a19c62bd8dd8b70a793.png" alt="" style=" width: 22px;float: left;margin-top: 7px;margin-right: 5px;"/>
+								<span id="coin-default">
+									<select name="type" id="coin-select" style="margin-top: 6px;">
+										<option value="hkd"  selected="selected"  >{:lang('HKD')} (HKD)</option>
+									</select>
+								</span>
+			                </div>
+		                </div>
+		                <script>
+			                $("#coin-select").change(function () {
+				                var coin        = $("#coin-select option:selected").val();
+				                window.location = '/finance/mycz.html';
+			                });
+		                </script>
+		                <div class="bizhong_type" style="width: 220px;">
+			                <span>{:lang('AVAILABLE')}<em class="coin-name"></em>：<font class="coin-balance">{$user_coin['hkd']|NumToStr}</font></span>
+		                </div>
+	                </div>
+	                <br>
+                    <dl>
+                        <dt>{:lang('RECHARGE_AMOUNT')}：</dt>
+                        <dd style="position: relative;">
+                            <input type="text" class="finance_texts" id="cnyin_num" maxlength="12" value="">
+                            <div style="position: absolute;right: 15px;top: 3px;color: red;">
+                                <span id="random" class="random">.{:tradenob()}</span></div>
+
+                        </dd>
+						<dd style="padding-top: 4px;padding-left: 40px;">
+							<span>{:lang('AVAILABLE')}<em class="coin-name"></em>：<font class="coin-balance">{$user_coin['hkd']|NumToStr}</font></span>
+
+						</dd>
+                    </dl>
+					<dl style="margin: 0;">
+						<dt></dt>
+						<p>
+							<span style="color: red;">{:lang('CHARGE_TIP')}</span>
+						</p>
+					</dl>
+					<dl>
+                        <dt class="cnyin_type">{:lang('RECHARGE_WAY')}：</dt>
+                        <dd class="payment-icon-list payment-list ">
+                            <ul style="width:600px;">
+									<li class="wx" data="{$alipaymycz.name}" style="margin-right: 24px;"><img src="/comfile/images/{$alipaymycz.name}.png" width="100"></li>
+									<li class="wx" data="{$weixinmycz.name}" style="margin-right: 24px;"><img src="/comfile/images/{$weixinmycz.name}.png" width="100"></li>
+									{eq name="bankmycz.name" value=""}
+										{else/}
+										<li class="wx" data="{$bankmycz.name}" style="margin-right: 24px;"><img src="/comfile/images/{$bankmycz.name}.png" width="100"></li>
+									{/eq}
+
+								<p style="color: red;">转账时, 必须备注订单号, 小数点, 不然无法入账。</p>
+							</ul>
+
+                            <input type="hidden" id="cnyin_type" value="">
+                        </dd>
+                    </dl>
+
+					<dl>
+                        <dt></dt>
+                        <dd>
+                            <input type="button" class="finance_btns2" value="{:lang('RECHARGE_NOW')}" onclick="cnyin_up()">
+                        </dd>
+                    </dl>
+                </div>
+                <div class="step2 f_body">
+                    <table class="f_table" id="investLog_content">
+                        <thead>
+                        <tr>
+                            <th width="">{:lang('RECHARGE_TIME')}</th>
+                            <th width="">{:lang('RECHARGE_ORDER')}</th>
+                            <th width="">{:lang('RECHARGE_WAY')}</th>
+                            <th width="">{:lang('RECHARGE_AMOUNT')}</th>
+                            <th width="">{:lang('ACTUAL_ARRIVAL')}</th>
+                            <th width="">
+								<span>
+									<select id="status-select">
+										<option value="" >{:lang('STATES_ALL')}</option>
+										<option value="1" {eq name="status" value="1"}selected{/eq}>{:lang('UNPAID')}</option>
+										<option value="2" {eq name="status" value="2"}selected{/eq}>{:lang('RECHARGE_SUCCESSFUL')}</option>
+										<option value="3" {eq name="status" value="3"}selected{/eq}>{:lang('MANUAL_PRO')}</option>
+										<option value="4" {eq name="status" value="4"}selected{/eq}>{:lang('IN_PROCESS')}</option>
+										<option value="5" {eq name="status" value="5"}selected{/eq}>{:lang('CANCLE_ORDER')}</option>
+										<option value="6" {eq name="status" value="6"}selected{/eq}>{:lang('Recharge_HUABEI')}</option>
+                                    </select>
+								</span>
+                            </th>
+                            <th width="">{:lang('OPERATE')}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+						{volist name="list" id="vo"}
+                           <tr>
+                            <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+	                        <td>{$vo.tradeno}</td>
+                            <td>{$vo.type}</td>
+                            <td>￥{$vo['num']|default="0.00"}</td>
+                            <td>￥{$vo['mum']|default="0.00"}</td>
+	                        <td>
+			                   
+							{eq name="vo.status" value="0"}
+							   <div>{:lang('UNPAID')}
+								   <!--<a  data-action="{$vo.typeEn}" data="{$vo['id']}" class="huikuan" onclick="cnyin_huikuan(this)" href="javascript:void(0)" style="    color: #2674FF!important;"> {:lang('REMITTED')} </a>-->
+							   </div>
+			                {/eq}
+							{eq name="vo.status" value="1"}
+								{:lang('RECHARGE_SUCCESSFUL')}
+							{/eq}
+							{eq name="vo.status" value="2"}
+								{:lang('MANUAL_PRO')}
+							{/eq}
+							{eq name="vo.status" value="3"}
+								{:lang('IN_PROCESS')}
+							{/eq}
+							{eq name="vo.status" value="4"}
+								{:lang('CANCLE_ORDER')}
+							{/eq}
+							{eq name="vo.status" value="5"}
+								{:lang('Recharge_HUABEI')}
+							{/eq}
+							 </td>
+		                        <td>
+			                        <div>
+				                        <a onclick="cnyin_chakan({$vo['id']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:lang('CHECK')}</a>
+										{eq name="vo.status" value="0"}
+											<a onclick="cnyin_chexiao({$vo['id']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:lang('CHEXIAO')}</a>
+											{else/}
+										{/eq}
+									</div>
+		                        </td>
+	                         </tr>
+						{/volist}
+                        </tbody>
+                    </table>
+                    <div class="pages"> {$page}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#status-select").val("{$status}");
+    $("#status-select").change(function () {
+        var status = $("#status-select option:selected").val();
+        var url = '/Finance/mycz';
+        if (status) {
+            url += '/status/' + status+'.html';
+        }
+        window.location = url;
+    });
+    function cnyin_huikuan(_this) {
+        var id = $(_this).attr('data');
+        var type = $(_this).attr('data-action');
+	    if(type == 'tenpay'){
+		    layer.config({
+			    extend: 'extend/layer.ext.js'
+		    });
+		    layer.ready(function () {
+			    layer.prompt({
+				    title: "{:lang('RECHARGE_CONFIRM')}",
+				    formType: 0
+			    }, function (val) {
+				    if (val) {
+					    $.post("/finan/pay_huikuan.html", {id: id,type:type, remark: val}, function (data) {
+						    if (data.code == 1) {
+							    layer.msg(data.msg, {icon: 1});
+							    location.reload();
+						    } else {
+							    layer.msg(data.msg, {icon: 2});
+							    if (data.url) {
+								    window.location = data.url;
+							    }
+						    }
+					    }, "json");
+				    }
+				    ;
+			    });
+		    });
+	    }else{
+		    $.post("/Finance/myczHuikuan", {id: id,type:type}, function (data) {
+			    if (data.code == 1) {
+				    layer.msg(data.msg, {icon: 1});
+				    window.location.reload();
+			    } else {
+				    layer.msg(data.msg, {icon: 2});
+			    }
+		    }, "json");
+	    }
+    }
+    function cnyin_chexiao(id,_this) {
+
+
+        //撤销询问框
+        layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">请问您是否已经转款？</p><p style="color: red;">（转款后请不要撤销，点击“撤销充值”并不会将充值金额返还，转款后请点击“暂不撤销”）</p>', {
+            btn: ['暂不撤销','撤销充值'] //按钮
+        }, function(){
+            window.location.reload();
+        }, function(){
+            layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">是否确认撤销？</p><p style="color: red;">（转款后请不要撤销，点击“撤销充值”并不会将充值金额返还，每日最多撤销五笔订单，大于五笔将无法撤销）</p>',{
+                btn:['是','否']
+			},function () {
+                $.post("/Finance/myczChexiao", {id: id}, function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                }, "json");
+            },function () {
+                window.location.reload();
+            })
+
+
+        });
+
+
+    }
+    function cnyin_chakan(id) {
+        layer.open({
+            title: '{:lang(\'RECHARGE\')}',
+            type: 2,
+            area: ['650px', '590px'],
+            content: ["{:url('Pay/mycz')}?id=" + id, 'no']
+        });
+    }
+    $(".payment-list li").first().addClass("curr");
+    $('#cnyin_type').val($(".payment-list li").first().attr('data'));
+    $('.payment-list li').click (function () {
+        $(this).addClass ('curr').siblings ('li').removeClass ('curr');
+        $('#cnyin_type').val($(this).attr('data'));
+    });
+	var lock = 0;
+    function cnyin_up() {
+        var type = $('#cnyin_type').val();
+        var num = $("#cnyin_num").val();
+        if (type == "" || type == null) {
+            layer.tips('{:lang(\'RECHARGE_CHOOSE\')}', '.cnyin_type', {tips: 2});
+            return false;
+        }
+        if (num == "" || num == null) {
+            layer.tips('{:lang(\'RECHARGE_AMOUNT_INPUT\')}', '#cnyin_num', {tips: 2});
+            return false;
+        } else {
+            num = num + $('#random').html();
+        }
+	    if(lock){
+		    layer.msg('{:lang(\'LOADING_NOT_CLICK\')}...');
+		    return;
+	    }
+	    lock = 1;
+        $.post("/Finance/myczUp.html", {
+            type: type,
+            num: num
+        }, function (data) {
+	        lock = 0;
+            if (data.code == 1) {
+                layer.open({
+                    title: "{:lang('RECHARGE')}",
+                    type: 2,
+                    area: ['650px', '590px'],
+                    content: ["/Pay/mycz.html?id=" + data.url.id, 'no'],
+                    cancel: function () {
+                        window.location = "/Finance/mycz.html";
+                    }
+                });
+            } else {
+                layer.msg(data.msg, {icon: 2},2000,function () {
+                    if (data.url) {
+                        window.location = data.url;
+                    }
+                });
+
+            }
+        }, "json");
+    }
+</script>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_pay').addClass('active');
+</script>	
+
+{include file="public:footer" /}

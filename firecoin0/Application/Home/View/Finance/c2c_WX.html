@@ -1,0 +1,233 @@
+<include file="Public:header" />
+    <div class="autobox ">
+        <div class="now">
+            <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt;c2c设置<!--  {:L('FINANCE_MY')} --></div>
+        <div class="main-content">
+        <include file="Finance:left" />
+        <div class="tag-list-content assets_content bg_w">
+            <h1 class="safe_center">
+                <span><!-- {:L('WITHDRAWAL')} -->cc2c交易设置 |</span>
+                    <span>
+                    <a href="/finance/bank.html" class="step fz_12 ml50 pd6"><!-- {:L('WITHDRAWAL')} -->网银</a>
+                    <a href="/finance/c2c_ZFB.html" class="step fz_12 ml20 pd6 "><!-- {:L('WITHDRAWAL_RECORD')} -->支付宝</a>
+                    <a href="/finance/c2c_WX.html" class="step fz_12 ml20 pd6 active"><!-- {:L('WITHDRAWAL_ADD_MAN')} -->微信</a>
+                </span>
+            </h1>
+            <div class="eee userMsg">
+                <neq name="weixin" value="">
+                    <p><s>微信绑定：</s>
+                        <eq name="weixin.status" value="2">
+                            <button class="off" userId="{$weixin.id}" status="{$weixin.status}" style="background:#0075a9;">
+                                <i style="left:30px;"></i>
+                            </button><span>启用</span>
+                            <else/>
+                            <button class="off" userId="{$weixin.id}" status="{$weixin.status}" style="background:#666;">
+                                <i  style="left:1px"></i>
+                            </button><span>关闭</span>
+                        </eq>
+                    </p>
+                </neq>
+
+                <if condition="$weixin neq ''">
+                     <!-- 绑定之后是隐藏的 -->
+                    <p><s>姓名:</s><b id="userName">{$weixin.name}</b></p>
+                    <p><s>微信账号:</s><input type="txt" id="wxNumber" wId='{$weixin.id}' value="{$weixin.bank}" /></p>
+                    <h3>上传微信二维码 :<a class="red">( 只能修改不能多个 )</a></h3>
+                    <p class="p_bg"><a class="red">微信收款二维码获取方法：打开微信 -> 点击收钱 -> 点击保存图片 -> 之后上传即可</a></p>
+                    <p>
+                        <s>微信收款二维码:</s>
+                        <span class="iconfont icon-add addImg back" style="width:190px;">
+                            <img src="__DOMAIN__/Upload/public/{$weixin.img}"/>
+                            <input type="hidden" id="fileName" >
+                            <input type="file"  onchange="upImg(this)" accept="image/*"/>
+                            <b><a class="minBtn bg_red">点击修改</a></b>
+                        </span>
+                    </p>
+                    <div style="display:none" id="showBox">
+                        <p><s>交易密码:</s><input type="password"  id="userPWD"  value="" placeholder="请输入你的交易密码"> <a href="/findpwd/findpwd" class="red">{:L('FORGET')}?</a></p>
+                        <p style="position:relative;width:600px;">
+                            <s>手机验证码:</s>
+                            <input type="txt"  id="phoneMsg"  value="" placeholder="请输入你的手机验证码">
+                            <span id="sendMsg" class="vifcode bg_red"></span>
+                            <s class="vifcode bg_red" id="vifcode" onclick="send_moble(60)">获取</s>
+                        </p>
+                        <p><input type="button" class="bg_red" value="修改绑定" onclick="submitBtn()"></p>
+                    </div>
+                    <else/>
+                    <!-- 没有绑定前显示的 -->
+                    <p><s>微信账号:</s><input type="txt"  id="wxNumber"  value=""></p>
+                    <h3>上传微信二维码 :<a class="red">( 只能修改不能多个 )</a></h3>
+                    <p class="p_bg"><a class="red">微信收款二维码获取方法：打开微信 -> 点击收钱 -> 点击保存图片 -> 之后上传即可</a></p>
+                    <p>
+                        <s>上传微信收款二维码:</s>
+                        <span class="iconfont icon-add addImg" style="width:190px;">
+                            <img src="__DOMAIN__/Upload/public/{$weixin.img}" style="display:none;"/>
+                            <input type="hidden" id="fileName" >
+                            <input type="file"  onchange="upImg(this)"  accept="image/*"/>
+                            <b>点击上传</b>
+                        </span>
+                    </p>
+                    <p><s>交易密码:</s><input type="password"  id="userPWD"  value="" placeholder="请输入你的交易密码"> <a href="/findpwd/findpwd" class="red">{:L('FORGET')}?</a></p>
+                    <p style="position:relative;width:600px;">
+                        <s>手机验证码:</s>
+                        <input type="txt"  id="phoneMsg"  value="" placeholder="请输入你的手机验证码">
+                        <span id="sendMsg" class="vifcode bg_red"></span>
+                        <s class="vifcode bg_red" id="vifcode" onclick="send_moble(60)">获取</s>
+                    </p>
+                    <p><input type="button" class="bg_red" value="确认绑定" onclick="submitBtn()"></p>
+                </if>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer" />
+
+<script>
+    //WECHART开关
+    $('.off').click(function(){
+        var el=$(this),
+            status=el.attr('status'), //1 //0
+            userId=el.attr('userId');
+            status=='1'?status='2':status='1';
+         $.post("{:U('Finance/savemy')}",{'userId':userId,'status':status},function(data){
+                if(data.status==0){
+                    layer.msg(data.msg, {icon: 2});
+                    return false;
+                }
+                if(status==1){
+					el.children().css({'left':'1px'})
+                    el.css({'background':'#666'});
+                    el.siblings('span').html('关闭');
+                    el.attr('status','1');
+                 }else{
+					el.children().css({'left':'30px'})
+                    el.css({'background':'#0075a9'});   
+                    el.siblings('span').html('启用');
+                    el.attr('status','2');
+                }
+        });
+    });
+     //发送短信
+    var clickN=0;
+    function send_moble(wait) {
+        clickN++;
+        if(clickN!=1){return false;}
+        var moble={$moble};
+        var obj  = $('#sendMsg');
+        $.post("{:U('Verify/bankseng')}", {
+            moble: moble,
+        }, function (data) {
+            if (data.status == 1) {
+                $("#vifcode").hide(500);
+                obj.show(500);
+                layer.msg(data.info, {icon: 1});
+                var interval = setInterval(function () {
+                    if (wait <0) {
+                        $("#vifcode").show(500);
+                        obj.hide(500);
+                        clickN=0;
+                        wait=60;
+                        clearInterval(interval);
+                    };
+                    obj.html(wait + "{:L('CODE_SEND_AGAIN')}");
+                    wait--;
+                }, 1000);
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+    //提交信息
+    var submitNum=0;
+    function submitBtn(){
+        submitNum++;
+        var wxNumber=$('#wxNumber').val(),
+            fileName= $('#fileName').val(),
+            userPWD=$('#userPWD').val(),
+            phoneMsg=$('#phoneMsg').val(),
+            userId=$('.off').attr('userId'),
+            status=$('.off').attr('status');
+        if(status==2){wId=$('#wxNumber').attr('wId');}else{wId=''}
+        console.log(wId+'----wId'+status);
+        if(!wxNumber){layer.tips('请输入微信号', '#wxNumber', { tips: [2, '#e3493c'],tipsMore:true,time:3000});}
+        else if(!fileName){layer.tips('请上传图片二维码', '#showFile', { tips: [2, '#e3493c'],tipsMore:true,time:3000});}
+        else if(!userPWD){layer.tips('请输入交易密码', '#userPWD', { tips: [2, '#e3493c'],tipsMore:true,time:3000});}
+        else if(!phoneMsg){layer.tips('请输入短信验证码', '#phoneMsg', { tips: [2, '#e3493c'],tipsMore:true,time:3000});}
+        else if(submitNum==1&&wxNumber&&fileName&&phoneMsg){
+            $.ajax({
+                url:"{:U('finance/AddWeChat')}",
+                type:'POST',
+                data:{
+                    'wId':wId,
+                    'userId':userId,
+                    'status':status,
+                    'wxNumber':wxNumber,
+                    'fileName':fileName,
+                    'userPWD':userPWD,
+                    'phoneMsg':phoneMsg,
+                },
+                dataType:'JSON',
+                success:function(data){
+                    //提交成功的情况下:的操作
+                    if(data.status==1){
+                        layer.msg(data.msg, {icon: 1, time: 1500}, function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg, {icon:2, time: 1500}, function () {
+                            location.reload();
+                        });
+                    }
+                },
+                error:function(err){
+                    layer.msg('修改失败!!！', {icon:2, time:1500}, function () {
+                        location.reload();
+                    });
+                }
+            });
+        };
+    }
+       //上传图片
+    function upImg(el){
+        //创建FormData对象
+        var data =new FormData();
+        if($(el)[0].files[0].size/(1024*1024)>2){
+            layer.msg('图片不能超过2M', {icon: 2,time:4000});
+            $(el).val('');
+            return false;
+        }
+        //为FormData对象添加数据
+        $.each($(el)[0].files, function (i, file) {
+            data.append('upload_file', file);
+        });
+        //发送数据
+        $.ajax({
+            url: '/Finance/myczTypeImage',
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,       //不可缺参数
+            processData: false,       //不可缺参数
+            success: function (data) {
+                if (data) {
+                    $(el).siblings('input').val(data);
+                    $(el).siblings('img').attr("src", '__DOMAIN__/Upload/public/' + data);
+                    $(el).siblings('img').show('500');
+                    $('#showBox').show('500')
+                    
+                }
+            },
+            error: function () {
+                layer.msg('上传出错！', {icon: 2});
+                $(".loading").hide('500');  //加载失败移除加载图片
+            }
+        });
+    }
+    $('.c2c_D').addClass('active');
+    $('#finance_box').addClass('active');
+</script>
+ 

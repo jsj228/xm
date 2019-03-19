@@ -1,0 +1,184 @@
+{include file="Public:header"/}
+<script type="text/javascript" src="/layer/laydate/laydate.js"></script>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">交易排行榜</span>
+        </div>
+        <div class="cf">
+            <div class="fl">
+                <button class="btn btn-success" url="{:url('trade/weike_financeExcel')}" target-form="ids" id="submit" type="submit">导出选中</button>
+                <a class="btn btn-success" href="{:url('trade/Excel',array('addtime'=>$addtime,'endtime'=>$endtime))}" >导出所有</a>
+            </div>
+
+            <div class="search-form fr cf">
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1">
+                        <input type="text" class="search-input form-control  " name="addtime" value="{$Think.get.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+                        <input type="text" class="search-input form-control  " name="endtime" value="{$Think.get.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="market" class="form-control">
+                            <option value="" {empty name="Think.get.market"}selected{/empty}>交易市场</option>
+                            {volist name="C['market']" id="vo"}
+                                <option value="{$vo['name']}" {eq name="vo['name']" value="$Think.get.market"}selected{/eq}>{$vo['title']}</option>
+                            {/volist}
+                        </select>
+                        <!--<select style="width: 160px; float: left; margin-right: 10px;" name="type" class="form-control">-->
+                            <!--<option value=""-->
+                            <!--{empty name="Think.get.type"}selected{/empty}-->
+                            <!--&gt;交易类型</option>-->
+                            <!--<option value="1" {eq name="Think.get.type" value="1"}selected{/eq}>买入</option>-->
+                            <!--<option value="2" {eq name="Think.get.type" value="2"}selected{/eq}>卖出</option>-->
+                        <!--</select>-->
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="username"
+                            {eq name="Think.get.field" value="username"}selected{/eq}
+                            >买家用户名</option>
+                            <option value="peername"
+                            {eq name="Think.get.field" value="peername"}selected{/eq}
+                            >卖家用户名</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="data-table table-striped">
+            <form id="form" action="{:url('trade/weike_financeExcel')}" method="post" class="form-horizontal">
+            <table class="">
+                <thead>
+                <tr >
+                    <th colspan="2" style="background-color:#009200">共{$weike_count}条记录</th>
+                    <th colspan="2" style="background-color:#009200">总额{$weike_mum|default="0"}</th>
+                    <th colspan="2" style="background-color:#009200">总手续费{$weike_fee}</th>
+                    <th colspan="2" style="background-color:#009200">当天手续费{$now_fee}</th>
+                </tr>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">排名</th>
+                    <th class="">姓名</th>
+                    <th class="">买家用户名</th>
+                    <th class="">卖家用户名</th>
+                    <th class="">手续费</th>
+                    <th class="">总额</th>
+                    <th class="">交易时间</th>
+                    <th class="">状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="vo"}
+                        <tr class="list_tr">
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <input  class="ids" name="addtime" value="{$addtime}" style="display: none"/>
+                            <input class="ids" name="endtime" value="{$endtime}" style="display: none"/>
+                            <td>{$i+$num}</td>
+                            <td>{$vo['truename']}</td>
+                            <td class="usertype" style="display: none;">{$vo['usertype']}</td>
+                            <td>{$vo['username']}</td>
+                            <td>{$vo['username']}</td>
+
+                             <td>{$vo['buy']|NumToStr}</td>
+
+                            <td>{$vo['zongshu']|NumToStr}</td>
+
+                            <td>{:date('Y-m-d H:i:s',$addtime)}-{:date('Y-m-d H:i:s',$endtime)}</td>
+                            <td>
+                                {eq name="vo.release" value="0"}未放行{/eq}
+                                {eq name="vo.release" value="1"}已放行{/eq}
+                            </td>
+                            <td>
+                                {eq name="vo.release" value="0"}
+                                    <a href="{:url('Trade/fenhong',array('id'=>$vo['id'],'feebuy'=>$vo['buy'],'feeall'=>$vo['weike_fell'],'addtime'=>$addtime,'endtime'=>$endtime))}" class="ajax-get btn btn-primary btn-xs">放行分红 </a>
+                                {/eq}
+                                {eq name="vo.release" value="1"}
+                                    <a href="" class="ajax-get btn btn-primary btn-xs" disabled="disabled">已放行分红 </a>
+                                {/eq}
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+                {/notempty}
+                </tbody>
+            </table>
+         </form>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="Public:footer"/}
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        $(".sell_td").each(function () {
+            if($(this).html() == "买入"){
+                $(this).parent().css({"background":"rgba(46, 204, 113, 0.11)"});
+            }else{
+                $(this).parent().css({"background":"rgba(255, 2, 2, 0.11)"});
+            }
+        });
+
+        $(".usertype").each(function () {
+            if($(this).html() == "1" || $(this).html() == "3" ){
+                $(this).parent().css({"background":"white"});
+            }
+        });
+
+        $(".list_tr>td").each(function () {
+            $(this).mouseenter(function () {
+                $(this).parent().css({"border-bottom":"3px solid #ccc"});
+            }).mouseout(function () {
+                $(this).parent().css({"border-bottom":"none"});
+            })
+        });
+
+        //导航高亮
+        highlight_subnav("{:url('Trade/ranking')}");
+    </script>
+    <script type="text/javascript">
+        //提交表单
+        $('#submit').click(function () {
+            $('#form').submit();
+        });
+//        $('#submit').click(function (){
+//            var id = $(".ids").val();
+//            $.ajax({
+//                type: "get",
+//                dataType: "json",
+//                url:"{:url('trade/weike_financeExcel')}",
+//                data:{
+//                    'id':id,
+//                    'addtime':{$addtime},
+//                    'endtime':{$endtime},
+//                },
+//                success: function (data) {
+//                    console.log(data)
+//
+//                }
+//            });
+//        }
+    </script>
+</block>

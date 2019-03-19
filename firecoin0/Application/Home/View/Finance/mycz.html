@@ -1,0 +1,310 @@
+<include file="Public:header" />
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt;
+        <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('RECHARGE')}    </div>
+    <div class="main-content">
+
+<include file="Finance:left" />
+
+        <div class="tag-list-content assets_content bg_w">
+            <h1 class="safe_center clear">
+                <span>{:L('RECHARGE')}</span>
+            </h1>
+            <div id="hints" class="mytips" style="display:none;">
+                <p><notempty name="prompt_text">{$prompt_text}</notempty></p>
+            </div>
+            <div class="mytable-body ">
+                <eq name="myczs" value="1">
+                <div class="step1   pwtrade  pw  mt30">
+                        <div class="tx_tips">
+                            支付宝微信单笔限额为<span style="color:#ff0000">100</span>元
+                            至<span style="color:#ff0000">50000</span>元,网银支付限额为<span style="color:#ff0000">100</span>元 至<span style="color:#ff0000">500000</span>元,
+                            充值到账时间为每天<span style="color:#ff0000">9:00</span>
+                            至<span style="color:#ff0000">22:00</span>,
+                            其余时间充值请等待到账。
+                            <br><br>
+                            转账时<span style="color:#ff0000;font-weight: bold;"></span><span style="color:#ff0000;font-weight: bold;">订单号</span>必须备注,否则将无法到账
+                        </div>
+                    <div class="weituo_bizhong" style="margin-left: 149px; margin-bottom: 10px;display: none;">
+                        <div class="bizhong_select">
+                            <div class="bz_btn">
+                              <img src="__DOMAIN__/Upload/coin/20e58f7436685a19c62bd8dd8b70a793.png" alt="" style=" width: 22px;float: left;margin-top: 7px;margin-right: 5px;"/>
+                                <span id="coin-default">
+                                    <select name="type" id="coin-select" style="margin-top: 6px;">
+                                        <option value="cny"  selected="selected"  >{:L('CNY')} (CNY)</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                        <script>
+                            $("#coin-select").change(function () {
+                                var coin        = $("#coin-select option:selected").val();
+                                window.location = '/finance/mycz.html';
+                            });
+                        </script>
+                        <div class="bizhong_type" style="width: 220px;">
+                            <span>{:L('AVAILABLE')}<em class="coin-name"></em>：<font class="coin-balance">{$user_coin['cny']|NumToStr}</font></span>
+                        </div>
+                    </div>
+                    <br>
+                    <dl>
+                        <dt>{:L('RECHARGE_AMOUNT')}：</dt>
+                        <dd style="position: relative;">
+                            <input type="text" class="finance_texts" id="cnyin_num" maxlength="12" value=""style="padding-right:44px;">
+                            <!--<div style="position: absolute;right:15px;top:2px;">-->
+                                <!--<span id="random" class="random">.{:tradenob()}</span></div>-->
+                            <!--<p style="color: red;line-height: 44px;margin-left: 20px;">{:L('CHARGE_TIP')}</p>-->
+                        </dd>
+                    </dl>
+
+                                        <dl>
+                        <dt class="cnyin_type">{:L('RECHARGE_WAY')}：</dt>
+                        <dd class="payment-icon-list payment-list ">
+                            <ul style="width:600px;">
+                                <li class="wx" data="{$alipaymycz.name}"><img src="/comfile/images/{$alipaymycz.name}.png" width="100"></li>
+                                <li class="wx" data="{$weixinmycz.name}"><img src="/comfile/images/{$weixinmycz.name}.png" width="100"></li>
+                                <!--<li class="wx" data="{$bankmycz.name}"><img src="/comfile/images/{$bankmycz.name}.png" width="100"></li>-->
+                                <eq name="bankmycz.name" value="">
+                                    <else/>
+                                    <li class="wx" data="{$bankmycz.name}"><img src="/comfile/images/{$bankmycz.name}.png" width="100"></li>
+                                </eq>
+                            </ul>
+                            <!--<ul>-->
+                                <!--<volist name="myczTypeList" id="vo">-->
+                                    <!--<li class="wx" data="{$key}"><img src="/comfile/images/{$key}.png" width="116"></li>-->
+                                <!--</volist>-->
+                            <!--</ul>-->
+                            <input type="hidden" id="cnyin_type" value="">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt></dt>
+                        <dd>
+                            <input type="button" value="{:L('RECHARGE_NOW')}" onclick="cnyin_up()">
+                        </dd>
+                    </dl>
+                </div>
+                <div class="step2 f_body">
+                    <table class="f_table" id="investLog_content">
+                        <thead>
+                        <tr>
+                            <th width="">{:L('RECHARGE_TIME')}</th>
+                            <th width="">{:L('RECHARGE_ORDER')}</th>
+                            <th width="">{:L('RECHARGE_WAY')}</th>
+                            <th width="">{:L('RECHARGE_AMOUNT')}</th>
+                            <th width="">{:L('ACTUAL_ARRIVAL')}</th>
+                            <th width="">
+                                <span>
+                                    <select id="status-select" class="mW100" >
+                                        <option value="" >{:L('STATES_ALL')}</option>
+                                        <option value="1" <eq name="status" value="1">selected</eq>>{:L('UNPAID')}</option>
+                                        <option value="2" <eq name="status" value="2">selected</eq>>{:L('RECHARGE_SUCCESSFUL')}</option>
+                                        <option value="3" <eq name="status" value="3">selected</eq>>{:L('MANUAL_PRO')}</option>
+                                        <option value="4" <eq name="status" value="4">selected</eq>>{:L('IN_PROCESS')}</option>
+                                        <option value="5" <eq name="status" value="5">selected</eq>>{:L('CANCLE_ORDER')}</option>
+                                        <option value="6" <eq name="status" value="6">selected</eq>>{:L('Recharge_HUABEI')}</option>
+                                    </select>
+                                </span>
+                            </th>
+                            <th width="">{:L('OPERATE')}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <volist name="list" id="vo">
+                           <tr>
+                            <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                            <td>{$vo.tradeno}</td>
+                            <td>{$vo.type}</td>
+                            <td>￥{$vo['num']|default="0.00"}</td>
+                            <td>￥{$vo['mum']|default="0.00"}</td>
+                            <td>
+
+                            <eq name="vo.status" value="0">
+                               <div>{:L('UNPAID')} <a data-action="{$vo.typeEn}" data="{$vo['id']}"  onclick="cnyin_huikuan(this)"class="list_oper minBtn bg_green"> {:L('REMITTED')} </a></div>
+                            </eq>
+                            <eq name="vo.status" value="1">
+                                {:L('RECHARGE_SUCCESSFUL')}
+                            </eq>
+                            <eq name="vo.status" value="2">
+                                {:L('MANUAL_PRO')}
+                            </eq>
+                            <eq name="vo.status" value="3">
+                                {:L('IN_PROCESS')}
+                            </eq>
+                            <eq name="vo.status" value="4">
+                                {:L('CANCLE_ORDER')}
+                            </eq>
+                            <eq name="vo.status" value="5">
+                                {:L('Recharge_HUABEI')}
+                            </eq>
+                             </td>
+                                <td>
+                                    <s class="minBtn bg_red" onclick="cnyin_chakan({$vo['id']})"  class="cur list_oper_btn ">{:L('CHECK')}</s>
+                                    <s class="minBtn bg_red" onclick="cnyin_chexiao({$vo['id']})" class="cur list_oper_btn">{:L('CHEXIAO')}</s>
+                                </td>
+                             </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    <div class="pages"> {$page}</div>
+                </div>
+                    <else />
+                    <div class="tx_tips">
+                        <h2 class="iconfont icon-warning red">充值已关闭</h2> 
+                        <p class="red" style="margin:10px 0 0">支付宝，微信，网银等账户充值与账户提现请前往  
+                            <a href="/c2c/index.html" class="minBtn bg_red">c2c交易区</a>
+                        </p>
+                    </div>
+                </eq>
+            </div>
+        </div>
+    </div>
+</div>
+ <!--<a href="{:U('Pay/doalipay')}" >充值</a>-->
+
+<script type="text/javascript">
+    $("#status-select").val("{$status}");
+    $("#status-select").change(function () {
+        var status = $("#status-select option:selected").val();
+        var url = '/Finance/mycz';
+        if (status) {
+            url += '/status/' + status+'.html';
+        }
+        window.location = url;
+    });
+    function cnyin_huikuan(_this) {
+        var id = $(_this).attr('data');
+        var type = $(_this).attr('data-action');
+        if(type == 'tenpay'){
+            layer.config({
+                extend: 'extend/layer.ext.js'
+            });
+            layer.ready(function () {
+                layer.prompt({
+                    title: "{:L('RECHARGE_CONFIRM')}",
+                    formType: 0
+                }, function (val) {
+                    if (val) {
+                        $.post("/finan/pay_huikuan.html", {id: id,type:type, remark: val}, function (data) {
+                            if (data.status == 1) {
+                                layer.msg(data.info, {icon: 1});
+                                location.reload();
+                            } else {
+                                layer.msg(data.info, {icon: 2});
+                                if (data.url) {
+                                    window.location = data.url;
+                                }
+                            }
+                        }, "json");
+                    }
+                    ;
+                });
+            });
+        }else{
+            $.post("/Finance/myczHuikuan", {id: id,type:type}, function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, {icon: 1});
+                    window.location.reload();
+                } else {
+                    layer.msg(data.info, {icon: 2});
+                }
+            }, "json");
+        }
+    }
+    function cnyin_chexiao(id) {
+        //撤销询问框
+        layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">请问您是否已经转款？</p><p style="color: red;">（转款后请不要撤销，点击“撤销充值”并不会将充值金额返还，转款后请点击“暂不撤销”）</p>', {
+            btn: ['暂不撤销','撤销充值'] //按钮
+        }, function(){
+            window.location.reload();
+        }, function(){
+            layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">是否确认撤销？</p><p style="color: red;">（转款后请不要撤销，点击“撤销充值”并不会将充值金额返还，每日最多撤销五笔订单，大于五笔将无法撤销）</p>',{
+                btn:['是','否']
+            },function () {
+                $.post("/Finance/myczChexiao", {id: id}, function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.info, {icon: 2});
+                    }
+                }, "json");
+            },function () {
+                window.location.reload();
+            })
+
+
+        });
+
+    }
+    function cnyin_chakan(id) {
+        layer.open({
+            title: '{:L(\'RECHARGE\')}',
+            type: 2,
+            area: ['650px', '450px'],
+            content: ["{:U('Pay/mycz')}?id=" + id, 'no']
+        });
+    }
+    $(".payment-list li").first().addClass("curr");
+    $('#cnyin_type').val($(".payment-list li").first().attr('data'));
+    $('.payment-list li').click (function () {
+        $(this).addClass ('curr').siblings ('li').removeClass ('curr');
+        $('#cnyin_type').val($(this).attr('data'));
+    });
+    var lock = 0;
+    function cnyin_up() {
+        var type = $('#cnyin_type').val();
+        var num = $("#cnyin_num").val();
+        if (type == "" || type == null) {
+            layer.tips('{:L(\'RECHARGE_CHOOSE\')}', '.cnyin_type', {tips: 2});
+            return false;
+        }
+        if (num == "" || num == null) {
+            layer.tips('{:L(\'RECHARGE_AMOUNT_INPUT\')}', '#cnyin_num', {tips: 2});
+            return false;
+        } else {
+//            num = num + $('#random').html();
+            num = num;
+        }
+        if(lock){
+            layer.msg('{:L(\'LOADING_NOT_CLICK\')}...');
+            return;
+        }
+        lock = 1;
+        $.post("/Finance/myczUp.html", {
+            type: type,
+            num: num
+        }, function (data) {
+            lock = 0;
+            if (data.status == 1) {
+                layer.open({
+                    title: "{:L('RECHARGE')}",
+                    type: 2,
+                    area: ['650px', '450px'],
+                    content: ["/Pay/mycz.html?id=" + data.url.id, 'no'],
+                    cancel: function () {
+                        window.location = "/Finance/mycz.html";
+                    }
+                });
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+</script>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.mycz').addClass('active');
+</script>
+
+<include file="Public:footer" />

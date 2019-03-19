@@ -1,0 +1,90 @@
+<include file="Public:header" />
+<script src="__PUBLIC__/Home/js/datepicker.min.js"></script>
+<div class="autobox">
+ <div class="now">
+  <a href="/" class="orange">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="orange">{:L('FINANCE')}</a> &gt; {:L('RECORD')}
+ </div>
+    <div class="main-content">
+
+  <!--左侧菜单-->
+  <include file="Finance:left" />
+  <!--右侧内容-->
+    <div class="tag-list-content">
+        <div class="assets_content bg_w">
+            <h1  class="safe_center clear" style="margin-top: 0px; margin-bottom: 15px; line-height: 15px;" >
+                <a>交易订单查询 </a> |
+                <a href="/Finance/mywt.html" style="margin-left:25px" >{:L('CONSIGNATION')}  </a>
+                <a href="/Finance/mycj.html" style="margin-left:25px"  class="active" >{:L('RECORD')} </a>
+            </h1>
+            <div class="cnyin_record" style="padding: 0 20px;">
+                <div class="f_body">
+                <div class="f_body_main">
+                <div class="f_tab_body">
+                <div>
+                    <table class="f_table" id="investLog_content">
+                    <thead>
+                    <tr>
+                    <th>
+                        <select name="market-selectTest" id="market-selectTest" style="background:url(__DOMAIN____UPLOAD__/coin/{$coin_list[$market_list[$market]['xnb']]['img']}) no-repeat 10px #161f2b;background-size:26px;"class="pl40W120">
+                        <volist name="market_list" id="vo"> <eq name="market" value="$key">
+                        <option value="{$vo['name']}" selected="selected">{$coin_list[$vo['xnb']]['title']}({$vo['xnb']|strtoupper}/{$vo['rmb']|strtoupper})</option>
+                        <else />
+                        <option value="{$vo['name']}">{$coin_list[$vo['xnb']]['title']}({$vo['xnb']|strtoupper}/{$vo['rmb']|strtoupper})</option>
+                        </eq> </volist>
+                    </select>
+                    </th>
+                    <th>{:L('DELEGATE_TIME')}</th>
+                    <th><select name="type-selectTest" id="type-selectTest" class="mW100">
+                        <option value="0"<eq name="type" value="0">selected</eq>>-{:L('ALL')}-
+                        </option>
+                        <option value="1"<eq name="type" value="1">selected</eq>>{:L('BUY')}
+                        </option>
+                        <option value="2"<eq name="type" value="2">selected</eq>>{:L('SOLD')}
+                        </option>
+                    </select></th>
+                    <th>{:L('TRANSACTION_PRICE')}</th>
+                    <th>{:L('TRANSACTION_QUANTITY')}</th>
+                    <th>{:L('TRANSACTION_AMOUNT')}</th>
+                    <th>{:L('TRANSACTION_FEE')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="list" id="vo">
+                    <tr>
+                    <td>{$coin_list[$market_list[$vo['market']]['xnb']]['title']} ({$market_list[$vo['market']]['xnb']|strtoupper}/{$market_list[$vo['market']]['rmb']|strtoupper})</td>
+                    <td>{$vo.addtime|date='m-d H:i:s',###}</td>
+                    <td><eq name="vo['userid']" value="$vo['peerid']"> <font class="buy">{:L('BUY_SELF')}</font> <font class="sell">{:L('SOLD_SELF')}</font> <else /> <if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 1)"> <font class="buy">{:L('BUY')}</font> </if> <if condition="($vo['userid'] eq $userid) AND ($vo['type'] eq 2)"> <font class="buy">{:L('BUY')}</font> </if> <if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 1)"> <font class="sell">{:L('SOLD')}</font> </if> <if condition="($vo['peerid'] eq $userid) AND ($vo['type'] eq 2)"> <font class="sell">{:L('SOLD')}</font> </if> </eq></td>
+                    <td>{$vo['price']|NumToStr}</td>
+                    <td>{$vo['num']|NumToStr}</td>
+                    <td>{$vo['mum']|NumToStr}</td>
+                    <td><if condition="($vo['userid'] eq $userid)"> {$vo['fee_buy']} <else /> {$vo['fee_sell']} </if></td>
+                    </tr>
+                    </volist>
+                    </tbody>
+                    </table>
+                    <div class="pages">{$page}</div>
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
+                </div>
+                    </div>
+                </div>
+
+            </div>
+<script>
+    $('.finan_mycj').addClass('active');
+	$("#type-selectTest,#market-selectTest").change(function(){
+		var type=$("#type-selectTest option:selected").val();
+		var market=$("#market-selectTest option:selected").val();
+		window.location='/Finance/mycj/type/'+type+'/market/'+market+'.html';
+	});
+</script>
+<script>
+	//菜单高亮
+    $('.finan_mywt').addClass('active');
+    $('#finance_box').addClass('active');
+	$('#finance_mycj i').attr('class','coin_menu_op_7');
+</script>
+<include file="Public:footer" />

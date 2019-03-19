@@ -1,0 +1,92 @@
+{include file="Public:header" /}
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')} </a> {:lang('REGISTERED_ACCOUNT')}	</div>
+
+	<div class="reg_box">
+		<div class="reg_wrap">
+			<div class="reg_warning">
+			<span>
+				{:lang('TRUE_NAME_INPUT')}
+			</span></div>
+			<p class="reg_input_box reg-fb">
+				<span class="mask_wrap_title">{:lang('REAL_NAME')}：</span>
+				<input type="text" id="truename" placeholder="{:lang('REAL_NAME_INPUT')}" />
+			</p>
+			<p class="reg_input_box reg-fb" style="display:none;">
+				<span class="mask_wrap_title">{:lang('MODIFY_REAL_NAME_AUTH')}：</span>
+				<select id="idcardtype" class="select">
+					<option value="">{:lang('SELECT_PLZ')}</option>
+					<option value="1" selected>{:lang('ID_CARD')}</option>
+					<option value="2">{:lang('OFFICIAL_CARD')}</option>
+					<option value="3">{:lang('PASSPORT')}</option>
+					<option value="4">{:lang('TAIWAN')}</option>
+					<option value="5">{:lang('HK_MACCO')}</option>
+					<option value="9">{:lang('OTHER')}</option>
+				</select>
+			</p>
+
+			<p class="reg_input_box reg-fb">
+				<span class="mask_wrap_title">{:lang('ID_NUM')}：</span>
+				<input type="text" id="idcard" placeholder="{:lang('ID_NUM_INPUT')}" />
+			</p>
+			<p class="login_button">
+				<input type="button"value="{:lang('NEXT')}" onclick="truename_up();"/>
+			</p>
+		</div>
+	</div>
+</div>
+
+<script>
+	function truename_up() {
+		var idcardtype = $('#idcardtype option:selected').html();
+		var truename   = $("#truename").val();
+		var idcard     = $("#idcard").val();
+
+		if (idcardtype == "" || idcardtype == null) {
+			layer.tips("{:lang('SELECT_DOC_TYPE')}", '#idcardtype', {tips: 2});
+			return false;
+		}
+		if (truename == "" || truename == null) {
+			layer.tips("{:lang('REAL_NAME_INPUT')}", '#truename', {tips: 2});
+			return false;
+		}
+		if (idcard == "" || idcard == null) {
+			layer.tips("{:lang('ID_NUM_INPUT')}", '#idcard', {tips: 2});
+			return false;
+		}
+		$.post("{:url('/login/upregister3','','')}", {
+			idcardtype: idcardtype,
+			truename: truename,
+			idcard: idcard,
+			token: ""
+		}, function (data) {
+			if (data.status == 1) {
+				layer.msg(data.msg, {icon: 1,
+                    time:2000
+                },function () {
+                    window.location ="{:url('/Login/info','','')}";
+
+                });
+
+
+			} else {
+				layer.msg(data.msg, {icon: 2,
+                    time:2000
+                },function () {
+                    if (data.url) {
+                        window.location = data.url;
+                    }
+				});
+
+			}
+		}, "json");
+	}
+</script>
+
+
+<script>
+	$('#index_box').addClass('active');
+</script>
+{include file="Public:footer" /}

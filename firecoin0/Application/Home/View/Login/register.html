@@ -1,0 +1,300 @@
+<include file="Public:header" />
+<!-- 会员登陆 -->
+<div id="all_mask" class="all_mask" style="/* height: 0px;  */display: none;"></div>
+<div id="all_mask_loginbox" class="all_mask_loginbox" style="display: none;" onkeyup="keyLogin();">
+    <div class="login_title pl20">
+        <span onclick="saoma()" style="text-align: center;margin-left: 15px;color: #FB1D1D;cursor:pointer;">{:L('MEMBER_LOGIN')}</span>
+        <span style="font-size: 12px;margin-left: 10px;">官方QQ群：535997102</span>
+
+        <eq name="Think.session.weike_already" value="1"><font color="#ff0000" size="1px;">{:L('LOGIN_REPEAT')}</font></eq>
+    </div>
+    <form id="form-login" class="form-login" class="mask_wrap login-fb">
+        <div class="login_text zin90">
+            <div class="mask_wrap_title">{:L('USER_ID')}：</div>
+            <input type="text" id="login_moble" class="texts" placeholder="{:L('MOBLE_INPUT')}" value=""/>
+
+        </div>
+        <div class="login_text zin80">
+            <div class="mask_wrap_title">{:L('PWD')}：</div>
+            <input id="login_password" class="texts" type="password" placeholder="{:L('LOGIN_PWD_INPUT')}">
+        </div>
+        <!--手机验证码-->
+        <!--<div class="login_text zin80">-->
+        <!--<div class="mask_wrap_title">手机验证吗：</div>-->
+        <!--<input type="text" id="code" value="" class="texts hg40 w250" style="width:200px!important;" placeholder="请输入验证码"/><a class="codeImg reloadverify hg40 w100" id="vifcode" onclick="send_moble('sms')" style="background: #e3493c;line-height: 40px;-->
+        <!--display: inline-block;-->
+        <!--vertical-align: bottom;-->
+        <!--text-align: center;-->
+        <!--width:50px!important;;-->
+        <!--font-size: 16px;-->
+        <!--color: #fff;">获取</a>-->
+        <!--</div>-->
+        <div class="login_text zin80">
+            <div class="mask_wrap_title">{:L('VERIFICATION_CODE')}：</div>
+            <input type="text" id="login_verify" value="" class="texts" placeholder="{:L('VERIFICATION_CODE_INPUT')}"/>
+            <span style="vertical-align: -17px;line-height: 20px;">
+                <img id="login_verify_up" class="codeImg reloadverify  w100" src="{:U('Verify/code')}"
+                    title="{:L('CHANGE_IT')}" onclick="this.src=this.src+'?t='+Math.random()" width="100" height="34">
+            </span>
+        </div>
+
+        <div class="login_button">
+            <input type="button" value="{:L('LOGIN')}" onclick="footer_login();" class="btns2  w250">
+
+        </div>
+
+        <div class="login-footer wwxwwx" style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+            <span style="color: #CCC;">
+            <a style="font-size: 14px;" href="{:U('Login/register')}">{:L('REGISTER_FREE')}</a>｜<a href="{:U('Login/findpwd')}" style="font-size: 14px;">{:L('FORGET_PWD')}</a>
+            </span>
+        </div>
+
+    </form>
+    <div class="iconfont mask_wrap_close eee" onclick="wrapClose()"></div>
+</div>
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:L('ADDRESS')}</a> > {:L('REGISTERED_ACCOUNT')}</div>
+	<div class="reg_box ">
+		<form id="form-register">
+		<div id="reg_index" class="reg_wrap">
+			<p class="reg_input_box" id="moble_reg">
+				<span class="mask_wrap_title">{:L('MOBLE')}：</span>
+				<!--<input type="text" id="moble" class="texts w300 hg40" placeholder="{:L('MOBLE_INPUT')}" onblur="check_moble()"/>-->
+                <input type="text" id="moble"  onkeyup="check_moble(this)"/>
+                <b id="sendMsg" class="bg666" onclick="new_send()">{:L(\'CLICK_SEND_CODE\')}</b>
+				<span id="reg_moble" class="eee" ></span>
+                <!-- style=" left: 210px;top: 2px;" -->
+				<!--<a class="move" onclick="new_sends()">点击发送验证码</a>-->
+			</p>
+			<p class="reg_input_box">
+				<div class="mask_wrap_title">{:L('VERIFICATION_CODE')}：</div>
+				<input id="moble_verify" type="text" placeholder="{:L('VERIFICATION_CODE_INPUT')}">
+			</p>
+			<p class="reg_input_box">
+				<div class="mask_wrap_title">{:L('PWD')}：</div>
+				<input type="password" id="password" placeholder="{:L('LOGIN_PWD_INPUT')}" style="line-height: 34px;"/>
+			</p>
+			<p class="reg_input_box">
+				<div class="mask_wrap_title">{:L('INVITATION_CODE')}：</div>
+				<input id="invit" type="text"  placeholder="{:L('INVITATION_CODE_NO_INPUT')}" value="<?php echo $_GET['invit']; ?>"/>
+			</p>
+			<p class="reg_radio_box">
+				<label><input type="checkbox" id="regweb" checked="checked" style="vertical-align: -2px;"> {:L('REGISTRATION_CONSENT')} <a href="javascript:void(0)" class="move" onclick="regWeb();">{:L('REGISTRATION_PROTOCOL')}</a></label>
+			</p>
+			<p class="login_button">
+				<input type="button"  onclick="reg_up();" value="{:L('REGISTER_NOW')}">
+			</p>
+		</div>
+		</form>
+	</div>
+</div>
+<div class="all_mask_loginbox" id="step1">
+	<div class="login_title pl20">{:L('CODE_SEND')}</div>
+	<form id="login_two" class="form-login">
+		<p class="login_text">
+			<span class="mask_wrap_title">{:L('GRAPHIC_VERIFICATION_CODE')}：</span>
+			<input type="text" id="verify" value=""/>
+			<img id="verify_up"  class="codeImg reloadverify" src="{:U('Verify/code')}" title="{:L('CHANGE_IT')}" onclick="this.src=this.src+'?t='+Math.random()" width="100" height="45">
+		</p>
+		<p class="login_text">
+			<span class="mask_wrap_title">{:L('CODE_RECEIVE')}：</span>
+			<input type="button" value="{:L('CODE_SEND')}"onclick="moble_reg()"/>
+		</p>
+    </form>
+    <!-- <i class=" fz_20 move" aria-hidden="true"></i> -->
+	<div class="iconfont mask_wrap_close eee" onclick="showB()"></div>
+</div>
+<div id="step2" class="all_mask" style="height: 0px;display: none;"></div>
+<script>
+    $('input').attr('autocomplete','off');
+    // $(function(){
+    //     // var old_moble = localStorage.getItem('moble');
+    //     // if(old_moble){
+    //     //     document.getElementById('moble').setAttribute('placeholder',old_moble);
+    //     // }
+    // });
+    //手机国家选择
+    $(
+        $("#moble").intlTelInput({
+            autoPlaceholder: "off",
+            initialCountry: "cn",
+            utilsScript: "__PUBLIC__/Home/js/utils.js"
+        })
+    );
+    $(function () {
+        var height = $(document).height();
+        if (height < 1000) {
+            height = 1000;
+        }
+        $('#step2').height(height);
+        $("#moble").focus();
+    });
+    function regWeb() {
+        layer.open({
+            type: 2,
+            skin: 'layui-layer-rim', // 边框
+            area: ['800px', '600px'], // 宽高
+            title: '{:L(\'REGISTRATION_PROTOCOL\')}', // 标题
+            content: "{:U('Login/webreg')}"
+        });
+    }
+    function showB() {
+        $("#step1").hide();
+        $("#step2").hide();
+        $("#verify").focus();
+    }
+    //手机验证
+    function mobleFun(){
+        var moble  = $('#moble').val(),regObj=/^(86)/;
+        if(moble.match(regObj)){moble=moble.replace(regObj,'')}
+        if(($('.country-list .active').attr('data-country-code')=='cn'&&moble.length==11)||($('.country-list .active').attr('data-country-code')!='cn'&&moble.length>=7&&moble.length<=11)) {
+            $("#sendMsg").removeClass('bg666').addClass('bg_green');
+            return moble;    
+        }else{
+            $("#sendMsg").removeClass('bg_green').addClass('bg666');
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+    }
+    function check_moble(el){
+        if(mobleFun()){
+            $.post("/login/check_moble.html", {
+                moble: mobleFun(),
+                token: ""
+            }, function (data) {
+                if (data.status == 1) {
+                    localStorage.setItem('moble', moble);
+                    // $('#reg_moble').html('<b class="eee" onclick="new_send()">{:L(\'CLICK_SEND_CODE\')}</b>');
+                } else {
+                    layer.tips(data.info, '#moble', {tips: 2});
+                    $("#sendMsg").removeClass('bg_green').addClass('bg666');
+                }
+            }, 'json');
+        }
+    }
+    // 显示弹框
+    function new_send() {
+        if($("#sendMsg").attr('class')=='bg666'){
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        $("#step1").show();
+    }
+    //发送短信
+    function moble_reg() {
+        var moble  = $('#moble').val(),regObj=/^(86)/g;
+        if(moble.match(regObj)){moble=moble.replace(regObj,'')}
+
+        var verify = $("#verify").val();
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+
+        if (!moble) {
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        if (!verify) {
+            layer.tips("{:L('GRAPHIC_VERIFICATION_CODE_INPUT')}", '#verify', {tips: 2});
+            return false;
+        }
+        $.post("/login/real.html", {
+            moble: moble,
+            verify: verify,
+            dial_code:dial_code,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                $('#sendMsg').hide(500);
+                layer.msg(data.info, {icon: 1});
+                $("#step1").hide();
+                $("#step2").hide();
+                $("#moble_verify").focus();
+                $('#moble').attr("disabled", "disabled");
+                var obj      = $('#reg_moble');
+                var wait     = 60;
+                var interval = setInterval(function () {
+                    obj.html(wait + " {:L('CODE_SEND_AGAIN')}");
+                    wait--;
+                    if (wait < 0) {
+                        clearInterval(interval);
+                        $(".reloadverify").click();
+                        $("#verify").val('');
+                        obj.html('<b onclick="new_send()">'+'{:L(\'CLICK_SEND_AGAIN\')}'+'</b>');
+                    }
+                }, 1000);
+            } else {
+                $(".reloadverify").click();
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+	$("#form-register").keyup(function(e){
+        var e = e || event,
+            keycode = e.which || e.keyCode;
+        if (keycode==13) {
+            footer_login();
+        }
+    });
+    function reg_up() {
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        var moble        = $("#moble").val();
+        var moble_verify = $("#moble_verify").val();
+        var password     = $("#password").val();
+        var invit        = $("#invit").val();
+
+        if (!moble) {
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        if (!moble_verify) {
+            layer.tips("{:L('VERIFICATION_CODE_INPUT')}", '#moble_verify', {tips: 2});
+            return false;
+        }
+        if (!password) {
+            layer.tips("{:L('PWD_INPUT')}", '#password', {tips: 2});
+            return false;
+        }
+        if (!$("#regweb").is(':checked')) {
+            layer.tips("{:L('REGISTRATION_PROTOCOL_CHOSE')}", '#regweb', {tips: 3});
+            return false;
+        }
+        $.post("/login/upregister.html", {
+            moble: moble,
+            dial_code:dial_code,
+            moble_verify: moble_verify,
+            password: password,
+            invit: invit,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {
+                    icon: 1,
+                    time:2000
+                },function () {
+                    $.cookies.set('move_moble', moble);
+                    window.location = '/Login/paypassword';
+                });
+            } else {
+                layer.msg(data.info, {
+                    icon: 2,
+                    time:1500
+                },function () {
+                    if (data.url) {
+                        window.location = data.url;
+                    }
+                });
+
+            }
+        }, "json");
+
+    }
+    $('.fa-user').parent('li').css({background:"#e3493c",color:'#eee'});
+</script>
+<include file="Public:footer" />

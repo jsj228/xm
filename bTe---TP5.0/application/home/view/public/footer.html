@@ -1,0 +1,137 @@
+<link rel="stylesheet" href="/comfile/css/userHelp_font.css"/>
+    <footer id="footer" class="footer">
+        <section class="main">
+            <div class="contact_us">
+                <h4 style="text-align: left;">联系我们</h4>
+                <div style="color:#666;">
+                    <b>全球服务电话：</b>
+                    <span>00852-67493962<br>00852-65292365‬</span>
+                    <br><b style="float:left;">{:lang('MEMBER_GROUP')}:</b>
+                    <span > 
+                        {volist name=":config('contact_qqun')" id="v"}
+                            {$i}{:lang('GROUP')}：{$v}<br>
+                        {/volist}
+                    </span>
+                </div>
+                <style> 
+                    .contact_us span{display:inline-block;font-size:14px;vertical-align:top;line-height:21px;margin-bottom:6px;text-align:left;color:#999;}
+                </style>
+           
+           
+            </div>
+            <div class="layout_center">
+    			{volist name="footerArticleType" id="vo"}
+    				<div class="list"><h4>{$vo['title']}</h4>
+    					<ul>
+    						{volist name="footerArticle[$vo['name']]" id="vvo"}
+    							<li><a href="{:url('/Article/type',array('id'=>$vvo['id']))}" style="overflow: hidden;">{$vvo['title']}</a></li>
+    						{/volist}
+    						<li><a href="{:url('/Article/type',array('id'=>$vo['id']))}" style="overflow: hidden; ">更多详情</a></li>
+    					</ul>
+    				</div>
+    			{/volist}
+            </div>
+            <div class="contact_us" style="padding-left:50px">
+               <a href="/"><img src="/picture/logo_f.png" alt="logo"></a> 
+            </div>
+             <img src="/picture/logos.png" style="width:80%;max-width:1200px;min-width:1000px;margin:15px 0 8px;">
+        </section>
+        <div class="main_bottom">
+            <p>为了您能更好的浏览和体验本站内容，浏览建议使用Google Chrome，分辨率建议使用1366X768以上</p>
+            <p>CopyRight 2017-2018 HUOCOIN交易所 WWW.HUOCOIN.COM ALL Rights Reserved</p>
+        </div>
+    </footer>
+<script>
+    $(function () {
+        var userid = "";
+        if (window.location.hash == '#login') {
+            if (!userid) {
+                loginpop();
+            }
+        }
+
+        var move_moble = $.cookies.get('move_moble');
+        if (move_moble != '' && move_moble != null) {
+            $("#login_moble").val(move_moble);
+        }
+    });
+
+    function loginpop() {
+        var height = $(document).height();
+        if (height < 1000) {
+            height = 1000;
+        }
+        $('.all_mask').css({'height': height});
+        $('.all_mask').show();
+        $('#all_mask_loginbox').show();
+    }
+
+    function wrapClose() {
+        $('.all_mask').hide();
+        $('.all_mask_loginbox').hide();
+    }
+    function footer_login() {
+        var moble = $("#login_moble").val();
+        var password = $("#login_password").val();
+        var verify = $("#login_verify").val();
+        if (moble == "" || moble == null) {
+            layer.tips('{:lang(\'MOBILE_NUM_INPUT\')}', '#login_moble', {tips: 2});
+            return false;
+        }
+        if (password == "" || password == null) {
+            layer.tips('{:lang(\'LOGIN_PWD_INPUT\')}', '#login_password', {tips: 2});
+            return false;
+        }
+        if (verify == "" || verify == null) {
+            layer.tips('{:lang(\'VERIFICATION_CODE_INPUT\')}', '#login_verify', {tips: 2});
+            return false;
+        }
+        $.post("{:url('login/submit')}", {
+            moble: moble,
+            password: password,
+            verify: verify,
+            login_token: "",
+        }, function (data) {
+            if (data.status == 1) {
+                $.cookies.set('move_moble', moble);
+                layer.msg(data.msg, {icon: 1,offset: '400px'});
+                if (data.url) {
+                    window.location = data.url;
+                } else {
+                    window.location = "/";
+                }
+            } else {
+                $("#login_verify_up").click();
+                layer.msg(data.msg, {icon: 2,offset: '400px'});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $.each($(".mv-hide"), function () {
+            eval($(this).html());
+        });
+    });
+
+    //回车键登陆
+    function keyLogin(){
+        if (event.keyCode == 13)  //回车键的键值为13
+            footer_login();
+    }
+</script>
+<script>
+    (function(a,h,c,b,f,g){a["UdeskApiObject"]=f;a[f]=a[f]||function(){(a[f].d=a[f].d||[]).push(arguments)};g=h.createElement(c);g.async=1;g.charset="utf-8";g.src=b;c=h.getElementsByTagName(c)[0];c.parentNode.insertBefore(g,c)})(window,document,"script","https://assets-cli.udesk.cn/im_client/js/udeskApi.js","ud");
+    ud({
+        "code": "2f6kec52",
+        "link": "https://fwzs6.udesk.cn/im_client/?web_plugin_id=52422"
+    });
+</script>
+</body>
+</html>

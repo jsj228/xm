@@ -1,0 +1,169 @@
+<include file="Public:header" />
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:L('FINANCE')} </a> &gt; {:L('FINANCE_MY')}	</div>
+    <div class="main-content">
+
+
+        <include file="Finance:left" />
+        <div class="tag-list-content assets_content bg_w">
+            <div class="safe_center clear">
+                <h1>
+					<span>我的雷达钱包</span>
+
+                    <!--<span>-->
+						<!--<a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i><span class="fz_12 move"></span></a>-->
+					<!--</span>-->
+                </h1>
+            </div>
+            <!--<div id="hints" class="mytips" style="display:none;">-->
+                <!--<p><notempty name="prompt_text">{$prompt_text}</notempty></p>-->
+            <!--</div>-->
+            <div class="mytable-body ">
+                <div class="step1  pwtrade  pw  mt50">
+                    <div style="margin-left:149px;">
+                        <span style="color:#ff0000">请绑定您实名认证的雷达钱包地址，否则将影响您的充值提现，该地址绑定后不能修改</span>
+                    </div>
+                    <br>
+
+                    <dl>
+                        <dt>雷达地址：</dt>
+                        <dd>
+                            <input style="width: 320px;" type="text" class="texts" id="radar_add" maxlength="40" placeholder="请输入您的雷达地址">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>重复输入雷达地址：</dt>
+                        <dd style="position: relative;">
+                            <input style="width: 320px;" type="text" class="texts" id="radar_add_re" maxlength="40" placeholder="请再次输入您的雷达地址">
+                        </dd>
+                    </dl>
+                    <dl class="step5">
+                        <dt>{:L('CODE_SEND')}：</dt>
+                        <dd class="yuyin">
+                            <div class="clear"><input type="button" value="{:L('CODE_SEND')}" class="btns" onclick="send_moble_out('sms')" style="width: 200px;font-size: 12px;"/>
+                                {$moble}({:L('CODE_RECEIVE_USED')})
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="step6" style="display:none;">
+                        <dt>{:L('CODE_SEND')}：</dt>
+                        <dd>
+                            <input type="text" id="out_moble_verify" value="" class="texts" placeholder="{:L('CODE_INPUT')}"/> <span id="reg_moble_new"></span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>{:L('TRAN_PWD')}：</dt>
+                        <dd>
+                            <input type="password" class="texts" id="out_paypassword"  value=""><a href="/findpwd/findpwd" class="move ml5">{:L('FORGET')}?</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt></dt>
+                        <dd>
+                            <input type="button" class="btns2" value="确认" onclick="bind_radar()">
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function send_new() {
+        $(".step6").hide();
+        $(".step5").show();
+    }
+
+    function send_moble_out(type) {
+        $.post("{:U('Verify/ldqb')}", {
+            type: type,
+        }, function (data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1});
+                $(".step5").hide();
+                $(".step6").show();
+                $("#out_moble_verify").focus();
+                $('#moble_new').attr("disabled", "disabled");
+                var obj      = $('#reg_moble_new');
+                var wait     = 60;
+                var interval = setInterval(function () {
+                    obj.html(wait + "{:L('CODE_SEND_AGAIN')}");
+                    wait--;
+                    if (wait < 0) {
+                        clearInterval(interval);
+                        $(".reloadverify_new").click();
+                        $("#verify_new").val('');
+                        obj.html('<a class="move" onclick="send_new()">{:L(\'CODE_SEND_NO_AGAIN\')}</a>');
+                    }
+                    ;
+                }, 1000);
+            } else {
+                layer.msg(data.msg, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+    function bind_radar() {
+        var radar_add    = $("#radar_add").val();
+        var radar_add_re = $("#radar_add_re").val();
+
+        var paypassword  = $("#out_paypassword").val();
+        var moble_verify = $("#out_moble_verify").val();
+
+        if (moble_verify == "" || moble_verify == null) {
+            layer.msg('{:L(\'VERIFICATION_CODE_INPUT\')}', {
+                icon: 2
+            });
+            return false;
+        }
+        if (radar_add == "" || radar_add == null) {
+            layer.msg('请输入雷达地址', {icon: 2});
+            return false;
+        }
+        if (radar_add_re == "" || radar_add_re == null) {
+            layer.msg('请再次输入雷达地址', {icon: 2});
+            return false;
+        }
+        if (radar_add !== radar_add_re) {
+            layer.msg('两次输入的雷达地址不同', {icon: 2});
+            return false;
+        }
+        if (paypassword == "" || paypassword == null) {
+            layer.msg('{:L(\'TRAN_PWD_ENTER\')}', '#out_paypassword',  {icon: 2});
+            return false;
+        }
+
+        $.post("{:U('Finance/ldqb')}", {
+            radar_add: radar_add,
+            paypassword: paypassword,
+            moble_verify: moble_verify
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                location.reload();
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+</script>
+<script>
+    $('.finan_ldqb').addClass('active');
+</script>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_pay').addClass('active');
+</script>

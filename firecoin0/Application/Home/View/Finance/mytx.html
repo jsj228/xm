@@ -1,0 +1,280 @@
+<include file="Public:header" />
+	
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('FINANCE_MY')}	</div>
+	<div class="main-content">
+
+<include file="Finance:left" />
+<div class="tag-list-content assets_content bg_w">
+	<h1 class="safe_center clear">
+		<span>
+			{:L('WITHDRAWAL')}					</span>
+			<span>
+			<a href="/finance/mytx.html" class="step fz_12 ml50 pd6 active">{:L('WITHDRAWAL')}</a>
+			<a href="/finance/outlog.html" class="step fz_12 ml20 pd6">{:L('WITHDRAWAL_RECORD')}</a>
+			<a href="/finance/bank.html" class="step fz_12 ml20 pd6">{:L('WITHDRAWAL_ADD_MAN')}</a>
+		</span>
+		<!--<span>-->
+			<!--<a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i><span class="fz_12 move">{:L('DETAILED_INFO')}</span></a>-->
+		<!--</span>-->
+	</h1>
+	<div id="hints" class="mytips" style="display:none;">
+		<notempty name="prompt_text">{$prompt_text}</notempty>
+	</div>
+	<div class="mytable-body ">
+
+		<div class="tx_tips">
+			<p>1.{:L('MIN_AMOUNT')}<b style="color:#ff0000">{:C('mytx_min')}</b>{:L('RMB')},
+			{:L('MAX_AMOUNT')}<b style="color:#ff0000">{:C('mytx_max')}</b>{:L('RMB')},
+			{:L('WITHDRAWAL_AMOUNT')}<b style="color:#ff0000">{:C('mytx_bei')}</b>{:L('Multiples')}
+			</p>
+			<p>2.{:L('Bank_TX')}<b style="color:#ff0000">{:L('HOUR_24')}</b>{:L('Bank_AFTER')}</p>
+			<p>3.{:L('DailyPresentation')}<b style="color:#ff0000">{:L('Times2')}</b>,{:L('itimes3')}</p>
+			<p>4.{:L('PresentTime')}<b style="color:#ff0000">{:L('workDay')}</b>{:L('noWork')}</p>
+		</div>
+		<div class="step1  pwtrade  pw  mt50">
+			<dl>
+				<dt>{:L('AVAILABLE')}：</dt>
+				<dd style="position:relative">
+					<select name="type" id="coin-select" style="padding-left:40px;background:url(__DOMAIN____UPLOAD__/coin/79ce839eebd198730c6e99a59ea1efc5.png) no-repeat 10px #161f2b;
+			background-size:26px;">
+						<option value="cny"  selected="selected"  >{:L('CNY')} (CNY)</option>
+					</select>
+					<span><font class="coin-balance">{$user_coin['cny']|NumToStr}</font></span>
+				</dd>
+			</dl>
+
+	<!-- 				<div class="weituo_bizhong" style="margin-left: 149px;
+    margin-bottom: 10px;">
+						<div class="bizhong_select">
+							<div class="bz_btn">
+								<img src="__DOMAIN____UPLOAD__/coin/79ce839eebd198730c6e99a59ea1efc5.png" alt="" class="currency_icon"/>
+								<span id="coin-default">
+									<select name="type" id="coin-select" style="margin-top: 6px;">
+										<option value="cny"  selected="selected"  >{:L('CNY')} (CNY)</option>
+									</select>
+								</span>
+							</div>
+						</div>
+
+						<div class="bizhong_type">
+							<span>{:L('AVAILABLE')}<em class="coin-name"></em>：<font class="coin-balance">{$user_coin['cny']|NumToStr}</font></span>
+						</div>
+					</div> -->
+					<dl>
+						<dt>{:L('WITHDRAWAL_ADDREESS')}：</dt>
+						<dd>
+							<span>
+								<select id="out_bank">
+									<option value="">--{:L('WITHDRAWAL_ADD_SELECT_CARD')}--</option>
+									
+									<volist name="userBankList" id="vo">
+										<option value="{$vo.id}">{$vo.name}</option>
+									</volist>
+									
+									 <option value="tianjia">{:L('WITHDRAWAL_ADD_NEW_ADD_CARD')}</option>
+								</select>
+							</span>
+						</dd>
+					</dl>
+					<dl>
+						<dt>{:L('WITHDRAWAL_MONEY')}：</dt>
+						<dd style="position: relative;">
+							<input type="number" id="out_num" maxlength="12">
+							<!--<notempty name="C['mytx_fee']">{:L('ORDER_MIN_5')}，{:L('WITHDRAWAL_FEE_MONEY')}{$C['mytx_fee']}%	</notempty>-->
+						</dd>
+					</dl>
+					<dl class="step6">
+						<dt>{:L('WITHDRAWAL_FEE_MONEY')}：</dt>
+						<dd>
+							<select id="myfee" style="width:350px">
+								<option value="0">{:L('urgentORnot')}</option>
+								<option value="0">{:L('option2')}</option>
+								<option value="1">{:L('option3')}</option>
+							</select>
+							<span>{:L('Minstart5')}</span>
+						</dd>
+					</dl>
+					<dl class="step5">
+						<dt>{:L('CODE_SEND')}：</dt>
+						<dd class="yuyin">
+							<div class="clear"><input type="button" value="{:L('CODE_SEND')}"onclick="send_moble_out('sms')" />
+								<span >{$moble}({:L('CODE_RECEIVE_USED')})</span>
+							</div>
+						</dd>
+					</dl>
+					<dl class="step6" style="display:none;">
+						<dt>{:L('CODE_SEND')}：</dt>
+						<dd>
+							<input type="text" id="out_moble_verify" value="" class="texts" placeholder="{:L('CODE_INPUT')}"/> <span id="reg_moble_new"></span>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt>{:L('TRAN_PWD')}：</dt>
+						<dd>
+							<input type="password" id="out_paypassword"  value=""><a href="/findpwd/findpwd" class="move">{:L('FORGET')}?</a>
+						</dd>
+					</dl>
+					<dl>
+						<dt></dt>
+						<dd>
+							<input type="button" value="{:L('WITHDRAWAL_NOW')}" onclick="out_up()">
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("#out_bank").change(function () {
+		var type = $("#out_bank option:selected").val();
+		if (type == 'tianjia') {
+			window.location = "/finance/bank.html";
+		}
+	});
+	function send_new() {
+		$(".step6").hide();
+		$(".step5").show();
+	}
+	function send_moble_out(type) {
+		$.post("{:U('Verify/mytx')}", {
+			type: type,
+		}, function (data) {
+			if (data.status == 1) {
+				layer.msg(data.info, {icon: 1});
+				$(".step5").hide();
+				$(".step6").show();
+				$("#out_moble_verify").focus();
+				$('#moble_new').attr("disabled", "disabled");
+				var obj      = $('#reg_moble_new');
+				var wait     = 60;
+				var interval = setInterval(function () {
+					obj.html(wait + "{:L('CODE_SEND_AGAIN')}");
+					wait--;
+					if (wait < 0) {
+						clearInterval(interval);
+						$(".reloadverify_new").click();
+						$("#verify_new").val('');
+						obj.html('<a class="move" onclick="send_new()">{:L(\'CODE_SEND_NO_AGAIN\')}</a>');
+					}
+					;
+				}, 1000);
+			} else {
+				layer.msg(data.info, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+	function out_up() {
+		var num          = $("#out_num").val();
+		var paypassword  = $("#out_paypassword").val();
+		var moble_verify = $("#out_moble_verify").val();
+		var bank         = $('#out_bank option:selected').val();
+		var myfee        = $('#myfee option:selected').val();
+		var coinname         = $('#coin-select option:selected').val();
+		console.log(myfee);
+		if (moble_verify == "" || moble_verify == null) {
+			layer.msg('{:L(\'VERIFICATION_CODE_INPUT\')}', {
+				icon: 2
+			});
+			return false;
+		}
+		if (num == "" || num == null) {
+			layer.tips('{:L(\'WITHDRAWAL_AMOUNT_INPUT\')}', '#out_num', {tips: 2});
+			return false;
+		}
+		if (bank == "" || bank == null) {
+			layer.tips('{:L(\'CHOOSE_WITH_ADD\')}', '#out_bank', {tips: 2});
+			return false;
+		}
+		if (paypassword == "" || paypassword == null) {
+			layer.tips('{:L(\'TRAN_PWD_ENTER\')}', '#out_paypassword', {tips: 2});
+			return false;
+		}
+		var goole ="0";
+		if(goole == 1){
+			layer.config({
+				extend: 'extend/layer.ext.js'
+			});
+			layer.ready(function () {
+				layer.prompt({
+					title: '{:L(\'GOOGLE_CODE\')}',
+					formType: 1
+				}, function (val) {
+					if (val) {
+						$.post("/finan/out_up", {
+							num: num,
+							paypassword: paypassword,
+							moble_verify: moble_verify,
+							bank: bank,
+							goole:val,
+							coinname:coinname,
+							myfee:myfee,
+						}, function (data) {
+							if (data.status == 1) {
+								layer.msg(data.info, {icon: 1});
+								window.location = '/finance/outlog.html';
+							} else {
+								layer.msg(data.info, {icon: 2});
+								if (data.url) {
+									window.location = data.url;
+								}
+							}
+						}, "json");
+					};
+				});
+			});
+		}else{
+			$.post("{:U('Finance/mytxUp')}", {
+				num: num,
+				paypassword: paypassword,
+				moble_verify: moble_verify,
+				type: bank,
+				coinname:coinname,
+				myfee:myfee,
+			}, function (data) {
+				if (data.status == 1) {
+					layer.msg(data.info, {icon: 1});
+					window.location = '/finance/outlog.html';
+				} else {
+					layer.msg(data.info, {icon: 2});
+					if (data.url) {
+						window.location = data.url;
+					}
+				}
+			}, "json");
+		}
+	}
+</script>
+<script>
+	$('.finan_out').addClass('active');
+</script>
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_out').addClass('active');
+</script>
+
+
+<include file="Public:footer" />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

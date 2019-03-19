@@ -1,0 +1,412 @@
+<include file="Public:header" />
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('DEPOSIT_COIN')}	</div>
+	<div class="main-content">
+
+<include file="Finance:left" />
+	<div class="tag-list-content assets_content bg_w">
+			<h1 class="safe_center clear">
+				<a href="..//Finance/index.html">{:L('FINANCE_MY')} </a> |  
+				<span>
+					{:L('DEPOSIT_COIN')}
+				</span>
+			</h1>
+			<div id="hints" class="mytips" style="display:none;">
+				<notempty name="prompt_text">{$prompt_text}</notempty>
+			</div>
+			<div class="mytable-body">
+				<div class="step1 cny_record">
+					<div class="weituo_bizhong">
+						<div class="bizhong_select">
+							<div class="bz_btn" style="position:relative">
+								<select name="type" id="coin-select" class="pl40W120" style="padding-left:40px;background:url(__DOMAIN____UPLOAD__/coin/{$coin_list[$xnb]['img']}) no-repeat 10px #161f2b;
+						background-size:26px;">
+									<volist name="coin_list" id="vo">
+										<eq name="xnb" value="$key">
+											<option value="{$vo['name']}" selected="selected">{$vo.title} ({$vo['name']|strtoupper})</option>
+										<else/>
+											<option value="{$vo['name']}">{$vo.title} ({$vo['name']|strtoupper})</option>
+										</eq>
+									</volist>
+								</select>
+							</div>
+						</div>
+						<div class="bizhong_type" >
+							<span>{:L('TOTAL_COIN')}<em class="coin-name"></em>：<font class="coin-balance">{$user_coin[$xnb]}</font></span>
+						</div>
+					</div>
+					<br>
+					
+					
+					<eq name="weike_opencoin" value="1">
+						<div class="cnyin_record">
+							<div style="margin-top:20px;">
+								<div id="pt-qrcode" style="display: inline-block;vertical-align:middle;">
+									<div id="qrcode-wallet" style="display: inline-block;background: #fff;">
+										<saon id="codeaa"></saon>
+									</div>
+									<p id="qrcode-t" style="font-size:12px;text-align:center;color: #fff;">{$coin_list[$xnb]['title']}{:L('WALLET_ADD')}</p>
+								</div>
+								<div class="ts" style="display: inline-block;vertical-align:-10px;border-left:1px solid #888;padding-left:7px;margin-left:7px">
+									<h2 class="qb_tishi">
+										{:L('WALLET_ADD_TIP')} <b class="coin-name">{$coin_list[$xnb]['title']}</b>{:L('WALLET_ADD_TIP_IN')}：
+										<notempty name="coin_list[$xnb]['zr_zs']">
+											<span id="zengsong" style="color: red; font-size: 14px;">转入即赠{$coin_list[$xnb]['zr_zs']}%</span>
+										</notempty>
+										<a style="color: #FD2537;text-decoration: underline;font-weight: bold;font-size: 14px;" target="_blank" href="{:U('Article/type',array('id'=>25))}">{$tishi}</a>
+									</h2>
+									<p id="wallets" class="qb_dizhi">
+										{$qianbao}
+									</p>
+								</div>
+								<eq name="xnb" value="eos">
+									<div class="ts" style="display: inline-block;vertical-align:-10px;border-left:1px solid #888;padding-left:7px;margin-left:7px">
+										<div class="qb_tishi">
+											<span id="eos" style="color: red; font-size: 14px;">{:L('WALLET_ADD_TIP_EOS')}</span>
+										</div>
+										<div class="qb_dizhi ts mb20">
+											<p id="memo">
+												{$mome}
+											</p>
+										</div>
+									</div>
+
+								</eq>
+
+								<eq name="xnb" value="xrp">
+									<div class="ts" style="display: inline-block;vertical-align:-10px;border-left:1px solid #888;padding-left:7px;margin-left:7px">
+										<div class="qb_tishi">
+											<span id="eos" style="color: red; font-size: 14px;">{:L('WALLET_ADD_TIP_XRP')}</span>
+										</div>
+										<div class="qb_dizhi ts mb20">
+											<p id="tag">
+												{$tag}
+											</p>
+										</div>
+									</div>
+
+								</eq>
+							</div>
+						</div>
+					<else/>
+
+						<div class="pwtrade  pw  mt50">
+								<dl>
+									<dt>{:L('TRANSFER_ADDRESS')}：</dt>
+									<dd>
+										<span>
+											{$qianbao}
+										</span>
+									</dd>
+								</dl>
+
+								
+								<dl>
+									<dt>{:L('ADD_FLAG')}：</dt>
+									<dd style="position: relative;">
+										<input type="text" class="texts" id="weike_dzbz" maxlength="100" value="">
+										(*{:L('ADD_FLAG_ASK')})
+									</dd>
+								</dl>
+								
+								
+								
+								<dl>
+									<dt>{:L('TRAN_QUANTITY')}：</dt>
+									<dd style="position: relative;">
+										<input type="text" class="texts" id="cny_num" maxlength="12" value="">
+																
+																</dd>
+								</dl>
+								<dl class="step5">
+									<dt>{:L('CODE')}：</dt>
+									<dd class="yuyin">
+										<div class="clear">
+											<input type="button" value="{:L('CODE_SEND')}" class="btns" onclick="send_moble_coinout('sms')" 
+											style="width: 100px;font-size: 12px;"/>{$moble}({:L('CODE_RECEIVE_USED')})
+										</div>
+									</dd>
+								</dl>
+								<dl class="step6" style="display:none;">
+									<dt>{:L('CODE')}：</dt>
+									<dd>
+										<input type="text" id="cny_moble_verify" value="" class="texts" placeholder="{:L('CODE_INPUT')}"/> <span id="reg_moble_new"></span>
+									</dd>
+								</dl>
+								<dl>
+									<dt>{:L('TRAN_PWD')}：</dt>
+									<dd>
+										<input type="password" class="texts" id="cny_paypassword"  value=""><a href="/findpwd/findpwd" class="move ml5">{:L('FORGET')}?</a>
+									</dd>
+								</dl>
+								<dl>
+									<dt></dt>
+									<dd>
+										<empty name="zc_jz">
+											<input type="button" class="btns2" value="{:L('TRANSFER_NOW')}" onclick="coinin_up()">
+										<else/>
+											<input type="button" class="btns2" value="{$zr_jz}" disabled>
+										</empty>
+									</dd>
+								</dl>
+						</div>
+
+					
+					</eq>
+					
+					
+					
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				<div class="step2 f_body">
+					
+					<eq name="weike_opencoin" value="1">
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:L('TRANSFER_TIME')}</th>
+							<th>{:L('TRANSFER_COIN_TYPE')}</th>
+							<th>{:L('TRANSFER_QUANTITY')}</th>
+							<th>{:L('TRANSFER_FEE')}</th>
+							<th>{:L('ARRIVAL_AMOUNT')}</th>
+							<th>{:L('STATE')}</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+                        <volist name="list" id="vo">
+                            <tr>
+                                <td>{$vo.addtime|addtime}</td>
+                                <td>{$vo.coinname}</td>
+                                <td>{$vo['num']|NumToStr}</td>
+                                <td>{$vo['fee']|NumToStr}</td>
+                                <td>{$vo['mum']|NumToStr}</td>
+                                <td>
+                                    <eq name="vo.status" value="1">
+                                        <font color="#39E2A2">{:L('SUCCESS_DEPOSIT')} </font>
+                                        <else/>
+                                        <font color="red">{:L('WAIT_FOR')}{$vo.status|abs}{:L('WAIT_FOR_CONFIRM')}</font>
+                                    </eq>
+                                </td>
+                            </tr>
+                        </volist>
+						
+						
+						</tbody>
+					</table>
+					<else/>
+					
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:L('TRANSFER_TIME')}</th>
+							<th>{:L('ADD_FLAG')}</th>
+							<th>{:L('TRANSFER_COIN_TYPE')}</th>
+							<th>{:L('TRANSFER_QUANTITY')}</th>
+							<th>{:L('ARRIVAL_AMOUNT')}</th>
+							<th>{:L('STATE')}</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+                        <volist name="list" id="vo">
+                            <tr>
+                                <td>{$vo.addtime|addtime}</td>
+								<td>{$vo['txid']}</td>
+                                <td>{$vo.coinname}</td>
+                                <td>{$vo['num']|NumToStr}</td>
+                                <td>{$vo['mum']|NumToStr}</td>
+                                <td>
+                                    <eq name="vo.status" value="1">
+                                        <font color="#39E2A2">{:L('SUCCESS_DEPOSIT')} </font>
+                                        <else/>
+                                        <font color="red">{:L('WAIT')}</font>
+                                    </eq>
+                                </td>
+                            </tr>
+                        </volist>
+						
+						
+						</tbody>
+					</table>
+					
+					
+					
+					</eq>
+					
+					
+					<div class="pages"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/comfile/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+		$('#codeaa').qrcode({
+		render: "table", //table方式
+		width: 100, //宽度
+		height: 100, //高度
+		text: "{$qianbao}" //任意内容
+	});
+	</script>
+<script>
+
+    $("#coin-select").change(function () {
+        var coin   = $("#coin-select option:selected").val();
+        if(coin=='drt'){
+            window.location = '{:U("Finance/mbizr")}';
+        }else{
+            window.location = '/Finance/myzr/coin/' + coin + '.html';
+        }
+    });
+	
+	
+	
+	function send_new() {
+		$(".step6").hide();
+		$(".step5").show();
+	}
+	function send_moble_coinout(type) {
+		$.post("{:U('Verify/myzr')}", {
+			type: type,
+		}, function (data) {
+			if (data.status == 1) {
+				layer.msg(data.info, {icon: 1});
+				$(".step5").hide();
+				$(".step6").show();
+				$("#cnyout_moble_verify").focus();
+				$('#moble_new').attr("disabled", "disabled");
+				var obj      = $('#reg_moble_new');
+				var wait     = 60;
+				var interval = setInterval(function () {
+					obj.html(wait + "{:L('CODE_SEND_AGAIN')}");
+					wait--;
+					if (wait < 0) {
+						clearInterval(interval);
+						$(".reloadverify_new").click();
+						$("#verify_new").val('');
+						obj.html('<a class="move" onclick="send_new()">{:L("CODE_SEND_NO_AGAIN")}</a>');
+					}
+					;
+				}, 1000);
+			} else {
+				layer.msg(data.info, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+	function coinin_up() {
+		var num          = $("#cny_num").val();
+		var paypassword  = $("#cny_paypassword").val();
+		var moble_verify = $("#cny_moble_verify").val();
+		var weike_dzbz = $("#weike_dzbz").val();
+		var coin         = $('#coin-select option:selected').val();
+		if (!moble_verify) {
+			layer.msg('{:L("CODE_INPUT")}', {icon: 2});
+			return false;
+		}else if (!num) {
+			layer.tips('{:L("TRAN_QUANTITY_INPUT")}', '#cny_num', {tips: 2});
+			return false;
+		}else if (!paypassword) {
+			layer.tips('{:L("TRAN_PWD_ENTER")}', '#cny_paypassword', {tips: 2});
+			return false;
+		}else if (!coin) {
+			layer.tips('{:L("coin-select option:selected")}', '#coin-select', {tips: 2});
+			return false;
+		}
+		var goole ="0";
+		if(goole == 1){
+			layer.config({
+				extend: 'extend/layer.ext.js'
+			});
+			layer.ready(function () {
+				layer.prompt({
+					title: '{:L("GOOGLE_CODE")}',
+					formType: 1
+				}, function (val) {
+					if (val) {
+						$.post("/finan/coinout_up", {
+							coin:coin,
+							num: num,
+							paypassword: paypassword,
+							moble_verify: moble_verify,
+							bank: bank,
+							goole:val,
+						}, function (data) {
+							if (data.status == 1) {
+								layer.msg(data.info, {
+									icon: 1
+								});
+								window.location = "/finan/coinoutlog.html";
+							} else {
+								layer.msg(data.info, {
+									icon: 2
+								});
+								if (data.url) {
+									window.location = data.url;
+								}
+							}
+						}, "json");
+					}
+					;
+				});
+			});
+		}else{
+			$.post("{:U('Finance/upmyzr')}", {
+				coin:coin,
+				num: num,
+				paypassword: paypassword,
+				moble_verify: moble_verify,
+				weike_dzbz:weike_dzbz,
+			}, function (data) {
+				if (data.status == 1) {
+					layer.msg(data.info, {
+						icon: 1
+					});
+					window.location = "/finance/myzr.html";
+				} else {
+					layer.msg(data.info, {
+						icon: 2
+					});
+					if (data.url) {
+						window.location = data.url;
+					}
+				}
+			}, "json");
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+
+
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_index').addClass('active');
+</script>
+<include file="Public:footer" />

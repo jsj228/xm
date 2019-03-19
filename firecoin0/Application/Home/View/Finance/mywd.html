@@ -1,0 +1,138 @@
+<include file="Public:header" />
+
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('RECOMMENDATION')}</div>
+	<div class="main-content">
+<include file="Finance:left" />
+	<div class="tag-list-content">
+			<div class="assets_content bg_w">
+				<h1 class="safe_center clear">
+					<span  style="margin-right:15px" >用户奖励  |</span>
+					<a href="/Finance/myawardifc.html">{:L('REWARDS')}</a>
+					<a href="/Finance/mywd.html"  class="active" style="margin-left:15px">{:L('RECOMMENDATION')}</a>
+					<a href="/Finance/myjp.html"  style="margin-left:15px">{:L('PUSHREWARDS')}</a>
+				</h1>
+				<div id="hints" class="mytips" style="display:none;">
+					<notempty name="prompt_text">
+						{$prompt_text}
+					</notempty>
+				</div>
+				<div class="mytable-body ">
+					<div class="f_body  step2">
+						<table class="f_table" id="investLog_content">
+							<thead>
+							<tr>
+								<th width="180" style="text-align: left; padding-left: 30px;">{:L('REFERRER')}</th>
+								<th>{:L('USER_ID')}</th>
+								<th>{:L('REGISTRATION_TIME')}</th>
+								<th>{:L('AUTHENTICATION_Y_N')}</th>
+							</tr>
+							</thead>
+							<tbody>
+
+		<volist name="list" id="v">
+		<tr>
+		<td style="text-align: left; padding-left: 20px;">
+			<a href="javascript:void(0)" onclick="Address({$v['id']})" class="eee">
+				<img class="invit_img_{$v['id']}" src="__PUBLIC__/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('REFERRAL_TOP')}({$v.invitss})
+			</a>
+		</td>
+		<td>{$v.username|substr_replace='****',3,6}</td>
+		<td>{$v.addtime|addtime}</td>
+		<td>
+			<eq name="v.idcardauth" value='0'> <font class="buy">{:L('UNVERIFIED')} </font> <else /> <font class="green"> {:L('VERIFIED')}({$v.invitss})</font></eq>
+		</td>
+		</tr>
+
+		<notempty name="v['invits']"> <volist name="v['invits']" id="vv">
+		<tr class="invit_{$v['id']}" style="display: none;">
+			<td style="text-align: left; padding-left: 40px;">
+				<a href="javascript:void(0)" onclick="Address({$vv['id']})">
+					<img class="invita_img_{$v['id']} invit_img_{$vv['id']}" src="__PUBLIC__/Home/images/jia.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('REFERRAL_SEC')}({$vv.invitss})
+				</a>
+			</td>
+			<td>{$vv.username|substr_replace='****',3,6}</td>
+			<td>{$vv.addtime|addtime}</td>
+			<td>
+				<empty name="vv.moble"> <font class="buy">{:L('UNVERIFIED')} </font> <else /> <font class="green">{:L('VERIFIED')} </font></empty>
+			</td>
+		</tr>
+
+		<notempty name="vv['invits']"> <volist name="vv['invits']" id="vvv">
+		<tr class="invita_{$v['id']} invit_{$vv['id']} " style="display: none;">
+			<td style="text-align: left; padding-left: 60px;">
+				<a href="javascript:void(0)" onclick="Address({$vvv['id']})">
+					<img class="invita_img_{$v['id']} invit_img_{$vvv['id']}" src="__PUBLIC__/Home/images/jian.png" style="width: 18px; vertical-align: middle; margin-top: -5px;">{:L('REFERRAL_THIRD')}
+				</a>
+			</td>
+			<td>{$vvv.username|substr_replace='****',3,6}</td>
+			<td>{$vvv.addtime|addtime}</td>
+			<td>
+				<empty name="vvv.moble"> <font class="buy">{:L('UNVERIFIED')} </font> <else /> <font class="green">{:L('VERIFIED')} </font></empty>
+			</td>
+		</tr>
+		</volist>
+		</notempty>
+		</volist>
+		</notempty>
+		</volist>
+
+							</tbody>
+						</table>
+						<div class="pages">{$page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+
+	function Address(id){
+		var img1="__PUBLIC__/Home/images/jia.png";
+		var img2="__PUBLIC__/Home/images/jian.png";
+		var img=$(".invit_img_"+id).attr("src");
+
+
+		//alert(img)
+		if(img==img1){
+			$(".invit_img_"+id).attr("src",img2);
+
+			$(".invit_"+id).show();
+		}else{
+			$(".invit_img_"+id).attr("src",img1);
+			$(".invita_img_"+id).attr("src",img1);
+			$(".invit_"+id).hide();
+			$(".invita_"+id).hide();
+		}
+	}
+
+	function Addressb(id){
+		var img1="__PUBLIC__/Home/images/jia.png";
+		var img2="__PUBLIC__/Home/images/jian.png";
+		var img=$(".invit_img_"+id).attr("src");
+
+
+		//alert(img)
+		if(img==img1){
+			$(".invit_img_"+id).attr("src",img2);
+
+			$(".invit_"+id).show();
+		}else{
+			$(".invit_img_"+id).attr("src",img1);
+			$(".invit_"+id).hide();
+			$(".invita_"+id).hide();
+		}
+	}
+
+	$('.finan_awardd').addClass('active');
+    $('#finance_box').addClass('active');
+</script>
+
+<include file="Public:footer" />

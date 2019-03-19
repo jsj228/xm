@@ -1,0 +1,104 @@
+{include file="public:header" /}
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:url('Activity/myaward')}">充值奖励</a> >></span>
+            <span class="h1-title">{empty name="data"}添加奖励 {else/} 编辑奖励 {/empty}</span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form_form" action="{:url('Activity/myawardEdit')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+
+								<tr class="controls">
+									<td class="item-label">充值用户 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="username" value="{$data['username']}">
+									</td>
+									<td class="item-note">充值用户</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">充值数量 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="amount" value="{$data['amount']}">
+									</td>
+									<td class="item-note">充值数量</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">充值单号 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="tradeno" value="{$data.tradeno}" id="tradeno" readonly style="color: red;"/>
+									</td>
+									<td class="item-note">充值单号</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">奖励币种 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="award_currency" value="{$data.award_currency}">
+									</td>
+									<td class="item-note">奖励币种</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">奖励数量 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="award_num" value="{$data.award_num}">
+									</td>
+									<td class="item-note">奖励数量</td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											{notempty name="data.id"}<input type="hidden" name="id" value="{$data.id}"/>{/notempty}
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+					//提交表单
+					
+					$('#submit').click(function () {
+						$('#form_form').submit();
+					});
+
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:url('Activity/myaward')}");
+
+		$(document).ready(function () {
+            var amount = "<?php echo $data['id'];?>";
+            if(amount == '') {
+                var vNow = new Date();
+                var sNow = "";
+                sNow += String(vNow.getFullYear());
+                sNow += String(vNow.getMonth() + 1);
+                sNow += String(vNow.getDate());
+                sNow += String(vNow.getHours());
+                sNow += String(vNow.getMinutes());
+                sNow += String(vNow.getSeconds());
+                sNow += String(vNow.getMilliseconds());
+                document.getElementById("tradeno").value = sNow;
+            }
+        });
+	</script>
+</block>

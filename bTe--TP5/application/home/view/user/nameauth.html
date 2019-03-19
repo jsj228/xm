@@ -1,0 +1,275 @@
+{include file="public:header" /}
+
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i>
+        <a href="/" class="">{:lang('ADDRESS')} </a> &gt;
+        <a href="/user/index.html" class="">{:lang('SAFE')} </a> &gt;{:lang('REAL_NAME_VERIFY')}
+    </div>
+    <div class="main-content">
+        <style>
+            .nav-tab-list .nav-tab-hover {
+                width: 100%;
+                top: 60px;
+                height: 50px;
+                line-height: 50px;
+                background: #EAEDF4;
+                position: absolute;
+                box-sizing: content-box;
+                z-index: 1;
+                transition: all 0.5s;
+                -webkit-transition: all 0.5s;
+                display: none;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                (function () {
+                    var tab = $('.nav-tab-list dd');
+                    var hover = $('.nav-tab-hover');
+                    var pos = 0;
+                    tab.each(function (index) {
+                        var $this = $(this);
+                        if ($this.hasClass('active')) {
+                            pos = index;
+                        }
+                        $this.hover(function () {
+                            _moveTo(index);
+                        }, function () {
+                            _moveTo(pos);
+                        });
+                    });
+                    _moveTo(pos);
+                    $('.nav-tab-hover').show();
+
+                    function _moveTo(index) {
+                        hover.css("top", 0 + 50 * index);
+                        tab.removeClass('active');
+                        tab.eq(index).addClass('active');
+                    }
+                })();
+            });
+            $(window).on('scroll resize', function () {
+                if (document.body.scrollTop < 100) {
+                    $('#left-nav-bar').css("top", 0);
+                } else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+                    $('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+                } else {
+                    $('#left-nav-bar').css("top", document.body.scrollTop - 100);
+                }
+            });
+        </script>
+
+        {include file="user:left" /}
+
+        <div class="tag-list-content assets_content bg_w">
+            <div class="safe_center clear">
+                <h1>
+					<span>{:lang('REAL_NAME_VERIFY')}</span>
+                    <span><a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i>
+                    <span class="fz_12 move">{:lang('DETAILED_INFO')}</span></a></span>
+                </h1>
+            </div>
+            <div id="hints" class="mytips" style="display:none;">
+                <p>
+                    {notempty name="prompt_text"}{$prompt_text}</notempty}
+                </p>
+            </div>
+            <div class="pwtrade">
+
+                {eq name="user['idcardauth']" value='0'}
+                    {eq name="user['idcardimg1']" value=''}
+
+                        <div class="band_succ move" style="padding-left: 210px;color: red !important;">
+                            <i class="fa fa-check mr5"></i>
+                            {:lang('REAL_NAME_NOT_PASS')}
+                        </div>
+
+                        {else/}
+
+                        <div class="band_succ move" style="padding-left: 210px;color: red !important;">
+                            <i class="fa fa-check mr5"></i>
+                            {eq name="user['idcardinfo']" value=''>{:lang('PENDING_AUDIT')}.
+                                {else/}
+                                {$user['idcardinfo']}.<br>
+                                {:lang('UP_ID_PHOTO_RULE')}
+                            {/eq}
+                        </div>
+
+                    {/eq}
+                    {else/}
+                    <div class="band_succ move" style="padding-left: 210px;">
+                        <i class="fa fa-check mr5"></i>
+                        {:lang('REAL_NAME_PASS')}
+                    </div>
+                {/eq}
+
+                <br>
+                <div class="set_verify">
+                    <ul>
+                        <li>{:lang('UR_ID')}</li>
+                        <li>{:lang('REAL_NAME')}：{$user.truename}</li>
+                        <li>{:lang('CERTIFICATE_TYPE')}：{:lang('ID_CARD')}</li>
+                        <li>{:lang('CERTIFICATE_NUM')}：{$user.idcard}</li>
+                        {eq name="user['idcardauth']" value='0'}
+                            {neq name="userimg" value=''}
+                                {$userimg}
+                            {/neq}
+                        {/eq}
+                        <li>{:lang('REAL_NAME_VERIFY_TIME')}：{$user['addtime']|addtime}</li>
+                        <li>
+                            <input type="button" class="btns2" onclick="$('.set_verify_img').slideToggle();"
+                                   value="{:lang('MODIFY_REAL_NAME_AUTH')}">
+                        </li>
+                    </ul>
+                </div>
+                <div class="set_verify_img" style="display:none;">
+                    <div class="sv_title">{:lang('MODIFY_REAL_NAME_AUTH_PROCESS')}：</div>
+                    <div class="sv_text">
+                        <p><span>1.</span>{:lang('SEND_DOC')}</p>
+                        <p><span>2.</span>{:lang('SEND_DOC_RESULT')} </p>
+                        <p><span>3.</span>{:lang('SEND_DOC_RESULT_Y')} </p>
+                        <p><span>4.</span>{:lang('SEND_DOC_RESULT_N')} </p>
+                    </div>
+                </div>
+
+                <div class="set_upload_img" style="display:none;">
+                </div>
+            </div>
+
+            {eq name="allowImg" value="true"}
+                <div class="pwtrade" id="shang_qq_chuandiv">
+
+                    <div class="band_succ move" style="padding-left: 210px;color: red !important;">
+                        <i class="fa fa-check mr5"></i>{:lang('UP_ID_PHOTO_RULE')}
+                        <br/>
+                        {:lang('ID_PHOTO_RULE')}
+                    </div>
+
+                    <br>
+                    <div class="set_verify">
+                        <ul>
+                            <li>
+                                <style>
+                                    .file {
+                                        position: relative;
+                                        display: inline-block;
+                                        background: #D0EEFF;
+                                        border: 1px solid #99D3F5;
+                                        border-radius: 4px;
+                                        padding: 4px 12px;
+                                        overflow: hidden;
+                                        color: #1E88C7;
+                                        text-decoration: none;
+                                        text-indent: 0;
+                                        line-height: 20px;
+                                    }
+
+                                    .file input {
+                                        position: absolute;
+                                        font-size: 100px;
+                                        right: 0;
+                                        top: 0;
+                                        opacity: 0;
+                                    }
+
+                                    .file:hover {
+                                        background: #AADFFD;
+                                        border-color: #78C3F3;
+                                        color: #004974;
+                                        text-decoration: none;
+                                    }
+
+                                    .sv_text p {
+                                        padding-left: 5px;
+                                    }
+                                </style>
+
+
+                                <a id="up_img" onclick="getElementById('inputfile').click()" style="cursor:pointer;display: block;text-align: center;" class="btns2" >{:lang('ADD_IMG')}</a>
+                                     <!--src="/Public/Admin/images/addimg.png">-->
+                                <input type="file" accept="image/gif, image/jpeg, image/jpg, image/png" id="inputfile" style="height:0;width:0;z-index: -1; position: absolute;left: 10px;top: 5px;" value=""/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {/eq}
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var hints = "0";
+    if (hints == 1) {
+        $('#hints').show();
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        //响应文件添加成功事件
+        $("#inputfile").change(function () {
+            //创建FormData对象
+            var data = new FormData();
+            //为FormData对象添加数据
+            $.each($('#inputfile')[0].files, function (i, file) {
+                data.append('upload_file' + i, file);
+            });
+
+            //发送数据
+            $.ajax({
+                url: '/ajax/imgUser',
+                type: 'POST',
+                data: data,
+                cache: false,
+                contentType: false,		//不可缺参数
+                processData: false,		//不可缺参数
+                success: function (data) {
+                    if (data) {
+                        if (data == "error") {
+                            alert("{:lang('UP_FILE_ERROR')}！");
+                            return false;
+                        }
+
+                        if (data == "error2") {
+                            alert("{:lang('UP_FILR_MUCH_ERROR')}！");
+                            return false;
+                        }
+
+                        $('<img />', {
+                            src: '__DOMAIN__/Upload/newcard/' + data,
+                            height: "100px",
+                            width: "300px",
+                        }).appendTo($('.set_upload_img'));
+
+
+                        $('.set_upload_img').show();
+
+                        if ($('.set_upload_img').find('img').length >= 3) {
+                            $('#shang_qq_chuandiv').hide();
+                            alert("{:lang('UP_FILR_MUCH_SUCCESS')}");
+                        }
+
+                        //$('#up_img').attr("src", '/Upload/newcard/' + data);
+                        //$('#up_img').attr("height", '100px');
+                        //$('#up_img').attr("width", '300px');
+                        //$('#up_img').attr("disabled", 'true');
+                        //$('#up_img').show();
+                    }
+                },
+                error: function () {
+                    alert("{:lang('UPLOAD_ERROR')}");
+                    $('.set_upload_img').hide();
+                    //$(".loading").hide();	//加载失败移除加载图片
+                }
+            });
+
+        });
+    });
+
+</script>
+<script>
+    $('.user_truename').addClass('active');
+</script>
+
+{include file="public:footer"/}

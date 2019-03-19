@@ -1,0 +1,218 @@
+<include file="Public:header"/>
+
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:L('ADDRESS')} </a> {:L('FIND_LOGIN_PWD')}
+    </div>
+    <!--<div class="login_step">-->
+        <!--<ul class="order clear" style="margin-left: 312px;">-->
+            <!--<li><i class="fa fa-circle  fz_40 move"><span>1</span></i> {:L('FIND_TRAN_PWD_CONFIRM_ID')}-->
+                <!--<div class="order_line"></div>-->
+            <!--</li>-->
+            <!--<li><i class="fa fa-circle  fz_40"><span>2</span></i>{:L('FIND_LOGIN_PWD_RESET')}-->
+                <!--<div class="order_line"></div>-->
+            <!--</li>-->
+            <!--<li><i class="fa fa-circle  fz_40"><span>3</span></i>{:L('FIND_TRAN_PWD_FINISHED')}</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <div class="reg_box ">
+        <div class="mt50" >
+            <div id="reg_index" class="reg_wrap">
+                <p class="reg_input_box" id="moble_reg">
+                    <span class="mask_wrap_title">{:L('MOBLE')}：</span>
+                    <input type="text" id="moble" onblur="check_moble()"/>
+                    <!--<input type="text" id="moble" class="texts w300 hg40" placeholder="{:L('MOBLE_INPUT')}" onblur="check_moble()"/>-->
+                </p>
+                <p class="reg_input_box">
+                    <span class="mask_wrap_title">{:L('VERIFICATION_CODE')}：</span>
+                    <input id="moble_verify" type="text" placeholder="{:L('VERIFICATION_CODE_INPUT')}"/>
+                    <span id="reg_moble" class="" ></span>
+                    <!-- style="position: absolute; left: 400px;top:6px;" -->
+
+                </p>
+                <p class="login_button">
+                    <input type="button" onclick="findpwd_up();" value="{:L('FIND_LOGIN_PWD')}">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="all_mask_loginbox" id="step1">
+    <div class="login_title pl20">{:L('CODE_SEND')}</div>
+    <form id="form-login" class="mask_wrap login-fb">
+        <p class="login_text">
+            <span class="mask_wrap_title">{:L('GRAPHIC_VERIFICATION_CODE')}：</span>
+            <input type="text" id="verify" value=""/>
+            <span style="vertical-align: -14px;line-height: 20px;">
+				<img id="verify_up" class="codeImg reloadverify" src="{:U('Verify/code')}" title="{:L('CHANGE_IT')}" onclick="this.src=this.src+'?t='+Math.random()" width="100" height="34">
+			</span>
+        </p>
+        <p class="login_text">
+            <span class="mask_wrap_title">{:L('CODE_RECEIVE')}：</span>
+            <input type="button" value="{:L('CODE_SEND')}"onclick="moble_findpwd()" />
+        </p>
+    </form>
+    <div class="mask_wrap_close iconfont" onclick="showB()"></div>
+</div>
+<div id="step2" class="all_mask" style="height: 0px;display: none;"></div>
+
+<script>
+
+    //手机国家选择
+    $(
+        $("#moble").intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            // autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            initialCountry: "cn",
+//             nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,
+            utilsScript: "__PUBLIC__/Home/js/utils.js"
+        })
+    );
+
+    $(function () {
+        var height = $(document).height();
+        if (height < 1000) {
+            height = 1000;
+        }
+        $('#step2').height(height);
+    });
+
+
+    function showB() {
+        $("#step1").hide();
+        $("#step2").hide();
+    }
+
+    function check_moble() {
+        var moble = $('#moble').val();
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        if (moble == "" || moble == null) {
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        $.post("/Login/check_pwdmoble.html", {
+            moble: moble,
+            dial_code:dial_code,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                $('#reg_moble').html('<a class="eee" onclick="new_send()">{:L(\'CLICK_SEND_CODE\')}</a>');
+            } else {
+                layer.tips(data.info, '#moble', {tips: 2});
+                return false;
+            }
+        }, 'json');
+    }
+
+
+    function new_send() {
+        $("#step1").show();
+        $("#step2").show();
+    }
+
+
+    function moble_findpwd() {
+        var moble = $("#moble").val();
+        var verify = $("#verify").val();
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        if (moble == "" || moble == null) {
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        if (verify == "" || verify == null) {
+            layer.tips("{:L('GRAPHIC_VERIFICATION_CODE_INPUT')}", '#verify', {tips: 2});
+            return false;
+        }
+        $.post("/verify/moble_findpwd.html", {
+            moble: moble,
+            verify: verify,
+            dial_code:dial_code,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                $("#step1").hide();
+                $("#step2").hide();
+                $("#moble_verify").focus();
+                $('#moble').attr("disabled", "disabled");
+                var obj = $('#reg_moble');
+                var wait = 60;
+                var interval = setInterval(function () {
+                    obj.html("<a class='eee'>" + wait + "{:L('CODE_SEND_AGAIN')}" + "</a>");
+                    wait--;
+                    if (wait < 0) {
+                        clearInterval(interval);
+                        $(".reloadverify").click();
+                        $("#verify").val('');
+                        obj.html('<a class="eee" onclick="new_send()">{:L(\'CLICK_SEND_AGAIN\')}</a>');
+                    }
+                    ;
+                }, 1000);
+            } else {
+                $(".reloadverify").click();
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+
+    function findpwd_up() {
+        var moble = $("#moble").val();
+        var moble_verify = $("#moble_verify").val();
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        if (moble == "" || moble == null) {
+            layer.tips("{:L('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        if (moble_verify == "" || moble_verify == null) {
+            layer.tips("{:L('VERIFICATION_CODE_INPUT')}", '#moble_verify', {tips: 2});
+            return false;
+        }
+
+        $.post("/Login/findpwd.html", {
+            moble: moble,
+            moble_verify: moble_verify,
+            dial_code:dial_code,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location = '/Login/findpwdconfirm';
+
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+</script>
+<script>
+    $('#index_box').addClass('active');
+</script>
+
+<include file="Public:footer" />

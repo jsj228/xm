@@ -1,0 +1,82 @@
+<include file="Public:header" />
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('REWARDS')}	</div>
+    <div class="main-content">
+
+
+        <include file="Finance:left" />
+
+        <div class="tag-list-content">
+            <div class="assets_content bg_w">
+                <h1 class="safe_center clear">{:L('REWARDS')}  
+                    <a class="right" onclick="$('#hints').slideToggle();">
+                        <i class="fa fa-hand-o-right move fz_14 mr5"></i>
+                        <span class="fz_12 move">{:L('DETAILED_INFO')}</span>
+                     </a> 					
+                </h1>
+                <div id="hints" class="mytips" style="display:none;">
+                    <notempty name="prompt_text">{$prompt_text}</notempty>
+                </div>
+                <div class="mytable-body ">
+                    <div class="f_body  step2">
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:L('USER_ID')}</th>
+                                <th>{:L('REWARD_TYPE')}</th>
+                                <th>{:L('REWARD_QUANTITY')}</th>
+                                <th>{:L('REWARD_STATE')}</th>
+                                <th>{:L('OPERATE_TIME')}</th>
+                                <th>{:L('OPERATE')}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td>{$vo.username|substr_replace='****',3,4}</td>
+                                    <td>{$vo.award_currency}</td>
+                                    <td>{$vo.award_num}</td>
+                                    <td>{:L('EXPECTED')} {$vo.arrival_time|addtime} {:L('ARRIVED')}</td>
+                                    <td>{$vo.addtime|addtime}</td>
+                                    <td><a onclick="jiedong({$vo['id']}, {$vo['addtime']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:L('THAW')}</a></td>
+                                </tr>
+                            </volist>
+
+                            </tbody>
+                        </table>
+                        <div class="pages">{$page}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_awardd').addClass('active');
+
+    function jiedong(id, time) {
+        $.post("/Finance/myaward", {id: id, time: time}, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location.reload();
+            } else {
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+    }
+</script>
+<include file="Public:footer" />

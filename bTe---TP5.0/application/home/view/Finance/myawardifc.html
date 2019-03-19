@@ -1,0 +1,77 @@
+{include file="Public:header" /}
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('REWARDS')}	</div>
+    <div class="main-content">
+
+        {include file="Finance:left" /}
+
+        <div class="tag-list-content">
+            <div class="assets_content bg_w">
+                <div class="safe_center clear ">
+                    <h1>{:lang('REWARDS')}  
+                        <a class="right" onclick="$('#hints').slideToggle();"> <i class="fa fa-hand-o-right move fz_14 mr5"></i> <span class="fz_12 move">{:lang('DETAILED_INFO')}</span></a> 					
+                    </h1>
+                </div>
+                <div id="hints" class="mytips" style="display:none;">
+                    {notempty name="prompt_text"}{$prompt_text}{/notempty}
+                </div>
+                <div class="mytable-body ">
+                    <div class="f_body  step2">
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:lang('USER_ID')}</th>
+                                <th>{:lang('REWARD_TYPE')}</th>
+                                <th>{:lang('REWARD_CURRENCY')}</th>
+                                <th>{:lang('REWARD_QUANTITY')}</th>
+                                <th>{:lang('REWARD_STATE')}</th>
+                                <th>{:lang('OPERATE_TIME')}</th>
+                                <th>{:lang('OPERATE')}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $list as $vo}
+            
+                                <tr>
+                                    <td>{$vo.one|substr_replace='****',3,4}</td>
+                                    <td>{$vo['award_type']}</td>
+                                    <td>{$vo['title']}({$vo['name']})</td>
+                                    <td>{$vo['nums'] / $vo['n']}</td>
+                                    <td>{$vo['award_status']}</td>
+                                    <td>{$vo['add_time']}</td>
+                                    <td><a onclick="jiedong({$vo['id']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:lang('THAW')}</a></td>
+                                </tr>
+                            {/foreach}
+
+                            </tbody>
+                        </table>
+                        <div class="pages">{$list->render()}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_awardd').addClass('active');
+
+    function jiedong(id) {
+        $.post("{:url('/Finance/myawardifc')}", {id: id}, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location.reload();
+            } else {
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+    }
+</script>
+{include file="Public:footer" /}

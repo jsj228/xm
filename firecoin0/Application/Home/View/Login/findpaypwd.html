@@ -1,0 +1,179 @@
+<include file="Public:header" />
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">首页</a>&gt; 找回登录密码	</div>
+	<!--<div class="login_step">-->
+		<!--<ul class="order clear" style="margin-left: 312px;">-->
+			<!--<li><i class="fa fa-circle  fz_40 move"><span>1</span></i>确认账号<div class="order_line"></div></li>-->
+			<!--<li><i class="fa fa-circle  fz_40"><span>2</span></i>重置密码<div class="order_line"></div></li>-->
+			<!--<li><i class="fa fa-circle  fz_40"><span>3</span></i>完成</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+	<div class="reg_box ">
+		<div id="reg_index" class="reg_wrap">
+			<p class="reg_input_box" id="moble_reg">
+				<span class="mask_wrap_title">{:L('PHONE_INPUT')}：</span>
+				<input type="text" id="moble" placeholder="{:L('MOBLE_INPUT')}" onblur="check_moble()"/>
+			</p>
+			<p class="reg_input_box">
+				<span class="mask_wrap_title">{:L('VERIFICATION_CODE')}：</span>
+				<input id="moble_verify" type="text" placeholder="{:L('CODE_INPUT')}"/><span id="reg_moble" class=""></span>
+				 <!-- style="position: absolute;left: 210px;top: 2px;" -->
+			</p>
+			<p class="login_button">
+				<input type="button"onclick="findpwd_up();" value="{:L('FIND_LOGIN_PWD')}">
+			</p>
+		</div>
+	</div>
+</div>
+<div class="all_mask_loginbox" id="step1">
+	<div class="login_title pl20">验证手机</div>
+	<form id="form-login" class="mask_wrap login-fb">
+		<p class="login_text">
+			<span class="mask_wrap_title">图形验证码：</span>
+			<input type="text" id="verify" value=""/>
+			<span >
+				<img id="verify_up" class="codeImg reloadverify" src="{:U('Verify/code')}" title="换一张" onclick="this.src=this.src+'?t='+Math.random()" width="100" height="34">
+			</span>
+		</p>
+		<p class="login_text">
+			<span class="mask_wrap_title">获取验证码：</span>
+			<input type="button" value="发送短信验证码" onclick="moble_findpwd('sms')"/>
+		</p>
+	</form>
+	<div class="mask_wrap_close" onclick="showB()"><i class="fa fa-times fz_20 move" aria-hidden="true"></i></div>
+</div>
+<div id="step2" class="all_mask" style="height: 0px;display: none;"></div>
+
+<script>
+	$(function () {
+		var height = $(document).height();
+		if (height < 1000) {
+			height = 1000;
+		}
+		$('#step2').height(height);
+	});
+
+	function showB() {
+		$("#step1").hide();
+		$("#step2").hide();
+	}
+
+	function check_moble() {
+		var moble  = $('#moble').val();
+		if (moble == "" || moble == null) {
+			layer.tips("请输入手机号", '#moble', {tips: 2});
+			return false;
+		}
+		$.post("/findpwd/check_moble.html", {
+			moble: moble,
+			token: ""
+		}, function (data) {
+			if (data.status == 1) {
+				$("#step1").show();
+				$("#step2").show();
+				$('#reg_moble').html('<a class="move" onclick="new_send()">点击发送验证码</a>');
+			} else {
+				layer.tips(data.info, '#moble', {tips: 2});
+				return false;
+			}
+		}, 'json');
+	}
+
+	function verify_ups() {
+		$('#verify_up').attr('src', "/ajax/verify.html?t=" + Math.random());
+	}
+
+	function new_send() {
+		$("#step1").show();
+		$("#step2").show();
+	}
+
+	function moble_findpwd(type) {
+		var moble  = $("#moble").val();
+		var verify = $("#verify").val();
+		if (moble == "" || moble == null) {
+			layer.tips("请输入手机号码", '#moble', {tips: 2});
+			return false;
+		}
+		if (verify == "" || verify == null) {
+			layer.tips("请输入图形验证码", '#verify', {tips: 2});
+			return false;
+		}
+		$.post("/verify/moble_findpwd.html", {
+			moble: moble,
+			type: type,
+			verify: verify,
+			token: ""
+		}, function (data) {
+			if (data.status == 1) {
+				layer.msg(data.info, {icon: 1});
+				$("#step1").hide();
+				$("#step2").hide();
+				$("#moble_verify").focus();
+				$('#moble').attr("disabled", "disabled");
+				var obj      = $('#reg_moble');
+				var wait     = 60;
+				var interval = setInterval(function () {
+					obj.html("<a>" + wait + "秒可再次发送" + "</a>");
+					wait--;
+					if (wait < 0) {
+						clearInterval(interval);
+						$(".reloadverify").click();
+						$("#verify").val('');
+						obj.html('<a class="move" onclick="new_send()">点击重新发送</a>');
+					}
+					;
+				}, 1000);
+			} else {
+				$(".reloadverify").click();
+				layer.msg(data.info, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+
+
+	function findpwd_up() {
+		var moble        = $("#moble").val();
+		var moble_verify = $("#moble_verify").val();
+
+
+		if (moble == "" || moble == null) {
+			layer.tips("请输入手机号", '#moble', {tips: 2});
+			return false;
+		}
+		if (moble_verify == "" || moble_verify == null) {
+			layer.tips("请输入验证码", '#moble_verify', {tips: 2});
+			return false;
+		}
+
+		$.post("/findpwd/up.html", {
+			moble: moble,
+			moble_verify: moble_verify,
+			token: ""
+		}, function (data) {
+			if (data.status == 1) {
+				layer.msg(data.info, {icon: 1});
+
+				if (data.url) {
+					window.location = data.url;
+				} else {
+					window.location.reload();
+				}
+			} else {
+				layer.msg(data.info, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+</script>
+<script>
+	$('#index_box').addClass('active');
+</script>
+<include file="Public:footer" />

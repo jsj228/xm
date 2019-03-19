@@ -1,0 +1,77 @@
+{include file="Public:header" /}
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('MYBONUS')}	</div>
+    <div class="main-content">
+
+        {include file="Finance:left" /}
+
+        <div class="tag-list-content">
+            <div class="assets_content bg_w">
+                <div class="safe_center clear ">
+                    <h1>{:lang('MYBONUS')}  <a class="right" onclick="$('#hints').slideToggle();"> <i class="fa fa-hand-o-right move fz_14 mr5"></i> <span class="fz_12 move">{:lang('DETAILED_INFO')}</span> </a> 					</h1>
+                </div>
+                <div id="hints" class="mytips" style="display:none;">
+                    <p>
+                        {notempty name="prompt_text"}
+                            {$prompt_text}
+                        {/notempty}
+                    </p>
+                </div>
+                <div class="mytable-body">
+                    <div class="f_body  step2">
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:lang('USER_ID')}</th>
+                                <th>{:lang('REWARD_TYPE')}</th>
+                                <th>{:lang('REWARD_CURRENCY')}</th>
+                                <th>{:lang('REWARD_AMOUNT')}</th>
+                                <th>{:lang('REWARD_STATE')}</th>
+                                <th>{:lang('OPERATE_TIME')}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {foreach $list as $vo}
+            
+                                <tr>
+                                    <td>{$vo.truename}</td>
+                                    <td>手续费分红</td>
+                                    <td>CNY</td>
+                                    <td>{$vo.mum}</td>
+                                    <td>已发放</td>
+                                    <td>{$vo.fenhong_time}</td>
+                                </tr>
+                           {/foreach}
+
+                            </tbody>
+                        </table>
+                        <div class="pages">{$list->render()}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_mybonus').addClass('active');
+
+    function jiedong(id) {
+        $.post("/Finance/myawardifc", {id: id}, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                window.location.reload();
+            } else {
+                layer.msg(data.info, {icon: 2});
+            }
+        }, "json");
+    }
+</script>
+{include file="Public:footer" /}

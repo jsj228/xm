@@ -1,0 +1,176 @@
+{include file="Public:header"/}
+<style>
+    .addImg{border:0!important;}
+    .form-con .upload-dropzone{
+        width: 100%;
+        height: auto;
+        border: none;
+        text-align: left;
+    }
+</style>
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')}</a> &gt; {:lang('REQUEST')}	</div>
+    <div class="assets_content bg_w">
+        <a class="request_gotoHis" href="/Order/history" style="display: inline-block;width: 200px;">
+            <h1  style="font-size: 16px;"><i class="iconfont icon-xiaoshoujiluchaxun"></i>{:lang('REQUEST_HISTORY')}</h1>
+        </a>
+        <span style="color: #fff;">紧急联系电话（香港）：00852-65292365/00852-67493962‬</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="color: #fff;">官方QQ群：535997102</span>
+
+        <div class="form-con">
+            <h1 style="padding-left: 0;">{:lang('REQUEST')}</h1>
+            <div class="form">
+                <form id="new_request" data-form="" class="request-form" action="/hc/zh-cn/requests" accept-charset="UTF-8" method="post">
+                    <div class="form-field string required request_anonymous_requester_email">
+                        <label for="request_anonymous_requester_email">{:lang('USER_ID')}</label>
+                        <input type="text" name="request[anonymous_requester_email]" readonly value="{$user['email']?$user['email']:$user['moble']}" id="request_anonymous_requester_email" style="cursor: not-allowed;width:100%">
+                        <p>Please input register mobile or email / 请输您注册时用的手机号或者邮箱</p>
+                    </div>
+
+                    <div class="form-field string  required  request_subject">
+                        <label for="request_subject">{:lang('REQUEST_TITLE')}</label>
+                        <input type="text" name="request[subject]" value="{$data.title}" {$data?'readonly':''} id="request_subject" maxlength="20" size="150">
+                        <p>Please describe your problem briefly / 请简要的描述您的问题</p>
+                    </div>
+
+                    <div class="suggestion-list" data-hc-class="searchbox" data-hc-suggestion-list="true"></div>
+
+                    <div class="form-field string  optional  request_custom_fields_21690204">
+                        <label>Question Type/问题类型(务必准确选择类型，以免延误处理)</label>
+                        <div class="bz_btn">
+
+                        <span id="coin-default">
+
+                            <select name="type" id="request_type" {$data?'disabled':''} class="orderType" >
+                               {foreach $list as $vo}                    
+                               <equal name="vo.type" value="$data[type]">
+                                 <option value="{$vo.type}" selected="selected">{$vo.type}</option>
+                                </equal>
+                                {/foreach}
+                            </select>
+                        </span>
+                        </div>
+                        <p>Please select the question type / 请选择您的问题类型</p>
+                    </div>
+                    <div class="form-field text  required  request_description">
+                        <label for="request_description">{:lang('DESCRIBE')}</label>
+                        <textarea name="request[description]" id="request_description" placeholder="{:explode(',',$data['description'])[count(explode(',',$data['description']))-1]}" maxlength="300"></textarea>
+                        <p>{:lang('DESCRIBE_TIP')}</p>
+                    </div>
+                    <div class="form-field">
+                        <label>{:lang('ENCLOSURE')}:&nbsp; ({:lang('ID_PHOTO_RULE')})</label>
+                        <div id="addimg">
+                            <span id="div1" class="addImg iconfont icon-add">
+                                <img id="up_img1"/>
+                                <input type="hidden" id="idcard1" name="img1" value="{$data.img}">
+                                <input type="file" id="inputfile1" onchange="upImg(this)" accept="image/*"/>
+                            </span>
+                            <span id="div2" class="addImg iconfont icon-add">
+                                <img id="up_img2"/>
+                                <input type="hidden" id="idcard2" name="img2" value="{$data.img}">
+                                <input type="file" id="inputfile2" onchange="upImg(this)" accept="image/*"/>
+                                
+                            </span>
+                            <span class="addImg iconfont icon-add">
+                                <img id="up_img3"/>
+                                <input type="hidden" id="idcard3" name="img3" value="{$data.img}">
+                                <input type="file" id="inputfile3" onchange="upImg(this)" accept="image/*"/>
+                            </span>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" id="id1" value="{$data.id}">
+                </form>
+                <div class="set_upload_img" style="display:none;margin-top: 10px;"></div>  
+                <footer><input type="button" name="commit" id="commit" value="提交" class="button-request" onclick="request_submit();"></footer>  
+            </div>
+        </div>
+    </div>
+</div>
+ <script>
+     //上传图片
+     function upImg(el){
+        //创建FormData对象
+        var data =new FormData();
+        if($(el)[0].files[0].size/(1024*1024)>2){
+            layer.msg('图片不能超过2M', {icon: 2,time:4000});
+            $(el).val('');
+            return false;
+        }   
+        //为FormData对象添加数据
+        $.each($(el)[0].files, function (i, file) {
+            data.append('upload_file', file);
+        });
+        //发送数据
+        $.ajax({
+            url:"{:url('Finance/myczTypeImage')}",
+            type: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,       //不可缺参数
+            processData: false,       //不可缺参数
+            success: function (data) {
+                if (data) {
+                    $(el).siblings('input').val(data);
+                    $(el).siblings('img').attr("src", '__DOMAIN__/Upload/public/' + data);
+                }
+            },
+            error: function () {
+                alert('上传出错');
+                $(".loading").hide();  //加载失败移除加载图片
+            }
+        });
+     }
+
+    function request_submit() {
+        var emailAdd              = $("#request_anonymous_requester_email").val();
+        var requestSub            = $("#request_subject").val();
+        var requestType           = $('#request_type option:selected') .val();
+        var requestDescription    = $("#request_description").val();
+        var id                    = $("#id1").val();
+        var data1 = $('#up_img1').attr('src')
+        var data2 = $('#up_img1').attr('src')
+        var data3 = $('#up_img1').attr('src')
+        if (emailAdd == "" || emailAdd == null) {
+            layer.tips("{:lang('EMAIL_ADD_ENTER')}", '#request_anonymous_requester_email', {tips: 2});
+            return false;
+        }
+        if (requestSub == "" || requestSub == null) {
+            layer.tips("{:lang('REQUEST_TIT_ENTER')}", '#request_subject', {tips: 2});
+            return false;
+        }
+        if (requestDescription == "" || requestDescription == null) {
+            layer.tips("{:lang('REQUEST_DETAIL_ENTER')}", '#request_description', {tips: 2});
+            return false;
+        }
+        console.log(data1);
+
+        $.post("/Order/jieshou",{
+            id: id,
+            emailAdd: emailAdd,
+            requestSub: requestSub,
+            requestType: requestType,
+            requestDescription:requestDescription,
+            data1:data1,
+            data2:data2,
+            data3:data3,
+
+        }, function (data) {
+            if (data.status == 1) {
+                $("#commit").attr({"disabled":"disabled"});
+                layer.msg("{:lang('SUBMIT_REFRESH')}",{time:2500},function(){
+                    window.location = '/Order/history';
+                });
+
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        });
+    }
+    $('#order_box').addClass('active');
+</script>
+{include file="Public:footer"/}

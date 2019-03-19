@@ -1,0 +1,116 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('Order/index')}">工单管理</a> >></span>
+			<span class="h1-title"><empty name="data">回复工单<else/></empty></span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form" action="" method="post" class="form-horizontal">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								<tr class="controls">
+									<td class="item-label">用户名 :</td>
+									<td>
+										<input type="text" readonly class="form-control input-10x" name="name" value="{$data.email}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">标题 :</td>
+									<td>
+										<input type="text" readonly class="form-control input-10x" name="title" value="{$data.title}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">问题类型 :</td>
+									<td>
+										<input type="text" readonly class="form-control input-10x" name="url" value="{$data.type}">
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">历史记录 :</td>
+									<td>
+											<volist name="data.msg" id="vo" key="k">
+												<?php  if($data['msg'][$key]['type']===0){ ?>
+												<p style="color: #225a8a;line-height: 40px;">{$data['msg'][$key]['username']}:<span style="color: #34495eb8;font-size: 12px;">{:date('Y-m-d H:i:s',$data['msg'][$key]['addtime'])}</span><br/>
+													<span style="color: #ffffff;display: inline-block;background-color: #3498db;border-radius: 4px;padding: 10px;">{$data['msg'][$key]['description']}</span>
+												</p>
+												
+													<?php }elseif($data['msg'][$key]['type']===1){ ?>
+													<p style="color: #225a8a;text-align: right;line-height: 40px;"><span style="color: #34495eb8;font-size: 12px;">{:date('Y-m-d H:i:s',$data['msg'][$key]['addtime'])}&nbsp;&nbsp;&nbsp;&nbsp;</span>{$data['msg'][$key]['username']}:<br/>
+														<span style="color: #ffffff;display: inline-block;background-color: #ea6780;border-radius: 4px;padding: 10px;">{$data['msg'][$key]['description']}</span>
+													</p>
+													<?php } ?>
+											</volist>
+										
+				
+										<div>
+
+										</div>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">问题描述:</td>
+									<td>
+										<textarea readonly type="text" name="web_description" class="form-control  input-10x">{$data['description'][0]}</textarea>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">查看图片 :</td>
+									<td>
+										<div id="addpicContainer">
+											<ul>
+												{$imgstr}
+											</ul>
+											<input type="hidden" id="img" name="img" value="{$data.img}">
+										</div>
+									</td>
+									<td class="item-note">1920px*400px</td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label">回复内容 :</td>
+									<td>
+										<textarea name="content" class="form-control input-10x"></textarea>
+									</td>
+									<td class="item-note"></td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											<notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/>
+											</notempty>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+                    //提交表单
+                    $('#submit').click(function () {
+                        $('#form').submit();
+                    });
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+<include file="Public:footer"/>

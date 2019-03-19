@@ -1,0 +1,326 @@
+<style>
+    .footer{
+        clear:both;
+    }
+
+    .footer .main{
+        height:240px;
+    }
+
+    #footer a{
+        color:#FFF;
+        margin:0px 0px;
+    }
+
+    .footer .bottom{
+        height:80px;
+        background:#2C2C2C;
+    }
+
+    .footer .main .list{
+        float:left;
+        margin-top:40px;
+        width: 185px;
+        padding: 0px 5px;
+    }
+
+    .footer .main .list label{
+        margin-top:10px;
+        display:block;
+        font-weight:bold;
+        color:#FFF;
+        font-size:16px;
+        text-align: left;
+        padding-left: 45px;
+    }
+
+    .footer .main .list ul{
+        margin:10px 0px 0px;
+        padding:0px;
+    }
+
+    .footer .main .list li{
+        display:block;
+        height:30px;
+        line-height:30px;
+        color:#CCC;
+        text-align:center;
+        list-style:none;
+        text-align: left;
+        padding-left: 45px;
+    }
+
+    .footer .main .list li a{
+        display:block;
+        width:100%;
+        height:100%;
+        color:#CCC;
+        font-size:14px;
+    }
+
+    .footer .about_me{
+        float:left;
+        margin-top:40px;
+        width:280px;
+        height:150px;
+        border-right:1px #606060 solid;
+        padding-right:50px;
+    }
+
+    .footer .wx{
+        margin-top:50px;
+        height:55px;
+    }
+
+    .footer .wx a{
+        position:relative;
+        margin:0 14px;
+        cursor:pointer;
+    }
+
+    .footer .wx a img{
+
+        left:-69px;
+
+        transition:300ms;
+        -webkit-transition:300ms;
+        -ms-transition:300ms;
+        -o-transition:300ms;
+        -moz-transition:300ms;
+    }
+
+    .footer .wx a:hover img{
+        display:block;
+        top:-180px;
+    }
+
+    .footer .footer_wx_icon{
+        float:left;
+
+        border-radius:55px;
+        -webkit-border-radius:55px;
+        -ms-border-radius:55px;
+        -o-border-radius:55px;
+        -moz-border-radius:55px;
+
+        transition:300ms;
+        -webkit-transition:300ms;
+        -ms-transition:300ms;
+        -o-transition:300ms;
+        -moz-transition:300ms;
+    }
+
+    .footer .footer_wx_icon:hover{
+
+    }
+
+    .footer .footer_sn_icon{
+        float:left;
+        width:55px;
+        height:55px;
+
+        background-color:#34353A;
+
+        border-radius:55px;
+        -webkit-border-radius:55px;
+        -ms-border-radius:55px;
+        -o-border-radius:55px;
+        -moz-border-radius:55px;
+
+        transition:300ms;
+        -webkit-transition:300ms;
+        -ms-transition:300ms;
+        -o-transition:300ms;
+        -moz-transition:300ms;
+    }
+
+    .footer .footer_sn_icon:hover{
+
+        background-color:#F00;
+    }
+
+    .footer .footer_qq_icon{
+        float:left;
+        width:55px;
+        height:55px;
+
+        background-color:#34353A;
+
+        border-radius:55px;
+        -webkit-border-radius:55px;
+        -ms-border-radius:55px;
+        -o-border-radius:55px;
+        -moz-border-radius:55px;
+
+        transition:300ms;
+        -webkit-transition:300ms;
+        -ms-transition:300ms;
+        -o-transition:300ms;
+        -moz-transition:300ms;
+    }
+
+    .footer .footer_qq_icon:hover{
+
+        background-color:#F00;
+    }
+
+    .footer .about_me h4{
+        margin:10px 0px 0px 44px;
+        color:#FFF;
+        font-size:14px;
+        font-weight:normal;
+    }
+
+    .footer .about_me .about_me_text{
+        margin-top:20px;
+        margin-left:44px;
+        font-size:14px;
+        color:#CCC;
+    }
+
+    .footer .contact_us{
+        float:left;
+        margin-top:50px;
+        padding-left:57px;
+        border-left:1px #606060 solid;
+        height:150px;
+        color:#CCC;
+        font-size:14px;
+    }
+
+    .footer .contact_us_text1{
+        margin-top:6px;
+        font-size:28px;
+        color:#FFF;
+    }
+
+    .footer .contact_us_text2{
+        margin-top:5px;
+        font-size:12px;
+    }
+
+    .footer .contact_us_text3 span{
+        float:left;
+        line-height:31px;
+    }
+
+    .footer .contact_us_text3{
+        margin-top:18px;
+        display:block;
+        color:#CCC;
+    }
+
+    .footer .contact_us_text3 i{
+        display:block;
+        float:left;
+        margin-left:10px;
+        width:32px;
+        height:30px;
+        cursor:pointer;
+        border:1px #CCC solid;
+
+        border-radius:16px;
+        -webkit-border-radius:16px;
+        -ms-border-radius:16px;
+        -o-border-radius:16px;
+        -moz-border-radius:16px;
+
+        transition:300ms;
+        -webkit-transition:300ms;
+        -ms-transition:300ms;
+        -o-transition:300ms;
+        -moz-transition:300ms;
+
+    }
+
+    .footer .contact_us_text3 i:hover{
+        border:1px #DB0015 solid;
+        background-color:#DB0015;
+    }
+
+    .footer .bottom .text{
+        float:left;
+        margin-top:34px;
+        color:#999;
+        font-size:14px;
+    }
+
+    .footer .bottom .g{
+        float:right;
+        margin-right:10px;
+    }
+
+    .footer .bottom .g a{
+        float:left;
+        margin-left:20px;
+        margin-top:24px;
+        width:100px;
+        height:36px;
+    }
+</style>
+
+<footer id="footer" class="footer" style="padding: 0px 0px 20px 0px;">
+    <section class="main">
+        <div class="about_me">
+            <div class="wx">
+                <a href="javascript:" class="footer_wx_icon"><img src="__DOMAIN____UPLOAD__/public/{$C['footer_logo']}"></a>
+            </div>
+        </div>
+        <div class="layout_center">
+            {volist name="footerArticleType" id="vo"}
+
+                <div class="list"><label>{$vo['title']}</label>
+                    <ul>
+                        {volist name="footerArticle[$vo['name']]" id="vvo"}
+                            <li><a href="{:url('Article/type',array('id'=>$vvo['id']))}" style="overflow: hidden;">{$vvo['title']}</a></li>
+
+                        {/volist}
+                        <li><a href="{:url('Article/type',array('id'=>$vo['id']))}" style="overflow: hidden;    text-align: left;">更多</a></li>
+                    </ul>
+                </div>
+
+            {/volist}
+
+            <div class="contact_us">
+                <div class="contact_us_text0" style="text-align: left;">全球国际咨询电话 :</div>
+                <div class="contact_us_text1" style="text-align: left;margin-top: 10px;margin-bottom: 12px;">{:config('contact_moble')}</div>
+                <div class="contact_us_text2" style="text-align: left;margin-bottom: 5px;">工作时间：周一至周日 8:00-23:00</div>
+                {volist name=":config('contact_qqun')" id="v"}
+                    <a href="#" class="contact_us_text3"><span>会员群号 :{$i}群：{$v}</span></a>
+                {/volist}
+            </div>
+        </div>
+    </section>
+</footer>
+<script type="application/javascript">
+
+    //得到token令牌
+    var lock_token = 0;
+    function get_token() {
+        if (lock_token) {
+            layer.msg('{:lang(\'LOADING_NOT_CLICK\')}...');
+            return;
+        }
+        lock_token = 1;
+        var objectName = new Object();
+        $.ajax({
+            type: 'POST',
+            url: "/Verify/getToken/reqstamp/" + new Date().getTime(),
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                lock_token = 0;
+                if (data.code == 1) {
+                    objectName.data = data.data;
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+
+            }
+        })
+        return objectName.data;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+{include file="public:header" /}
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/finan/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('FINANCE_MY')}	</div>
+    <div class="main-content">
+        <style>
+            .nav-tab-list .nav-tab-hover{
+                width:100%;
+                top:60px;
+                height:50px;
+                line-height:50px;
+                background:#EAEDF4;
+                position:absolute;
+                box-sizing:content-box;
+                z-index:1;
+                transition:all 0.5s;
+                -webkit-transition:all 0.5s;
+                display:none;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                (function () {
+                    var tab   = $('.nav-tab-list dd');
+                    var hover = $('.nav-tab-hover');
+                    var pos   = 0;
+                    tab.each(function (index) {
+                        var $this = $(this);
+                        if ($this.hasClass('active')) {
+                            pos = index;
+                        }
+                        $this.hover(function () {
+                            _moveTo(index);
+                        }, function () {
+                            _moveTo(pos);
+                        });
+                    });
+                    _moveTo(pos);
+                    $('.nav-tab-hover').show();
+                    function _moveTo(index) {
+                        hover.css("top", 0 + 50 * index);
+                        tab.removeClass('active');
+                        tab.eq(index).addClass('active');
+                    }
+                })();
+            });
+            $(window).on('scroll resize', function () {
+                if (document.body.scrollTop < 100) {
+                    $('#left-nav-bar').css("top", 0);
+                } else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+                    $('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+                } else {
+                    $('#left-nav-bar').css("top", document.body.scrollTop - 100);
+                }
+            });
+        </script>
+
+
+        {include file="finance:left" /}
+        <div class="tag-list-content assets_content bg_w">
+            <div class="safe_center clear">
+                <h1>
+					<span>我的雷达钱包</span>
+
+                    <!--<span>-->
+						<!--<a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i><span class="fz_12 move"></span></a>-->
+					<!--</span>-->
+                </h1>
+            </div>
+            <!--<div id="hints" class="mytips" style="display:none;">-->
+                <!--<p>{notempty name="prompt_text"}{$prompt_text}{/notempty}</p>--}
+            <!--</div>-->
+            {empty name="vbcb"}
+            <div class="mytable-body ">
+                <div class="step1  pwtrade  pw  mt50">
+
+                    <div style="margin-left:149px;">
+                        <span style="color:#ff0000">请绑定您实名认证的雷达钱包地址，否则将影响您的充值提现，该地址绑定后不能修改</span>
+                    </div>
+                    <br>
+
+                    <dl>
+                        <dt>雷达地址：</dt>
+                        <dd>
+                            <input style="width: 320px;" type="text" class="texts" id="radar_add" maxlength="40" placeholder="请输入您的雷达地址" value="{empty name='vbcb'}{else /}{$vbcb}{/empty}">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>重复输入雷达地址：</dt>
+                        <dd style="position: relative;">
+                            <input style="width: 320px;" type="text" class="texts" id="radar_add_re" maxlength="40" placeholder="请再次输入您的雷达地址">
+                        </dd>
+                    </dl>
+                    <dl class="step5">
+                        <dt>{:lang('CODE_SEND')}：</dt>
+                        <dd class="yuyin">
+                            <div class="clear"><input type="button" value="{:lang('CODE_SEND')}" class="finance_btns" onclick="send_moble_out('sms')" style="width: 200px;font-size: 12px;"/>
+                                {$moble}({:lang('CODE_RECEIVE_USED')})
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl class="step6" style="display:none;">
+                        <dt>{:lang('CODE_SEND')}：</dt>
+                        <dd>
+                            <input type="text" id="out_moble_verify" value="" class="texts" placeholder="{:lang('CODE_INPUT')}"/> <span id="reg_moble_new"></span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>{:lang('TRAN_PWD')}：</dt>
+                        <dd>
+                            <input type="password" autocomplete="off" class="texts" id="out_paypassword"  value=""><a href="/findpwd/findpwd" class="move ml5">{:lang('FORGET')}?</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt></dt>
+                        <dd>
+                            <input type="button" class="finance_btns2" value="确认" onclick="bind_radar()">
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            {else /}
+                <div style="margin-top: 20px;font-size: 14px;">
+                    <center>您已经添加雷达钱包。</center>
+                </div>
+            {/empty}
+
+        </div>
+    </div>
+</div>
+<script>
+
+    function send_new() {
+        $(".step6").hide();
+        $(".step5").show();
+    }
+    function send_moble_out(type) {
+        $.post("{:url('Verify/mytx')}", {
+            type: type,
+        }, function (data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1});
+                $(".step5").hide();
+                $(".step6").show();
+                $("#out_moble_verify").focus();
+                $('#moble_new').attr("disabled", "disabled");
+                var obj      = $('#reg_moble_new');
+                var wait     = 60;
+                var interval = setInterval(function () {
+                    obj.html(wait + "{:lang('CODE_SEND_AGAIN')}");
+                    wait--;
+                    if (wait < 0) {
+                        clearInterval(interval);
+                        $(".reloadverify_new").click();
+                        $("#verify_new").val('');
+                        obj.html('<a class="move" onclick="send_new()">{:lang(\'CODE_SEND_NO_AGAIN\')}</a>');
+                    }
+                    ;
+                }, 1000);
+            } else {
+                layer.msg(data.msg, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+    function bind_radar() {
+        var radar_add          = $("#radar_add").val();
+        var radar_add_re       = $("#radar_add_re").val();
+
+        var paypassword  = $("#out_paypassword").val();
+        var moble_verify = $("#out_moble_verify").val();
+
+        if (moble_verify == "" || moble_verify == null) {
+            layer.msg('{:lang(\'VERIFICATION_CODE_INPUT\')}', {
+                icon: 2
+            });
+            return false;
+        }
+        if (radar_add == "" || radar_add == null) {
+            layer.msg('请输入雷达地址', {icon: 2});
+            return false;
+        }
+        if (radar_add_re == "" || radar_add_re == null) {
+            layer.msg('请再次输入雷达地址', {icon: 2});
+            return false;
+        }
+        if (radar_add !== radar_add_re) {
+            layer.msg('两次输入的雷达地址不同', {icon: 2});
+            return false;
+        }
+        if (paypassword == "" || paypassword == null) {
+            layer.msg('{:lang(\'TRAN_PWD_ENTER\')}', '#out_paypassword',  {icon: 2});
+            return false;
+        }
+
+        $.post("{:url('User/ldqianbao')}", {
+            radar_add: radar_add,
+            paypassword: paypassword,
+            moble_verify: moble_verify
+        }, function (data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1});
+                location.reload();
+            } else {
+                layer.msg(data.msg, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+</script>
+<script>
+    $('.finan_ldqb').addClass('active');
+</script>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_pay').addClass('active');
+</script>
+
+{include file="public:footer" /}

@@ -1,0 +1,260 @@
+{include file="Public:header" /}
+<style>
+    #div-zp{
+        width: 100%;
+    }
+
+</style>
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i>
+        <a href="/" class="">{:lang('ADDRESS')} </a> &gt;
+        <a href="/user/index.html" class="">{:lang('SAFE')} </a> &gt;{:lang('REAL_NAME_VERIFY')}
+    </div>
+    <div class="main-content clear">
+        <style>
+            .set_upload_img .up_img_wrp{
+                display: inline-block;
+                margin-left: 40px;
+                margin-top: 30px;
+            }
+            .set_upload_img a{
+                display: inline-block;
+                width: 250px;
+                height: 300px;
+                background: rgba(0,0,0,.3);
+                cursor: pointer;
+
+                background-size: 210px;
+                background-repeat: no-repeat;
+                text-align: center;
+                line-height: 250px;
+                font-size: 18px;
+                font-weight: bold;
+                color: #fb4545;
+            }
+            .set_upload_img a>span{
+                border: 4px dashed #ff3c00;
+            }
+            .set_upload_img>.up_img_wrp:nth-child(1)>a{
+                background-image: url("/comfile/images/idc1.png");
+                background-position:22px 40%;
+            }
+            .set_upload_img>.up_img_wrp:nth-child(2)>a{
+                background-image: url("/comfile/images/idc2.png");
+                background-position:22px 40%;
+            }
+            .set_upload_img>.up_img_wrp:nth-child(3)>a{
+                background-image: url("/comfile/images/idc3.png");
+                background-position:22px 40%;
+            }
+            /**********/
+            #fileId .style{
+                height: 20px;
+                width: 60px;
+                background: #00cc00;
+                /*background-image: url(img/search.jpg);*/
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-color: transparent;
+                border-top-style: none;
+                border-right-style: none;
+                border-bottom-style: none;
+                border-left-style: none;
+
+            }
+            #fileId :hover {
+                background: #AADFFD;
+                border-color: #78C3F3;
+                color: #004974;
+                text-decoration: none;
+            }
+
+            .sv_text p {
+                padding-left: 5px;
+            }
+        </style>
+        {include file="User:left" /}
+        <div class="tag-list-content assets_content bg_w">
+            <div class="safe_center clear">
+                <h1>
+                    <span>{:lang('REAL_NAME_VERIFY')}</span>
+                </h1>
+            </div>
+            <div id="hints" class="mytips" style="display:none;">
+
+                <p><notempty name="prompt_text">{$prompt_text}</notempty></p>
+            </div>
+            <div class="pwtrade" style="width: 90%;margin:85px auto 0;">
+                {eq name="user['idcardauth']" value='0'}
+                    {eq name="user['idcardimg1']" value=''}
+                        <div class="band_succ move" style="color: red !important;margin-left: 205px;margin-top: 20px;">
+                            <i class="fa fa-check mr5"></i>
+                            {:lang('REAL_NAME_NOT_PASS')}
+                        </div>
+
+                        {else/}
+
+                        <div class="band_succ move" style="width: 100%;margin-left: 23%;margin-top: 20px;" >
+                            <i class="fa fa-check mr5"></i>
+                            <eq name="user['idcardinfo']" value=''>
+                                {:lang('PENDING_AUDIT')}.
+                                <else/>
+                                {$user['idcardinfo']}.<br>
+                                {:lang('UP_ID_PHOTO_RULE')}
+                            </eq>
+                        </div>
+
+                    {/eq}
+                    {else/}
+
+                    <div class="band_succ move" style="width: 100%;margin-left: 23%;" >
+                        <i class="fa fa-check mr5"></i>
+                        {:lang('REAL_NAME_PASS')}
+                    </div>
+                {/eq}
+
+                <br>
+                <div class="set_verify" style="position: relative;width: 100%;height: auto;">
+                    <ul>
+                        <li>{:lang('UR_ID')}</li>
+                        <li>{:lang('REAL_NAME')}：{$user.truename}</li>
+                        <li>{:lang('CERTIFICATE_TYPE')}：{:lang('ID_CARD')}</li>
+                        <li>{:lang('CERTIFICATE_NUM')}：{$user.idcard}</li>
+                        <li>{:lang('REAL_NAME_VERIFY_TIME')}：{$user['addtime']|addtime}</li>
+                        {neq name="userimg" value=''}
+                            <li>
+
+                                <input type="button"  onclick="$('#div-zp').slideToggle();" value="{:lang('MODIFY_REAL_NAME_AUTH')}">
+                            </li>
+                            {else/}
+                            <li>
+                                <input type="button"  onclick="$('#div-zp').slideToggle();" value="{:lang('Uploadcertificate')}">
+
+                            </li>
+                        {/neq}
+                    </ul>
+                </div>
+            </div>
+
+            <div style="width:100%;padding:25px 50px;text-align:center;display:none;" id="div-zp">
+                {eq name="user['idcardauth']" value='0'}
+                    {neq name="user['idcardinfo']" value=''}
+                        <p><b style="font-size:24px;" class="iconfont icon-warning red"> 您的照片审核不通过!</b></p>
+                        <p class="eee">原因是:<span style="font-size: 14px;"></span></p>
+                        <p class="red">{$user['idcardinfo']}</p>
+                        {else/}
+                        <p  class="red">{:lang('Pleaseupload')}</p>
+                    {/neq}
+                {/eq}
+                <div id="addimg">
+                <span id="div1" class="addImg iconfont icon-add">
+                    <img id="up_img1"  title="点击添加图片" alt="点击添加图片" src="/comfile/images/idc1.png">
+                    <input type="hidden" id="idcard1" name="img1" value="{$data.img}">
+                    <input type="file" id="inputfile1" onchange="click()"/>
+                </span>
+                    <span id="div2" class="addImg iconfont icon-add">
+                    <img id="up_img2"  title="点击添加图片" alt="点击添加图片" src="/comfile/images/idc2.png">
+                    <input type="hidden" id="idcard2" name="img2" value="{$data.img}">
+                    <input type="file" id="inputfile2" onchange="click()"/>
+                </span>
+                    <span class="addImg iconfont icon-add">
+                    <img id="up_img3" title="点击添加图片" alt="点击添加图片" src="/comfile/images/idc3.png">
+                    <input type="hidden" id="idcard3" name="img3" value="{$data.img}">
+                    <input type="file" id="inputfile3"  onchange="click()"/>
+                </span>
+                    <div style="text-align: center;margin-top:25px;">
+                        <input type="button" id="upload"  value="{:lang('upload')}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #succ{
+        position: absolute;
+        width: 280px;
+        height:220px;
+        top:30%;
+        left:50%;
+        background:#fff;
+    }
+    #succ .zhez{
+        text-align: center;
+        margin-top: 60px;
+        color: #00a0e9;
+    }
+    #inp-qd{
+        margin-top: 200px;
+        text-align: center;
+        font-size: 18px;
+        color: #fff;
+        width: 120px;
+        height: 50px;
+        line-height: 50px;
+        margin: auto;
+        cursor: pointer;
+    }
+</style>
+<script>
+    $('#upload').click(function(){
+        var data = $('#idcard1').val();
+        var data1 = $('#idcard2').val();
+        var data2 = $('#idcard3').val();
+        console.dir({data:data,data1:data1,data2:data2});
+        $.ajax({
+            url: '/ajax/imgUser',
+            type: 'POST',
+            data: {data:data,data1:data1,data2:data2},
+            success: function (data) {
+                if(data.code==1){
+                    layer.msg(data.msg, {icon: 1});
+                    location.href= "{:url('/User/nameauth')}";
+                }else if(data.code==0){
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $('.user_truename').addClass('active');
+    $(document).ready(function () {
+        //响应文件添加成功事件
+        $("#inputfile1,#inputfile2,#inputfile3").change(function () {
+            var _that = $(this)
+            //创建FormData对象
+            var data = new FormData();
+            //为FormData对象添加数据
+            $.each($(this)[0].files, function (i, file) {
+                data.append('upload_file' + i, file);
+            });
+
+            //发送数据
+            $.ajax({
+                url: '/User/userImage',
+                type: 'POST',
+                data: data,
+                cache: false,
+                contentType: false,		//不可缺参数
+                processData: false,		//不可缺参数
+                success: function (data) {
+                    if (data) {
+                        _that.prev().prev().attr("src", '__DOMAIN__/Upload/idcard/' + data);
+                        _that.prev().val(data);
+                        _that.prev().prev().show();
+                    }
+                },
+                error: function () {
+                    alert('上传出错');
+                    $(".loading").hide();	//加载失败移除加载图片
+                }
+            });
+
+        });
+    });
+</script>
+
+
+{include file="Public:footer" /}

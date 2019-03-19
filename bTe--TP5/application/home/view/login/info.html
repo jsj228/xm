@@ -1,0 +1,54 @@
+{include file="public:header" /}
+
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')} </a>&gt; {:lang('REGISTERED_ACCOUNT')}	</div>
+	<div class="login_step">
+		<ul class="order clear">
+			<li><i class="fa fa-circle  fz_40"><span>1</span></i>{:lang('REGISTERED_ACCOUNT')}				<div class="order_line"></div>
+			</li>
+			<li><i class="fa fa-circle  fz_40"><span>2</span></i>{:lang('TRAN_PWD')}				<div class="order_line"></div>
+			</li>
+			<li><i class="fa fa-circle  fz_40 "><span>3</span></i>{:lang('REAL_NAME_VERIFY')}				<div class="order_line"></div>
+			</li>
+			<li><i class="fa fa-circle  fz_40 move"><span>4</span></i>{:lang('SUCCESS')}</li>
+		</ul>
+	</div>
+	<div class="reg_box">
+		<div class="reg_su">
+			<div class="reg_su_title"><i class="fa fa-check mr5 fz_40"></i>{:lang('REGISTRATION_SUCCESS')}</div>
+			<div class="reg_info">
+				<ul>
+					<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:lang('MOBLE')}：<span>{$user.moble}</span></li>
+					<li>{:lang('CERTIFICATE_TYPE')}：<span>{:lang('ID_CARD')}</span></li>
+					<li>{:lang('REAL_NAME')}：<span>{$user.truename}</span></li>
+					<li>{:lang('IDENTIFICATION_NUM')}：<span>{$user.idcard}</span></li>
+				</ul>
+				<div class="auto_btn mb35">
+					<a href="{:url('Trade/index')}" class="center btns2">{:lang('GO_TRADE')}</a>
+					<div class="right_side"></div>
+				</div>
+				<div class="reg_otherlink">
+					{:lang('YOU_ALSO')}： <a href="{:url('Finance/myzr')}" target="_blank">{:lang('DEPOSIT_COIN')}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+	$('#index_box').addClass('active');
+</script>
+
+{include file="public:footer" /}

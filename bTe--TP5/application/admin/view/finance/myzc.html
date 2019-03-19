@@ -1,0 +1,205 @@
+{include file="public:header" /}
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">数字资产转出</span>
+        </div>
+
+        <div class="cf">
+            <div class="fl">
+                <input type="password" autocomplete="off" id="pass" class="search-input form-control" placeholder="请输入确认转出的密码" style="margin-right: 10px;">
+            </div>
+            <div class="search-form fr cf">
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1">
+                        <input type="text" class="search-input form-control  " name="addtime" value="{$Request.param.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+                        <input type="text" class="search-input form-control  " name="endtime" value="{$Request.param.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+
+                        <input type="text" name="address" class="search-input form-control  " value="{$Request.param.address}" placeholder="请输入转出地址" style="">
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="coinname" class="form-control">
+                            <option value="" {empty name="$Request.param.coinname"}selected</empty>>交易币种</option>
+                            {volist name="C['coin']" id="vo"}
+                                <option value="{$vo['name']}" {eq name="vo['name']" value="$Request.param.coinname"}selected{/eq}>{$vo['title']}</option>
+                            {/volist}
+                        </select>
+                        <select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+                            <option value="" {empty name="$Request.param.status"}selected</empty>>转出状态</option>
+
+                            <option value="1" {eq name="$Request.param.status" value="1"}selected{/eq}>未处理</option>
+                            <option value="4" {eq name="$Request.param.status" value="4"}selected{/eq}>已处理</option>
+                            <option value="3" {eq name="$Request.param.status" value="3"}selected{/eq}>已撤销</option>
+                            <option value="2" {eq name="$Request.param.status" value="2"}selected{/eq}>转出成功</option>
+                        </select>
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="username" {eq name="$Request.param.field" value="username"}selected{/eq}>用户名</option>
+                            <option value="cl_czr" {eq name="$Request.param.field" value="cl_czr"}selected{/eq}>操作人(处理)</option>
+                            <option value="qr_czr" {eq name="$Request.param.field" value="qr_czr"}selected{/eq}>操作人(转出)</option>
+                            <option value="cx_czr" {eq name="$Request.param.field" value="cx_czr"}selected{/eq}>操作人(撤销)</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+
+                <tr >
+                    <th colspan="2" style="background-color:#009200">
+                        共{$weike_count}条记录
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        转出总数量{$weike_sum|default="0"}元
+                    </th>
+                    <th colspan="2" style="background-color:#009200">
+                        到账总数量{$weike_num|default="0"}元
+                    </th>
+                </tr>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">用户名</th>
+                    <th class="">真实姓名</th>
+                    <th class="">币种</th>
+                    <th width="">申请时间</th>
+                    <th width="">确认时间</th>
+                    <th width="">转出地址</th>
+                    <th width="">转出数量</th>
+                    <th width="">实际到账</th>
+                    <th class="">转出手续费</th>
+                    <th width="">操作人</th>
+                    <th width="">状态</th>
+                    <th width="">操作</th>
+                    <th width="">华克金公钥</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="vo"}
+                        <tr>
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo['usernamea']} </td>
+                            <td>{$vo['truename']} </td>
+                            <td>{$vo.coinname}</td>
+                            <td>{$vo.addtime|addtime}</td>
+                            <td>{$vo.endtime|addtime}</td>
+                            <td>{$vo.username}</td>
+
+                            {empty name="vo['num']"}
+                                    <td style="color: yellowgreen">({$vo['num']})手续费</td>
+                                {else /}
+                                    <td>{$vo['num']}</td>
+                            {/empty}
+
+                            {empty name="vo['num']"}
+                                <td style="color: yellowgreen">入账:{$vo['mum']}</td>
+                                {else /}
+                                <td>{$vo['mum']}</td>
+                            {/empty}
+
+                            {empty name="vo['num']"}
+                                <td style="color: yellowgreen">入账:{$vo['fee']}</td>
+                                {else /}
+                                <td>{$vo['fee']}</td>
+                            {/empty}
+
+                            <td>
+                                {eq name="vo.status" value="1"}{$vo['qr_czr']}{/eq}
+                                {eq name="vo.status" value="2"}{$vo['cx_czr']}{/eq}
+                                {eq name="vo.status" value="3"}{$vo['cl_czr']}{/eq}
+                            </td>
+                            <td>
+                                {eq name="vo.status" value="0"}未处理{/eq}
+                                {eq name="vo.status" value="1"}转出成功{/eq}
+                                {eq name="vo.status" value="2"}已撤销{/eq}
+                                {eq name="vo.status" value="3"}处理中{/eq}
+                            </td>
+                            <td>
+                                {eq name="vo.status" value="0"}
+                                    <a onclick="qrzc({$vo['id']}, 3)" href="#" class="ajax-get btn btn-primary btn-xs">处理</a>
+                                    <a onclick="qrzc({$vo['id']}, 2)" href="#" class="ajax-get btn btn-primary btn-xs">撤销</a>
+                                {/eq}
+                                {eq name="vo.status" value="3"}
+                                    <a onclick="qrzc({$vo['id']}, 1)" href="#" class="ajax-get btn btn-primary btn-xs">确认转出</a>
+                                    {eq name="group_id" value="3"}
+                                        <a onclick="qrzc({$vo['id']}, 2)" href="#" class="ajax-get btn btn-primary btn-xs">撤销</a>
+                                    {/eq}
+                                    {eq name="group_id" value="4"}
+                                        <a onclick="qrzc({$vo['id']}, 2)" href="#" class="ajax-get btn btn-primary btn-xs">撤销</a>
+                                    {/eq}
+                                {/eq}
+                            </td>
+                            <td>{$vo['wcgkey']}</td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+                {/notempty}
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('Finance/myzc')}");
+
+        function qrzc(id, type) {
+            var pass = $('#pass').val();
+            layer.confirm('是否确定本次操作？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.get("{:url('Finance/myzcQueren')}", {
+                    id: id,
+                    pass: pass,
+                    type: type,
+                }, function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                        if (data.url) {
+                            window.location.href = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('已取消本次操作', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+
+        }
+    </script>
+</block>

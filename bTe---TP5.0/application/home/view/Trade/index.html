@@ -1,0 +1,1223 @@
+
+{include file="Trade:header"/}
+<div class="home">
+    <!--左侧市场列表-->
+    <div class="trade_left_list" style="display: none;">
+        <div class="trade_left_charge">
+            <p>使用法币快速交易</p>
+            <ul>
+                <li>
+                    <a href="/Finance/mycz">支付宝充值</a>
+                </li>
+                <li>
+                    <a href="/Finance/mycz">微信充值</a>
+                </li>
+                <li>
+                    <a href="/Finance/mycz">网银在线充值</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="trade_left_list_title">
+                <li>{:lang('TRAN_MARKET')}</li>
+                <li>{:lang('LATEST_PRICE')}</li>
+                <li>{:lang('RANGE')}</li>
+            </ul>
+            <ul class="price_today_ul_trade" id="price_today_ul_trade" >
+            </ul>
+            <script src="/comfile/js/jquery.flot.js"></script>
+            <script>
+                function click_sortList(sortdata) {
+                    var a = $(sortdata).attr('data-toggle');
+                    var b = $(sortdata).attr('data-sort');
+                    $(sortdata).css('color', '#FB1D1D');
+                    if (a == 0) {
+                        priceTmp = priceTmp.sort(sortcoinList('dec', b));
+                        $(sortdata).find('.cagret-down').css('border-top-color', '#FB1D1D');
+                        $(sortdata).find('.cagret-up').css('border-bottom-color', '#848484');
+                        $(sortdata).attr('data-flaglist', 1).attr('data-toggle', 1)
+                    }
+                    else if (a == 1) {
+                        $(sortdata).attr('data-toggle', 0).attr('data-flaglist', 2);
+                        $(sortdata).find('.cagret-up').css('border-bottom-color', '#FB1D1D');
+                        $(sortdata).find('.cagret-down').css('border-top-color', '#848484');
+                        priceTmp = priceTmp.sort(sortcoinList('asc', b));
+                    }
+                    renderPage(priceTmp);
+                    change_line_bg('price_today_ul_trade', 'li');
+                }
+                function trends() {                
+                    $.get("{:url('ajax/index_b_trends')}",{t:Math.random()},function (d) {
+                        trends = d;
+                        allcoin();
+                    },'json');
+          
+                }
+                function allcoin() {
+                    var trade_qu_id = $('.trade_qu_list .current').attr('data');
+                    $.get("{:url('ajax/allcoin_a')}",{id:trade_qu_id,t:Math.random()}, function (data) {
+                        var d;
+                        if (data.status == 1) {
+                            d = data.url;
+                        }
+                        ALLCOIN  = d;
+                        var t    = 0;
+                        var img  = '';
+                        priceTmp = [];
+                        for (var x in d) {
+                            if (typeof(trends[x]) != 'undefined' && parseFloat(trends[x]['yprice']) > 0) {
+                                rise1 = (((parseFloat(d[x][4]) + parseFloat(d[x][5])) / 2 - parseFloat(trends[x]['yprice'])) * 100) / parseFloat(trends[x]['yprice']);
+                                rise1 = rise1.toFixed(2);
+                            } else {
+                                rise1 = 0;
+                            }
+                            img = d[x].pop();
+                            d[x].push(rise1);
+                            d[x].push(x);
+                            d[x].push(img);
+                            priceTmp.push(d[x]);
+                        }
+                        $('.price_today_ull > .click-sort').each(function () {
+                            var listId = $(this).attr('data-sort');
+                            if ($(this).attr('data-flaglist') == 1 && $(this).attr('data-sort') !== 0) {
+                                priceTmp = priceTmp.sort(sortcoinList('dec', listId))
+                            } else if ($(this).attr('data-flaglist') == 2 && $(this).attr('data-sort') !== 0) {
+                                priceTmp = priceTmp.sort(sortcoinList('asc', listId))
+                            }
+                        });
+                        renderPage(priceTmp);
+
+                        change_line_bg('price_today_ul_trade', 'li');
+                        t = setTimeout('allcoin()', 5000);
+                    }, 'json');
+                }
+                function renderPage(ary) {
+                    var html = '';
+                    for (var i in ary) {
+                        t = ary[i][0].split("(")[1].split(")")[0];//币种英文截取
+                        n = t.split("/")[0];//币种name
+                        h = t.split("/")[1];//交易市场
+
+                        var coinfinance = 0;
+                        if (typeof FINANCE == 'object') coinfinance = parseFloat(FINANCE.data[ary[i][8] + '_balance']);
+                        html += '<li style="line-height: 39px;"><a href="/trade/index/market/' + ary[i][8] + '/"><dl class="clear"><dt style="display: inline-block;width: 35%;color: #fff;text-indent: 1em;">' +
+                            '<span class="font_size16">'+ n+'</span>' +"/"+ h  + '</dt><dd style="color:#fff;text-indent: 0.6em;display: inline-block;width: 35%;">' + ary[i][1] + '</dd><dd class="w142 ' + (ary[i][7] >= 0 ? 'buy' : 'sell') + '" style="display: inline-block;width: 30%; text-indent: 0.5em;">' + (parseFloat(ary[i][7]) < 0 ? '' : '+') + ((parseFloat(ary[i][7]) < 0.01 && parseFloat(ary[i][7]) > -0.01) ? "0.00" : (parseFloat(ary[i][7])).toFixed(2)) + '%</dd></dl></a></li>'
+                    }
+                    $('#price_today_ul_trade').html(html);
+                }
+                function formatCount(count) {
+                    var countokuu = (count / 100000000).toFixed(3)
+                    var countwan  = (count / 10000).toFixed(3)
+                    if (count > 100000000)
+                        return countokuu.substring(0, countokuu.lastIndexOf('.') + 3) + '{:lang(\'BILLION\')}'
+                    if (count > 10000)
+                        return countwan.substring(0, countwan.lastIndexOf('.') + 3) + '万'
+                    else
+                        return count
+                }
+                //交易列表底部背景颜色
+                function change_line_bg(id, tag, nobg) {
+                    var oCoin_list = $('#' + id);
+                    var oC_li      = oCoin_list.find(tag);
+                    var oInp       = oCoin_list.find('input');
+                    var oldCol     = null;
+                    var newCol     = null;
+                    if (!nobg) {
+                        for (var i = 0; i < oC_li.length; i++) {
+                            oC_li.eq(i).css('background-color', i % 2 ? '#181B2A' : '#181B2A');
+                        }
+                    }
+                    oCoin_list.find(tag).hover(function () {
+                        oldCol = $(this).css('backgroundColor');
+                        $(this).css('background-color', '#1E2235');
+                    }, function () {
+                        $(this).css('background-color', oldCol);
+                    })
+                }
+
+                trends();
+            </script>
+        </div>
+    </div>
+    <div class="trade_autobox clear" id="Kline-change">
+        <!--行情图-->
+        <div id="kline">
+            <div id="paint_chart">
+                <iframe style="border-style: none;" border="0" width="100%" height="499" id="market_chart" src="/Trade/ordinary?market={$market}"></iframe>
+            </div>
+        </div>
+        <!-- 行情图结束+  模式+买入+卖出 -->
+        <div class="KlineSiblings">        <!--行情图结束-->
+            <div class="clear">
+                <!-- 判断有没有登陆 -->
+                {gt name="Think.session.userId" value="0"}
+                    {else/}
+                    <p class="login_trade">
+                        <span>您还没有登录，请登录或注册后再尝试。</span >
+                        <a class="btn_trade bg_red" href="javascript:loginpop();">登录</a>
+                        <a class="btn_trade bg_green" href="/Login/register">注册</a>
+                    </p>
+                {/gt}
+                <!--买-->
+                <form class="ft_box" id="form-buy">
+                    <h3 class="red">{:lang('BUY')}</h3>
+                    <p>
+                        <span style="width: auto;margin-left: 20px;">{:lang('AVAILABLE')}CNY：</span>
+                        <b class="red" id="my_rmb" style="font-size:14px;">0</b>
+                    </p>
+                    <p><span style="width: auto;margin-left: 20px;">{:lang('BUY1_BEST')}：</span>
+                        <b class="red" id="buy_best_price" onclick="setMaiRu();" style="font-size: 14px;"><?php print($buy_best_price['price']?$buy_best_price['price']:'-'); ?></b> {$rmb|strtoupper}/{$xnb|strtoupper}
+                        {eq name="config['trade_hangqing']" value="1"}
+                            <!--<a style="float: right;margin-right: 60px;color:#e55600;" id="market_hangqing" onclick="hangqing()">{:lang('QUOTATION')}</a>-->
+                        {/eq}
+                    </p>
+                    <p>
+                        <span style="width: auto;margin-left: 20px;">{:lang('BUY_PRICE')}：</span><input type="text" id="buy_price" name="price" placeholder="{:lang('PER_COIN')}" value="" maxlength="8"/>
+                    </p>
+                    <p>
+                        <span style="width: auto;margin-left: 20px;">{:lang('MAX_BUY')}：</span>
+                        <b class="red" id="buy_max" title="{:lang('FULL_IN_TIP')}">-</b> {$xnb|strtoupper}
+                    </p>
+                    <div class="proportion">
+                            <span>{:lang('BUY_PROPORTION')}：</span>
+                            <div class="slider_wrap">
+
+                                <div id="ratio_num_buy" class="ratio">0%</div>
+                                <div class="sliderbox">
+                                    <div id="slider_buy"
+                                         class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                        <div class="ui-slider-range ui-widget-header ui-slider-range-min"></div>
+                                        <a data_slide="buy" class="ui-slider-handle ui-state-default ui-corner-all" href="#"
+                                           style="left: 0%;"></a>
+                                        <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"
+                                             style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <p>
+                        <span>{:lang('BUY_QUANTITY')}：</span><input type="text" id="buy_num" name="num" maxlength="8" />
+                        <!-- <input type="password" style="position: absolute;top: -9999999px;border: none;/> -->
+                    </p>
+                    <p>
+                        <span>{:lang('TOTAL')}：</span>
+                        <b class="red" id="buy_mum" style="font-size: 14px;">-</b> {$rmb|strtoupper}
+                    </p>
+                    <p>
+                        <span>{:lang('TRANSACTION_FEE')}：</span>
+                        {:config('market')[$market]['fee_buy']}% <b class="red">({:lang('FEE_DESGIN')})</b>
+                    </p>
+                    <p class="pwdtrade" style="margin-top: 17px;position:relative">
+                        <!-- <input type="password" style="position: absolute;top: -9999999px;border: none;"/> -->
+                        <span>{:lang('TRAN_PWD')}：</span><input id="buy_paypassword" name="pwtrade" type="password" > 
+                        <b onclick="layertpwd()" class="settings"></b> 
+                    </p>
+                   {eq name="showPW" value="0"}
+                        <p class="showPW">{:lang('TRAN_PWD_SET_NO')}</p>
+                    {/eq}
+                    {eq name="showPW" value="2"}
+                        <p class="showPW">{:lang('TRAN_PWD_NO')}</p>
+                    {/eq}
+                    <div class="trader_btn">
+                        <div class="tan_btn" id="tm-buy"></div><input type="button" class="bg_red" value="{:lang('BUY')}" onclick="tradeadd_buy();">
+                    </div>
+                </form>
+                <!--卖-->
+                <form class="ft_box nobr" id="form-sell">
+                    <h3 class="green">{:lang('SELL')}</h3>
+                    <p> 
+                        <span style="width: auto;margin-left: 20px;">{:lang('AVAILABLE')}{$xnb|strtoupper}：</span>
+                        <b class="green" id="my_xnb" style="font-size: 14px;">0</b>
+                    </p>
+                    <p><span style="width: auto;margin-left: 20px;">{:lang('SELL1_BEST')}：</span>
+                        <b class="green" id="sell_best_price"  onclick="setMaiChu();"  style="font-size: 14px;"><?php print($sell_best_price['price']?$sell_best_price['price']:'-'); ?></b>
+                            {$rmb|strtoupper}/{$xnb|strtoupper}
+                            {eq name="config['trade_hangqing']" value="1"}
+                                <!--<a style="float: right;margin-right: 60px;color:#e55600;" id="market_hangqing"  onclick="hangqing()">{:lang('QUOTATION')}</a>-->
+                            {/eq}
+                    </p><p>
+                        <span style="width: auto;margin-left: 20px;">{:lang('SELL_PRICE')}：</span>
+                        <input type="text" id="sell_price" name="price" placeholder="{:lang('PER_COIN')}" maxlength="8"/>
+                    </p><p>
+                        <span style="width: auto;margin-left: 20px;">{:lang('MAX_SELL')}：</span>
+                        <b id="sell_max" class="green">-</b> {$xnb|strtoupper}
+                    </p>
+                    <div class="proportion">
+                        <span>{:lang('SELL_PROPORTION')}：</span>
+                        <div class="slider_wrap">
+                            <div id="ratio_num_sell" class="ratio">0%</div>
+                            <div class="sliderbox">
+                                <div id="slider_sell"
+                                     class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                    <div class="ui-slider-range ui-widget-header ui-slider-range-min"></div>
+                                    <a data_slide="sell" class="ui-slider-handle ui-state-default ui-corner-all"
+                                       href="#" style="left: 0%;"></a>
+                                    <div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min"
+                                         style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><p>
+                        <!-- <input type="password" style="position: absolute;top: -9999999px;border: none;"/> -->
+                        <span>{:lang('SELL_QUANTITY')}：</span>
+                        <input type="text" id="sell_num" name="num" maxlength="8"/>
+                    </p><p>
+                        <span>{:lang('TOTAL')}：</span>
+                        <b class="green" id="sell_mum" style="font-size: 16px;">-</b> {$rmb|strtoupper}
+                    </p><p>
+                        <span>{:lang('TRANSACTION_FEE')}：</span>
+                        <b>{:config('market')[$market]['fee_sell']}% <b class="green" style="width: auto;">({:lang('FEE_DESGIN')})</b> </b>
+                    </p>
+                    <p class="pwdtrade" style="margin-top: 17px;position:relative;">
+                        <!-- <input type="password" style="position: absolute;top: -9999999px;border: none;"/> -->
+                        <span style="line-height: 20px;">{:lang('TRAN_PWD')}：
+                        </span><input id="sell_paypassword" name="pwtrade" type="password"> 
+                        <b onclick="layertpwd()" class="settings"></b>
+
+                    </p>
+                        {eq name="showPW" value="0"}
+                            <p class="showPW">{:lang('TRAN_PWD_SET_NO')}</p>
+                        {/eq}
+                        {eq name="showPW" value="2"}
+                            <p class="showPW">{:lang('TRAN_PWD_NO')}</p>
+                        {/eq}
+                    <div class="trader_btn">
+                        <div class="tan_btn" id="tm-sell"></div>
+                        <input class="bg_green" type="button" value="{:lang('SELL')}" onclick="tradeadd_sell();">
+                    </div>
+                </form>
+            </div><!-- 模式+买入+卖出 --><div style="width:39.5%">
+                <textarea id="pubkey" style="display:none" rows="15" cols="65">-----BEGIN PUBLIC KEY-----
+                MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8yguaHUfg70u+ktyjn8WVsUOW
+                a/omxw3PwvxbUioW6rLxdSRwIxRif1j6ZsuUBsizf/YlUYNJjXpU0P+3tFZZK6X2
+                b/lCuYeb22KnlfZQTX9bsomMdGBZrr7GPjLFioMMZV91ljB03HJjXPT0yLQ5SEkB
+                s/RrG+gPa8rVx/+QzwIDAQAB
+                -----END PUBLIC KEY-----</textarea>
+                <div class="zcxx hide" style="display: none; margin-bottom: 20px;">
+                    <div class="right_table">
+                        <table style="width: 100%">
+                            <tbody>
+                            <tr>
+                                <th>{:lang('AVAILABLE')}{$C['coin'][$xnb]['title']}</th>
+                                <td><span id="my_xnb">0</span></td>
+                            </tr>
+                            <tr>
+                                <th>{:lang('FROZEN')}{$C['coin'][$xnb]['title']}</th>
+                                <td><font id="my_xnbd">0</font></td>
+                            </tr>
+                            <tr>
+                                <th>{:lang('AVAILABLE')}{$C['coin'][$rmb]['title']}</th>
+                                <td><span id="my_rmb">0</span></td>
+                            </tr>
+                            <tr>
+                                <th>{:lang('FROZEN')}{$C['coin'][$rmb]['title']}</th>
+                                <td><font id="my_rmbd">0</font></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <div class="tradeBox">
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <ul class="active slideHd">
+                    <li id="trade_moshi_1" class="trade_moshi on"><a href="javascript:void(0);" onclick="moshi(1)">{:lang('DEFAULT')} </a></li>
+                    {eq name="C['trade_moshi']" value="1"}
+                        <li style="display:none;" id="trade_moshi_2" class="trade_moshi"><a href="javascript:void(0);" onclick="moshi(2)">聊天模式 </a></li>
+                    {/eq}
+                    <li id="trade_moshi_3" class="trade_moshi"  style="margin-left: 18%;text-align: left;"><a href="javascript:void(0);" onclick="moshi(3)">{:lang('ONLY_BUY')} </a></li>
+                    <li id="trade_moshi_4" class="trade_moshi"  style="margin-left: 15%;text-align: left;"><a href="javascript:void(0);" onclick="moshi(4)">{:lang('ONLY_SELL')} </a></li>
+                </ul>
+                <div class="entrust" id="trade_moshi_liaotian_2">
+                    <div class="entrust_list">
+                        <div class="el_dl" id="selllist"></div>
+                        <div class="el_dl" id="buylist" style="border-bottom: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- IE中会显示 -->
+        <div class="tables">
+            <div class="shareFriends">
+                <img src="/picture/shareFriends.jpg" alt="shareFriends">
+                <a href="/Finance/mytj">邀请好友注册<br>立即获取邀请佣金</a>
+            </div>
+           
+            
+            <!-- 市场bi -->
+
+            <div id="all_coin_list"></div>
+            <!-- 我的委托 -->
+            <div id="entrust_over">
+                <h3 class="PlateTitle">{:lang('COMMISSION')}</h3>
+                <div style="height:246px">
+                    <table class="Transaction">
+                        <thead>
+                        <tr>
+                            <th width="63">{:lang('TIME')}</th>
+                            <!-- <th width="34">{:lang('BUY_SELL')}</th> -->
+                            <th  width="55">{:lang('PRICE')}</th>
+                            <th width="60">{:lang('QUANTITY')}</th>
+                            <th width="80">{:lang('FINISHED')}</th>
+                            <th  width="110">{:lang('AMOUNT')}</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody id="entrustlist" align="center"></tbody>
+                    </table>
+                    <p id="warning" class="icon-warning iconfont">
+                        {:lang('Youhaven')}
+                    </p>
+                </div>
+            </div>
+            <!-- 交易记录 -->
+            <div class="account_table" >
+                <h3 class="PlateTitle">{:lang('LATEST_TRAN_RECORD')}</h3>
+                <div>
+                    <table class="Transaction">
+                        <thead>
+                            <tr>
+                                <th width="55">{:lang('TIME')}</th>
+                                <!-- <th width="50">{:lang('BUY_SELL')}</th> -->
+                                <th width="60">{:lang('FINISH_PRICE')}</th>
+                                <th width="100">{:lang('FINISH_QUANTITY')}</th>
+                                <th width="100"><span style="padding_right: 18px;">{:lang('TOTAL_AMOUNT')}</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderlist" align="center">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+             <!-- 市场行情 -->
+            {gt name="Think.session.userId" value="0"}
+                <style>
+                    .ft_box h3{margin:0px 0 20px;}
+                </style>
+                {else/}
+                <div style="padding:0 10px">
+                    <h3 class="PlateTitle">{$indexArticleType[1]['title']}
+                        <a href="/Article/index/id/{$indexArticleType[1]['id']}" style="float:right;padding:0px 15px;" target="_blank">&gt;&gt;</a>
+                    </h3>
+                    <div>
+                        {volist name="$indexArticle[1]" id="vo"}
+                            <li>
+                               <a href="{:url('Article/detail','id='.$vo['id'])}" target="_blank" class="inlineBlockMiddle" >{$vo['title']}</a>
+                               <span style="float:right;">{$vo['addtime']|date='Y.m.d',###}</span>
+                            </li>
+                        {/volist}
+                    </div>
+                </div>
+            {/gt}
+        </div>
+    </div>
+</div>
+{include file="Public:footer" /}
+<script type="text/javascript">
+    var market = "{$market}";
+    var market_round = "{$C['market'][$market]['round']}";
+    var market_round_num = 10 - "{$C['market'][$market]['round']}";
+    var userid = "{$Think.session.userId}";
+    var trade_moshi = 1;
+    var getDepth_tlme = null;
+    var trans_lock = 0;
+    var time = 5;
+    var isInterval = setInterval(function () {
+        $('#coins_timer').html(time + '{:lang(\'SECONDS_LATER_REFRESH\')}');
+        time--;
+        if (time == -1) {
+            //clearInterval(isInterval);
+            time=5;
+        }
+    }, 1000);
+
+
+    function hangqing() {
+        layer.alert("{:lang('TRAN_MARKET')}:{:config('market')[$market]['title']}<br><br>" +
+            "{:lang('YESTODAY_CLOSING')}:{$C['market'][$market]['hou_price']|NumToStr}<br>" +
+            "{:lang('TODAY_LIMIT_INCREASE')}：{:config('market')[$market]['zhang']}%<br>" +
+            "{:lang('TODAY_LIMIT_DECLINE')}：{:config('market')[$market]['die']}%<br>" +
+            "{:lang('TODAY_MIN_PRICE')}:{$C['market'][$market]['buy_min']|NumToStr}<br>" +
+            "{:lang('TODAY_MAX_PRICE')}:{$C['market'][$market]['sell_max']|NumToStr}<br>",
+            {title: '{:lang(\'QUOTATION\')}',});
+    }
+
+    function moshi(id) {
+        trade_moshi = id;
+        $('.trade_moshi').removeClass('on');
+        $('#trade_moshi_' + id).addClass('on');
+        if (id == 3) {
+            $('#selllist').hide();
+        } else {
+            $('#selllist').show();
+        }
+
+        if (id == 4) {
+            $('#buylist').hide();
+        } else {
+            $('#buylist').show();
+        }
+
+        if (id == 2) {
+            //$('#trade_moshi_liaotian_2').hide();
+            //$('#trade_moshi_liaotian_1').show();
+            if("WebSocket" in window && false){
+                window.setTimeout(function(){
+                    var send_obj = {c:'TradeController',m:'both',u:'test',d:{market:market}};
+                    window.ws.send(get_encryption_param(send_obj));                    
+                },3000);
+
+            }else{
+                getDepth();
+            }
+            
+        } else {
+            $('#trade_moshi_liaotian_2').show();
+            //$('#trade_moshi_liaotian_1').hide();
+            if("WebSocket" in window && false){
+                window.setTimeout(function(){
+                    var send_obj = {c:'TradeController',m:'both',u:'test',d:{market:market}};
+                    window.ws.send(get_encryption_param(send_obj));                    
+                },3000);
+            }else{
+            getDepth();
+        }
+    }
+    }
+
+
+    function layertpwd() {
+        var html = '<div id="all_mask" class="all_mask"></div><div id="tpwd" class="all_mask_loginbox">' +
+            '<div class="login_title pl20">{:lang(\'TRAN_PWD_SET\')}</div><form id="tpwdsetting" class="set_verify">' +
+            '<ul class="tpwd"><li><label for="only"><input type="radio" id="only" value="1" name="aaatpwdsetting"> {:lang(\'TRAN_PWD_ONCE\')} </label></li><li>' +
+            '<label for="every"><input type="radio" checked id="every" value="2" name="aaatpwdsetting"> {:lang(\'TRAN_PWD_EVERY\')}</label></li><li><label for="none">' +
+            '<input type="radio" id="none" name="aaatpwdsetting" value="3"> {:lang(\'TRAN_PWD_NONE\')}</label></li><li><input type="password" id="aaapaypassword" name="paypassword" placeholder="{:lang(\'TRAN_PWD_ENTER\')}" class="text"/>' +
+            '</li></ul><div class="save_verify"><input type="button" value="{:lang(\'KEEP\')}" onclick="tpwdsettingaa()" /></div><div class="mask_wrap_close" id="pwd_close"></div></form></div>';
+        $('body').append(html);
+        $('#tpwd').css('top', ($(window).height() / 2) - (265 / 2) + $(document).scrollTop());
+        $('.all_mask').css({'height': $(document).height()});
+        $('#pwd_close').click(function () {
+            $('#tpwd').remove();
+            $('#all_mask').remove();
+            $('#all_mask').remove();
+        })
+
+
+        $.get("{:url('/user/tpwdsetting','','')}", function (d) {
+            if (d == 1) {
+                $('#only').prop('checked', true);
+            }
+            if (d == 2) {
+                $('#every').prop('checked', true);
+            }
+            if (d == 3) {
+                $('#none').prop('checked', true);
+            }
+
+
+        })
+    }
+
+    //保存交易密码设置
+    function tpwdsettingaa() {
+        var paypassword = $("#aaapaypassword").val();
+        var tpwdsetting = $("input[name='aaatpwdsetting']:checked").val();
+        if (paypassword == "" || paypassword == null) {
+            layer.tips('{:lang(\'TRAN_PWD_ENTER\')}', '#paypassword', {tips: 3});
+            return false;
+        }
+        if (tpwdsetting == "" || tpwdsetting == null) {
+            layer.tips('{:lang(\'SELECT_ONE\')}', '#tpwdsetting', {tips: 3});
+            return false;
+        }
+
+
+        $.post("{:url('/user/uptpwdsetting','','')}", {paypassword: paypassword, tpwdsetting: tpwdsetting}, function (d) {
+            if (d.code) {
+                layer.msg('{:lang(\'SET_SUCCESSFUL\')}', {icon: 1});
+                window.location.reload();
+            } else {
+                layer.msg(d.msg, {icon: 2});
+            }
+
+        }, 'json');
+    }
+
+    //买单
+    function tradeadd_buy() {
+        if (trans_lock) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        trans_lock = 1;
+        var price = parseFloat($('#buy_price').val());
+        var num = parseFloat($('#buy-num').val());
+        var paypassword = $('#buy_paypassword').val();
+        if (price == "" || price == null) {
+            layer.tips('{:lang(\'ENTER_CONTENT\')}', '#buy_price', {tips: 3});
+            return false;
+        }
+        if (num == "" || num == null) {
+            layer.tips('{:lang(\'ENTER_CONTENT\')}', '#buy_num', {tips: 3});
+            return false;
+        }
+
+        //加载层-风格3
+        layer.load(2);
+
+
+        //此处演示关闭
+        setTimeout(function () {
+            layer.closeAll('loading');
+            trans_lock = 0;
+        }, 10000);
+
+
+        //超过 20% 提示文本框
+        if ($('#buy_price').val() > $("#market_sell_price").html() * 1.05) {
+            layer.confirm('您输入的买入价与当前市场最新价有较大出入，是否确认交易？', {
+                btn: ['确定本次交易','取消本次交易'] //按钮
+            }, function(){
+                $.post("{:url('Trade/upTrade')}", {
+                    price: $('#buy_price').val(),
+                    num: $('#buy_num').val(),
+                    paypassword: $('#buy_paypassword').val(),
+                    market: market,
+                    type: 1
+                }, function (data) {
+                    layer.closeAll('loading');
+                    trans_lock = 0;
+                    if (data.code == 1) {
+
+                        $("#buy_price").val('');
+                        $("#buy_num").val('');
+                        $("#sell_price").val('');
+                        $("#sell_num").val('');
+                        layer.msg(data.msg, {icon: 1});
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                }, 'json');
+            }, function(){
+                layer.closeAll('loading');
+                trans_lock = 0;
+                layer.msg('已取消本次操作', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        } else {
+            $.post("{:url('Trade/upTrade')}", {
+                price: $('#buy_price').val(),
+                num: $('#buy_num').val(),
+                paypassword: $('#buy_paypassword').val(),
+                market: market,
+                type: 1
+            }, function (data) {
+                layer.closeAll('loading');
+                trans_lock = 0;
+                if (data.code == 1) {
+
+                    $("#buy_price").val('');
+                    $("#buy_num").val('');
+                    $("#sell_price").val('');
+                    $("#sell_num").val('');
+                    layer.msg(data.msg, {icon: 1});
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }, 'json');
+        }
+    }
+    //卖单
+    function tradeadd_sell() {
+        if (trans_lock) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        trans_lock = 1;
+        var price = parseFloat($('#sell_price').val());
+        var num = parseFloat($('#sell_num').val());
+        var paypassword = $('#sell_paypassword').val();
+        if (price == "" || price == null) {
+            layer.tips('{:lang(\'ENTER_CONTENT\')}', '#sell_price', {tips: 3});
+            return false;
+        }
+        if (num == "" || num == null) {
+            layer.tips('{:lang(\'ENTER_CONTENT\')}', '#sell_num', {tips: 3});
+            return false;
+        }
+        layer.load(2);
+        //此处演示关闭
+        setTimeout(function () {
+            layer.closeAll('loading');
+            trans_lock = 0;
+        }, 10000);
+
+
+        //超过 20% 提示文本框
+        if ($('#sell_price').val() < $("#market_buy_price").html() * 0.95) {
+            layer.confirm('您输入的卖出价与当前市场最新价有较大出入，是否确认交易？', {
+                btn: ['确定本次交易','取消本次交易'] //按钮
+            }, function(){
+                $.post("{:url('Trade/upTrade')}", {
+                    price: $('#sell_price').val(),
+                    num: $('#sell_num').val(),
+                    paypassword: $('#sell_paypassword').val(),
+                    market: market,
+                    type: 2
+                }, function (data) {
+                    layer.closeAll('loading');
+                    trans_lock = 0;
+                    if (data.code == 1) {
+                        $("#buy_price").val('');
+                        $("#buy_num").val('');
+                        $("#sell_price").val('');
+                        $("#sell_num").val('');
+                        layer.msg(data.msg, {icon: 1});
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                }, 'json');
+            }, function(){
+                layer.closeAll('loading');
+                trans_lock = 0;
+                layer.msg('已取消本次操作', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        } else {
+            $.post("{:url('Trade/upTrade')}", {
+                price: $('#sell_price').val(),
+                num: $('#sell_num').val(),
+                paypassword: $('#sell_paypassword').val(),
+                market: market,
+                type: 2
+            }, function (data) {
+                layer.closeAll('loading');
+                trans_lock = 0;
+                if (data.code == 1) {
+                    $("#buy_price").val('');
+                    $("#buy_num").val('');
+                    $("#sell_price").val('');
+                    $("#sell_num").val('');
+                    layer.msg(data.msg, {icon: 1});
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }, 'json');
+        }
+    }
+
+
+    //撤销
+    function cancelaa(id) {
+        $.post("{:url('Trade/chexiao')}", {id: id}, function (data) {
+            if (data.code == 1) {
+                getEntrustAndUsercoin();
+                layer.msg(data.msg, {icon: 1,time:1000});
+                location.href = data.url;
+            } else {
+                layer.msg(data.msg, {icon: 2,time:1000});
+            }
+        });
+    }
+
+    
+    // 使用ajax的轮询机制获取数据
+    function getTradelog() {
+       // $.ajaxSetup({ cache: false });
+        $.get("{:url('Ajax/getTradelog')}",{market:market,t:Math.random()},function (data) {
+            if (data) {
+                if (data['tradelog']) {
+                    var list = '';
+                    var type = '';
+                    var typename = '';
+                    // 交易记录数据
+                    for (var i in data['tradelog']) {
+                        if (data['tradelog'][i]['type'] == 1) {
+                            // <td class="buy" width="55">{:lang(\'BUY\')}</td>
+                            
+                            list += '<tr title="{:lang(\'SOLD_AT_PRICE\')}" onclick="autotrust(this,\'buy\',2)"><td class="buy"   width="50">' + data['tradelog'][i]['addtime'] + '</td><td class="buy"   width="60">' + data['tradelog'][i]['price'] + '</td><td class="buy" width="100">' + data['tradelog'][i]['num'] + '</td><td class="buy" width="100">' + data['tradelog'][i]['mum'] + '</td></tr>';
+                        } else {
+                            // <td class="sell" width="55">{:lang(\'SELL\')}</td>
+                            list += '<tr title="{:lang(\'BUY_AT_PRICE\')}" onclick="autotrust(this,\'sell\',2)"><td class="sell" width="50">' + data['tradelog'][i]['addtime'] + '</td><td class="sell"   width="60">' + data['tradelog'][i]['price'] + '</td><td class="sell" width="100">' + data['tradelog'][i]['num'] + '</td><td class="sell" width="100">' + data['tradelog'][i]['mum'] + '</td></tr>';
+                        }
+                    }
+                    // console.log('list----------->'+list)
+                    // console.log('#orderlist---------->'+$("#orderlist"));
+                    $("#orderlist").html(list);
+                }
+            }
+        },'json');
+        //$.ajaxSetup({ cache: true });
+        setTimeout('getTradelog()', 5000);
+    }
+
+
+    function getTradelogSocket(received_msg) {
+                    data = received_msg.getTradelog;
+                    var list ='';
+
+                    for (var i in data) {
+                        var d = JSON.parse(data[i]);
+                                if (d.type == 1) {
+                                    list += '<tr title="{:lang(\'SOLD_AT_PRICE\')}" onclick="autotrust(this,\'buy\',2)"><td class="buy"   width="80">' + d.addtime + '</td><td class="buy"   width="100">{:lang(\'BUY\')}</td><td class="buy"   width="100">' + d.price + '</td><td class="buy"  width="60">' + d.num + '</td><td class="buy" width="100">' + d.mum + '</td></tr>';
+                                } else {
+                                    list +='<tr title="{:lang(\'BUY_AT_PRICE\')}" onclick="autotrust(this,\'sell\',2)"><td class="sell"   width="80">' + d.addtime + '</td><td class="sell"   width="100">{:lang(\'SELL\')}</td><td class="sell"   width="100">' + d.price + '</td><td class="sell"  width="60">' + d.num + '</td><td class="sell" width="100">' + d.mum + '</td></tr>';
+                                }
+                            }
+                            $("#orderlist").html(list);
+        setTimeout(function(){
+            var send_obj = {c:'TradeController',m:'both',u:'test',d:{market:market}};
+            window.ws.send(get_encryption_param(send_obj));
+        },3000);    
+    }
+
+    function getDepth() {
+        if (trade_moshi != 2) {
+
+            $.get("{:url('Ajax/getDepth')}",{market:market,trade_moshi:trade_moshi,t:Math.random()},function (data) {
+                if (data) {
+
+                    if (data['depth']) {
+                        var list = '';
+                        var sellk = data['depth']['sell'].length;
+                        if (data['depth']['sell']) {
+                            for (i = 0; i < data['depth']['sell'].length; i++) {
+                                list += '<dl title="{:lang(\'BUY_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'sell\',1)"><dt class="sell"  style="width: 12%;padding-left: 5px;">{:lang(\'SELL_\')}' + (sellk - i) + '</dt><dd class="sell"  style="width:25%">' + data['depth']['sell'][i][0] + '</dd><dd class="sell"  style="width:30%;">' + data['depth']['sell'][i][1] + '</dd><dd class="sell">' + (data['depth']['sell'][i][0] * data['depth']['sell'][i][1]).toFixed(6) + '</dd></dl>';
+                            }
+                            //$('#sell_best_price').html(data['depth']['buy'][0][0])
+                        }
+                        $("#selllist").html(list);
+                        list = '';
+                        if (data['depth']['buy']) {
+                            for (i = 0; i < data['depth']['buy'].length; i++) {
+                                list += '<dl title="{:lang(\'SOLD_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'buy\',1)"><dt class="buy"  style="width: 12%;padding-left: 5px;">{:lang(\'BUY_\')}' + (i + 1) + '</dt><dd class="buy"  style="width: 25%;">' + data['depth']['buy'][i][0] + '</dd><dd class="buy"  style="width:30%;">' + data['depth']['buy'][i][1] + '</dd><dd class="buy">' + (data['depth']['buy'][i][0] * data['depth']['buy'][i][1]).toFixed(6) + '</dd></dl>';
+
+                            }
+                            //$('#buy_best_price').html(data['depth']['sell'][9][0])
+                        }
+                        $("#buylist").html(list);
+                    }
+
+                }
+            },'json');
+            clearInterval(getDepth_tlme);
+            setTimeout('getDepth()', 5000);
+            var wait = second = 5;
+            //$.ajaxSetup({ cache: true });
+//            getDepth_tlme = setInterval(function () {
+//                wait--;
+//                if (wait < 0) {
+//                    clearInterval(getDepth_tlme);
+//                    getDepth();
+//                    wait = second;
+//                }
+//            }, 1000);
+        }
+    }
+
+
+    function getDepthSocket(received_msg) {
+            if(trade_moshi != 2){
+                if(received_msg.buy){
+                    received_msg.buy = getsort(received_msg.buy,'desc');
+                    var list ='';
+                    if(trade_moshi == 1){
+                        if(received_msg.buy.length <= 10){
+                    for(var i = 0 ;i<received_msg.buy.length;i++){
+                        var buy_obj = (received_msg.buy)[i];
+                        list += '<dl title="{:lang(\'SOLD_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'buy\',1)"><dt class="buy"  style="width: 10%;padding-left: 5px;">{:lang(\'BUY_\')}' + (i + 1) + '</dt><dd class="buy"  style="width: 15%">' + parseFloat(buy_obj.price) + '</dd><dd class="buy"  style="width:25%">' + parseFloat(buy_obj.nums) + '</dd><dd class="buy"  style="padding-left: 3px;">' + (buy_obj.price * buy_obj.nums).toFixed(6) + '</dd></dl>';
+                    }
+                }else{
+                    for(var i = 0 ;i < 10;i++){
+                        var buy_obj = (received_msg.buy)[i];
+                        list += '<dl title="{:lang(\'SOLD_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'buy\',1)"><dt class="buy"  style="width: 10%;padding-left: 5px;">{:lang(\'BUY_\')}' + (i + 1) + '</dt><dd class="buy"  style="width: 15%">' + parseFloat(buy_obj.price) + '</dd><dd class="buy"  style="width:25%">' + parseFloat(buy_obj.nums) + '</dd><dd class="buy"  style="padding-left: 3px;">' + (buy_obj.price * buy_obj.nums).toFixed(6) + '</dd></dl>';
+                        }   
+                    }
+                    }else if(trade_moshi == 3){
+                        for(var i = 0 ;i<received_msg.buy.length;i++){
+                        var buy_obj = (received_msg.buy)[i];
+                        list += '<dl title="{:lang(\'SOLD_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'buy\',1)"><dt class="buy"  style="width: 10%;padding-left: 5px;">{:lang(\'BUY_\')}' + (i + 1) + '</dt><dd class="buy"  style="width: 15%">' + parseFloat(buy_obj.price) + '</dd><dd class="buy"  style="width:25%">' + parseFloat(buy_obj.nums) + '</dd><dd class="buy"  style="padding-left: 3px;">' + (buy_obj.price * buy_obj.nums).toFixed(6) + '</dd></dl>';
+                        }
+                    }
+                    $("#buylist").html(list);
+                }
+
+            if(received_msg.sell){
+                received_msg.sell = getsort(received_msg.sell,'desc');
+                    var list ='';
+                    if(trade_moshi == 1){
+                        if(received_msg.sell.length <= 10){
+                    for(var i = received_msg.sell.length-1 ;i>=0;i--){
+                        var sell_obj = (received_msg.sell)[i];
+                        list += '<dl title="{:lang(\'BUY_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'sell\',1)"><dt class="sell"  style="width: 10%;padding-left: 5px;">{:lang(\'SELL_\')}' + ( received_msg.sell.length+ 1) + '</dt><dd class="sell"  style="width: 15%">' + parseFloat(sell_obj.price) + '</dd><dd class="sell"  style="width: 25%">' + parseFloat(sell_obj.nums) + '</dd><dd class="sell"  style="padding-left: 3px;">' + (sell_obj.price * sell_obj.nums).toFixed(6) + '</dd></dl>';
+                    }
+                }else{
+                    received_msg.sell = received_msg.sell.reverse();
+                    for(var i = 9 ;i>=0;i--){
+                        var sell_obj = (received_msg.sell)[i];
+                        list += '<dl title="{:lang(\'BUY_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'sell\',1)"><dt class="sell"  style="width: 10%;padding-left: 5px;">{:lang(\'SELL_\')}' + (i+1) + '</dt><dd class="sell"  style="width: 15%">' + parseFloat(sell_obj.price) + '</dd><dd class="sell"  style="width: 25%">' + parseFloat(sell_obj.nums) + '</dd><dd class="sell"  style="padding-left: 3px;">' + (sell_obj.price * sell_obj.nums).toFixed(6) + '</dd></dl>';
+                        }   
+                    }
+                }else if(trade_moshi == 4){
+                    for(var i = (received_msg.sell.length-1) ;i>=0;i--){
+                        var sell_obj = (received_msg.sell)[i];
+                        list += '<dl title="{:lang(\'BUY_AT_PRICE\')}" style="cursor: pointer;" onclick="autotrust(this,\'sell\',1)"><dt class="sell"  style="width: 10%;padding-left: 5px;">{:lang(\'SELL_\')}' + (received_msg.sell.length-i) + '</dt><dd class="sell"  style="width: 15%">' + parseFloat(sell_obj.price) + '</dd><dd class="sell"  style="width: 25%">' + parseFloat(sell_obj.nums) + '</dd><dd class="sell"  style="padding-left: 3px;">' + (sell_obj.price * sell_obj.nums).toFixed(6) + '</dd></dl>';
+                    }
+                }
+                
+                    $("#selllist").html(list);
+            }
+            }
+                }
+    function getsort(arr){
+        var sorted = 'asc';
+        var a = new Array();
+        $(arr).each(function(ix,vx){
+            a.push(JSON.parse(vx));
+        });
+        if(sorted == 'asc'){
+            a.sort(function(one,two){
+                return one.price - two.price;
+            });            
+        }else if(soted = 'desc'){
+            a.sort(function(one,two){
+                return two.price - one.price;
+            }); 
+        }
+        return a;
+    }
+
+    function getEntrustAndUsercoin() {
+        $.get("{:url('Ajax/getEntrustAndUsercoin')}",{market:market,t:Math.random()},function (data) {
+            if (data) {
+                if (data['entrust']) {
+                    $('#warning').hide();
+                    var list = '';
+                    var cont = data['entrust'].length;
+                    // 我的委托数据
+                    for (i = 0; i < data['entrust'].length; i++) {
+                        if (data['entrust'][i]['type'] == 1) {
+                            // <td class="buy">{:lang(\'BUY\')}</td>
+                            list += '<tr title="{:lang(\'SOLD_AT_PRICE\')}" onclick="autotrust(this,\'buy\',2)"><td class="buy">' + data['entrust'][i]['addtime'] + '</td><td class="buy">' + data['entrust'][i]['price'] + '</td><td class="buy">' + data['entrust'][i]['num'] + '</td><td class="buy">' + data['entrust'][i]['deal'] + '</td><td class="buy" style="text-align:center;position:relative;">' + (data['entrust'][i]['price'] * data['entrust'][i]['num']).toFixed(6) + '<a class="cancelaa" id="' + data['entrust'][i]['id'] + '" onclick="cancelaa(\'' + data['entrust'][i]['id'] + '\')" href="javascript:void(0);" title="{:lang(\'RESCIND\')}" style="position:absolute;right:0;top:10px;">&times;</a></td></tr>';
+                        } else {
+                            // <td class="sell">{:lang(\'SELL\')}</td>
+                            list += '<tr title="{:lang(\'BUY_AT_PRICE\')}" onclick="autotrust(this,\'sell\',2)"><td class="sell">' + data['entrust'][i]['addtime'] + '</td><td class="sell">' + data['entrust'][i]['price'] + '</td><td class="sell">' + data['entrust'][i]['num'] + '</td><td class="sell">' + data['entrust'][i]['deal'] + '</td><td class="sell" style="text-align:center;position:relative;">' + (data['entrust'][i]['price'] * data['entrust'][i]['num']).toFixed(6) + '<a class="cancelaa" id="' + data['entrust'][i]['id'] + '" onclick="cancelaa(\'' + data['entrust'][i]['id'] + '\')" href="javascript:void(0);" title="{:lang(\'RESCIND\')}" style="position:absolute;right:0;top:10px">&times;</a></td></tr>';
+                        }
+                    }
+                    if (cont == 10) {
+                        list += '<tr><td style="text_align:center;" colspan="7"><a href="/Finance/mywt" style="color: #2674FF;">{:lang(\'MORE_DELEGATION\')}</a>&nbsp;&nbsp;</td></tr>';
+                    }
+                    $('#entrustlist').html(list);
+                } else {
+                    $('#warning').show();
+                }
+
+                if (data['usercoin']) {
+                    if (data['usercoin']['cny']) {
+                        $("#my_rmb").html(data['usercoin']['cny']);
+                    } else {
+                        $("#my_rmb").html('0.00');
+                    }
+
+                    if (data['usercoin']['cnyd']) {
+                        $("#my_rmbd").html(data['usercoin']['cnyd']);
+                    } else {
+                        $("#my_rmbd").html('0.00');
+                    }
+
+                    if (data['usercoin']['xnb']) {
+                        $("#my_xnb").html(data['usercoin']['xnb']);
+                    } else {
+                        $("#my_xnb").html('0.00');
+                    }
+
+                    if (data['usercoin']['xnbd']) {
+                        $("#my_xnbd").html(data['usercoin']['xnbd']);
+                    } else {
+                        $("#my_xnbd").html('0.00');
+                    }
+                }
+
+            }
+        },'json');
+        $.ajaxSetup({ cache: true });
+        setTimeout('getEntrustAndUsercoin()', 5000);
+    }
+
+    function get_encryption_param(obj){
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey($('#pubkey').val());
+        var encrypted = encrypt.encrypt(JSON.stringify(obj));
+        param = new Object();
+        param.encrypted =  encrypted;
+        param.token = $.md5(encrypted);
+        return JSON.stringify(param);
+    }
+    $(function () {
+         if ("WebSocket" in window && false){
+               (function wssocketreload(){
+                    window.ws = new WebSocket("wss://wss.huocoin.com"); 
+               })();
+               window.ws.onopen = function(){
+                    var send_obj = {c:'TradeController',m:'both',u:'test',d:{market:market}};
+                    window.ws.send(get_encryption_param(send_obj));
+               }
+               window.ws.onmessage=function(env){
+                    var received_msg = JSON.parse(env.data);
+                    getTradelogSocket(received_msg.log);
+                    getDepthSocket(received_msg.market);
+               } 
+               window.ws.onerror=function(){
+                    wssocketreload();
+               }    
+               window.ws.onclose = function(){ 
+                };
+            }else{
+                getTradelog();
+                getDepth();                
+            }
+        if (userid > 0) {
+            getEntrustAndUsercoin();
+        } else {
+            $('#entrust_over').hide();
+        }
+
+    });
+
+
+    function toNum(num, round) {
+        return Math.abs(Math.round(num * Math.pow(10, round) - 1) / Math.pow(10, round));
+    }
+
+
+    // 自动填价格
+    function autotrust(_this, type, cq) {
+
+        if (type == 'sell') {
+            $('#buy_price').val($(_this).children().eq(cq).html()).css({'font_size': '14px'});
+            if ($("#my_rmb").html() > 0) {
+                $("#buy_max").html(toNum(($("#my_rmb").html() / ($('#buy_price').val() * 1.002)), market_round_num));
+            }
+            if ($('#buy_num').val()) {
+                $("#buy_mum").html(($('#buy_num').val() * $('#buy_price').val()).toFixed(8) * 1);
+            }
+
+        }
+        if (type == 'buy') {
+            $('#sell_price').val($(_this).children().eq(cq).html()).css({'fontSize': '14px'});
+            if ($("#my_xnb").html() > 0) {
+                $("#sell_max").html($("#my_xnb").html());
+            }
+            if ($('#sell_num').val()) {
+                $("#sell_mum").html(($('#sell_num').val() * $('#sell_price').val()).toFixed(8) * 1);
+            }
+        }
+    }
+
+    function  setMaiChu(){
+        $('#sell_price').val($.trim($('#sell_best_price').html().replace('￥', '')));
+        var buyprice = parseFloat($('#buy_price').val());
+        var buynum = parseFloat($('#buy_num').val());
+        var sellprice = parseFloat($('#sell_price').val());
+        var sellnum = parseFloat($('#sell_num').val());
+        var buymum = buyprice * buynum;
+        var sellmum = sellprice * sellnum;
+        var myrmb = $("#my_rmb").html();
+        var myxnb = $("#my_xnb").html();
+        var buykenum = 0;
+        var sellkenum = 0;
+        if (myrmb > 0) {
+            buykenum = myrmb / (buyprice * 1.002);
+        }
+        if (myxnb > 0) {
+            sellkenum = myxnb;
+        }
+
+        if (buyprice != null && buyprice.toString().split(".") != null && buyprice.toString().split(".")[1] != null) {
+            if (buyprice.toString().split('.')[1].length > market_round) {
+                $('#buy_price').val(buyprice.toFixed(market_round));
+            }
+        }
+        if (buynum != null && buynum.toString().split(".") != null && buynum.toString().split(".")[1] != null) {
+            if (buynum.toString().split('.')[1].length > market_round_num) {
+                $('#buy_num').val(toNum(buynum, market_round_num));
+            }
+        }
+        if (sellprice != null && sellprice.toString().split(".") != null && sellprice.toString().split(".")[1] != null) {
+            if (sellprice.toString().split('.')[1].length > market_round) {
+                $('#sell_price').val(sellprice.toFixed(market_round));
+            }
+        }
+        if (sellnum != null && sellnum.toString().split(".") != null && sellnum.toString().split(".")[1] != null) {
+            if (sellnum.toString().split('.')[1].length > market_round_num) {
+                $('#sell_num').val(toNum(sellnum, market_round_num));
+            }
+        }
+        if (buymum != null && buymum > 0) {
+            $('#buy_mum').html(buymum.toFixed(8) * 1);
+        }
+        if (sellmum != null && sellmum > 0) {
+            $('#sell_mum').html(sellmum.toFixed(8) * 1);
+        }
+        if (buykenum != null && buykenum > 0 && buykenum != 'Infinity') {
+            $('#buy_max').html(toNum(buykenum, market_round_num));
+        }
+        if (sellkenum != null && sellkenum > 0 && sellkenum != 'Infinity') {
+            $('#sell_max').html(sellkenum);
+        }
+    }
+
+
+
+    function setMaiRu(){
+        $('#buy_price').val($.trim($('#buy_best_price').html().replace('￥', '')));
+        var buyprice = parseFloat($('#buy_price').val());
+        var buynum = parseFloat($('#buy_num').val());
+        var sellprice = parseFloat($('#sell_price').val());
+        var sellnum = parseFloat($('#sell_num').val());
+        var buymum = buyprice * buynum;
+        var sellmum = sellprice * sellnum;
+        var myrmb = $("#my_rmb").html();
+        var myxnb = $("#my_xnb").html();
+        var buykenum = 0;
+        var sellkenum = 0;
+        if (myrmb > 0) {
+            buykenum = myrmb / (buyprice * 1.002);
+        }
+        if (myxnb > 0) {
+            sellkenum = myxnb;
+        }
+
+        if (buyprice != null && buyprice.toString().split(".") != null && buyprice.toString().split(".")[1] != null) {
+            if (buyprice.toString().split('.')[1].length > market_round) {
+                $('#buy_price').val(buyprice.toFixed(market_round));
+            }
+        }
+        if (buynum != null && buynum.toString().split(".") != null && buynum.toString().split(".")[1] != null) {
+            if (buynum.toString().split('.')[1].length > market_round_num) {
+                $('#buy_num').val(toNum(buynum, market_round_num));
+            }
+        }
+        if (sellprice != null && sellprice.toString().split(".") != null && sellprice.toString().split(".")[1] != null) {
+            if (sellprice.toString().split('.')[1].length > market_round) {
+                $('#sell_price').val(sellprice.toFixed(market_round));
+            }
+        }
+        if (sellnum != null && sellnum.toString().split(".") != null && sellnum.toString().split(".")[1] != null) {
+            if (sellnum.toString().split('.')[1].length > market_round_num) {
+                $('#sell_num').val(toNum(sellnum, market_round_num));
+            }
+        }
+        if (buymum != null && buymum > 0) {
+            $('#buy_mum').html(buymum.toFixed(8) * 1);
+        }
+        if (sellmum != null && sellmum > 0) {
+            $('#sell_mum').html(sellmum.toFixed(8) * 1);
+        }
+        if (buykenum != null && buykenum > 0 && buykenum != 'Infinity') {
+            $('#buy_max').html(toNum(buykenum, market_round_num));
+        }
+        if (sellkenum != null && sellkenum > 0 && sellkenum != 'Infinity') {
+            $('#sell_max').html(sellkenum);
+        }
+    }
+    $('#buy_price,#buy_num,#sell_price,#sell_num').css("ime-mode", "disabled").bind('keyup change', function () {
+        var buyprice = parseFloat($('#buy_price').val());
+        var buynum = parseFloat($('#buy_num').val());
+        var sellprice = parseFloat($('#sell_price').val());
+        var sellnum = parseFloat($('#sell_num').val());
+        var buymum = buyprice * buynum;
+        var sellmum = sellprice * sellnum;
+        var myrmb = $("#my_rmb").html();
+        var myxnb = $("#my_xnb").html();
+        var buykenum = 0;
+        var sellkenum = 0;
+        if (myrmb > 0) {
+            buykenum = myrmb / (buyprice * 1.002);
+        }
+        if (myxnb > 0) {
+            sellkenum = myxnb;
+        }
+        //alert("wobianliao");
+
+        if (buyprice != null && buyprice.toString().split(".") != null && buyprice.toString().split(".")[1] != null) {
+            if (buyprice.toString().split('.')[1].length > market_round) {
+                $('#buy_price').val(buyprice.toFixed(market_round));
+            }
+        }
+        if (buynum != null && buynum.toString().split(".") != null && buynum.toString().split(".")[1] != null) {
+            if (buynum.toString().split('.')[1].length > market_round_num) {
+                $('#buy_num').val(toNum(buynum, market_round_num));
+            }
+        }
+        if (sellprice != null && sellprice.toString().split(".") != null && sellprice.toString().split(".")[1] != null) {
+            if (sellprice.toString().split('.')[1].length > market_round) {
+                $('#sell_price').val(sellprice.toFixed(market_round));
+            }
+        }
+        if (sellnum != null && sellnum.toString().split(".") != null && sellnum.toString().split(".")[1] != null) {
+            if (sellnum.toString().split('.')[1].length > market_round_num) {
+                $('#sell_num').val(toNum(sellnum, market_round_num));
+            }
+        }
+        if (buymum != null && buymum > 0) {
+            $('#buy_mum').html(buymum.toFixed(8) * 1);
+        }
+        if (sellmum != null && sellmum > 0) {
+            $('#sell_mum').html(sellmum.toFixed(8) * 1);
+        }
+        if (buykenum != null && buykenum > 0 && buykenum != 'Infinity') {
+            $('#buy_max').html(toNum(buykenum, market_round_num));
+        }
+        if (sellkenum != null && sellkenum > 0 && sellkenum != 'Infinity') {
+            $('#sell_max').html(sellkenum);
+        }
+    }).bind("paste", function () {
+        //return false;
+    }).bind("blur", function () {
+        if (this.value.slice(-1) == ".") {
+            this.value = this.value.slice(0, this.value.length - 1);
+        }
+    }).bind("keypress", function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which); //兼容火狐 IE
+        if (this.value.indexOf(".") == -1) {
+            return (code >= 48 && code <= 57) || (code == 46);
+        } else {
+            return code >= 48 && code <= 57
+        }
+    });
+</script>
+
+
+<script type="text/javascript" src="/home/js/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(function (){
+        slider();
+    });
+    // 买入/卖出 比例
+    function slider() {
+        var type = ['sell', 'buy'];
+        for (var i in type) {
+            $("#slider_" + type[i]).slider({
+                value: 0, min: 0, max: 100, step: 10, range: "min", slide: function (a, t) {
+                    var type = $(t.handle).attr('data_slide');
+                    var e = parseFloat($("#" + type + '_max').text());
+                    if (isNaN(e)) e = 0;
+                    $("#" + type + ' .ui-slider-handle').addClass('ui-state-focus ui-state-active');
+                    $("#" + type + "_num").val((e / 100 * t.value).toFixed(market_round_num));
+                    $("#ratio_num_" + type).text(t.value + "%");
+                    if ($('#' + type + '_price').val()) {
+                        $("#" + type + "_mum").html(((e / 100 * t.value * $('#' + type + '_price').val() * 1.002)).toFixed(2) * 1);
+                    }
+                }
+            })
+        }
+    }
+    $('.account_table>div').css('maxHeight',452 - $('.shareFriends>img').height())
+</script>
+<script>
+    //菜单高亮
+    $('#list-tab_index').addClass('on');
+</script>
+

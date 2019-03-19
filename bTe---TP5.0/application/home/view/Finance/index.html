@@ -1,0 +1,92 @@
+{include file="Public:header" /}
+
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('FINANCE_MY')}	</div>
+	<div class="main-content">
+		{include file="Finance:left" /}
+		<div class="tag-list-content assets_content bg_w">
+			<h1 class="safe_center clear">
+				<span>{:lang('FINANCE_MY')}</span>
+			</h1>
+			<div id="hints" class="mytips" style="display:none;">
+				<p>
+					{notempty name="prompt_text"}
+						{$prompt_text}
+					{/notempty}
+				</p>
+
+			</div>
+			<div class="pur_dy" >
+				
+				<i class="fa fa-pie-chart" aria-hidden="true"></i>
+
+				{:lang('AVAILABLE_HKD')}：
+				<b class="red">￥{$userCoin_top['cny']}</b>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				{:lang('FROZEN_HKD')}：
+				<b class="red">￥{$userCoin_top['cnyd']}</b>
+
+				<span class="pur_dy_all">{:lang('ACCOUNT_HKD')}：
+								<b class="red">￥{$userCoin_top['zzc']}</b>
+							</span>
+			</div>
+			<div class="pur_shop_title grid-finan">
+					<dt>{:lang('DIGITAL_ASSET')}</dt>
+					<dd>{:lang('AVAILABLE')}</dd>
+					<dd>{:lang('FROZEN')}</dd>
+					<dd>{:lang('TOTAL')}</dd>
+					<dd>{:lang('EQUIVALENT')}</dd>
+					<dd>{:lang('OPERATE')}</dd>
+			</div>
+			<ul class="coin_list grid-finan" id="grid-finan">
+				<!-- <li>华克金</li> -->
+				{volist name="coinList" id="vo"}
+					<li >
+						<dt style="margin-left: 0;">
+							<div class="coin_pic mr20">
+								<img src="__DOMAIN____UPLOAD__/coin/{$vo['img']}" alt="" width="40"/>
+							</div>
+							<div class="coin_name">
+								<div>{$vo['title']}</div>
+								<p class="">¥{$vo['jia']}</p>
+							</div>
+						</dt>
+						<dd >{$vo['xnb']}</dd>
+						<dd >{$vo['xnbd']}</dd>
+						<dd >{$vo['xnbz']}</dd>
+						<dd>{$vo['zhehe']}</dd>
+						<dd>
+							{if condition="$vo['name'] eq 'wcg'"}
+								<a href="/Activity/wcg_zr" class="minBtn bg_red">转入</a>
+							{elseif condition="$vo['name'] eq 'drt'" /}
+								<a href="{:url('Finance/mbizr')}" class="minBtn bg_red">转入</a>
+							{elseif condition="$vo['name'] eq 'mat'" /}
+								<a href="/Finance/matzr" class="minBtn bg_red">转入</a>
+							{elseif condition="$vo['name'] eq 'mtr'" /}
+								<a href="/Finance/mtrzr" class="minBtn bg_red">转入</a>
+							{else /}
+								<a href="/Finance/myzr/coin/{$vo['name']}" class="minBtn bg_red">转入</a>
+							{/if}
+							<a href="/Finance/myzc/coin/{$vo.name}" class="minBtn bg_red">转出</a>
+							<a href="/trade/index/market/{:config('market_type')[$vo['name']]}" class="minBtn bg_green">{:lang('GO_TRADE')}</a>
+						</dd>
+					</li>
+				{/volist}
+			</ul>
+			<div class="pages">{$page}</div>
+		</div>
+</div>
+</div>
+
+<script type="text/javascript">
+</script>
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('.finan_index').addClass('active');
+    $('#finance_box').addClass('active');
+</script>
+{include file="Public:footer" /}

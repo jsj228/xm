@@ -1,0 +1,316 @@
+{include file="Public:header" /}
+
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt;
+		<a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('WITHDRAWAL_COIN')}
+	</div>
+	<div class="main-content">
+
+
+
+{include file="Finance:left" /}
+		<div class="tag-list-content assets_content bg_w">
+			<div class="safe_center clear">
+				<h1>
+					<span>{:lang('WITHDRAWAL_DIGI_ASSET')}</span>
+					 <span>
+                        <a href="/finance/myzc" class="step fz_12 ml50 pd6 active">{:lang('WITHDRAWAL_DIGI_ASSET')}</a>
+                        <a href="/finance/coinoutlog" class="step fz_12 ml20 pd6 ">{:lang('WITHDRAWAL_RECORDS')}</a>
+                        <a href="/finance/qianbao" class="step fz_12 ml20 pd6 ">{:lang('WITHDRAWAL_ADD_LIST')}</a>
+                    </span>
+					<!--<span>-->
+						<!--<a class="right" onclick="$('#hints').slideToggle();">-->
+							<!--<i class="fa fa-hand-o-right move fz_14 mr5"></i>-->
+							<!--<span class="fz_12 move">{:lang('DETAILED_INFO')}</span>-->
+						<!--</a>-->
+					<!--</span>-->
+				</h1>
+			</div>
+			<div id="hints" class="mytips" style="display:none;">
+				<p><notempty name="prompt_text">{$prompt_text}</notempty></p>
+			</div>
+			<div class="mytable-body " style="    padding-top: 0px;">
+				<div class="pwtrade  pw  mt50">
+					<dl>
+						<dt>{:lang('WITHDRAWAL_COIN_TYPE')}：</dt>
+						<dd style="position:relative">
+							<select name="type" id="coin-select" style="
+							padding-left:40px;background:url(__DOMAIN__/Upload/coin/{$coin_list[$xnb]['img']}) no-repeat 10px #161f2b;
+							background-size:26px;
+							">
+								
+								{foreach $coin_list as $vo}
+									{eq name="xnb" value="$key"}
+										<option value="{$vo['name']}" selected="selected" >{$vo.title} ({$vo['name']|strtoupper})</option>
+										{else/}
+										<option value="{$vo['name']}" >{$vo.title}({$vo['name']|strtoupper})</option>
+									{/eq}
+								{/foreach}
+							</select>
+							{:lang('AVAILABLE_BALANCE')} <font class="coin-balance">{$user_coin[$xnb]}</font><!--{$user_coin[$xnb]|Num}删除|Num后余额显示小数点后8位-->
+						</dd>
+					</dl>
+					<dl>
+						<dt>{:lang('WITHDRAWAL_ADD')}：</dt>
+						<dd>
+							<span>
+								<select id="cnyout_bank">
+									<option value="">--{:lang('WITHDRAWAL_ADD_SELECT')}--</option>
+									{foreach  $userQianbaoList as $vo }
+                     
+                                            <option value="{$vo.addr}">{$vo.name}</option>
+                                     {/foreach}
+									<option value="tianjia">{:lang('WITHDRAWAL_ADD_NEW_ADD')}</option>
+								</select>
+							</span>
+						</dd>
+					</dl>
+
+
+					{eq name="Think.get.coin" value="wcg"}
+						<dl>
+							<dt>华克金公钥：</dt>
+							<dd style="position: relative;">
+								<input type="text" id="wcgkey" maxlength="100" value="" placeholder="例如：51aca0eab71baaf0784b7f98612b8ba71841a2d73f2d07669786cdf0d1131b16">
+							</dd>
+						</dl>
+					{/eq}
+					<dl>
+						<dt>{:lang('WITHDRAWAL_QUANTITY')}：</dt>
+						<dd style="position: relative;">
+							<input type="number" id="cnyout_num" maxlength="12" >
+							{:lang('WITHDRAWAL_FEE')}{$coin_list[$xnb]['zc_fee']}
+							{if condition="($coin eq 'wc') or ($coin eq 'wcg') or ($coin eq 'oioc') or ($coin eq 'eac') or ($coin eq 'si{')"}
+								%
+								{else/}
+								{:lang('individual')}
+							{/if}
+
+							<span>&nbsp;&nbsp;{:lang('WITHDRAWAL_MIN')}：{$min_number}</span>
+						</dd>
+					</dl>
+					<dl class="step5">
+						<dt>{:lang('CODE')}：</dt>
+						<dd class="yuyin">
+							<div class="clear">
+								<input type="button" value="{:lang('CODE_SEND')}" onclick="send_moble_coinout()" />
+								{$moble}({:lang('CODE_RECEIVE_USED')})
+							</div>
+						</dd>
+					</dl>
+					<dl class="step6" style="display:none;">
+						<dt>{:lang('CODE')}：</dt>
+						<dd>
+							<input type="text" id="cnyout_moble_verify" value="" class="texts" placeholder="{:lang('CODE_INPUT')}"/> <span id="reg_moble_new"></span>
+						</dd>
+					</dl>
+					<dl>
+						<dt>{:lang('TRAN_PWD')}：</dt>
+						<dd>
+							<input type="password" class="texts" id="cnyout_paypassword"  value=""><a href="/findpwd/findpwd" class="move ml5">{:lang('FORGET')}?</a>
+						</dd>
+					</dl>
+					<dl>
+						<dt></dt>
+						<dd>
+							{empty name="zc_jz"}
+								<input type="button" value="{:lang('WITHDRAWAL_NOW')}" onclick="coinout_up()">
+							{else/}
+								<input type="button" value="{$zc_jz}" disabled>
+							{/empty}
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("#cnyout_bank").change(function () {
+		var type = $("#cnyout_bank option:selected").val();
+		if (type == 'tianjia') {
+			window.location = "/finance/qianbao";
+		}
+	});
+	$("#coin-select").change(function () {
+		var coin = $("#coin-select option:selected").val();
+		var url    = '/Finance/myzc';
+		if (coin) {
+			url += '/coin/' + coin;
+		}
+		window.location = url;
+	});
+	function send_new() {
+		$(".step6").hide();
+		$(".step5").show();
+	}
+	function send_moble_coinout() {
+		$.post("{:url('Verify/myzc')}", {
+
+		}, function (data) {
+			if (data.code == 1) {
+				layer.msg(data.msg, {icon: 1});
+				$(".step5").hide();
+				$(".step6").show();
+				$("#cnyout_moble_verify").focus();
+				$('#moble_new').attr("disabled", "disabled");
+				var obj      = $('#reg_moble_new');
+				var wait     = 60;
+				var interval = setInterval(function () {
+					obj.html(wait + "{:lang('CODE_SEND_AGAIN')}");
+					wait--;
+					if (wait < 0) {
+						clearInterval(interval);
+						$(".reloadverify_new").click();
+						$("#verify_new").val('');
+						obj.html('<a class="move" onclick="send_new()">{:lang("CODE_SEND_NO_AGAIN")}</a>');
+					}
+					;
+				}, 1000);
+			} else {
+				layer.msg(data.msg, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+	function coinout_up() {
+		var num          = $("#cnyout_num").val();
+		var paypassword  = $("#cnyout_paypassword").val();
+		var moble_verify = $("#cnyout_moble_verify").val();
+		var bank         = $('#cnyout_bank option:selected').val();
+		var coin         = $('#coin-select option:selected').val();
+        var wcgkey		 = $('#wcgkey').val();
+		if (moble_verify == "" || moble_verify == null) {
+			layer.msg('{:lang("CODE_INPUT")}', {
+				icon: 2
+			});
+			return false;
+		}
+		if (num == "" || num == null) {
+			layer.tips('{:lang("TRAN_QUANTITY_INPUT")}', '#cnyout_num', {
+				tips: 2
+			});
+			return false;
+		}
+		if (bank == "" || bank == null) {
+			layer.tips('{:lang("WITHDRAWAL_ADD")}', '#cnyout_bank', {
+				tips: 2
+			});
+			return false;
+		}
+		if (paypassword == "" || paypassword == null) {
+			layer.tips('{:lang("TRAN_PWD_ENTER")}', '#cnyout_paypassword', {
+				tips: 2
+			});
+			return false;
+		}
+		if (coin == "" || coin == null) {
+			layer.tips('{:lang("COIN_TYPE_SELECT")}', '#coin-select', {
+				tips: 2
+			});
+			return false;
+		}
+		var goole ="0";
+		if(goole == 1){
+			layer.config({
+				extend: 'extend/layer.ext.js'
+			});
+			layer.ready(function () {
+				layer.prompt({
+					title: '{:lang("GOOGLE_CODE")}',
+					formType: 1
+				}, function (val) {
+					if (val) {
+						$.post("/finan/coinout_up", {
+							coin:coin,
+							num: num,
+							paypassword: paypassword,
+							moble_verify: moble_verify,
+							bank: bank,
+							goole:val,
+						}, function (data) {
+							if (data.status == 1) {
+								layer.msg(data.info, {
+									icon: 1
+								});
+								window.location = "/finan/coinoutlog";
+							} else {
+								layer.msg(data.info, {
+									icon: 2
+								});
+								if (data.url) {
+									window.location = data.url;
+								}
+							}
+						}, "json");
+					}
+					;
+				});
+			});
+		}else{
+			$.post("{:url('Finance/upmyzc')}", {
+				coin:coin,
+				num: num,
+				paypassword: paypassword,
+				moble_verify: moble_verify,
+				addr: bank,
+                wcgkey: wcgkey,
+			}, function (data) {
+				if (data.code == 1) {
+					layer.msg(data.msg, {
+						icon: 1
+					});
+					window.location = "/finance/coinoutlog";
+				} else {
+					layer.msg(data.msg, {
+						icon: 2
+					});
+					if (data.url) {
+						window.location = data.url;
+					}
+				}
+			}, "json");
+		}
+	}
+</script>
+
+
+
+
+
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_coinout').addClass('active');
+</script>
+
+{include file="Public:footer" /}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

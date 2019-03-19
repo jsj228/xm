@@ -1,0 +1,219 @@
+    <include file="Public:header" />
+    <style type="text/css">
+       
+        .nav-bar{display:none!important;opacity:0;}
+        li{display:inline-block;}
+        li a{color:#ffffff;font-size:16px;}
+        .bg_green{background:rgba(148, 147, 48,0.8)};
+        table{margin:0 auto;text-align:center;}
+        th{font-size:16px;padding:5px;}
+        th,td{border:1px solid rgba(225, 255, 255, 0.5);}
+        
+        [pRight]{position: fixed;right:0;top:0;height:32px;line-height:32px;font-size:16px;padding:0 10px;}
+        body{background:url(__PUBLIC__/Home/ActImages/top.png)no-repeat top center #810000;overflow-x: hidden;background-size:100%;height:100%;min-height:768px;}
+        div.bgBottom{background:url("__PUBLIC__/Home/ActImages/active.png")no-repeat bottom center;background-size:100%;
+        min-height: 500px;min-width:1200px;width:100%;position: absolute;bottom: 0;z-index:-1;}
+
+
+        .egg{width:100%; height:400px; margin:50px auto 20px auto;}
+        .egg ul li{z-index:999;}
+        .eggList{padding-top:110px;position:relative;width:660px;}
+        .eggList li{display:inline-block;background:url("__PUBLIC__/Home/ActImages/images/egg_1.png") no-repeat bottom;width:158px;height:187px;cursor:pointer;position:relative;margin-left:35px;}
+        /* 数字 */
+        .eggList li span{position:absolute; width:30px; height:60px; left:68px; top:64px; color:#ff0; font-size:42px; font-weight:bold}
+        /* 咋过后 */
+        .eggList li.end{background:url("__PUBLIC__/Home/ActImages/images/egg_2.png") no-repeat bottom;cursor:default;z-index:300;}
+        /* 咋过程 */
+        .eggList li.end sup{position:absolute;background:url("__PUBLIC__/Home/ActImages/images/img-4.png") no-repeat;width:232px; height:181px;top:-36px;left:-34px;z-index:800;}
+        /* 锤子 */
+        /* .hammer{background:url("__PUBLIC__/Home/ActImages/images/img-4.png") no-repeat;width:74px;height:87px;position:absolute;z-index:150;left:168px;top:100px;} */
+        /* 结果提示 */
+        .resultTip{position:absolute; background:#ffc ;width:148px;padding:6px;z-index:500;top:200px; left:10px; color:#f60; text-align:center;overflow:hidden;display:none;z-index:500;}
+        .resultTip b{font-size:14px;line-height:24px;}
+        .eggList li.be:after{content:'';width:74px;height:87px;background:url("__PUBLIC__/Home/ActImages/images/img-6.png") no-repeat;position:absolute;z-index:150;left:115px;top:-18px;
+            transition:all 1s;opacity:0;
+        }
+        .eggList li:hover:after{
+            opacity:0.8;
+            transform:rotate(-45deg);
+            -ms-transform:rotate(-45deg); 	/* IE 9 */
+            -moz-transform:rotate(-45deg); 	/* Firefox */
+            -webkit-transform:rotate(-45deg); /* Safari 和 Chrome */
+            -o-transform:rotate(-45deg); 	/* Opera */
+        }
+    </style>
+<body>
+    <div class="bgBottom"></div>
+    <!-- 用户没有登陆 显示登陆框 -->
+    <ul class="bg_green" pRight>
+        <gt name="Think.session.userId" value="0">
+            <li id="user_top">
+                <i class="fa fa-user fa-lg left eee"></i>
+                <a href="/finance/"  class=" nav-username">{$Think.session.userName}</a>
+                <div id="mywallet_list" class="mywallet_list deal_list">
+                    <h4>{:L('AVAILABLE_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['cny']}</a>
+                    </h4>
+                    <h4>{:L('FROZEN_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['cnyd']}</a>
+                    </h4>
+                    <h4>{:L('ACCOUNT_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['zzc']}</a>
+                    </h4>
+                    <div class="mywallet_btn_box">
+                        <a href="/Finance/myzc.html" class="mywallet_btn">{:L('WITHDRAWAL_COIN')}</a>
+                        <a href="/Finance/index.html" class="mywallet_btn">{:L('FINANCE')}</a>
+                        <a href="/User/index.html" class="mywallet_btn">{:L('SAFE')}</a>
+                    </div>
+                    <i class="fa fa-caret-up" style="position: absolute;top: -21px;right: 34px;font-size: 28px;"></i>
+                    <div class="nocontent"></div>
+                </div>
+            </li>
+            <li>
+                <a href="{:U('Login/loginout')}" class="">{:L('SIGN_OUT')}</a>
+            </li>
+            <else/>
+            <li>
+                <i class="fa fa-user eee left fz_16"></i> <a href="{:U('Login/register')}"> {:L('REGISTER')}</a>
+            </li>
+            <li>
+                <a onclick="loginpop()" class="">{:L('LOGIN')}</a>
+            </li>
+        </gt>
+    </ul>
+    <div style="padding-left:80px ;width:750px;margin:120px auto 30px;">
+        <img src="__PUBLIC__/Home/ActImages/00.png" alt="活动说明">
+    </div>
+    <div style="margin:0 auto;width:1200px;border:1px solid #eee">
+        <div style="display:inline-block;vertical-aligin:top;width:80%">
+            <div class="egg">
+                <ul class="eggList">
+                    <li class="be"><span>1</span><sup></sup></li>
+                    <li class="be"><span>2</span><sup></sup></li>
+                    <li class="be"><span>3</span><sup></sup></li>
+                </ul>
+                <p class="hammer" id="hammer">锤子</p>
+                <p class="resultTip" id="resultTip"><b id="result"></b></p>
+            </div>
+            <div>抽奖</div>
+        </div><div style="display:inline-block;vertical-aligin:top;width:20%">
+        right
+        </div>
+    </div>
+    <script>
+    $(".eggList li.be").click(function() {
+        $(this).children("span").hide();
+        $(this).removeClass('be');
+        var _this =$(this);
+        // $.getJSON("data.php",function(res){
+            if(_this.hasClass("end")){
+                layer.msg('蛋都碎了，别砸了！刷新再来.',{icon:2})
+                return false;
+            };
+            $(".hammer").css({"top":_this.position().top-55,"left":_this.position().left+185});
+            $(".hammer").animate({
+                "top":_this.position().top-25,
+                "left":_this.position().left+125
+                },30,function(){
+                    _this.addClass("end"); //蛋碎效果
+                    // _this.find("sup").show(); //金花四溅
+                    // $(".hammer").hide();
+                    // $('.resultTip').css({display:'block',top:'100px',left:_this.position().left+45,opacity:0}).animate({top: '50px',opacity:1},300,function(){
+                    //     // if(res.msg==1){
+                    //     //     $("#result").html("恭喜，您中得"+res.prize+"!");
+                    //     // }else{
+                    //     //     $("#result").html("很遗憾,您没能中奖!");
+                    //     // }
+                    // });	
+                }
+            );
+        // });
+    });
+    </script>
+
+
+
+
+
+
+
+    <script>
+        // 雪花运动
+        (function () {
+            var COUNT = 400;
+            var masthead = document.querySelector('body');
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            var width = masthead.clientWidth;
+            var height = masthead.clientHeight;
+            var i = 0;
+            var active = false;
+            function onResize() {
+            canvas.width = width;
+            canvas.height =1000;
+            
+
+            ctx.fillStyle = '#FFF';
+            var wasActive = active;
+            active = width >1000;
+            if (!wasActive && active)
+                requestAnimFrame(update);
+            }
+            var Snowflake = function () {
+            this.x = 0;
+            this.y = 0;
+            this.vy = 0;
+            this.vx = 0;
+            this.r = 0;
+            this.reset();
+            };
+            Snowflake.prototype.reset = function() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * -height;
+            this.vy = 1 + Math.random() * 3;
+            this.vx = 0.5 - Math.random();
+            this.r = 1 + Math.random() * 2;
+            this.o = 0.5 + Math.random() * 0.5;
+            };
+            canvas.style.position = 'absolute';
+            canvas.style.zIndex = '-1';
+            canvas.style.left = canvas.style.bottom = '0';
+            var snowflakes = [], snowflake;
+            for (i = 0; i < COUNT; i++) {
+            snowflake = new Snowflake();
+            snowflakes.push(snowflake);
+            }
+            function update() {
+            ctx.clearRect(0, 0, width, 1000);
+            if (!active)
+                return;
+            for (i = 0; i < COUNT; i++) {
+                snowflake = snowflakes[i];
+                snowflake.y += snowflake.vy;
+                snowflake.x += snowflake.vx;
+                ctx.globalAlpha = snowflake.o;
+                ctx.beginPath();
+                ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
+                ctx.closePath();
+                ctx.fill();
+                if (snowflake.y >1000) {
+                snowflake.reset();
+                }
+            }
+            requestAnimFrame(update);
+            }
+            window.requestAnimFrame = (function(){
+            return window.requestAnimationFrame    ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame  ||
+                function( callback ){
+                    window.setTimeout(callback, 1000 /10);
+                };
+            })();
+            onResize();
+            window.addEventListener('resize', onResize, false);
+            masthead.appendChild(canvas);
+        })();
+    </script>
+    </body>
+</html>

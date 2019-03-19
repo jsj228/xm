@@ -1,0 +1,221 @@
+    <include file="Public:header" />
+    <style type="text/css">
+        .nav-bar{display:none!important;opacity:0;}
+        li{display:inline-block;}
+        li a{color:#ffffff;font-size:16px;}
+        .bg_green{background:rgba(148, 147, 48,0.8)};
+        table{margin:0 auto;text-align:center;}
+        th{font-size:16px;padding:5px;}
+        th,td{border:1px solid rgba(225, 255, 255, 0.5);}
+        
+        [pRight]{position: fixed;right:0;top:0;height:32px;line-height:32px;font-size:16px;padding:0 10px;}
+        body{background:url(__PUBLIC__/Home/ActImages/top.png)no-repeat top center #810000;overflow-x: hidden;background-size:100%;height:100%;min-height:768px;}
+        div.bgBottom{background:url("__PUBLIC__/Home/ActImages/active.png")no-repeat bottom center;background-size:100%;
+        min-height: 500px;min-width:1200px;width:100%;position: absolute;bottom: 0;z-index:-1;}
+        .eggList,.eggList+div,.rightBox{background:rgba(255,255,255,0.2)}
+        .eggList{position:relative;width:100%;min-height:270px;margin-bottom:10px;}
+        .eggList li{display:inline-block;background:url("__PUBLIC__/Home/ActImages/images/egg_1.png") no-repeat bottom;
+        width:158px;height:187px;cursor:pointer;position:relative;margin:0 13px;}
+        .eggList li span{position:absolute; width:30px; height:60px; left:68px; top:64px; color:#ff0; font-size:42px; font-weight:bold}
+        .eggList li.end{background:url("__PUBLIC__/Home/ActImages/images/egg_2.png") no-repeat bottom;cursor:default;z-index:300;}
+        .eggList li.end sup{position:absolute;background:url("__PUBLIC__/Home/ActImages/images/img-4.png") no-repeat;width:232px; height:181px;top:-36px;left:-34px;z-index:800;}
+        .hammer{opacity:0;
+        background:url("__PUBLIC__/Home/ActImages/images/img-6.png") no-repeat;width:74px;height:87px;position:absolute; text-indent:-9999px;z-index:150;left:120px;top:-10px;}
+        .resultTip{position:absolute; background:yellow;width:148px;padding:6px;z-index:500;top:200px; left:10px; color:#f60; text-align:center;overflow:hidden;display:none;z-index:500;}
+        .resultTip b{font-size:14px;line-height:24px;}
+        .eggList li:hover .hammer{opacity:1;}
+
+        .animat h2{margin-bottom:10px;padding:12px 0 8px;text-align: center;color:yellow;background:rgba(150,0,0,0.3);border-bottom:1px solid rgba(191, 161, 39,0.8);}
+        .animat p{margin:3px 10px;background:rgba(150,0,0,0.2);color:#ddd;}
+        .animat p:hover{background:rgba(191, 161, 39,0.3)}
+    </style>
+<body>
+    <div class="bgBottom"></div>
+    <!-- 用户没有登陆 显示登陆框 -->
+    <ul class="bg_green" pRight>
+        <gt name="Think.session.userId" value="0">
+            <li id="user_top">
+                <i class="fa fa-user fa-lg left eee"></i>
+                <a href="/finance/"  class=" nav-username">{$Think.session.userName}</a>
+                <div id="mywallet_list" class="mywallet_list deal_list">
+                    <h4>{:L('AVAILABLE_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['cny']}</a>
+                    </h4>
+                    <h4>{:L('FROZEN_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['cnyd']}</a>
+                    </h4>
+                    <h4>{:L('ACCOUNT_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['zzc']}</a>
+                    </h4>
+                    <div class="mywallet_btn_box">
+                        <a href="/Finance/myzc.html" class="mywallet_btn">{:L('WITHDRAWAL_COIN')}</a>
+                        <a href="/Finance/index.html" class="mywallet_btn">{:L('FINANCE')}</a>
+                        <a href="/User/index.html" class="mywallet_btn">{:L('SAFE')}</a>
+                    </div>
+                    <i class="fa fa-caret-up" style="position: absolute;top: -21px;right: 34px;font-size: 28px;"></i>
+                    <div class="nocontent"></div>
+                </div>
+            </li>
+            <li>
+                <a href="{:U('Login/loginout')}" class="">{:L('SIGN_OUT')}</a>
+            </li>
+            <else/>
+            <li>
+                <i class="fa fa-user eee left fz_16"></i> <a href="{:U('Login/register')}"> {:L('REGISTER')}</a>
+            </li>
+            <li>
+                <a onclick="loginpop()" class="">{:L('LOGIN')}</a>
+            </li>
+        </gt>
+    </ul>
+    <div style="padding-left:80px ;width:750px;margin:120px auto 30px;">
+        <img src="__PUBLIC__/Home/ActImages/00.png" alt="活动说明">
+    </div>
+    <div style="margin:0 auto;width:1200px;">
+        <div style="display:inline-block;vertical-align:top;width:80%">
+            <ul class="eggList">
+                <h1  style="font-size:32px;padding:30px 0 60px;text-align:center;color:#ff0">砸 金 蛋 抽 獎</h1>
+                <li class="be"><span>1</span><sup></sup><b class="hammer"></b></li>
+                <li class="be"><span>2</span><sup></sup><b class="hammer"></b></li>
+                <li class="be"><span>3</span><sup></sup><b class="hammer"></b></li>
+                <li class="be"><span>4</span><sup></sup><b class="hammer"></b></li>
+                <li class="be"><span>5</span><sup></sup><b class="hammer"></b></li>
+                <p class="resultTip" id="resultTip"><b id="result"></b></p>
+            </ul>
+            <div class="animat">
+                <h2>中獎的用戶</h2>
+                <p>11111</p>
+                <p>2222222</p>
+                <p>333333</p>
+                <p>4444444444</p>
+                <p>5555555</p>
+                <p>66666666</p>
+                <p>777777777</p>
+                <p>888888888</p>
+                <p>99999999</p>
+                <p>000000000</p>
+            </div>
+        </div><div class="rightBox" style="display:inline-block;vertical-align:top;width:calc(20% -10px);margin-left:10px;">
+              <p>11111</p>
+              <p>2222222</p>
+              <p>333333</p>
+              <p>4444444444</p>
+              <p>5555555</p>
+              <p>66666666</p>
+              <p>777777777</p>
+              <p>888888888</p>
+              <p>99999999</p>
+              <p>000000000</p>
+        </div>
+    </div>
+    <script>
+    $(".eggList li.be").click(function() {
+        $(this).children("span").hide();
+        $(this).removeClass('be');
+        var _this =$(this);
+        // $.getJSON("data.php",function(res){
+            if(_this.hasClass("end")){
+                layer.msg('蛋都碎了，别砸了！刷新再来.',{icon:2})
+                return false;
+            };
+            _this.find(".hammer").css({"top":_this.position().top-55,"left":+100});
+            _this.find(".hammer").animate({
+                "top":-25,
+                "left":+125
+                },30,function(){
+                    _this.addClass("end"); //蛋碎效果
+                    _this.find("sup").show(); //金花四溅
+                    _this.find(".hammer").hide();
+                    $('.resultTip').css({height:0,display:'block',top:'150px',left:_this.position().left+30,opacity:0}).animate({height:'36px',top:'100px',opacity:1},300,function(){
+                        if(true){
+                            $("#result").html("恭喜，您中得!"+'00');
+                        }else{
+                            $("#result").html("很遗憾,您没能中奖!");
+                        }
+                    });	
+                }
+            );
+        // });
+    });
+    </script>
+    <script>
+        
+        // 雪花运动
+        (function () {
+            var COUNT = 400;
+            var masthead = document.querySelector('body');
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            var width = masthead.clientWidth;
+            var height = masthead.clientHeight;
+            var i = 0;
+            var active = false;
+            function onResize() {
+            canvas.width = width;
+            canvas.height =1000;
+            
+
+            ctx.fillStyle = '#FFF';
+            var wasActive = active;
+            active = width >1000;
+            if (!wasActive && active)
+                requestAnimFrame(update);
+            }
+            var Snowflake = function () {
+            this.x = 0;
+            this.y = 0;
+            this.vy = 0;
+            this.vx = 0;
+            this.r = 0;
+            this.reset();
+            };
+            Snowflake.prototype.reset = function() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * -height;
+            this.vy = 1 + Math.random() * 3;
+            this.vx = 0.5 - Math.random();
+            this.r = 1 + Math.random() * 2;
+            this.o = 0.5 + Math.random() * 0.5;
+            };
+            canvas.style.position = 'absolute';
+            canvas.style.zIndex = '-1';
+            canvas.style.left = canvas.style.bottom = '0';
+            var snowflakes = [], snowflake;
+            for (i = 0; i < COUNT; i++) {
+            snowflake = new Snowflake();
+            snowflakes.push(snowflake);
+            }
+            function update() {
+            ctx.clearRect(0, 0, width, 1000);
+            if (!active)
+                return;
+            for (i = 0; i < COUNT; i++) {
+                snowflake = snowflakes[i];
+                snowflake.y += snowflake.vy;
+                snowflake.x += snowflake.vx;
+                ctx.globalAlpha = snowflake.o;
+                ctx.beginPath();
+                ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
+                ctx.closePath();
+                ctx.fill();
+                if (snowflake.y >1000) {
+                snowflake.reset();
+                }
+            }
+            requestAnimFrame(update);
+            }
+            window.requestAnimFrame = (function(){
+            return window.requestAnimationFrame    ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame  ||
+                function( callback ){
+                    window.setTimeout(callback, 1000 /10);
+                };
+            })();
+            onResize();
+            window.addEventListener('resize', onResize, false);
+            masthead.appendChild(canvas);
+        })();
+    </script>
+    </body>
+</html>

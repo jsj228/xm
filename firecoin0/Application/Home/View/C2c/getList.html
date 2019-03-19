@@ -1,0 +1,181 @@
+
+    <volist name="list" id="vo">
+        <tr class="wait">
+            <td>{$vo.addtime|addtime}</td>
+            <td class="text-left in}">
+                <eq name="vo.type" value="1">买入</eq>
+                <eq name="vo.type" value="2">卖出</eq>
+                {$coin|strtoupper}/CNY
+                <br>
+                流水号 : {$vo.tradeno}
+            </td>
+            <td class="text-left">
+                {$vo.price}
+            </td>
+            <td class="text-left">
+                {$vo['log']*1}
+            </td>
+            <td class="text-left">
+                {$vo['deal']*1}
+            </td>
+            <td class="text-left">
+                {$vo['num']*1}
+            </td>
+            <td class="text-left">
+                {$vo['mum']*1}
+            </td>
+            <eq name="vo.type" value="1">
+                <td class="exlist-icon text-center">
+                    <eq name="vo.order" value="0">
+                        <eq name="vo.status" value="0">
+                            <eq name="vo.businessid" value="0">
+                                等待匹配
+                                <else/>
+                                匹配成功
+                            </eq>
+                        </eq>
+                        <eq name="vo.status" value="3">
+                            已付款
+                        </eq>
+                        <eq name="vo.status" value="2">
+                            已撤销
+                        </eq>
+                        <eq name="vo.status" value="1">
+                            已成交
+                        </eq>
+                        <else/>
+                        <eq name="vo.status" value="0">
+                            匹配成功
+                        </eq>
+                        <eq name="vo.status" value="3">
+                            已付款
+                        </eq>
+                        <eq name="vo.status" value="2">
+                            已撤销
+                        </eq>
+                        <eq name="vo.status" value="1">
+                            已成交
+                        </eq>
+                    </eq>
+                </td>
+                <td>
+                    <eq name="vo.order" value="0">
+                        <eq name="vo.status" value="0">
+                            <eq name="vo.businessid" value="0">
+                                <button class="bg_red minBtn" onclick="c2cchexiao({$vo['id']})" title="手动撤单">撤销</button>
+                                <else/>
+                                <button class="bg_red minBtn"  onclick="c2cchexiao({$vo['id']})" title="手动撤单">撤销</button>
+                            </eq>
+                        </eq>
+                        <else/>
+                        <eq name="vo.status" value="0">
+                            <button class="bg_red minBtn"  onclick="c2cchexiao({$vo['id']})" title="手动撤单">撤销</button>
+                        </eq>
+                    </eq>
+                </td>
+            </eq>
+            <eq name="vo.type" value="2">
+                <td class="exlist-icon text-center">
+                    <eq name="vo.order" value="0">
+                        <eq name="vo.status" value="0">
+                            <eq name="vo.businessid" value="0">
+                                等待匹配
+                                <else/>
+                                匹配成功
+                            </eq>
+                        </eq>
+                        <eq name="vo.status" value="1">
+                            交易已完成
+                        </eq>
+                        <eq name="vo.status" value="2">
+                            已撤销
+                        </eq>
+                        <eq name="vo.status" value="3">
+                            已付款
+                        </eq>
+                        <else/>
+                        <eq name="vo.status" value="0">
+                            匹配成功
+                        </eq>
+                        <eq name="vo.status" value="1">
+                            交易已完成
+                        </eq>
+                        <eq name="vo.status" value="2">
+                            已撤销
+                        </eq>
+                        <eq name="vo.status" value="3">
+                            已付款
+                        </eq>
+                    </eq>
+                </td>
+                <td>
+                    <eq name="vo.order" value="0">
+                        <eq name="vo.status" value="0">
+                            <eq name="vo.businessid" value="0">
+                                <button class="bg_red minBtn" onclick="c2cchexiao({$vo['id']})" title="手动撤单">撤销</button>
+                                <else/>
+                                <button class="bg_red minBtn" title="请收到款项后,点击确认收款!" onclick="confirm({$vo.id});">确认收款</button>
+                            </eq>
+                        </eq>
+                        <eq name="vo.status" value="3">
+                            <button class="bg_red minBtn" title="请收到款项后,点击确认收款!" onclick="confirm({$vo.id});">确认收款</button>
+                        </eq>
+                        <else/>
+                        <eq name="vo.status" value="0">
+                            <button class="bg_red minBtn" title="请收到款项后,点击确认收款!" onclick="confirm({$vo.id});">确认收款</button>
+                            <else/>
+                        </eq>
+                    </eq>
+                </td>
+            </eq>
+
+            <if condition="($vo.status eq 0) and ($vo.businessid neq 0)  and ($vo.type eq 1)">
+                <!--倒计时2H -->
+                <td name="{$vo.id}" class='time' time="{$vo.match}"></td>
+                <else/>
+                <td></td>
+            </if>
+
+            <td style="line-height:18px">
+                <eq name="vo.type" value="2">
+                    <eq name="vo.buji" value="2"><button class="iconfont icon-comOn"></button></eq>
+                </eq>
+                <neq name="vo['businessid']" value="0">
+                    <eq name="vo.order" value="0">
+                        <eq name="vo.status" value="0">
+                            <button class="sell minBtn bg_red" onclick="reminder({$vo.id},this);">催单 </button>
+                        </eq>
+                        <eq name="vo.status" value="3">
+                            <button class="sell minBtn bg_red" onclick="reminder({$vo.id},this);">催单</button>
+                        </eq>
+                        <s class="Time"></s>
+                    </eq>
+                </neq>
+            </td>
+            <td>{$vo.fee_sell}</td>
+            <td>
+                <neq name="vo['businessid']" value="0">
+                    <eq name="vo['bank']" value="0">
+                        <i class="typeshow iconfont icon-WY" onclick="show({$vo.id},0)" title="网银"></i>
+                    </eq>
+                    <eq name="vo['weixin']" value="1">
+                        <i class="typeshow iconfont icon-WX" onclick="show({$vo.id},1)" title="微信"></i>
+                    </eq>
+                    <eq name="vo['aplay']" value="2">
+                        <i class="typeshow iconfont icon-ZFB" onclick="show({$vo.id},2)"  title="支付宝"></i>
+                    </eq>
+                    <neq name="vo['aplay']" value="2">
+                        <neq name="vo['weixin']" value="1">
+                            <neq name="vo['bank']" value="0">
+                                <button class="typeshow minBtn bg_red" onclick="show({$vo.id})">其他</button>
+                            </neq>
+                        </neq>
+                    </neq>
+                </neq>
+            </td>
+        </tr>
+    </volist>
+    <tr><td colspan="13" style="text-align:center;" class="pages">{$show}</td></tr>
+    <style>
+        i{cursor:pointer;}
+    </style>

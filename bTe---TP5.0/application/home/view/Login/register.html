@@ -1,0 +1,314 @@
+{include file="public:header" /}
+<!-- 会员登陆 -->
+<div id="all_mask" class="all_mask" style="/* height: 0px;  */display: none;"></div>
+<div id="all_mask_loginbox" class="all_mask_loginbox" style="display: none;" onkeyup="keyLogin();">
+    <div class="login_title pl20">
+        <span onclick="saoma()" style="text-align: center;margin-left: 15px;color: #FB1D1D;cursor:pointer;">{:lang('MEMBER_LOGIN')}</span>
+        <span style="font-size: 12px;margin-left: 10px;">官方QQ群：535997102</span>
+
+        <eq name="Think.session.weike_already" value="1"><font color="#ff0000" size="1px;">{:lang('LOGIN_REPEAT')}</font></eq>
+    </div>
+    <form id="form-login" class="mask_wrap login-fb">
+        <div class="login_text zin90">
+            <div class="mask_wrap_title">{:lang('USER_ID')}：</div>
+            <input type="text" id="login_moble" class="texts hg40 w250" placeholder="{:lang('MOBLE_INPUT')}" value=""/>
+
+        </div>
+        <div class="login_text zin80">
+            <div class="mask_wrap_title">{:lang('PWD')}：</div>
+            <input id="login_password" class="texts hg40 w250" type="password" placeholder="{:lang('LOGIN_PWD_INPUT')}">
+        </div>
+        <!--手机验证码-->
+        <!--<div class="login_text zin80">-->
+        <!--<div class="mask_wrap_title">手机验证吗：</div>-->
+        <!--<input type="text" id="code" value="" class="texts hg40 w250" style="width:200px!important;" placeholder="请输入验证码"/><a class="codeImg reloadverify hg40 w100" id="vifcode" onclick="send_moble('sms')" style="background: #e3493c;line-height: 40px;-->
+        <!--display: inline-block;-->
+        <!--vertical-align: bottom;-->
+        <!--text-align: center;-->
+        <!--width:50px!important;;-->
+        <!--font-size: 16px;-->
+        <!--color: #fff;">获取</a>-->
+        <!--</div>-->
+        <div class="login_text zin80">
+            <div class="mask_wrap_title">{:lang('VERIFICATION_CODE')}：</div>
+            <input type="text" id="login_verify" value="" class="texts w145 hg40" placeholder="{:lang('VERIFICATION_CODE_INPUT')}"/>
+            <span style="vertical-align: -17px;line-height: 20px;">
+                <img id="login_verify_up" class="codeImg reloadverify hg40 w100" src="{:captcha_src()}"
+                     title="{:lang('CHANGE_IT')}" onclick="{:captcha_src()}?'+Math.random();" width="100" height="34">
+            </span>
+        </div>
+
+        <div class="login_button">
+            <input type="button" value="{:lang('LOGIN')}" onclick="footer_login();" class="btns2  hg40 w250">
+        </div>
+        <div class="login-footer wwxwwx" style="border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+            <span style="color: #CCC;">
+            <a style="font-size: 14px;" href="{:url('/Login/register','','')}">{:lang('REGISTER_FREE')}</a>｜<a href="{:url('/Login/findpwd','','')}" style="font-size: 14px;">{:lang('FORGET_PWD')}</a>
+            </span>
+        </div>
+    </form>
+    <div class="mask_wrap_close" onclick="wrapClose()"><i class="fa fa-times fz_20 move" aria-hidden="true"></i></div>
+</div>
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')}</a> > {:lang('REGISTERED_ACCOUNT')}</div>
+	<div class="reg_box ">
+		<div id="reg_index" class="reg_wrap">
+			<p class="reg_input_box" id="moble_reg">
+				<span class="mask_wrap_title">{:lang('MOBLE')}：</span>
+				<!--<input type="text" id="moble" class="texts w300 hg40" placeholder="{:lang('MOBLE_INPUT')}" onblur="check_moble()"/>-->
+				<input type="text" id="moble"  onblur="check_moble()"/>
+				<span id="reg_moble" class="" ></span>
+                <!-- style=" left: 210px;top: 2px;" -->
+				<!--<a class="move" onclick="new_sends()">点击发送验证码</a>-->
+			</p>
+			<p class="reg_input_box">
+				<div class="mask_wrap_title">{:lang('VERIFICATION_CODE')}：</div>
+				<input id="moble_verify" type="text" placeholder="{:lang('VERIFICATION_CODE_INPUT')}">
+
+			</p>
+			<p class="reg_input_box">
+				<div class="mask_wrap_title">{:lang('PWD')}：</div>
+				<input type="password" id="password" placeholder="{:lang('LOGIN_PWD_INPUT')}" style="line-height: 34px;"/>
+			</p>
+			<p class="reg_input_box">
+				<div class="mask_wrap_title">{:lang('INVITATION_CODE')}：</div>
+        
+				<input id="invit" type="text"  placeholder="{:lang('INVITATION_CODE_NO_INPUT')}" value=""/>
+			</p>
+			<p class="reg_radio_box">
+				<label><input type="checkbox" id="regweb" checked="checked" style="vertical-align: -2px;"> {:lang('REGISTRATION_CONSENT')} <a href="javascript:void(0)" class="move" onclick="regWeb();">{:lang('REGISTRATION_PROTOCOL')}</a></label>
+			</p>
+			<p class="login_button">
+				<input type="button"  onclick="reg_up();" value="{:lang('REGISTER_NOW')}">
+			</p>
+		</div>
+	</div>
+</div>
+<div class="all_mask_loginbox" id="step1">
+	<div class="login_title pl20">{:lang('CODE_SEND')}</div>
+	<form id="form-login">
+		<p class="login_text">
+			<span class="mask_wrap_title">{:lang('GRAPHIC_VERIFICATION_CODE')}：</span>
+			<input type="text" id="verify" value=""/>
+			<img id="verify_up" class="codeImg reloadverify" src="{:captcha_src()}" title="{:lang('CHANGE_IT')}" onclick="this.src='{:captcha_src()}?'+Math.random();" width="100" height="45">
+		</p>
+		<p class="login_text">
+			<span class="mask_wrap_title">{:lang('CODE_RECEIVE')}：</span>
+			<input type="button" value="{:lang('CODE_SEND')}"onclick="moble_reg()"/>
+		</p>
+	</form>
+	<div class="mask_wrap_close" onclick="showB()"><i class="fa fa-times fz_20 move" aria-hidden="true"></i></div>
+</div>
+<div id="step2" class="all_mask" style="height: 0px;display: none;"></div>
+<script>
+
+    $(function(){
+        var old_moble = localStorage.getItem('moble');
+        if(old_moble){
+            document.getElementById('moble').setAttribute('placeholder',old_moble);
+        }
+    });
+    //手机国家选择
+    $(
+        $("#moble").intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            initialCountry: "cn",
+//             nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,
+            utilsScript: "/home/js/utils.js"
+        })
+    );
+    $(function () {
+        var height = $(document).height();
+        if (height < 1000) {
+            height = 1000;
+        }
+        $('#step2').height(height);
+        $("#moble").focus();
+    });
+    function regWeb() {
+        layer.open({
+            type: 2,
+            skin: 'layui-layer-rim', // 边框
+            area: ['800px', '600px'], // 宽高
+            title: '{:lang(\'REGISTRATION_PROTOCOL\')}', // 标题
+            content: "{:url('Login/webreg')}"
+        });
+    }
+    function showB() {
+        $("#step1").hide();
+        $("#step2").hide();
+        $("#verify").focus();
+    }
+    function check_moble() {
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        var moble  = $('#moble').val();
+        if (moble == "" || moble == null) {
+            layer.tips("{:lang('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        $.post("{:url('login/check_moble')}", {
+            moble: moble,
+            dial_code:dial_code,
+            token: ""
+        }, function (data) {
+            if (data.status == 0) {
+                 layer.tips(data.msg, '#moble', {tips: 2});
+                return false;
+               
+            } else {
+                localStorage.setItem('moble', moble);
+                $('#reg_moble').html('<a class="move" onclick="new_send()">{:lang(\'CLICK_SEND_CODE\')}</a>');
+            }
+        }, 'json');
+    }
+    function verify_ups() {
+        $('#verify_up').attr('src', "/ajax/verify.html?t=" + Math.random());
+    }
+    function new_send() {
+        $("#step1").show();
+        $("#step2").show();
+        $("#verify").focus();
+    }
+    function new_sends() {
+        var moble  = $('#moble').val();
+        if (moble == "" || moble == null) {
+            layer.tips("{:lang('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        $.post("{:url('login/check_moble')}", {
+            moble: moble,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                $("#step1").show();
+                $("#step2").show();
+                $("#verify").focus();
+            } else {
+                layer.tips(data.info, '#moble', {tips: 2});
+                return false;
+            }
+        }, 'json');
+    }
+    function moble_reg() {
+        var moble  = $("#moble").val();
+        var verify = $("#verify").val();
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        if (moble == "" || moble == null) {
+            layer.tips("{:lang('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        if (verify == "" || verify == null) {
+            layer.tips("{:lang('GRAPHIC_VERIFICATION_CODE_INPUT')}", '#verify', {tips: 2});
+            return false;
+        }
+        $.post("{:url('login/real','','')}", {
+            moble: moble,
+            verify: verify,
+            dial_code:dial_code,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.msg, {icon: 1});
+                $("#step1").hide();
+                $("#step2").hide();
+                $("#moble_verify").focus();
+                $('#moble').attr("disabled", "disabled");
+                var obj      = $('#reg_moble');
+                var wait     = 60;
+                var interval = setInterval(function () {
+                    obj.html("<a>" + wait + "{:lang('CODE_SEND_AGAIN')}" + "</a>");
+                    wait--;
+                    if (wait < 0) {
+                        clearInterval(interval);
+                        $(".reloadverify").click();
+                        $("#verify").val('');
+                        obj.html('<a class="move" onclick="new_send()">{:lang(\'CLICK_SEND_AGAIN\')}</a>');
+                    }
+                    ;
+                }, 1000);
+            } else {
+                $(".reloadverify").click();
+                layer.msg(data.msg, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+    function reg_up() {
+        var dial_code_arr = $(".selected-flag").attr("title").split(" ");
+        var dial_code_length = dial_code_arr.length;
+        var dial_code = dial_code_arr[dial_code_length-1];
+        var moble        = $("#moble").val();
+        var moble_verify = $("#moble_verify").val();
+        var password     = $("#password").val();
+        var invit        = $("#invit").val();
+
+        if (moble == "" || moble == null) {
+            layer.tips("{:lang('MOBLE_INPUT')}", '#moble', {tips: 2});
+            return false;
+        }
+        if (moble_verify == "" || moble_verify == null) {
+            layer.tips("{:lang('VERIFICATION_CODE_INPUT')}", '#moble_verify', {tips: 2});
+            return false;
+        }
+        if (password == "" || password == null) {
+            layer.tips("{:lang('PWD_INPUT')}", '#password', {tips: 2});
+            return false;
+        }
+        if (!$("#regweb").is(':checked')) {
+            layer.tips("{:lang('REGISTRATION_PROTOCOL_CHOSE')}", '#regweb', {tips: 3});
+            return false;
+        }
+        $.post("{:url('/login/upregister','','')}", {
+            moble: moble,
+            dial_code:dial_code,
+            moble_verify: moble_verify,
+            password: password,
+            invit: invit,
+            token: ""
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.msg, {
+                    icon: 1,
+                    time:2000
+                },function () {
+                    $.cookies.set('move_moble', moble);
+                    window.location = "{:url('/Login/paypassword','','')}";
+                });
+            } else {
+                layer.msg(data.msg, {
+                    icon: 2,
+                    time:1500
+                },function () {
+                    if (data.url) {
+                        window.location = data.url;
+                    }
+                });
+
+            }
+        }, "json");
+    }
+</script>
+{include file="public:footer" /}

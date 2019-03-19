@@ -1,0 +1,105 @@
+{include file="public:header" /}
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:url('Article/adver')}">工单管理</a></span>
+		</div>
+		<div class="cf">
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<select style="width: 160px; float: left; margin-right: 10px;" name="type" class="form-control">
+							<option value="">对应提交工单的问题分类</option>
+							{volist name="types" id="type"}
+								<option value="{$type.type}" {eq name="type['type']" value="$Request.param.type"}selected{/eq}>{$type.type}</option>
+							{/volist}
+						</select>
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="huifu" class="form-control">
+							<option value="0">全部</option>
+							<option value="1" {eq name="$Request.param.huifu" value="1"}selected{/eq}>等待处理</option>
+							<option value="2" {eq name="$Request.param.huifu" value="2"}selected{/eq}>已回复</option>
+						</select>
+						<input type="text" name="name" id="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入用户名查询" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="" id="table1">
+				<thead>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+					<th class="">用户名</th>
+					<th class="">标题</th>
+					<th class="">问题类型</th>
+					<th class="">问题描述</th>
+					<th class="">附件</th>
+					<th class="">提问时间</th>
+					<th class="">提问状态</th>
+					<th class="">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{notempty name="list"}
+					{volist name="list" id="vo"}
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>{$vo.id}</td>
+							<td>{$vo.email}</td>
+							<td>{$vo.title}</td>
+							<td>{$vo.type}</td>
+							<td></td>
+							<td></td><!--<img src="{$vo.attrimg.0}" height="40px"/>-->
+							<td>{$vo.addtime.0}</td>
+							<td>
+								{eq name="vo.wt_type" value="0"}
+									未解决
+									{else/}
+									已解决
+								{/eq}
+							</td>
+							<td>
+								<a href="{:url('Order/huifuorder?id='.$vo['id'])}" class="btn btn-primary btn-xs">回复</a>
+								<a href="{:url('Order/del?id='.$vo['id'])}" class="btn btn-primary btn-xs">删除</a>
+						</tr>
+					{/volist}
+					{else/}
+					<td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+				{/notempty}
+				</tbody>
+			</table>
+			<div class="page" id="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('Article/adver')}");
+	</script>
+</block>

@@ -1,0 +1,135 @@
+<include file="Public:header" />
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('WITHDRAWAL')}	</div>
+	<div class="main-content">
+
+
+
+<include file="Finance:left" />
+		<div class="tag-list-content assets_content bg_w">
+			<h1 class="safe_center clear">
+				<span>
+					{:L('WITHDRAWAL_RECORD')}					</span>
+					<span>
+					<a href="/finance/mytx"  class="step fz_12 ml50 pd6 ">{:L('WITHDRAWAL')}</a>
+						<a href="/finance/outlog" class="step fz_12 ml20 pd6 active">{:L('WITHDRAWAL_RECORD')}</a>
+					<a href="/finance/bank"  class="step fz_12 ml20 pd6">{:L('WITHDRAWAL_ADD_MAN')}</a>
+				</span>
+				<!--<span>-->
+											<!--<a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i><span class="fz_12 move">{:L('DETAILED_INFO')}</span></a>-->
+										<!--</span>-->
+			</h1>
+			<div id="hints" class="mytips" style="display:none;">
+					<notempty name="prompt_text">{$prompt_text}</notempty>	
+			</div>
+			<div class="mytable-body ">
+				<div class="step2 f_body  ">
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:L('WITHDRAWAL_TIME')}</th>
+							<th>{:L('WITHDRAWAL_MONEY')}</th>
+							<th>{:L('TRANSACTION_FEE')}</th>
+							<th>{:L('ARRIVAL_AMOUNT_')}</th>
+							<th>{:L('WITHDRAWAL_ADDREESS')}</th>
+							<th width="">
+								<span>
+									<select id="status-select" class="mW100">
+										<option value=""
+										<eq name="status" value="">selected</eq>
+										>{:L('STATES_ALL')}</option>
+										<option value="1"
+										<eq name="status" value="1">selected</eq>
+										>{:L('APPLIED')}</option>
+										<option value="2"
+										<eq name="status" value="2">selected</eq>
+										>{:L('WITHDRAWAL_SUCCESS')}</option>
+										<option value="3"
+										<eq name="status" value="3">selected</eq>
+										>{:L('RESCINDED')}</option>
+										<option value="4"
+										<eq name="status" value="4">selected</eq>
+										>{:L('BEING_PROCESS')}</option>
+									</select>
+								</span>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+						
+						<volist name="list" id="vo">
+							<tr>
+								<td>{$vo['addtime']|date='Y-m-d H:i:s',###}</td>
+								<td>￥{$vo['num']|default="0.00"}</td>
+								<td>￥{$vo['fee']|default="0.00"}</td>
+								<td>￥{$vo['mum']|default="0.00"}</td>
+								<td>{$vo['name']}</td>
+								<td>
+									<eq name="vo.status" value="0">
+										{:L('APPLIED')}
+										<a onclick="out_chexiao(this)" data="{$vo['id']}" href="javascript:void(0)" style="color:#2674FF!important;">撤销{:L('WITHDRAWAL')}</a>
+									</eq>
+									<eq name="vo.status" value="1">
+										{:L('WITHDRAWAL_SUCCESS')}
+									</eq>
+									<eq name="vo.status" value="2">
+										{:L('RESCINDED')}
+									</eq>
+									<eq name="vo.status" value="3">
+										{:L('BEING_PROCESS')}
+									</eq>
+								</td>
+							</tr>
+						</volist>
+						
+						
+						
+						</tbody>
+					</table>
+					<div class="pages">
+						{$page}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("#status-select").val("{$status}");
+	$("#status-select").change(function () {
+		var status = $("#status-select option:selected").val();
+		var url    = '/finance/outlog';
+		if (status) {
+			url += '/status/' + status;
+		}
+		window.location = url;
+	});
+	function out_chexiao(_this) {
+		var id = $(_this).attr('data');
+		$.post("{:U('Finance/mytxChexiao')}", {id: id}, function (data) {
+			if (data.status == 1) {
+				layer.msg(data.info, {icon: 1});
+				window.location.reload();
+			} else {
+				layer.msg(data.info, {icon: 2});
+			}
+		}, "json");
+	}
+</script>
+
+
+
+
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_out').addClass('active');
+</script>
+<include file="Public:footer" />

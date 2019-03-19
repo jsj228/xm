@@ -1,0 +1,77 @@
+{include file="public:header" /}
+
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')}</a>{:lang('FIND_TRAN_PWD')}</div>
+	<div class="login_step">
+		<div class="login_step">
+			<ul class="order clear" style="margin-left: 312px;">
+				<li><i class="fa fa-circle  fz_40 "><span>1</span></i>{:lang('FIND_TRAN_PWD_CONFIRM_ID')}<div class="order_line"></div></li>
+				<li><i class="fa fa-circle  fz_40 move"><span>2</span></i>{:lang('FIND_TRAN_PWD_RESET')}<div class="order_line"></div></li>
+				<li><i class="fa fa-circle  fz_40"><span>3</span></i>{:lang('FIND_TRAN_PWD_FINISHED')}</li>
+			</ul>
+		</div>
+	</div>
+	<div class="reg_box">
+		<div class="reg_wrap pt47">
+			<div class="reg_input_box reg-fb">
+				<div class="reg_title">{:lang('TRAN_PWD_NEW')}：</div>
+				<input type="password" autocomplete="off" id="password" class="texts w300"/>
+			</div>
+			<div class="reg_input_box reg-fb">
+				<div class="reg_title">{:lang('TRAN_PWD_CONFIRM')}：</div>
+				<input type="password" autocomplete="off" id="repassword" class="texts w300"/>
+			</div>
+			<br/>
+			<div class="reg_button_box">
+				<input type="button" class="btns2 w300" value="{:lang('NEXT')}" onclick="password_up();"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function password_up() {
+		var password   = $("#password").val();
+		var repassword = $("#repassword").val();
+
+		if (password == "" || password == null) {
+			layer.tips("{:lang('INPUT_PWD_NEW')}", '#password', {tips: 3});
+			return false;
+		}
+		if (repassword == "" || repassword == null) {
+			layer.tips("{:lang('LOGIN_PWD_CONFIRM_INPUT')}", '#repassword', {tips: 3});
+			return false;
+		}
+		if (password != repassword) {
+			layer.tips("{:lang('LOGIN_PWD_CONFIRM_WRONG')}", '#repassword', {tips: 3});
+			return false;
+		}
+
+		$.post("/Findpwd/password_up.html", {
+			password: password,
+			repassword:repassword,
+			token: ""
+		}, function (data) {
+			console.log(data);
+			if (data.code == 1) {
+				layer.msg(data.msg, {icon: 1});
+				window.location = '/Findpwd/findpwdinfo';
+			} else {
+				layer.msg(data.msg, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+</script>
+
+<script>
+	$('#index_box').addClass('active');
+</script>
+
+
+
+{include file="public:footer" /}

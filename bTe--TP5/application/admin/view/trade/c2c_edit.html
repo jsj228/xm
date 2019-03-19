@@ -1,0 +1,208 @@
+{include file="public:header" /}
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:url('Trade/c2c')}">C2c 商户</a> >></span>
+            <span class="h1-title">{empty name="data"}添加商户 {else/}编辑商户 {/empty}</span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form_form" action="{:url('Trade/c2cEdit')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+
+								<tr class="controls" >
+									<td class="item-label">交易币种 :</td>
+									<td>
+										<select name="coin" class="form-control input-10x">
+											<option value="hkd" {notempty name="data.coin"}{eq name="data.coin" value="hkd"}selected{/eq}{/notempty} >hkd</option>
+
+										</select>
+									</td>
+									<td class="item-note">(*请只选择)</td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label">价格 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="price" value="{notempty name='data.price'}{$data['price']*1}{/notempty}">
+									</td>
+									<td class="item-note">交易价格</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">数量 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="num" value="{notempty name='data.num'}{$data['num']*1}{/notempty}">
+									</td>
+									<td class="item-note">交易数量</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">可交易数量 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="deal" value="{notempty name='data.deal'}{$data['deal']*1}{/notempty}">
+									</td>
+									<td class="item-note">可交易数量</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">类型:</td>
+									<td>
+										<select name="type" class="form-control input-10x">
+											<option value="1" {eq name="data.type" value="1"}selected{/eq} >买入</option>
+											<option value="2" {eq name="data.type" value="2"}selected{/eq} >卖出</option>
+										</select>
+									</td>
+									<td class="item-note">交易类型</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">户名 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="name" value="{notempty name='data.name'}{$data.name}{/notempty}">
+									</td>
+									<td class="item-note">户名 / 姓名</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">手机 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="moble" value="{notempty name='data.moble'}{$data.moble}{/notempty}">
+									</td>
+									<td class="item-note">手机</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">开户行 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" onblur="whether();" id="bankaddr" name="bankaddr" value="{notempty name='data.bankaddr'}{$data.bankaddr}{/notempty}">
+									</td>
+									<td class="item-note">开户行 / 微信 / 支付宝</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">银行卡 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="bankcard" value="{notempty name='data.bankcard'}{$data.bankcard}{/notempty}">
+									</td>
+									<td class="item-note">银行卡号 / 微信账号 / 支付宝账号</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">支付类型:</td>
+									<td>
+										<select name="paytype" class="form-control input-10x">
+											<option value="0" {eq name="data.paytype" value="0"}selected{/eq} >网银</option>
+											<option value="1" {eq name="data.paytype" value="1"}selected{/eq} >支付宝</option>
+										</select>
+									</td>
+									<td class="item-note">交易类型</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">排序 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="sort" value="{notempty name='data["sort"]'}{$data['sort']*1}{/notempty}">
+									</td>
+									<td class="item-note">用户交易选择优先级，越大越优先选择</td>
+								</tr>
+
+								<tr id="pay_type" class="controls" <?php if(empty($data['image'])){ ?> style="display: none;" <?php } ?> >
+									<td class="item-label">支付图片上传 :</td>
+									<td>
+										<div>
+											{notempty name="data.image"}
+												<!--没有图片显示默认图片-->
+												<img id="up_img" onclick="getElementById('inputfile').click()" style="cursor:pointer;max-width:400px;" title="点击添加图片" alt="点击添加图片" src="__DOMAIN__/Upload/merchant/{$data.image}">
+											    <input type="hidden" id="img" name="image" value="{$data.image}">
+											{else/}
+												<!--没有图片显示默认图片-->
+												<img id="up_img" onclick="getElementById('inputfile').click()" style="cursor:pointer;max-width:400px;" title="点击添加图片" alt="点击添加图片" src="__PUBLIC__/Admin/images/addimg.png">
+											<input type="hidden" id="img" name="image" value="">
+											{/notempty}
+											<input type="file" id="inputfile" style="height:0;width:0;z-index: -1; position: absolute;left: 10px;top: 5px;" value=""/>
+										</div>
+									</td>
+									<td class="item-note">交易界面显示 200px*200px</td>
+								</tr>
+
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											{notempty name="data.id"}<input type="hidden" name="id" value="{$data.id}"/>{/notempty}
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+					//提交表单
+					$('#submit').click(function () {
+						$('#form_form').submit();
+					});
+
+					//商家微信和支付宝 照片上传
+					function whether() {
+					    var type = $('#bankaddr').val();
+						if (type === '微信' || type === '支付宝') {
+						    $('#pay_type').show();
+						} else {
+                            $('#pay_type').hide();
+						}
+                    }
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:url('Trade/c2c')}");
+
+		//商户微信图片上传
+        $(document).ready(function () {
+            //响应文件添加成功事件
+            $("#inputfile").change(function () {
+                //创建FormData对象
+                var data = new FormData();
+                //为FormData对象添加数据
+                $.each($('#inputfile')[0].files, function (i, file) {
+                    data.append('upload_file' + i, file);
+                });
+                data.append('type', $('#bankaddr').val());
+
+                //发送数据
+                $.ajax({
+                    url:"{:url('Config/merchant')}",
+                    type: 'POST',
+                    data: data,
+                    cache: false,
+                    contentType: false,		//不可缺参数
+                    processData: false,		//不可缺参数
+                    success: function (data) {
+                        if (data) {
+                            if (data == "error") {
+                                alert("图片上传出错！");
+                                return false;
+                            }
+
+                            $('#up_img').attr("src", '__DOMAIN__/Upload/merchant/' + data);
+                            $('#img').val(data);
+                            $('#up_img').show();
+                        }
+                    },
+                    error: function () {
+                        alert('上传出错');
+                        $(".loading").hide();	//加载失败移除加载图片
+                    }
+                });
+
+            });
+        });
+	</script>
+</block>

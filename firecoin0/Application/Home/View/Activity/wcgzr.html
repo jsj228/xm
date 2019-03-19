@@ -1,0 +1,644 @@
+<include file="Public:header" />
+
+<div class="autobox ">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/finan/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('DEPOSIT_COIN')}	</div>
+    <div class="main-content">
+        <style>
+            .nav-tab-list .nav-tab-hover{
+                width:100%;
+                top:60px;
+                height:50px;
+                line-height:50px;
+                background:#EAEDF4;
+                position:absolute;
+                box-sizing:content-box;
+                z-index:1;
+                transition:all 0.5s;
+                -webkit-transition:all 0.5s;
+                display:none;
+            }
+
+            .weituo_bizhong {
+                margin-left: 147px;
+                padding-top: 30px;
+            }
+            .payment-list li{
+                width: 115px;
+                height: 40px;
+            }
+            .btns{
+                line-height: 14px;
+                text-align: center;
+            }
+            .transer_add_wrp{
+                font-size: 19px;
+                color: #FB4545;
+                width: 390px;
+                height: 45px;
+                padding-left: 10px;
+
+            }
+            .btns.active_wcg{
+                background: #FB4545;
+                color: #fff;
+            }
+            #wcg_m{
+                display: none;
+            }
+            #wcg_x{
+                display: none;
+            }
+        </style>
+
+
+        <include file="Finance:left" />
+        <div class="tag-list-content assets_content bg_w">
+                <h1 class="safe_center clear">
+                    <span>{:L('DEPOSIT_WCG')}</span>
+                </h1>
+            <div id="hints" class="mytips" style="display:none;">
+                <notempty name="prompt_text">{$prompt_text}</notempty>
+            </div>
+
+            <div class="mytable-body">
+                <div class="step1 cny_record">
+                    <div class="weituo_bizhong">
+                        <div class="bizhong_select">
+                            <div class="bz_btn" style="position:relative">
+                                <img src="__DOMAIN____UPLOAD__/coin/{$wcg_info['img']}" alt="" style="width: 22px;position:absolute;"/>
+								<select name="type" id="coin-select" style="margin-top: 6px;">
+                                    <option value="{$wcg_info['name']}" selected="selected">{$wcg_info['title']}({$wcg_info['name']|strtoupper})</option>
+								</select>
+                            </div>
+                        </div>
+                        <div class="bizhong_type" >
+                            <span>{:L('TOTAL_COIN')}<em class="coin-name"></em>：<font class="coin-balance">{$user_wcg}</font></span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <eq name="weike_opencoin" value="1">
+                        <div class="cnyin_record">
+                            <div class="adr-zhuanru" style="position: relative;z-index:0;">
+                                <div id="pt-qrcode" style="position:absolute;top:0;right:0;display: inline-block;;">
+                                    <div id="qrcode-wallet" style="display: inline-block;">
+                                        <saon id="codeaa"></saon>
+                                    </div>
+                                    <p id="qrcode-t" style="font-size:13px;text-align: center;">{$coin_list[$xnb]['title']}{:L('WALLET_ADD')}</p>
+                                </div>
+                                <div class="qb_tishi">
+                                    {:L('WALLET_ADD_TIP')} <b class="coin-name">hello</b>{:L('WALLET_ADD_TIP_IN')}：
+                                    <notempty name="coin_list[$xnb]['zr_zs']">
+                                        <span id="zengsong" style="color: red; font-size: 14px;">转入即赠{$coin_list[$xnb]['zr_zs']}%</span>
+                                    </notempty>
+                                    {$tishi}
+                                </div>
+                                <div class="qb_dizhi ts mb20">
+                                    <p id="wallets">
+                                        {$qianbao}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <else/>
+
+                        <div class="pwtrade  pw  mt50">
+                            <dl>
+                                <dt></dt>
+                                <dd>
+                                    <!--<a href="/Article/type/id/25" style="display: block;font-size: 14px" >-->
+                                        华克金充值方式已更新，请点击查看<span style="color: red;text-decoration: underline;">《充值指南》</span>再转账！
+                                    <!--</a>-->
+                                </dd>
+                            </dl>
+                            <dl style="display: none;">
+                                <dt class="cnyin_type">转入数量：</dt>
+                                <dd class="payment-icon-list payment-list ">
+                                    <ul style="width:400px;">
+                                            <li class="btns active_wcg" id="btn_s" style="margin-right:10px;">0-50 WCG</li>
+                                            <li class="btns" id="btn_m" >50以上 WCG</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+
+                            <dl style="display: none;">
+                                <dt>火网接收地址：</dt>
+                                <dd>
+                                        <span class="transer_add_wrp" style="display: block" id="wcg_qb">WCG-3LHX-KCS7-4LQ4-4KEWV</span>
+                                        <span id="wcg_key">696c8ef027ad8d76b12d7d6716b9d7a1d741c86d54d6755afee2502933358165(地址公钥)</span>
+                                </dd>
+                            </dl>
+                            
+                            <!--<dl>-->
+                                <!--<dt>识别码：</dt>-->
+                                <!--<dd>-->
+                                    <!--<span class="transer_add_wrp" id="tradeno">{$tradeno}</span>-->
+                                    <!--<span style="color: red;">(在发送WCG时，将该识别码填入"添加一条信息"中，无需加密处理)</span>-->
+                                <!--</dd>-->
+                            <!--</dl>-->
+                       
+                            <dl>
+                                <dt>您的华克金钱包地址：</dt>
+                                <dd style="position: relative;">
+                                    <input type="text" class="texts" id="weike_dzbz" onkeyup='value=value.replace(/[^A-Za-z0-9\-]+/g,"")' maxlength="24" value="">
+                                    (*{:L('ADD_FLAG_ASK')})
+                                </dd>
+                            </dl>
+
+                            <dl>
+                                <dt>{:L('TRAN_QUANTITY')}：</dt>
+                                <dd style="position: relative;">
+                                    <input type="text" class="texts" id="cny_num" maxlength="12" value="">
+                                </dd>
+                            </dl>
+
+
+                            <dl>
+                                <dt>{:L('TRAN_PWD')}：</dt>
+                                <dd>
+                                    <input type="password" class="texts" id="cny_paypassword"  value=""><a href="/findpwd/findpwd" class="move ml5">{:L('FORGET')}?</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt></dt>
+                                <dd>
+                                    <empty name="zc_jz">
+                                        <input type="button" class="btns2" value="{:L('POST_ORDER')}" onclick="coinin_up()">
+
+                                        <else/>
+                                        <input type="button" class="btns2" value="{$zr_jz}" disabled>
+                                    </empty>
+                                </dd>
+                            </dl>
+                        </div>
+                    </eq>
+                </div>
+
+                <div class="step2 f_body">
+                    <eq name="weike_opencoin" value="1">
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:L('TRANSFER_TIME')}</th>
+                                <th>{:L('TRANSFER_COIN_TYPE')}</th>
+                                <th>{:L('TRANSFER_QUANTITY')}</th>
+                                <th>{:L('TRANSFER_FEE')}</th>
+                                <th>{:L('ARRIVAL_AMOUNT')}</th>
+                                <th>{:L('STATE')}</th>
+                                <th>{:L('OPERATE')}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td>{$vo.addtime|addtime}</td>
+                                    <td>{$vo['username']}</td>
+                                    <td>{$vo.coinname}</td>
+                                    <td>{$vo['num']|NumToStr}</td>
+                                    <td>{$vo['mum']|NumToStr}</td>
+                                    <td>
+                                        <?php if ($vo['status'] == 1) { ?>
+                                        <font color="#23a800">{:L('SUCCESS_DEPOSIT')} </font>
+                                        <?php } elseif ($vo['status'] == 2) { ?>
+                                        <font color="#23a800">{:L('CANCEL')}</font>
+                                        <?php } else { ?>
+                                        <font color="red">{:L('WAIT')}</font>
+                                        <?php } ?>
+                                    </td>
+                                    <td>
+                                        <div>
+
+                                            <a onclick="cnyin_chexiao({$vo['id']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:L('CHEXIAO')}</a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+
+                            </tbody>
+                        </table>
+                        <else/>
+
+                        <table class="f_table" id="investLog_content">
+                            <thead>
+                            <tr>
+                                <th>{:L('TRANSFER_TIME')}</th>
+                                <th>{:L('ADD_FLAG')}</th>
+                                <th>{:L('TRADENO')}</th>
+                                <!--<th>{:L('TRANSACTION_ID')}</th>-->
+                                <th>{:L('TRANSFER_COIN_TYPE')}</th>
+                                <th>{:L('TRANSFER_QUANTITY')}</th>
+                                <th>{:L('ARRIVAL_AMOUNT')}</th>
+                                <th>{:L('STATE')}</th>
+                                <th>{:L('OPERATE')}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td>{$vo.addtime|addtime}</td>
+                                    <td>{$vo['username']}</td>
+                                    <td>{$vo['tradeno']}</td>
+                                    <!--<td>{$vo['tradeid']}</td>-->
+                                    <td>{$vo.coinname}</td>
+                                    <td>{$vo['num']|NumToStr}</td>
+                                    <td>{$vo['mum']|NumToStr}</td>
+                                    <td>
+                                        <eq name="vo.status" value="1">
+                                            <font color="#23a800">{:L('SUCCESS_DEPOSIT')} </font>
+                                        </eq>
+                                        <eq name="vo.status" value="0">
+                                            <font color="red">{:L('WAIT')}</font>
+                                        </eq>
+                                        <eq name="vo.status" value="2">
+                                            <font color="red">已撤销</font>
+                                        </eq>
+                                    </td>
+                                    <td width="100">
+                                        <a onclick="cnyin_chakan({$vo['id']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:L('CHECK')}</a>
+
+                                        <neq name="vo.status" value="0">
+
+                                            <else/>
+                                                <a onclick="cnyin_chexiao({$vo['id']})" href="javascript:void(0)" class="cur" style="    color: #E55600!important;">{:L('CHEXIAO')}</a>
+                                        </neq>
+
+                                    </td>
+                                </tr>
+                            </volist>
+
+                            </tbody>
+                        </table>
+                    </eq>
+
+                    <div class="pages"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/comfile/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    $('#codeaa').qrcode({
+        render: "table", //table方式
+        width: 100, //宽度
+        height: 100, //高度
+        text: "{$qianbao}" //任意内容
+    });
+
+    //提示弹窗
+    layer.msg('华克金充值方式已更新！为避免不必要的损失，请查看指南再充值！');
+    // layer.open({
+    //     type: 1,
+    //     skin: 'layui-layer-rim', //加上边框
+    //     area: ['420px', '240px'], //宽高
+    //     content: 'html内容'
+    // });
+</script>
+<script>
+    $("#btn_s").click(function () {
+        $(this).parent("ul").find(".btns").removeClass("active_wcg");
+        $(this).addClass("active_wcg");
+
+        $(".transer_add_wrp").show();
+       $("#wcg_qb").html('WCG-NWT2-8CC6-V3UV-GEBQM');
+       $("#wcg_key").html('ee9f610de68c4a473c3dd95cc46c6f3889c79df65ee30060b98f5aa9a5a3e224（地址公钥）');
+    });
+    $("#btn_m").click(function () {
+        $(this).parent("ul").find(".btns").removeClass("active_wcg");
+        $(this).addClass("active_wcg");
+
+        $(".transer_add_wrp").show();
+        $("#wcg_qb").html('WCG-KSC6-UKRG-5HXC-DKKT7');
+        $("#wcg_key").html('b770770683a6f7d710a6f3e37a4f4c4107ed4577f97c1285292c4c956de5ca1a（地址公钥）');
+    });
+    // $("#btn_x").click(function () {
+    //     $(this).parent("ul").find(".btns").removeClass("active_wcg");
+    //     $(this).addClass("active_wcg");
+    //
+    //     $(".transer_add_wrp").show();
+    //     $("#wcg_qb").html('WCG-NQTL-JJAX-PA3G-5EVBS');
+    // });
+    $("#coin-select").change(function () {
+        var coin        = $("#coin-select option:selected").val();
+        window.location = '/Activity/wcgzr/coin/' + coin + '.html';
+    });
+    //根据数量来确定转入地址
+//    $("#cny_num").blur(function(){
+//        if ($(this).val() > 0 && $(this).val() < 50){
+//            $('#btn_s').parent("ul").find(".btns").removeClass("active_wcg");
+//            $('#btn_s').addClass("active_wcg");
+//            $("#wcg_qb").html('WCG-NWT2-8CC6-V3UV-GEBQM');
+//        }else {
+//            $("#btn_x").parent("ul").find(".btns").removeClass("active_wcg");
+//            $("#btn_x").addClass("active_wcg");
+//            $("#wcg_qb").html('WCG-KSC6-UKRG-5HXC-DKKT7');
+//        }
+//    });
+
+    function cnyin_chexiao(id,_this) {
+
+
+        //撤销询问框
+        layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">请问您是否已充币？</p><p style="color: red;">（充币后请不要撤销，点击“撤销充币”并不会将充值币返还）</p>', {
+            btn: ['暂不撤销','撤销充币'] //按钮
+        }, function(){
+            window.location.reload();
+        }, function(){
+            layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">是否确认撤销？</p><p style="color: red;">（充币后请不要撤销，点击“撤销充币”并不会将充值币返还，每日最多撤销五笔订单，大于五笔将无法撤销）</p>',{
+                btn:['是','否']
+            },function () {
+                $.post("/Activity/wcgChexiao", {id: id}, function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.info, {icon: 2});
+                    }
+                }, "json");
+            },function () {
+                window.location.reload();
+            })
+
+
+        });
+
+
+    }
+
+    function cnyin_chakan(id) {
+        $.post("{:U('Activity/wcgzr_info')}",{id:id},function(data){
+            if(data.code != 200){
+                layer.msg(data.msg,{icon:2});
+                setTimeout(function(){
+                    location.reload();
+                },2000)
+            }else{
+                // var wcg_address = data.data.num <= 50 ? 'WCG-NWT2-8CC6-V3UV-GEBQM' : 'WCG-KSC6-UKRG-5HXC-DKKT7';
+                // var wcg_key = data.data.num <= 50 ? 'ee9f610de68c4a473c3dd95cc46c6f3889c79df65ee30060b98f5aa9a5a3e224' : 'b770770683a6f7d710a6f3e37a4f4c4107ed4577f97c1285292c4c956de5ca1a';
+                var wcg_address =  'WCG-3LHX-KCS7-4LQ4-4KEWV';
+                var wcg_key = '696c8ef027ad8d76b12d7d6716b9d7a1d741c86d54d6755afee2502933358165';
+                layer.open({
+                    content:'<p  style="font-weight: bold;text-align: center;font-size: 16px;">请根据订单信息转入华克金</p>' +
+                    '<table class="mana-app-table info" style="width: 100%;padding-top:0;">' +
+                    '<tr>' +
+                    '<td width="140">火网接收地址：</td>' +
+                    '<td  style="color:red;font-size:16px;font-weight: bold;">'+wcg_address+'</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>地址公钥：</td>' +
+                    '<td>'+wcg_key+'</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>您的华克金钱包地址：</td>' +
+                    '<td  style="color:#1a9cdb;font-size:16px;font-weight: bold;">'+data.data.username+'</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>转入数量：</td>' +
+                    '<td style="color:#1a9cdb;font-size:16px;font-weight: bold;">'+data.data.num+'</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td>识别码：</td>' +
+                    '<td>' +
+                    '<em class="cnyin_msg" style="color:red;font-size:16px;font-weight: bold;">'+data.data.tradeno+'<span style="font-size: 14px;">（该笔订单有唯一的识别码，提交后可在下方充值记录里查询。）</span></em>' +
+                    '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td></td>' +
+                    '<td>' +
+                    '<em class="cnyin_msg" style="color:red;font-size:14px;font-weight: bold;">在发送WCG时，将该识别码填入"添加一条信息"中，取消勾选"加密信息"按钮，请勿加密。</em>' +
+                    '</td>' +
+                    '</tr>' +
+                    '</table>' +
+                    '' ,
+                    // btn: ['提交','取消'], //按钮
+                    area:['750px','450px'],
+                    title:'请根据订单信息转入华克金',
+
+                });
+            }
+        },'json');
+    }
+
+    function send_new() {
+        $(".step6").hide();
+        $(".step5").show();
+    }
+    function send_moble_coinout(type) {
+        $.post("{:U('Verify/myzr')}", {
+            type: type,
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.info, {icon: 1});
+                $(".step5").hide();
+                $(".step6").show();
+
+                $('#moble_new').attr("disabled", "disabled");
+                var obj      = $('#reg_moble_new');
+                var wait     = 60;
+                var interval = setInterval(function () {
+                    obj.html(wait + "{:L('CODE_SEND_AGAIN')}");
+                    wait--;
+                    if (wait < 0) {
+                        clearInterval(interval);
+                        $(".reloadverify_new").click();
+                        $("#verify_new").val('');
+                        obj.html('<a class="move" onclick="send_new()">{:L("CODE_SEND_NO_AGAIN")}</a>');
+                    }
+                    ;
+                }, 1000);
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+
+    function coinin_up() {
+        var num          = $("#cny_num").val();
+        var paypassword  = $("#cny_paypassword").val();
+        var weike_dzbz = $("#weike_dzbz").val();
+        var coin         = $('#coin-select option:selected').val();
+        var numlimit = $(".active_wcg").html();
+        //var tradeno = $("#tradeno").html();
+        var wcg_qb = $('#wcg_qb').html();
+        var wcg_key = $('#wcg_key').html();
+
+        if (num == "" || num == null) {
+            layer.tips('{:L("TRAN_QUANTITY_INPUT")}', '#cnyout_num', {
+                tips: 2
+            });
+            return false;
+        }
+
+        if (paypassword == "" || paypassword == null) {
+            layer.tips('{:L("TRAN_PWD_ENTER")}', '#cnyout_paypassword', {
+                tips: 2
+            });
+            return false;
+        }
+        if (coin == "" || coin == null) {
+            layer.tips('{:L("COIN_TYPE_SELECT")}', '#coin-select', {
+                tips: 2
+            });
+            return false;
+        }
+
+
+        var goole ="0";
+        if(goole == 1){
+            layer.config({
+                extend: 'extend/layer.ext.js'
+            });
+            layer.ready(function () {
+                layer.prompt({
+                    title: '{:L("GOOGLE_CODE")}',
+                    formType: 1
+                }, function (val) {
+                    if (val) {
+                        $.post("/finan/coinout_up", {
+                            coin:coin,
+                            num: num,
+                            paypassword: paypassword,
+                            bank: bank,
+                            goole:val,
+                            numlimit:numlimit
+                        }, function (data) {
+                            if (data.status == 1) {
+                                layer.msg(data.info, {
+                                    icon: 1
+                                });
+                                window.location = "/finan/coinoutlog.html";
+                            } else {
+                                layer.msg(data.info, {
+                                    icon: 2
+                                });
+                                if (data.url) {
+                                    window.location = data.url;
+                                }
+                            }
+                        }, "json");
+                    }
+
+                });
+            });
+        }else{
+
+            $.post("{:U('Finance/upmyzr')}", {
+                coin:coin,
+                num: num,
+                paypassword: paypassword,
+                weike_dzbz:weike_dzbz,
+                wcg_qb: wcg_qb,
+                tradeno: '<?php print($tradeno); ?>',
+                //tradeid:tradeID
+            }, function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, {
+                        icon: 1
+                    });
+                    layer.open({
+                        content:'<p  style="font-weight: bold;text-align: center;font-size: 16px;">请根据订单信息转入华克金</p>' +
+                        '<table class="mana-app-table info" style="width: 100%;padding-top:0;">' +
+                        '<tr>' +
+                        '<td width="140">火网接收地址：</td>' +
+                        '<td  style="color:red;font-size:16px;font-weight: bold;">'+wcg_qb+'</td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>地址公钥：</td>' +
+                        '<td>'+wcg_key+'</td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>您的华克金钱包地址：</td>' +
+                        '<td  style="color:#1a9cdb;font-size:16px;font-weight: bold;">'+weike_dzbz+'</td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>转入数量：</td>' +
+                        '<td style="color:#1a9cdb;font-size:16px;font-weight: bold;">'+num+'</td>' +
+                        '</tr>' +
+                        '<tr>' +
+                        '<td>识别码：</td>' +
+                        '<td>' +
+                        '<em class="cnyin_msg" style="color:red;font-size:16px;font-weight: bold;"><?php print($tradeno); ?><span style="font-size: 14px;">（该笔订单有唯一的识别码，提交后可在下方充值记录里查询。）</span></em>' +
+                        '</td>' +
+                        '</tr>' +
+                        '</table>' +
+                        '<p style="color: #1a9cdb;">在发送WCG时，将该识别码填入"添加一条信息"中，无需加密处理。</p>' ,
+                        // btn: ['提交','取消'], //按钮
+                        area:['750px','500px'],
+                        title:'请根据订单信息转入华克金',
+                        yes:function () {
+
+                                window.location = "/activity/wcgzr.html";
+
+                        }
+
+                    });
+
+
+
+                } else {
+                    layer.msg(data.info, {
+                        icon: 2
+                    });
+                    if (data.url) {
+                        setTimeout(function(){
+                            window.location = data.url;
+                        },2000);
+                    }
+                }
+            },'json');
+
+            /*
+             layer.config({
+                 extend: 'extend/layer.ext.js'
+             });*/
+
+                /*
+                 layer.prompt({title: '请输入识别码：<span style="color:red;"><?php print($tradeno); ?></span>', formType: 0,maxlength: 50,area: ['400px', '150px']}, function(tradeno){
+                    $.post("{:U('Finance/upmyzr')}", {
+                        coin:coin,
+                        num: num,
+                        paypassword: paypassword,
+                        weike_dzbz:weike_dzbz,
+                        wcg_qb: wcg_qb,
+                        tradeno: tradeno,
+                        //tradeid:tradeID
+                    }, function (data) {
+
+                        if (data.status == 1) {
+                            layer.msg(data.info, {
+                                icon: 1
+                            });
+                            window.location = "/activity/wcgzr.html";
+                        } else {
+                            layer.msg(data.info, {
+                                icon: 2
+                            });
+                            if (data.url) {
+                                window.location = data.url;
+                            }
+                        }
+                    }, "json");
+                 });
+             });*/
+
+         }
+    }
+</script>
+
+<script>
+    var hints = "0";
+    if(hints == 1){
+        $('#hints').show();
+    }
+    $('#finance_box').addClass('active');
+    $('.finan_wcgin').addClass('active');
+</script>
+
+<include file="Public:footer" />

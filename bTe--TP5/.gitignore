@@ -1,0 +1,7 @@
+/.idea
+/.project
+/composer.lock
+/application/config.php
+/application/database.php
+/runtime
+/public/common_enter.php

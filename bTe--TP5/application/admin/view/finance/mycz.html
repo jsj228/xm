@@ -1,0 +1,234 @@
+{include file="public:header" /}
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">港币充值</span>
+		</div>
+		<div class="cf">
+			<div class="fl">
+				<button class="btn ajax-post confirm btn-danger" url="{:url('Finance/myczStatus',array('type'=>'chexiao'))}" target-form="ids">撤销</button>
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<input type="text" class="search-input form-control  " name="addtime" value="{$Request.param.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+						<input type="text" class="search-input form-control  " name="endtime" value="{$Request.param.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="payment" class="form-control">
+							<option value="" {empty name="$Request.param.payment"}selected{/empty} >请选择支付方式</option>
+							<option value="weixin" {eq name="$Request.param.payment" value="weixin"}selected{/eq} >微信</option>
+							<option value="alipay" {eq name="$Request.param.payment" value="alipay"}selected{/eq} >支付宝</option>
+						</select>
+
+						<select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+							<option value="" {empty name="$Request.param.status"}selected{/empty} >全部状态</option>
+							<option value="1" {eq name="$Request.param.status" value="1"}selected{/eq} >未付款</option>
+							<option value="2" {eq name="$Request.param.status" value="2"}selected{/eq} >充值成功</option>
+							<option value="3" {eq name="$Request.param.status" value="3"}selected{/eq} >人工到账</option>
+							<option value="4" {eq name="$Request.param.status" value="4"}selected{/eq} >处理中</option>
+							<option value="5" {eq name="$Request.param.status" value="5"}selected{/eq} >已撤销</option>
+							<option value="6" {eq name="$Request.param.status" value="6"}selected{/eq} >花呗到账</option>
+						</select>
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+							<option value="username" {eq name="$Request.param.field" value="username"}selected{/eq} >用户名</option>
+							<option value="tradeno" {eq name="$Request.param.field" value="tradeno"}selected{/eq} >订单号</option>
+							<option value="alipay_id" {eq name="$Request.param.field" value="tradeno"}selected{/eq} >支付宝编号</option>
+							<option value="czr" {eq name="$Request.param.field" value="czr"}selected{/eq} >操作人</option>
+						</select>
+
+						<input type="text" name="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入查询内容" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+						//搜索功能
+						$(function () {
+							$('#search').click(function () {
+								$('#formSearch').submit();
+							});
+						});
+						//回车搜索
+						$(".search-input").keyup(function (e) {
+							if (e.keyCode === 13) {
+								$("#search").click();
+								return false;
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="">
+				<thead>
+				<tr >
+					<th colspan="2" style="background-color:#009200">
+						共{$weike_count}条记录
+					</th>
+					<th colspan="2" style="background-color:#009200">
+						充值总金额{$weike_sum|default="0"}元
+					</th>
+					<th colspan="2" style="background-color:#009200">
+						到账总金额{$weike_num|default="0"}元
+					</th>
+				</tr>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+					<th class="">用户名</th>
+					<th class="">充值金额</th>
+					<th width="">到账金额</th>
+					<th width="">充值方式</th>
+					<th width="">充值账号</th>
+					{eq name="group_id" value="3"}<th width="">充值订单</th>{/eq}
+					{eq name="group_id" value="4"}<th width="">充值订单</th>{/eq}
+					<th class="">充值时间</th>
+					<th class="">确认时间</th>
+					<th width="">状态</th>
+					<th width="">操作</th>
+					<th width="">操作人</th>
+					<th width="">备注</th>
+				</tr>
+				</thead>
+				<tbody>
+				{notempty name="list"}
+					{volist name="list" id="vo"}
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>{$vo.id}</td>
+							<td>{$vo['username']}</td>
+							<td>{$vo.num}</td>
+							<td>{$vo.mum}</td>
+							<td class="sell_td">{$vo.type}</td>
+							<td>
+								{eq name='vo.alipay_id' value="1" }支付宝1{/eq}
+								{eq name='vo.alipay_id' value="2" }支付宝2{/eq}
+								{eq name='vo.alipay_id' value="3" }支付宝3{/eq}
+							</td>
+							{eq name="group_id" value="3"}<td>{$vo.tradeno}</td>{/eq}
+							{eq name="group_id" value="4"}<td>{$vo.tradeno}</td>{/eq}
+							<td>{$vo.addtime|addtime}</td>
+							<td>{$vo.endtime|addtime}</td>
+							<td>
+								{eq name="vo.status" value="0"}未付款{/eq}
+								{eq name="vo.status" value="1"}充值成功{/eq}
+								{eq name="vo.status" value="2"}人工到账{/eq}
+								{eq name="vo.status" value="3"}处理中{/eq}
+								{eq name="vo.status" value="4"}已撤销{/eq}
+								{eq name="vo.status" value="5"}花呗到账{/eq}
+							</td>
+							<td>
+								{eq name="vo.status" value="0"}
+									{eq name="vo.type" value="微信转账支付"}
+										<a onclick="qrcz({$vo['id']}, 1)" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+									{else/}
+										<a onclick="qrcz({$vo['id']}, 1)" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+										<a onclick="qrcz({$vo['id']}, 2)" href="#" class="ajax-get btn btn-primary btn-xs">花呗到账 </a>
+									{/eq}
+
+								{/eq}
+								{eq name="vo.status" value="3"}
+									{eq name="vo.type" value="微信转账支付"}
+										<a onclick="qrcz({$vo['id']}, 1)" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+									{else/}
+										<a onclick="qrcz({$vo['id']}, 1)" href="#" class="ajax-get btn btn-primary btn-xs">确认到账 </a>
+										<a onclick="qrcz({$vo['id']}, 2)" href="#" class="ajax-get btn btn-primary btn-xs">花呗到账 </a>
+									{/eq}
+								{/eq}
+							</td>
+							<td>{$vo.czr}</td>
+							<td>
+								{eq name="vo.beizhu" value=""}
+									<a onclick="czbz({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">备注</a>
+									{else/}
+									{$vo.beizhu}
+								{/eq}
+							</td>
+						</tr>
+					{/volist}
+					{else/}
+					<td colspan="20" class="text-center">Oh! 暂时还没有内容!</td>
+				{/notempty}
+				</tbody>
+			</table>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+
+		//支付宝微信区分颜色
+        $(".sell_td").each(function () {
+            if($(this).html() == "微信转账支付"){
+                $(this).parent().css({"background":"rgba(46, 204, 113, 0.11)"});
+            }else{
+                $(this).parent().css({"background":"rgba(255, 2, 2, 0.11)"});
+            }
+        });
+
+
+		//导航高亮
+		highlight_subnav("{:url('Finance/mycz')}");
+
+		//人工充值 , 花呗充值
+        function qrcz(id, type) {
+            layer.confirm('是否成功操作充值？', {
+                btn: ['确定','还未充值'] //按钮
+            }, function(){
+                layer.prompt({title: '请填写订单号！', formType: 2}, function(text){
+                    $.get("{:url('Finance/myczQueren')}", {
+                        id: id,
+                        type: type,
+						text: text,
+                    }, function (data) {
+                        if (data.code == 1) {
+                            layer.msg(data.msg, {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                            if (data.url) {
+                                window.location = data.url;
+                            }
+                        }
+                    }, "json");
+                });
+
+
+            }, function(){
+                layer.msg('请充值后再确认充值', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        }
+        //客服对充值订单的备注
+        function czbz(id) {
+            layer.prompt({title: '备注完，并确认', formType: 2}, function(text, index){
+                $.post("{:url('Finance/czbz')}",{
+                    id:id,
+					type:'czbz',
+					text:text
+				},function (data) {
+                    if (data.code == 200){
+                        layer.msg(data.msg, {icon: 1});
+                        layer.close(index);
+                        window.location.reload();
+
+					}else{
+                        layer.msg(data.msg, {icon: 2});
+					}
+
+                },'json');
+            });
+        }
+	</script>
+</block>

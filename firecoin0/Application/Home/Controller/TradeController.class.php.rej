@@ -1,0 +1,66 @@
+diff a/Application/Home/Controller/TradeController.class.php b/Application/Home/Controller/TradeController.class.php	(rejected hunks)
+@@ -598,8 +598,8 @@
+ 					$log = '错误1交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . "\n";
+ 					$log .= 'ERR: 成交数量出错，数量是' . $amount;
+                     mlog($log);
+-					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
+-					M('Trade')->where(array('id' => $sell['id']))->setField('status', 1);
++					/*M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
++					M('Trade')->where(array('id' => $sell['id']))->setField('status', 1);*/
+ 					break;
+ 				}
+ 
+@@ -681,7 +681,7 @@
+ 					$log = '错误88交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . '成交数量' . $amount . '成交价格' . $price . '成交总额' . $mum . "\n";
+ 					$log .= 'ERR: 买家更新冻结人民币出现错误,应该更新' . $buy_save . '账号余额' . $user_buy[$rmb . 'd'] . '进行错误处理';
+ 					mlog($log);
+-					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
++//					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
+ 					break;
+ 				}
+ 
+@@ -696,7 +696,7 @@
+ 					$log = '错误9交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . '成交数量' . $amount . '成交价格' . $price . '成交总额' . $mum . "\n";
+ 					$log .= 'ERR: 买家更新冻结人民币出现错误,应该更新' . $buy_save . '账号余额' . $user_buy[$rmb . 'd'] . '进行错误处理';
+ 					mlog($log);
+-					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
++//					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
+ 					break;
+ 				}
+ 				// TODO: SEPARATE
+@@ -714,7 +714,7 @@
+ 						$log = '错误11交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . '成交数量' . $amount . '成交价格' . $price . '成交总额' . $mum . "\n";
+ 						$log .= 'ERR: 卖家更新冻结虚拟币出现错误,应该更新' . $amount . '账号余额' . $user_sell[$xnb . 'd'] . '进行错误处理';
+ 						mlog($log);
+-						M('Trade')->where(array('id' => $sell['id']))->setField('status', 1);
++//						M('Trade')->where(array('id' => $sell['id']))->setField('status', 1);
+ 						break;
+ 					}
+ 				}
+@@ -723,7 +723,7 @@
+ 					$log = '错误12交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . '成交数量' . $amount . '成交价格' . $price . '成交总额' . $mum . "\n";
+ 					$log .= 'ERR: 买家更新数量出错错误,更新数量是' . $save_buy_rmb;
+ 					mlog($log);
+-					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
++//					M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
+ 					break;
+ 				}
+ 
+@@ -731,7 +731,7 @@
+ 					$log = '错误13交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . '成交数量' . $amount . '成交价格' . $price . '成交总额' . $mum . "\n";
+ 					$log .= 'ERR: 卖家更新数量出错错误,更新数量是' . $save_sell_xnb;
+ 					mlog($log);
+-					M('Trade')->where(array('id' => $sell['id']))->setField('status', 1);
++//					M('Trade')->where(array('id' => $sell['id']))->setField('status', 1);
+ 					break;
+ 				}
+ 
+@@ -814,7 +814,7 @@
+ 							mlog('错误92交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '交易方式：' . $type . '成交数量' . $amount, '成交价格' . $price . '成交总额' . $mum . "\n");
+ 							mlog('交易市场' . $market . '出错：买入订单:' . $buy['id'] . '卖出订单：' . $sell['id'] . '成交数量' . $amount . '交易方式：' . $type . '卖家更新冻结虚拟币出现错误,应该更新' . $chajia . '账号余额' . $chajia_user_buy[$rmb . 'd'] . '进行错误处理');
+ 							$mo->rollback();
+-							M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
++//							M('Trade')->where(array('id' => $buy['id']))->setField('status', 1);
+ 							break;
+ 						}
+ 

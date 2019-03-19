@@ -1,0 +1,139 @@
+{include file="Public:header"/}
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">财产管理</span>
+		</div>
+
+		<div class="cf">
+			<button class="btn btn-success" url="{:url('user/weike_Excel')}" target-form="ids" id="submit" type="submit">导出选中</button>
+			<a class="btn btn-success" href="{:url('trade/Excel',array('addtime'=>$addtime,'endtime'=>$endtime))}" >导出所有</a>
+			<div class="fl">
+				<span style="font-size: 24px;color: red;">{$statistics}</span>
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="coins" class="form-control">
+							<option value="">选择币种</option>
+							{volist name=":config('coin')" id="v"}
+								<option value="{$v['name']}" {eq name="Think.get.coins" value="$v['name']"}selected{/eq}>{$v['title']}</option>
+								<option value="{$v['name']}d" <?php if($_GET['coins'] == $v['name'].'d'){ echo 'selected'; }?>>{$v['title']}冻结</option>
+							{/volist}
+						</select>
+						<input type="text" name="number" class="search-input form-control  " value="{$Think.get.number}" placeholder="请输入数量" style="">
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+							<option value="username" {eq name="Think.get.field" value="username"}selected}{/eq}>用户名</option>
+						</select>
+						<input type="text" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入用户名" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<form id="form" action="{:url('user/weike_Excel')}" method="post" class="form-horizontal">
+			<table class="">
+				<thead>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+					<th class="">用户名</th>
+					<th class="">操作</th>
+					{volist name=":config('coin')" id="v"}
+						{if condition="$v['name'] neq 'btmz'"}
+						<th class="">{$v['title']}</th>
+						{/if}
+					{/volist}
+				</tr>
+				</thead>
+				<tbody>
+
+				{notempty name="list"}
+					{volist name="list" id="vo"}
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<input class="ids" type="checkbox" name="name" value="{$name}" style="display: none"/>
+							<td>{$vo.id}
+								<br> 买入手续费{$vo.fee_buy}
+								<br> 卖出手续费 {$vo.fee_sell}
+								<br> 总收入 {$vo.pay_in}
+								<br> 总支出 {$vo.pay_out}
+								<!--<br> 估计余额 <php>echo ($vo['pay_in'] - $vo['pay_out']) * 1;</php>-->
+							</td>
+							<td>{$vo['username']}<br>
+								<br> 分红金额 {$vo.fenhong}
+								<br> 市场交易赠送 {$vo.trade_award}
+								<br> 买入总金额 {$vo.num_buy}
+								<br> 卖出总金额 {$vo.num_sell}
+							</td>
+							<td>充值成功 {$vo.recharge_cash}
+								<br> 人工充值 {$vo.recharge_person}
+								<br> 花呗充值 {$vo.recharge_ant}
+								<br> 总计充值 {:number_format($vo['recharge_ant']+$vo['recharge_person']+$vo['recharge_cash'],8,".", "")}
+								<br> 总计提现 {$vo.withdraw_cash}
+								{eq name="group_id" value="3"}<br><a href="{:url('User/coinEdit?id='.$vo['id'])}" class="btn btn-primary btn-xs">编辑</a>
+							    {/eq}
+							</td>
+							{volist name=":config('coin')" id="v"}
+								{if condition="$v['name'] neq 'btmz'"}
+								<td> 可用 {:$vo[$v['name']]}
+									<br> 冻结 {:$vo[$v['name'].'d']}
+									<br> 总计 {:number_format($vo[$v['name'].'d'] + $vo[$v['name']],8,".","")}
+									<br> 转入 {$vo['turn_into'][$v['name']]}
+									<br> 转出 {$vo['turn_out'][$v['name']]}
+									<br> 买入 {$vo['coin_buy'][$v['name']]}
+									<br> 卖出 {$vo['coin_sell'][$v['name']]}
+									<br> 剩余 {:number_format($vo['turn_into'][$v['name']] + $vo['coin_buy'][$v['name']] - $vo['turn_out'][$v['name']] - $vo['coin_sell'][$v['name']],8,".", "")}
+									<br> <a href="{:url('User/coinLog?coinname='.$v['name'].'&userid='.$vo['userid'])}">财产统计</a>
+								</td>
+								{/if}
+							{/volist}
+						</tr>
+					{/volist}
+					{else/}
+					<td colspan="20" class="text-center">Oh! 暂时还没有内容!</td>
+				{/notempty}
+				</tbody>
+			</table>
+			</form>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="Public:footer"/}
+<block name="script">
+	<script>
+		//提交表单
+		$('#submit').click(function () {
+			$('#form').submit();
+		});
+	</script>
+	<script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('User/coin')}");
+	</script>
+</block>

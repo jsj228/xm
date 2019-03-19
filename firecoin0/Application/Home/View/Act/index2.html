@@ -1,0 +1,319 @@
+    <include file="Public:header" />
+    <style type="text/css">
+        table#lottery td{width:142px;height:142px;text-align:center;vertical-align:middle;font-size:24px;;}
+        table#lottery  td a{width:100%;height:100%;display:inline-block;text-decoration:none;padding-top:36px;}
+        table#lottery  td.active{border:4px solid #e3493c;background:#09164d}
+        button,a{cursor: pointer;color:#ffffff}
+        .nav-bar{display:none!important;opacity:0;}
+        li{display:inline-block;}
+        li a{color:#ffffff;font-size:16px;}
+        .bg_green{background:rgba(0, 117, 169,0.8)};
+ 
+        table{margin:0 auto;text-align:center;}
+        th{font-size:16px;padding:5px;}
+        th,td{border:1px solid rgba(225, 255, 255, 0.5);}
+        .container{text-align: center}
+        .container>*{display: inline-block;vertical-align:top;}   
+        .container b{display:inline-block;margin:10px 0;text-align: center;}
+        [pRight]{position: fixed;right:0;top:0;height:32px;line-height:32px;font-size:16px;padding:0 10px;}
+        canvas{background:url("__PUBLIC__/Home/ActImages/wcg_ac.png")no-repeat bottom center;background-size:100%;}
+        body{background:#000040;overflow-x: hidden;}
+        .EEE{color:#ffffff}
+        td{background:rgba(58, 69, 113,0.8)}
+        .list a{margin:3px 0;display: inline-block;font-size:16px;}
+        .bgRed{background:#e3493c;}
+    </style>
+<body>
+    <!-- 用户没有登陆 显示登陆框 -->
+    <ul class="bg_green" pRight>
+        <gt name="Think.session.userId" value="0">
+            <li id="user_top">
+                <i class="fa fa-user fa-lg left eee"></i>
+                <a href="/finance/"  class=" nav-username">{$Think.session.userName}</a>
+                <div id="mywallet_list" class="mywallet_list deal_list">
+                    <h4>{:L('AVAILABLE_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['cny']}</a>
+                    </h4>
+                    <h4>{:L('FROZEN_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['cnyd']}</a>
+                    </h4>
+                    <h4>{:L('ACCOUNT_HKD')}:<br>
+                        <a href="javascript:void(0)">{$userCoin_top['zzc']}</a>
+                    </h4>
+                    <div class="mywallet_btn_box">
+                        <a href="/Finance/myzc.html" class="mywallet_btn">{:L('WITHDRAWAL_COIN')}</a>
+                        <a href="/Finance/index.html" class="mywallet_btn">{:L('FINANCE')}</a>
+                        <a href="/User/index.html" class="mywallet_btn">{:L('SAFE')}</a>
+                    </div>
+                    <i class="fa fa-caret-up" style="position: absolute;top: -21px;right: 34px;font-size: 28px;"></i>
+                    <div class="nocontent"></div>
+                </div>
+            </li>
+            <li>
+                <a href="{:U('Login/loginout')}" class="">{:L('SIGN_OUT')}</a>
+            </li>
+            <else/>
+            <li>
+                <i class="fa fa-user eee left fz_16"></i> <a href="{:U('Login/register')}"> {:L('REGISTER')}</a>
+            </li>
+            <li>
+                <a onclick="loginpop()" class="">{:L('LOGIN')}</a>
+            </li>
+        </gt>
+    </ul>
+        <div class="eee" style="margin:6% auto 16px;max-width:900px;padding-left:6px">
+            <img src="__PUBLIC__/Home/ActImages/00.png">
+        </div>
+        <div class="container">
+            <table id="lottery" cellpadding="0" cellspacing="0" style="background:rgba(255,255,255,0.2);">
+                <tr>
+                    <td class="lottery-unit lottery-unit-0"><img src="__PUBLIC__/Home/ActImages/7.png"></td>
+                    <td class="lottery-unit lottery-unit-1"><img src="__PUBLIC__/Home/ActImages/3.png"></td>
+                    <td class="lottery-unit lottery-unit-2"><img src="__PUBLIC__/Home/ActImages/2.png"></td>
+                    <td class="lottery-unit lottery-unit-3 eee bgTd">谢谢参与</td>
+                </tr>
+                <tr>
+                    <td class="lottery-unit lottery-unit-11"><img src="__PUBLIC__/Home/ActImages/1.png"></td>
+                    <td colspan="2" rowspan="2" class="bg_green" style="border-radius:30px;">
+                        <a style="color:#eee;" href="javascript:void(0);">
+                            <img src="__PUBLIC__/Home/ActImages/start.png" style="width:50%"><br>
+                            获取圣诞果
+                        </a>
+                    </td>
+                    <td class="lottery-unit lottery-unit-4"><img src="__PUBLIC__/Home/ActImages/4.png"></td>
+                </tr>
+                <tr>
+                    <td class="lottery-unit lottery-unit-10"><img src="__PUBLIC__/Home/ActImages/9.png"></td>
+                    <td class="lottery-unit lottery-unit-5"><img src="__PUBLIC__/Home/ActImages/8.png"></td>
+                </tr>
+                <tr>
+                    <td class="lottery-unit lottery-unit-9 eee bgTd">谢谢参与</td>
+                    <td class="lottery-unit lottery-unit-8"><img src="__PUBLIC__/Home/ActImages/6.png"></td>
+                    <td class="lottery-unit lottery-unit-7"><img src="__PUBLIC__/Home/ActImages/5.png"></td>
+                    <td class="lottery-unit lottery-unit-6"><img src="__PUBLIC__/Home/ActImages/10.png"></td>
+                </tr>
+            </table>
+            <div class="eee" style="text-align:left;font-size:18px;margin-left:10px;padding-left:15px; border-left:1px dashed rgba(255,255,255,0.3);width:300px">
+                <if condition="$is_login">
+                    <h2 class="EEE" style="text-align:left;background:rgba(255,255,255,0.3);padding:5px 10px">
+                        我的圣诞果:
+                        <if condition="$xm_arr.xm_number eq 0">
+                            0
+                            <else/>
+                            <span id="xm_number">{$xm_arr.xm_number}</span>
+                        </if>
+                        <br>
+                        <span style="font-size:22px;line-height:20px;">我的抽奖记录</span>
+                    </h2>
+                    <if condition="$prize_list">
+                        <p style="padding:0 10px 5px 0;border-bottom:1px dashed #eee">
+                            <b style="width:34%">奖品名称</b><b style="width:50%">抽奖时间</b><b style="width:16%">操作</b>
+                        </p>
+                        <div style="height:440px;overflow:auto;margin-top:8px">
+                            <volist name="prize_list" id="vo">
+                                <p width="300px" class="list">
+                                    <a style="width:34%">{$vo.prize}</a><a style="width:46%">{$vo.addtime|date="m-d H:i:s",###}</a><if
+                                        condition="$vo.xm_status eq 1"><button
+                                            listId="{$vo.id}" style="width:20%;padding:3px 5px;border-radius:3px;" class='<if condition="$vo.is_take eq 0">get  bg_green <else/>bgRed</if>'>
+                                            <if condition="$vo.is_take eq 0">领取<else/>已领取</if></button></if>
+                                </p>
+                            </volist>
+                        </div>
+                    <else/>
+                        <p class="eee" style="margin-top:10px;color:red;padding-left:10px;"> 您还没有抽奖记录哦 !!</p>
+                    </if>    
+                <else/>
+                    <p style="margin:5px 0 5px  0" ><a onclick="loginpop()" class="bg_green" style="font-size:32px;border-radius:5px;padding:5px 10px;">你还未登录!</a></p>
+                </if>
+            </div>
+        </div>
+<script type="text/javascript">
+    // 领取
+    $(".get").click(function(){
+        var that=$(this);
+        $.post("{:U('act/receive')}",{"id":$(this).attr('listId')},function (data) {
+            if(data.code==1){
+                that.html('已领取');
+                that.addClass('bgRed').removeClass('get bg_green');
+                layer.msg(data.msg,{icon:1});
+            }else{
+                layer.msg(data.msg,{icon:2});
+            }
+        });
+    });
+    
+    var lottery = {
+        index: 0, //当前转动到哪个位置，起点位置
+        count: 0, //总共有多少个位置
+        timer: 0, //setTimeout的ID，用clearTimeout清除
+        speed: 20, //初始转动速度
+        times: 0, //转动次数
+        cycle: 50, //转动基本次数：即至少需要转动多少次再进入抽奖环节
+        prize: 0, //中奖位置
+        init: function(id) {
+            if ($("#" + id).find(".lottery-unit").length > 0) {
+                $lottery = $("#" + id);
+                $units = $lottery.find(".lottery-unit");
+                this.obj = $lottery;
+                this.count = $units.length;
+                $lottery.find(".lottery-unit-" + this.index).addClass("active");
+            }
+        },
+        roll: function() {
+            var index = this.index;
+            var count = this.count;
+            var lottery = this.obj;
+            $(lottery).find(".lottery-unit-" + index).removeClass("active");
+            index += 1;
+            if (index > count - 1) {
+                index = 0;
+            }
+            $(lottery).find(".lottery-unit-" + index).addClass("active");
+            this.index = index;
+            return false;
+        },
+        stop: function(index) {
+            this.prize = index;
+            return false;
+        }
+    };
+    function roll() {
+        lottery.times += 1;
+        lottery.roll();
+        var prize_site = $("#lottery").attr("prize_site");
+        if (lottery.times > lottery.cycle + 10 && lottery.index == prize_site) {
+            var prize_id = $("#lottery").attr("prize_id");
+            var prize_name = $("#lottery").attr("prize_name");
+            layer.msg('您抽中了'+prize_name,{icon:1});
+
+            clearTimeout(lottery.timer);
+            lottery.prize = -1;
+            lottery.times = 0;
+            click = false;
+            $('#xm_number').html(parseInt($('#xm_number').html())-1)
+
+        } else {
+            if (lottery.times < lottery.cycle) {
+                lottery.speed -= 10;
+            } else if (lottery.times == lottery.cycle) {
+                var index = Math.random() * (lottery.count) | 0;
+                lottery.prize = index;
+            } else {
+                if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
+                    lottery.speed += 110;
+                } else {
+                    lottery.speed += 20;
+                }
+            }
+            if (lottery.speed < 40) {
+                lottery.speed = 40;
+            }
+            lottery.timer = setTimeout(roll, lottery.speed);
+        }
+        return false;
+    }
+    var click = false;
+    $(function() {
+        lottery.init('lottery');
+        $("#lottery a").click(function() {
+            $(this).css({"opcity":"0.5"});
+            if (click) {return false;}
+            lottery.speed = 100;
+            // alert(100);die;
+            $.post("{:U('prize')}", {uid: 1}, function(data) { //获取奖品，也可以在这里判断是否登陆状态
+                $(this).css({"opcity":"1"});
+                if(data.status==0){
+                    layer.msg(data.msg,{icon:2});
+                }else {
+                    $("#lottery").attr("prize_site", data.prize_site);
+                    $("#lottery").attr("prize_id", data.prize_id);
+                    $("#lottery").attr("prize_name", data.prize_name);
+                    roll();
+                    click = true;
+                    return false;
+                }
+            }, "json")
+        });
+    })
+</script>
+<script>
+        // 雪花运动
+        (function () {
+        var COUNT = 400;
+        var masthead = document.querySelector('body');
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        var width = masthead.clientWidth;
+        var height = masthead.clientHeight;
+        var i = 0;
+        var active = false;
+        function onResize() {
+          width = masthead.clientWidth;
+          height = masthead.clientHeight;
+          canvas.width = width;
+          canvas.height = 1000;
+
+          ctx.fillStyle = '#FFF';
+          var wasActive = active;
+          active = width >1000;
+          if (!wasActive && active)
+            requestAnimFrame(update);
+        }
+        var Snowflake = function () {
+          this.x = 0;
+          this.y = 0;
+          this.vy = 0;
+          this.vx = 0;
+          this.r = 0;
+          this.reset();
+        };
+        Snowflake.prototype.reset = function() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * -height;
+          this.vy = 1 + Math.random() * 3;
+          this.vx = 0.5 - Math.random();
+          this.r = 1 + Math.random() * 2;
+          this.o = 0.5 + Math.random() * 0.5;
+        };
+        canvas.style.position = 'absolute';
+        canvas.style.zIndex = '-1';
+        canvas.style.left = canvas.style.top = '0';
+        var snowflakes = [], snowflake;
+        for (i = 0; i < COUNT; i++) {
+          snowflake = new Snowflake();
+          snowflakes.push(snowflake);
+        }
+        function update() {
+          ctx.clearRect(0, 0, width, 1000);
+          if (!active)
+            return;
+          for (i = 0; i < COUNT; i++) {
+            snowflake = snowflakes[i];
+            snowflake.y += snowflake.vy;
+            snowflake.x += snowflake.vx;
+            ctx.globalAlpha = snowflake.o;
+            ctx.beginPath();
+            ctx.arc(snowflake.x, snowflake.y, snowflake.r, 0, Math.PI * 2, false);
+            ctx.closePath();
+            ctx.fill();
+            if (snowflake.y >1000) {
+              snowflake.reset();
+            }
+          }
+          requestAnimFrame(update);
+        }
+        window.requestAnimFrame = (function(){
+          return window.requestAnimationFrame    ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame  ||
+              function( callback ){
+                window.setTimeout(callback, 1000 /10);
+              };
+        })();
+        onResize();
+        window.addEventListener('resize', onResize, false);
+        masthead.appendChild(canvas);
+      })();
+    </script>
+    </body>
+</html>

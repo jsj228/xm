@@ -1,0 +1,133 @@
+<include file="Public:header" />
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg mr5"></i>
+        <a href="/" class="">{:L('ADDRESS')} </a> &gt;
+        <a href="/user/index.html" class="">{:L('SAFE')} </a> &gt;{:L('REAL_NAME_VERIFY')}
+    </div>
+    <div class="main-content clear">
+        <include file="User:left" />
+        <div class="tag-list-content assets_content bg_w">
+            <h1 class="safe_center clear">
+                <span>{:L('REAL_NAME_VERIFY')}</span>
+            </h1>
+            <div id="hints" class="mytips" style="display:none;">
+                <notempty name="prompt_text">{$prompt_text}</notempty>
+            </div>
+            <ul class="set_verify" >
+                <li>{:L('UR_ID')}</li>
+       
+                <li>是否通过：
+                    <eq name="user['idcardauth']" value='0'>
+                        <eq name="user['idcardimg1']" value=''>
+                            <b class="iconfont icon-warning red">{:L('REAL_NAME_NOT_PASS')}</b>
+                            <else/>
+                            <b class="red">审核中</b>
+                        </eq>
+                        <neq name="user['idcardinfo']" value=''>
+                            <li class="red">未通过原因 :<b class="red"> {$user['idcardinfo']}</b></li>
+                        </neq>
+                        <else/>
+                        <b class="iconfont icon-ok green">
+                            {:L('REAL_NAME_PASS')}
+                        </b>
+                    </eq>
+                </li>
+                <li>{:L('REAL_NAME')}：{$user.truename}</li>
+                <li>{:L('CERTIFICATE_TYPE')}：{:L('ID_CARD')}</li>
+                <li>{:L('CERTIFICATE_NUM')}：{$user.idcard}</li>
+                <li>{:L('REAL_NAME_VERIFY_TIME')}：{$user['addtime']|addtime}</li>
+                <br/>
+                <neq name="userimg" value=''>
+                    <input type="button"  onclick="$('#addimg').slideToggle();" value="{:L('MODIFY_REAL_NAME_AUTH')}">
+                    <else/>
+                    <input type="button"  onclick="$('#addimg').slideToggle();" value="{:L('Uploadcertificate')}">
+                </neq>
+            </ul>
+            <div id="addimg" style="width:100%;padding:25px 50px;text-align:center;display:none;">
+                <span id="div1" class="addImg iconfont icon-add back">
+                    <img id="up_img1" src="/comfile/images/idc1.png">
+                    <input type="hidden" id="idcard1" name="img1" value="{$data.img}">
+                    <input type="file" accept="image/*"/>
+                </span>
+                <span id="div2" class="addImg iconfont icon-add back">
+                    <img id="up_img2" src="/comfile/images/idc2.png">
+                    <input type="hidden" id="idcard2" name="img2" value="{$data.img}">
+                    <input type="file" accept="image/*"/>
+                </span>
+                <span class="addImg iconfont icon-add back">
+                    <img id="up_img3" src="/comfile/images/idc3.png">
+                    <input type="hidden" id="idcard3" name="img3" value="{$data.img}">
+                    <input type="file" accept="image/*"/>
+                </span>
+                <div style="text-align: center;margin-top:25px;">
+                    <input type="button" id="upload"  value="{:L('upload')}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#user_box').addClass('active');
+    $('.user_truename').addClass('active');
+    $('#upload').click(function(){
+        var data = $('#idcard1').val();
+        var data1 = $('#idcard2').val();
+        var data2 = $('#idcard3').val();
+        console.dir({data:data,data1:data1,data2:data2});
+        $.ajax({
+            url: '/ajax/imgUser',
+            type: 'POST',
+            data: {data:data,data1:data1,data2:data2},
+            success: function (data) {
+                if(data.status==1){
+                    layer.msg(data.msg, {icon: 1});
+                    location.href= "{:U('User/nameauth')}";
+                }else if(data.status==0){
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }
+        });
+    })
+    $(document).ready(function () {
+        //响应文件添加成功事件
+        $("[type=file]").change(function () {
+            var _that = $(this)
+            //创建FormData对象
+            var data = new FormData();
+
+            if($(this)[0].files[0].size/(1024*1024)>2){
+                layer.msg('图片不能超过2M', {icon: 2,time:4000});
+                $(this).val('');
+                return false;
+            }    
+
+            //为FormData对象添加数据
+            $.each($(this)[0].files, function (i, file) {
+                data.append('upload_file' + i, file);
+            });
+            //发送数据
+            $.ajax({
+                url: '/User/userImage',
+                type: 'POST',
+                data: data,
+                cache: false,
+                contentType: false,		//不可缺参数
+                processData: false,		//不可缺参数
+                success: function (data) {
+                    if (data) {
+                        _that.prev().prev().attr("src", '__DOMAIN__/Upload/idcard/' + data);
+                        _that.prev().val(data);
+                        _that.prev().prev().show();
+                    }
+                },
+                error: function () {
+                    alert('上传出错');
+                    $(".loading").hide();	//加载失败移除加载图片
+                }
+            });
+
+        });
+    });
+</script>
+<include file="Public:footer" />

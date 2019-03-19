@@ -1,0 +1,140 @@
+{include file="public:header" /}
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">财产管理</span>
+		</div>
+		<div class="cf">
+			<div class="fl">
+				<span style="font-size: 24px;color: red;">{$statistics}</span>
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="coins" class="form-control">
+							<option value="">选择币种</option>
+							{volist name=":config('coin')" id="v"}
+								<option value="{$v['name']}" {eq name="$Request.param.coins" value="$v['name']"}selected{/eq}>{$v['title']}</option>
+								<option value="{$v['name']}d" <?php if(input('param.coins') == $v['name'].'d'){ echo 'selected'; }?>>{$v['title']}冻结</option>
+							{/volist}
+						</select>
+						<input type="text" name="number" class="search-input form-control  " value="{$Request.param.number}" placeholder="请输入数量" style="">
+
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+							<option value="username" {eq name="$Request.param.field" value="username"}selected{/eq}>用户名</option>
+						</select>
+						<input type="text" name="name" class="search-input form-control" value="{$Request.param.name}" placeholder="请输入用户名" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+
+					</form>
+					<script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="">
+				<thead>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">用户</th>
+					<th class="">收入</th>
+					<th class="">支出</th>
+					{volist name=":config('coin')" id="v"}
+						<th class="">{$v['title']}</th>
+					{/volist}
+				</tr>
+				</thead>
+				<tbody>
+				{notempty name="list"}
+					{volist name="list" id="vo"}
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>
+								{$vo.id}<br>
+								{$vo['username']}<br>
+								<a href="{:url('User/coinEdit?id='.$vo['id'])}" class="btn btn-primary btn-xs">编辑</a>
+							</td>
+							<td>
+								平台充值 {php}echo $vo['recharge_cash'] * 1 + $vo['recharge_person'] * 1 + $vo['recharge_ant'] * 1;{/php}
+								<br>点对点充值{php}echo $vo['recharge_c2c'] * 1;{/php}
+								<br>Epay充值{php}echo $vo['epaycz'] * 1;{/php}
+								<br>卖出总金额{php}echo $vo['num_sell'] * 1;{/php}
+								<br> 市场交易赠送 {php}echo $vo['trade_award'] * 1;{/php}
+								<br> 总收入 {php}echo $vo['pay_in'] * 1;{/php}
+							</td>
+							<td>
+								<br> C2c 总计提现 {php}echo $vo['withdraw_c2c'] * 1;{/php}
+								<br> 总计提现 {php}echo $vo['withdraw_cash'] * 1;{/php}
+								<br> 买入总金额 {php}echo $vo['num_buy'] * 1;{/php}
+								<br> 买入手续费 {php}echo $vo['fee_buy'] * 1;{/php}
+								<br> 卖出手续费 {php}echo $vo['fee_sell'] * 1;{/php}
+								<br> 总支出 {php}echo $vo['pay_out'] * 1;{/php}
+							</td>
+							{volist name=":config('coin')" id="v"}
+							    {php}
+							     $vo['turn_into'][$v['name']]=isset($vo['turn_into'][$v['name']])?$vo['turn_into'][$v['name']]:0;
+							     $vo['turn_out'][$v['name']] =isset($vo['turn_out'][$v['name']])?$vo['turn_out'][$v['name']]:0;
+							     $vo['coin_buy'][$v['name']] = isset($vo['coin_buy'][$v['name']])? $vo['coin_buy'][$v['name']]:0;
+							     $vo['coin_sell'][$v['name']] = isset($vo['coin_sell'][$v['name']])? $vo['coin_sell'][$v['name']]:0;
+							     $vo['interest'][$v['name']] = isset($vo['interest'][$v['name']])? $vo['interest'][$v['name']]:0;
+							     $vo['myejf'][$v['name']] = isset($vo['myejf'][$v['name']])? $vo['myejf'][$v['name']] :0;
+
+							     {/php}
+								<td> 可用 {$vo[$v['name']] * 1}
+									<br> 冻结 {php}echo $vo[$v['name'].'d'] * 1;{/php}
+									<br> 总计 {php}echo $vo[$v['name'].'d'] * 1 + $vo[$v['name']] * 1;{/php}
+									<br> 转入 {php}echo $vo['turn_into'][$v['name']] * 1;{/php}
+									<br> 转出 {php}echo $vo['turn_out'][$v['name']] * 1;{/php}
+									<br> 买入 {php}echo $vo['coin_buy'][$v['name']] * 1;{/php}
+									<br> 卖出 {php}echo $vo['coin_sell'][$v['name']] * 1;{/php}
+									<br> 利息 {php}echo $vo['interest'][$v['name']] * 1;{/php}
+									{eq name="v.name" value="ejf"}
+									解冻 {php}echo $vo['myejf'][$v['name']] * 1;{/php}
+									{/eq}
+									{eq name="v.name" value="hkd"}
+										<br> 剩余 {php}echo $vo['pay_in'] * 1 - $vo['pay_out'] * 1;{/php}
+										{else/}
+										<br> 剩余 {php}echo ($vo['turn_into'][$v['name']] + $vo['coin_buy'][$v['name']] + $vo['interest'][$v['name']] + $vo['myejf'][$v['name']] - $vo['turn_out'][$v['name']] - $vo['coin_sell'][$v['name']]) * 1;{/php}
+									{/eq}
+									<br> <a href="{:url('User/coinLog?coinname='.$v['name'].'&userid='.$vo['userid'])}">财产统计</a>
+								</td>
+							{/volist}
+						</tr>
+					{/volist}
+					{else/}
+					<td colspan="20" class="text-center">Oh! 暂时还没有内容!</td>
+				{/notempty}
+				</tbody>
+			</table>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('User/coin')}");
+	</script>
+</block>

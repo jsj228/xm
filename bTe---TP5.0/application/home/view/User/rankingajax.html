@@ -1,0 +1,40 @@
+
+<p class="mum">{$weike_mum} </p>
+<p class="fee">{$weike_fee}</p>
+
+
+<thead>
+    <tr>
+        <th>{:L('RANKING')}</th>
+        <th>{:L('RANKING_NAME')}</th>
+        <th>{:L('USER_NAME')}</th>
+        <eq name="type" value="1">
+            <th>{:L('TRANSACTION_FEE')}</th>
+        </eq>
+        <th>{:L('TOTAL_AMOUNT')}</th>
+        <eq name="type" value="1">
+         <th>{:L('AWARD')}</th>
+        </eq>
+    </tr>
+</thead>
+
+<if condition="$list neq null">
+    <volist name="list" id="vo">
+    <tr>
+        <td>{$i}</td>
+        <td>{$vo.truename|substr_replace='**',3}</td>
+        <td>{$vo.username|substr_replace='******',3,6}</td>
+       <eq name="type" value="1">
+           <td>{$vo['buy']|round=###,4}</td>
+       </eq>
+        <td>{$vo['zongshu']|round=###,4}</td>
+        <eq name="type" value="1">
+         <td>{$vo['userfee']|round=###,4} (CNY)</td>
+        </eq>
+    </tr>
+    </volist>
+</if>
+
+
+
+

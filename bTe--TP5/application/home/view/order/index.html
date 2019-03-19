@@ -1,0 +1,195 @@
+{include file="public:header" /}
+
+<div class="autobox">
+    <div class="now">
+        <i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')}</a> &gt; {:lang('REQUEST')}	</div>
+    <div class="assets_content bg_w">
+        <a class="request_gotoHis" href="/Order/history" style="display: inline-block;width: 200px;">
+            <h1  style="font-size: 16px;"><i class="iconfont icon-xiaoshoujiluchaxun"></i>{:lang('REQUEST_HISTORY')}</h1>
+        </a>
+        <span style="color: #fff;">紧急联系电话（香港）：00852-65292365/00852-67493962‬</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="color: #fff;">官方QQ群：693158105‬</span>
+
+        <div class="form-con">
+            <h1 style="padding-left: 0;">{:lang('REQUEST')}</h1>
+            <div class="form">
+                <form id="new_request" data-form="" class="request-form" action="/hc/zh-cn/requests" accept-charset="UTF-8" method="post">
+                    <!--<input name="utf8" type="hidden" value="✓">-->
+                    <!--<input type="hidden" name="authenticity_token" value="3uExiwfFax0U2NDc24cH68IzDAoCaitI1PoVKWLYaLP0OGKsDvtXF4nlxrvr/ZFcGI0Dss0YQ2np8Y580hisPQ==">-->
+
+                    <div class="form-field string required request_anonymous_requester_email">
+                        <label for="request_anonymous_requester_email">{:lang('USER_ID')}</label>
+                        <!--ray(    [userId] => 72    [token_user] => 4e738c978f82ac7e90370766e1801d18    [userName] => ceshi    [weike_already] => 0    [admin_id] => 1    [admin_username] => Khz2muwrNPRkeQn    [admin_password] => 568c9207ac78d2797258071224423253    [d2d977c58444271d9c780187e93f80e51] => Array        (            [verify_code] => 5473cab861de2d0dcc79bf10e15ba8f6            [verify_time] => 1520062565        ))-->
+                        <input type="text" name="request[anonymous_requester_email]" readonly value="{$user['email']?$user['email']:$user['moble']}" id="request_anonymous_requester_email">
+                        <p>Please input register mobile or email / 请输您注册时用的手机号或者邮箱</p>
+                    </div>
+
+                    <div class="form-field string  required  request_subject">
+                        <label for="request_subject">{:lang('REQUEST_TITLE')}</label>
+                        <input type="text" name="request[subject]" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;" value="{$data.title}" {$data?'readonly':''} id="request_subject" maxlength="20" size="150">
+                        <p>Please describe your problem briefly / 请简要的描述您的问题</p>
+                    </div>
+
+                    <div class="suggestion-list" data-hc-class="searchbox" data-hc-suggestion-list="true"></div>
+
+                    <div class="form-field string  optional  request_custom_fields_21690204">
+                        <label>Question Type/问题类型(务必准确选择类型，以免延误处理)</label>
+                        <div class="bz_btn">
+
+                        <span id="coin-default">
+                            <select name="type" id="request_type" {$data?'disabled':''} class="orderType" >
+                                {volist name="list" id="vo"}
+                                {equal name="vo.type" value="$data['type']"}
+                                 <option value="{$vo.type}" selected="selected">{$vo.type}</option>
+                                {else /}
+                                <option value="{$vo.type}">{$vo.type}</option>
+                                {/equal}
+                                {/volist}
+
+                            </select>
+                        </span>
+                        </div>
+                        <p>Please seelct the question type / 请选择您的问题类型</p>
+                    </div>
+                    <div class="form-field text  required  request_description">
+                        <label for="request_description">{:lang('DESCRIBE')}</label>
+                        <textarea name="request[description]" id="request_description" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;"placeholder="{:explode(',',$data['description'])[count(explode(',',$data['description']))-1]}" maxlength="300"></textarea>
+                        <p>{:lang('DESCRIBE_TIP')}</p>
+                    </div>
+
+                    <div class="form-field">
+                        <label>{:lang('ENCLOSURE')}</label>
+
+                        <div id="upload-dropzone" class="upload-dropzone">
+                            <!--<input type="file" multiple="true" id="request-attachments" data-fileupload="true" data-dropzone="upload-dropzone" data-error="upload-error" data-create-url="/hc/zh-cn/request_uploads" data-name="request[attachments][]" data-pool="request-attachments-pool" data-delete-confirm-msg="">-->
+                            <input  type="file"  multiple="true"  id="inputfile" accept="image/gif, image/jpeg, image/jpg, image/png" data-fileupload="true" data-dropzone="upload-dropzone" data-error="upload-error" data-create-url="/hc/zh-cn/request_uploads" data-name="request[attachments][]" data-pool="request-attachments-pool" data-delete-confirm-msg="" >
+                            <span>
+                                <a>{:lang('ADD_FILE')}</a>{:lang('PUT_FILE')}
+                            </span>
+                        </div>
+
+                        <p>{:lang('ID_PHOTO_RULE')}</p>
+
+                        <script>
+                            $(document).ready(function () {
+                                //响应文件添加成功事件
+                                $("#inputfile").change(function () {
+                                    //创建FormData对象
+                                    var data = new FormData();
+                                    //为FormData对象添加数据
+                                    $.each($('#inputfile')[0].files, function (i, file) {
+                                        data.append('upload_file' + i, file);
+                                        data.append('id', $("#id").val());
+                                    });
+
+                                    //发送数据
+                                    $.ajax({
+                                        url: '/ajax/imgUp',
+                                        type: 'POST',
+                                        data: data,
+                                        cache: false,
+                                        contentType: false,		//不可缺参数
+                                        processData: false,		//不可缺参数
+                                        success: function (data) {
+                                            if (data) {
+                                                if(data.msg=="error"){
+                                                    alert("{:lang('UP_FILE_ERROR')}！");
+                                                    return false;
+                                                }
+
+                                                if(data.msg=="error2"){
+                                                    alert("{:lang('ORDER_3_DOC')}！");
+                                                    return false;
+                                                }
+
+                                                $('<img />', {
+                                                    src : '__DOMAIN__/Upload/order/{:userid()}/' + data.data.name,
+                                                    height : "250px",
+                                                    width  : "180px",
+                                                }).appendTo($('.set_upload_img'));
+                                                $('#id').val(data.data.id);
+
+                                                $('.set_upload_img').show();
+
+                                                if($('.set_upload_img').find('img').length >= 3){
+                                                    $('#shang_qq_chuandiv').hide();
+                                                    alert("{:lang('ORDER_3_DOC_WAIT')}");
+                                                }
+                                            }
+                                        },
+                                        error: function () {
+                                            alert('{:lang(\'UPLOAD_ERROR\')}');
+                                            $('.set_upload_img').hide();
+                                            //$(".loading").hide();	//加载失败移除加载图片
+                                        }
+                                    });
+
+                                });
+                            });
+
+                        </script>
+
+                        <div class="set_upload_img" style="display:none;margin-top: 10px;"></div>
+                    </div>
+                    <input type="hidden" name="id" id="id" value="{$data.id}">
+                    <footer><input type="button" name="commit" id="commit" value="提交" class="button-request" onclick="request_submit();"></footer>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $("#request-attachments").change(function () {
+        //创建FormData对象
+        var data = new FormData();
+        console.log($('#request-attachments')[0].files);
+        //为FormData对象添加数据
+        $.each($('#request-attachments')[0].files, function (i, file) {
+            data.append('upload_request_file' + i, file);
+        });
+    });
+
+    function request_submit() {
+        var emailAdd              = $("#request_anonymous_requester_email").val();
+        var requestSub            = $("#request_subject").val();
+        var requestType           = $('#request_type option:selected') .val();
+        var requestDescription    = $("#request_description").val();
+        var id                    = $("#id").val();
+
+        if (emailAdd == "" || emailAdd == null) {
+            layer.tips("{:lang('EMAIL_ADD_ENTER')}", '#request_anonymous_requester_email', {tips: 2});
+            return false;
+        }
+        if (requestSub == "" || requestSub == null) {
+            layer.tips("{:lang('REQUEST_TIT_ENTER')}", '#request_subject', {tips: 2});
+            return false;
+        }
+        if (requestDescription == "" || requestDescription == null) {
+            layer.tips("{:lang('REQUEST_DETAIL_ENTER')}", '#request_description', {tips: 2});
+            return false;
+        }
+
+        $.post("/Order/jieshou",{
+            id: id,
+            emailAdd: emailAdd,
+            requestSub: requestSub,
+            requestType: requestType,
+            requestDescription:requestDescription,
+        }, function (data) {
+            if (data.code == 1) {
+                $("#commit").attr({"disabled":"disabled"});
+                layer.msg(data.msg,{time:2500, icon: 1},function(){
+                    window.location = '/Order/history';
+                });
+
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        });
+    }
+</script>

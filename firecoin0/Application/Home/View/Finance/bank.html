@@ -1,0 +1,241 @@
+<include file="Public:header" />
+<script type="text/javascript" src="/comfile/js/cityselect.js"></script>
+<style>
+	.bankItem{display:inline-block;vertical-align:middle;margin:5px;width:243px;background:#10161f;height:150px;padding:20px 10px 10px;border-radius:5px;}
+	.bankItem>p{margin-top:28px!important;overflow:hidden;}
+	.hide{display: none;}
+
+</style>
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt; <a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('WITHDRAWAL')}	</div>
+	<div class="main-content">
+		<include file="Finance:left" />
+		<div class="tag-list-content assets_content bg_w">
+            <h1 class="safe_center clear">
+                <span><!-- {:L('WITHDRAWAL')} -->c2c交易设置 |</span>
+                <span>
+                    <a href="/finance/bank.html" class="step fz_12 ml50 pd6 active"><!--{:L('WITHDRAWAL')} -->网银</a>
+                    <a href="/finance/c2c_ZFB.html" class="step fz_12 ml20 pd6 "><!-- {:L('WITHDRAWAL_RECORD')} -->支付宝</a>
+                    <a href="/finance/c2c_WX.html" class="step fz_12 ml20 pd6 "><!-- {:L('WITHDRAWAL_ADD_MAN')} -->微信</a>
+                </span>
+            </h1>
+			<div class="userMsg">
+				<button class="iconfont icon-add btnAdd" onclick="showA()">{:L('BANK_CARD_ADD')}</button>
+				<volist name="UserBank" id="vo">
+					<div class="bankItem">
+						<h3>{$vo.name} <u style="float:right">{$vo.bank}</u></h3>
+						<p style="text-align:center">{$vo.bankcard}</p>
+						<p>
+							<!-- <a href="/finance/mycz.html" class="minBtn bg_red">{:L('RECHARGE_')}</a> -->
+							<!-- <a href="/finance/mytx.html" class="minBtn bg_red" >{:L('WITHDRAWAL_')}</a> -->
+							<s  class="minBtn bg_red"  data="{$vo.id}" onclick="bank_del(this)">{:L('UNBUNDLING')}</s>
+							<span class="hide" id="cur_status" data-open="{:L('ENABLED')}" data-close="{:L('CLOSED')}" data-active="{:L('NOT_ACTIVE')}">{:L('ENABLED')}</span>
+                            
+                            <eq name="vo.status" value="2">
+								<button class="off" userId="{$vo.id}" status="{$vo.status}" style="background:#0075a9;margin-left:90px">
+									<i style="left:30px;"></i>
+								</button><span>启用</span>
+								<else/>
+								<button class="off" userId="{$vo.id}" status="{$vo.status}" style="background:#666;margin-left:90px;">
+									<i style="left:1px"></i>
+								</button><span >关闭</span>
+							</eq>
+						</p>
+					</div>
+				</volist>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="all_mask_loginbox tx_loginbox" id="step1" style="display: none;">
+	<div class="login_title pl20">{:L('WITHDRAWAL_ADD_NEW_ADD')}</div>
+	<form id="form-login" class="mask_wrap login-fb">
+		<div class="login_text zin90">
+			<div class="mask_wrap_title">{:L('REMARK_NAME')}：</div>
+			<input id="bank_name" class="texts" type="text">
+		</div>
+		<div class="login_text zin80" style="display:none;">
+			<div class="mask_wrap_title">{:L('CURRENCIES_NAME')}：</div>
+			<select name="bank" id="bank_coinname" class="texts">
+				<option value="" selected="selected">--{:L('COIN_TYPE_SELECT')}--</option>
+				<option value="cny" selected>{:L('RMB')} (CNY)</option>
+			</select>
+		</div>
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">{:L('BANK')}：</div>
+			<select name="bank" id="bank_bank" class="texts">
+				<option value="0">--{:L('BANK_SELECT')}--</option>
+				<volist name="UserBankType" id="vo">
+					<option value="{$vo['title']}">{$vo['title']}</option>
+				</volist>
+			</select>
+		</div>
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">{:L('BANK_ADD')}：</div>
+			<span class="controls" id="city_1">
+				<select class="prov texts" id="bank_prov" name="prov" style="min-width:170px;"></select><select
+					class="city texts" id="bank_city" name="city" style="min-width:170px;"></select>
+            </span>
+		</div>
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">{:L('BANK_BRANCH')}：</div>
+			<input id="bank_bankaddr" class="texts" type="text">
+		</div>
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">{:L('ACCOUNT_NAME')}：</div>
+			<input id="bank_username" class="texts not_allow_texts" type="text" value="{$truename}" disabled=true>
+		</div>
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">{:L('BANK_CARD_NUM')}：</div>
+			<input id="bank_bankcard" class="texts" type="text">
+		</div>
+		<div class="login_text zin80">
+			<div class="mask_wrap_title">{:L('TRAN_PWD')}：</div>
+			<input id="bank_paypassword" class="texts" type="password"><a href="/findpwd/findpwd" class="red">{:L('FORGET')}?</a>
+		</div>
+		<div class="login_button">
+			<input type="button" class="btns2" value="{:L('ADD_WALLET_ADDRESS_NOW')}" onclick="bank_up();">
+		</div>
+	</form>
+	<div class="mask_wrap_close iconfont" onclick="showB()"></div>
+</div>
+<div id="step2" class="all_mask" style="height: 0px;display: none;"></div>
+<script>
+    $(function () {
+        var height = $(document).height();
+        if (height < 1000) {
+            height = 1000;
+        }
+        $('#step2').height(height);
+        $("#city_1").citySelect({nodata: "none", required: false});
+    });
+    function showA() {
+        $("#step1").show();
+        $("#step2").show();
+    }
+    function showB() {
+        $("#step1").hide();
+        $("#step2").hide();
+    }
+    function bank_up() {
+        var name        = $('#bank_name').val();
+        var bank        = $('#bank_bank option:selected').val();
+        var bankprov    = $('#bank_prov option:selected').val();
+        var bankcity    = $('#bank_city option:selected').val();
+        var bank_coinname    = $('#bank_coinname option:selected').val();
+        var bankaddr    = $('#bank_bankaddr').val();
+        var bankcard    = $('#bank_bankcard').val();
+        var paypassword = $('#bank_paypassword').val();
+        if (!name) {
+            layer.tips("{:L('MEMO_NAME_ENTER')}", '#bank_name', {tips: 2});
+            return false;
+        }
+        if (!bank_coinname) {
+            layer.tips("{:L('COIN_TYPE_SELECT')}", '#bank_coinname', {tips: 2});
+            return false;
+        }
+        if (!bankaddr) {
+            layer.tips("{:L('BANK_BRANCH_ENTER')}", '#bank_bankaddr', {tips: 2});
+            return false;
+        }
+        if (!bankcard) {
+            layer.tips("{:L('BANK_CARD_ENTER')}", '#bank_bankcard', {tips: 2});
+            return false;
+        }
+
+        if(bankcard.length < 16 || bankcard.length > 19){
+            layer.tips("{:L('BANK_CARD_CORRECT_ENTER')}", '#bank_bankcard', {tips: 2});
+            return false;
+        }
+        if (!paypassword) {
+            layer.tips("请输入交易密码{:L('UNBUNDLING')}", '#bank_paypassword', {tips: 2});
+            return false;
+        }
+        $.post("{:U('Finance/upbank')}", {
+            name: name,
+            bank: bank,
+            bankprov: bankprov,
+            bank_coinname: bank_coinname,
+            bankcity: bankcity,
+            bankaddr: bankaddr,
+            bankcard: bankcard,
+            paypassword: paypassword
+        }, function (data) {
+            if (data.status == 1) {
+                layer.msg(data.msg, {icon: 1});
+                location.reload();
+            } else {
+                layer.msg(data.msg, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+    function bank_del(_this) {
+        var id = $(_this).attr('data');
+        layer.config({
+            extend: 'extend/layer.ext.js'
+        });
+        layer.ready(function () {
+            layer.prompt({
+                title: "输入交易密码，并确认{:L('UNBUNDLING')}",
+                formType: 1
+            }, function (val) {
+                if (val) {
+                    $.post("{:U('User/delbank')}", {id: id, paypassword: val}, function (data) {
+                        if (data.status == 1) {
+                            layer.msg(data.info, {icon: 1});
+                            location.reload();
+                        } else {
+                            layer.msg(data.info, {icon: 2});
+                            if (data.url) {
+                                window.location = data.url;
+                            }
+                        }
+                    }, "json");
+                }
+                ;
+            });
+        });
+    }
+	//开关
+    $('.off').click(function(){
+        var el=$(this),
+            status=el.attr('status'), //1 //0
+            userId=el.attr('userId');
+            status==1?status=2:status=1;
+            console.log('传userId----'+userId);
+            console.log('传status----'+status);
+        $.post(
+            "{:U('Finance/savebank')}",
+            {'userId':userId,'status':status},
+            function(data){
+                if(data.status==0){
+                    layer.msg(data.msg, {icon: 2});
+                    return false;
+                }
+                if(status==1){
+					el.children().css({'left':'1px'})
+                    el.css({'background':'#666'});
+                    el.siblings('span').html('关闭');
+                    el.attr('status','1');
+                 }else{
+					el.children().css({'left':'30px'})
+                    el.css({'background':'#0075a9'});   
+                    el.siblings('span').html('启用');
+                    el.attr('status','2');
+                }
+            }
+        )
+    });
+	
+    $('.c2c_D').addClass('active');
+    $('#finance_box').addClass('active');
+    
+</script>
+
+<include file="Public:footer" />
+

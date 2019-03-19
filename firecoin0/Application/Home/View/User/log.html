@@ -1,0 +1,79 @@
+<include file="Public:header" />
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i>
+		<a href="/" class="">{:L('ADDRESS')} </a> &gt;
+		<a href="/user/index.html" class="">{:L('SAFE')} </a> &gt;{:L('SECURIYY_LOGS')}
+		</div>
+	<div class="main-content">
+		<style>
+	
+</style>
+<include file="User:left" />
+	<div class="tag-list-content assets_content bg_w">
+			<h1 class="safe_center clear">
+				<span>{:L('SECURIYY_LOGS')}</span>
+			</h1>
+			<div id="hints" class="mytips" style="display:none;">
+            	<notempty name="prompt_text">{$prompt_text}</notempty>
+			</div>
+			<div class="cnyin_record log_record_list">
+				<div class="f_body">
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:L('OPERATE_TIME')}</th>
+							<th>{:L('OPERATE_TYPE')}</th>
+							<th>{:L('REMARKS')}</th>
+							<th>{:L('OPERATE_IP')}</th>
+							<th>{:L('OPERATE_ADD')}</th>
+							<th>{:L('STATE')}</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+						
+						
+						<volist name="list" id="vo">
+						<tr>
+							<td>{$vo.addtime|addtime}</td>
+							<td>{$vo.type}</td>
+							<td>{$vo.remark}</td>
+							<td>{$vo.addip}</td>
+							<td>{$vo.addr} </td>
+							<td>
+								 
+								 
+								<eq name="vo.status" value="0">
+									<font color="violet">出错</font>
+								</eq>
+								<eq name="vo.status" value="1"> <font class="white">正常</font></eq>
+								<eq name="vo.status" value="2">
+									<font color="red">异常</font>
+								</eq>
+
+								 </td>
+						</tr>
+											
+						</volist>						
+												
+												
+												
+					    </tbody>
+					</table>
+					<div class="pages">{$page}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$('.user_log').addClass('active');
+$('#user_box').addClass('active');
+
+</script>
+
+
+<include file="Public:footer" />

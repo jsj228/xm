@@ -1,0 +1,116 @@
+{include file="Public:header" /}
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('INVITE_FRIENDS')}	</div>
+	<div class="main-content">
+{include file="Finance:left" /}
+
+		<div class="tag-list-content assets_content bg_w">
+			<div class="safe_center clear">
+				<h1>
+					<span>{:lang('INVITE_FRIENDS')}</span>
+				</h1>
+			</div>
+			<div id="hints" class="mytips" style="display:none;">
+				<p>
+					{notempty name="prompt_text"}
+						{$prompt_text}
+					{/notempty}
+				</p>
+			</div>
+            <div class="tg_rule" style="">
+                <!--<img style="width: 100%;" src="/comfile/images/yqlayer.png" alt="">-->
+            </div>
+			<div id="qrcode-wallet" style="display: inline-block;margin-top: 60px;float: right;margin-right: 100px;background: #fff;padding: 20px;" width="100">
+				<saon id="codeaa"></saon>
+				<p id="qrcode-t" style="font-size: 16px;margin-top: 10px;text-align: center;" class="move">{:lang('UR_Q_R_CODE')}</p>
+			</div>
+			<div class="tg_rule" style="display: none;">
+				<p>{:lang('HDGUIZE')}</p>
+				<p>1、{:lang('HD_ONE')}</p>
+				<p>2、{:lang('HD_TWO')}</p>
+				<p>3、{:lang('HD_THREE')}</p>
+				<p>4、{:lang('HD_FOUR')}</p>
+				<p>5、{:lang('HD_FIVE')}</p>
+			</div>
+			<div class="quicklink invite-content" style="margin-top: 15px;">
+				<h4>{:lang('INVITAIION_CODE')}</h4>
+				<p class="tip">{:lang('INVITAIION_CODE_TIP')}</p>
+				<p>
+					<input type="text" value="{$user['invit']}" ><input type="button" value="{:lang('COPY')}"  style="min-width:85px;">
+				</p>
+			</div>
+			<div class="quicklink invite-content">
+				<h4>{:lang('EXCLUSIVE_LINK')}</h4>
+				<p class="tip">{:lang('EXCLUSIVE_LINK_TIP')}</p>
+				<p>
+					<input type="text"  value="http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}" ><input type="button" value="{:lang('COPY')}" style="min-width:85px;">
+				</p>
+			</div>
+			<div class="quicklink invite-content">
+				<h4>{:lang('EXCLUSIVE_ADVERTISE')}</h4>
+				<p class="tip">{:lang('EXCLUSIVE_ADVERTISE_TIP')}：</p>
+				<p>
+					<textarea type="text" id="invite-textarea" style="width: 350px;height: 100px;line-height: 25px;" >{$C['invit_text_txt']} http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}</textarea><input type="button" value="{:lang('COPY')}"  id="copy_button3" style="min-width:85px;">
+				</p>
+			</div>
+			<div class="quicklink">
+				<h4>{:lang('SHARE_PLATFORM')}</h4>
+				<div class="reward-share">
+					<a href="javascript:;" title="{:lang('SHARE_SINA')}" class="wlb_tsina"> <span class="icon icon-sina"></span> <b class="eee">{:lang('SINA')}</b> </a>
+					<a href="javascript:;" title="{:lang('SHARE_DOUBAN')}" class="wlb_douban"> <span class="icon icon-douban"></span> <b class="eee">{:lang('DOUBAN')}</b> </a>
+					<a href="javascript:;" title="{:lang('SHARE_QQ_ZONE')}" class="wlb_qzone"> <span class="icon icon-qzone"></span> <b class="eee">{:lang('QQ_ZONE')}</b> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/home/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" >
+	$('#codeaa').qrcode({
+		 render: "table", //table方式
+		 size:200,
+		 text: "http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['invit']}" //任意内容
+	}); //任意字符串
+</script>
+
+<!-- <script type="text/javascript" src="__PUBLIC__/Home/js/ZeroClipboard.min.js"></script> -->
+<script>
+	var _share_title = encodeURI("{:lang('INVITE_FRIENDS')}");
+	var _share_content = encodeURI("{$C['invit_text_txt']}");
+	var _share_url = encodeURIComponent("http://{$_SERVER['HTTP_HOST']}/Login/register/?invit={$user['id']}");
+	var _share_pic = '/';
+	$(document).ready(function () {
+		// 复制js
+		$('[type="button"]').click(function(){
+      		//选择文本
+			$(this).siblings().select()
+     		 //执行复制命令
+			document.execCommand('Copy');
+			layer.msg('{:lang("COPY_SUCCESS")}！', {icon: 1});
+		});
+
+		// 分享按钮
+		$(".wlb_tsina").click(function () {
+			window.open("http://v.t.sina.com.cn/share/share.php?url=" + _share_url + "&title=" + _share_content);
+		});
+		$(".wlb_douban").click(function () {
+			window.open("http://www.douban.com/recommend/?url=" + _share_url + "&title=" + _share_content);
+		});
+		$(".wlb_qzone").click(function () {
+			window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + _share_url + "&title=" + _share_title + "&pics=" + _share_pic + "&desc=" + _share_content);
+		});
+	});
+</script>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_invit').addClass('active');
+</script>
+{include file="Public:footer" /}

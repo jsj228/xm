@@ -1,0 +1,1209 @@
+{include file="public:header" /}
+<style>
+	.trader_oper{
+		overflow: hidden;
+	}
+	.ft_box{
+		width: 50%;
+		border:none;
+	}
+	.ft_box dt{
+		font-size: 16px;
+	}
+	.ft_box dd{
+		line-height: 43px;
+		height: 43px;
+	}
+	.ft_box dd input{
+		border: 1px solid #dfdfdf;
+		height: 43px;
+		line-height: 43px;
+		padding: 10px;
+		width: 95%;
+		text-align: right;
+	}
+	.ft_box dd .radio_input{
+		width: 20px;
+		height: 14px;
+		vertical-align: middle;
+	}
+	.ft_box  .ft_box_readonly input{
+		background: #f3f3f3;
+	}
+	.trader_btn{
+		width: 100%;
+		height:45px;
+
+	}
+	.ft_box dd .trader_btn input{
+		height: 45px;
+		font-size:14px;
+		border-radius: 4px;
+		text-align: center;
+		line-height: 24px;
+	}
+	.trader_btn input.buy_btn{
+		background-color: #F9505D;
+
+	}
+	.ft_box dd input.c2c_buy_num{
+		color: #f00;
+		font-size: 18px;
+	}
+	.ft_box dd input.c2c_sell_num{
+		color: #1EAE58;
+		font-size: 18px;
+	}
+	.ft_box .form-select{
+		border: 1px solid #dfdfdf;
+		height: 43px;
+		line-height: 43px;
+		padding: 10px;
+		width: 95%;
+		text-align: right;
+		font-size: 14px;
+	}
+	.trader_box{
+		overflow: hidden;
+	}
+
+	.trader_box .col-xs-6 {
+		width: 50%;
+		float: left;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.trader_box .exchangetlist {
+		width: 100%;
+		/*height: 105px;*/
+		margin-bottom: 20px;
+		color: #6d7b82;
+		overflow: hidden;
+		margin-top: 30px;
+		border: 1px solid #eee;
+	}
+	.trader_box .exchangetlist li,.trader_box  .exchangetlist .shd {
+		height: 32px;
+		line-height: 32px;
+		padding: 0 10px;
+	}
+
+	.trader_box .exchangetlist .shd {
+		overflow: hidden;
+		background: #fafafa;
+	}
+
+	.trader_box .exchangetlist .shd * {
+		float: left;
+	}
+
+	.trader_box .exchangetlist span {
+		width: 15%;
+		display: inline-block;
+	}
+	.trader_box .exchangetlist span:nth-child(1){
+		width: 20%;
+	}
+	.trader_box .exchangetlist .shd b {
+		font-weight: 100;
+	}
+
+	.trader_box .exchangetlist .typeshow{
+		text-align:right;
+        vertical-align: top;
+	}
+
+
+
+	.trader_box .exchangetlist b {
+		width: 25%;
+		display: inline-block;
+		text-align: right;
+        vertical-align: top;
+	}
+
+	.PlateTitle{
+		font-size: 16px;
+		margin-bottom: 10px;
+	}
+
+
+
+
+
+	/*弹框*/
+	.main-bd{
+		padding:10px 20px;
+		border:none;
+		width: 600px;
+		font-size: 14px;
+		line-height: 28px;
+	}
+	.privilege .tb-list2 th {
+		border: 1px solid #1b9ddc40;
+		background-color: #1a9cdb0a;
+		text-align: right;
+		height: 40px;
+		line-height: 40px;
+		padding-right: 15px;
+		font-size: 12px;
+		font-weight: bold;
+	}
+	.privilege .tb-list2 td {
+		border: 1px solid #1b9ddc40;
+		background-color: #fff;
+		text-align: left;
+		height: 40px;
+		line-height: 40px;
+		padding-left: 15px;
+	}
+	.sd_box{
+		width: 100%;
+		height: 15px;
+		margin: 10px auto;
+		position: relative;
+	}
+	.sd_box>p{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		font-size: 16px;
+		font-weight: bold;
+		color: #fe334d;
+		padding-left: 35px;
+	}
+	.sd_trade{
+		display: inline-block;
+		width: 50%;
+		height: 24px;
+		text-align: center;
+		line-height: 24px;
+		color: #ffffff;
+	}
+	.sd_box span{
+		width: 100%;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		color: #1eae57;
+	}
+	.sd_buy>span{
+		color: #F9505D;
+	}
+	.sd_box th{
+		text-align: left;
+		height: 26px;
+		font-size: 14px;
+	}
+	.sd_box td{
+		height: 26px;
+		font-size: 14px;
+		text-align: left;
+	}
+	.sd_box td>a{
+		display: block;
+		background: #F9505D;
+		color: #ffffff;
+		text-align: center;
+	}
+	.sd_buy td>a{
+		background: #1eae57;
+	}
+	.sd_sell{
+		float: left;
+		width: 46%;
+		height: 240px;
+		margin: 10px 15px;
+	}
+	.sd_buy{
+		float: right;
+		width: 46%;
+		height: 240px;
+		margin: 10px 15px;
+	}
+	.bs_but{
+		width: 100%;
+		height: 1346px;
+		background:rgba(100,100,100,0.1);
+		position: absolute;
+		left: 0;
+		top:-1001px;
+		display: none;
+	}
+	.bs_but>div{
+		width: 45%;
+		margin: 30% auto;
+		border-radius: 0.4px;
+		display: none;
+		background: #fff;
+		box-shadow: 0px 2px 10px #333;
+		padding: 30px;
+	}
+	.bs_but p>span{width:100px;text-align:right;display:inline-block;color:#000;}
+	.bs_but [type="text"],.bs_but [type="password"],.bs_but select,button{width:280px;height:38px;margin-bottom: 10px;border:1px solid #666;margin-left:5px;}
+	.bs_but button{margin-left:105px;border:0;color:#fff;}
+	.bs_but label{margin-right:15px;}
+	.bs_but [type="radio"]{vertical-align:middle;margin-right:5px;}
+	.bs_but .close{float:right;font-size:18px;background: #e3493c;color: #fff;margin: -30px;padding: 6px;}
+	#buy{background: #f95050}
+	#sell{background: #1eae57}
+</style>
+
+<div class="bk-onekey financen ">
+	<div class="container">
+		<div class="now">
+			<i class="fa fa-home fa-lg move mr5"></i>
+			<a href="/" class="">首页 </a> &gt;
+			<a href="/C2c/index.html" class="">C2C交易 </a>
+		</div>
+		<div class="finance-rd" style="width:100%; margin-left:0;">
+			<div class="bk-tabList">
+				<div class="bk-c2c-nav bk-band clearfix">
+					<a class="tab active" href="{:url('C2c/index')}">HKD 交易</a>
+					<a style="display: none;" class="tab " href="{:url('C2c/index', ['coin' => 'usdt'])}">USDT 交易</a>
+
+					<!--<a class="btn card-add" role="button" href="/finance/bank.html"><i class="iconfont icon-tianjialeimu"></i>新增银行卡</a>-->
+					<a class="btn card-admin" role="button" href="/finance/bank.html">{:lang('WITHDRAWAL_ADD_BANK')}</a>
+					<!--<a class="introabtn " href="/qctech" target="_blank"><i class="fa fa-cube fa-fw"></i> 操作说明</a>-->
+				</div>
+
+				<div class="fast_tr clear">
+					<a name="mark-trade"></a>
+					<div class="trader_oper">
+						<form method="post" class="ft_box" id="form-buy">
+							<input id="buy_type" type="hidden" name="type" value="1">
+							<input id="buy_coin" type="hidden" name="coin" value="{$coin}">
+
+							<dl>
+								<dt class="orange">买入 {$coin}</dt>
+								<dd class="ft_box_readonly">
+									<p>买入价格：</p>
+									<input id="buy_price" type="text" name="price" readonly="readonly" value="{$currency[$coin]['buy_price']}" class="form-control form-second">
+								</dd>
+								<dd>
+									<p>买入数量：</p>
+									<input id="buy_num" class="c2c_buy_num" type="text" name="buy_num" minlength="3" maxlength="8" onkeyup='value=value.replace(/[^0-9.]+/g,"")'>
+									<!--<select id="buy_num" class="form-select"  name="bankid">
+										<option value="1000">1000</option>
+										&lt;!&ndash;<option value="2000">2000</option>&ndash;&gt;
+										<option value="5000">5000</option>
+										<option value="10000">10000</option>
+										&lt;!&ndash;<option value="20000">20000</option>&ndash;&gt;
+										<option value="50000">50000</option>
+										&lt;!&ndash;<option value="100000">100000</option>&ndash;&gt;
+										&lt;!&ndash;<option value="50000">500000</option>&ndash;&gt;
+									</select>-->
+								</dd>
+								<dd>
+									<p>选择账号：</p>
+									<select id="buy_card" class="form-select"  name="bankid">
+										<option value="0">请选择</option>
+										{volist name="bank" id="vo"}
+											<option value="{$vo.id}">{$vo.bank} - {$vo.bankcard}</option>
+										{/volist}
+									</select>
+								</dd>
+								<dd>
+									<p>交易密码：</p>
+									<input type="password" autocomplete="off" class="texts" id="buy_paypassword"  value=""><br>
+									<!--<a href="/findpwd/findpwd" class="move ml5">{:lang('FORGET')}?</a>-->
+								</dd>
+								<dd>
+									<p>选择支付方式：</p>
+									<input class="radio_input" type="radio" name="buypay" value="支付宝" >支付宝
+									<input class="radio_input" type="radio" name="buypay" value="网银" checked>网银
+								</dd>
+								<dd>
+									<p></p>
+									<div class="trader_btn">
+										<div class="tan_btn"></div>
+										<input id="buy_but" class="buy_btn" type="button" value="买入（充值）" onclick="c2c_buy()">
+									</div>
+								</dd>
+							</dl>
+						</form>
+
+						<form method="post" class="ft_box nobr" id="form-sell">
+							<input id="sell_type" type="hidden" name="type" value="2">
+							<input id="sell_coin" type="hidden" name="coin" value="{$coin}">
+
+							<dl>
+								<dt class="green">卖出 {$coin}</dt>
+								<dd class="ft_box_readonly">
+									<p>卖出价格：</p>
+									<input id="sell_price" type="text" name="price" readonly="readonly" value="{$currency[$coin]['sell_price']}" class="form-control form-second">
+								</dd>
+								<dd>
+									<p>卖出数量：</p>
+									<input id="sell_num" class="c2c_sell_num" type="text" name="sell_num" minlength="3" maxlength="8" onkeyup='value=value.replace(/[^0-9.]+/g,"")'>
+								</dd>
+								<dd>
+									<p>选择账号：</p>
+									<select  id="sell_card" class="form-select" name="bankid">
+										<option value="0">请选择</option>
+										{volist name="bank" id="vo"}
+											<option value="{$vo.id}">{$vo.bank} - {$vo.bankcard}</option>
+										{/volist}
+									</select>
+								</dd>
+								<dd>
+									<p>交易密码：</p>
+									<input type="password" autocomplete="off" class="texts" id="sell_paypassword"  value=""><br/>
+									<!--<a href="/findpwd/findpwd" class="move ml5">{:lang('FORGET')}?</a>-->
+								</dd>
+								<dd>
+									<p>选择支付方式：</p>
+									<input type="radio" class="radio_input" name="sellpay" value="支付宝" >支付宝
+									<input type="radio" class="radio_input" name="sellpay" value="网银" checked>网银
+								</dd>
+
+								<dd>
+									<p></p>
+									<div class="trader_btn">
+										<div class="tan_btn" id="tm-sell"></div>
+										<input id="sell_but" class="bg_green sell_btn" type="button" value="卖出（提现）" onclick="c2c_sell()">
+									</div>
+								</dd>
+							</dl>
+						</form>
+					</div>
+
+
+					<div class="trader_box">
+						<div class="col-xs-6">
+							<div class="exchangetlist" id="usdtcnybuylist">
+								<div class="shd">
+									<span style="color: #53A9AF">商户(卖出委单)</span>
+									<b>卖出数量</b>
+									<b>可交易数量</b>
+									<span class="typeshow">支付类型</span>
+									<span class="typeshow">操作</span>
+								</div>
+								<div class="bd">
+									<div class="tempWrap" style="">
+										<ul style="">
+											{volist name="sell" id="vo"}
+												<li class="clone" style="height: 32px;"><span><i class="fa fa-user fa-fw"></i>{$vo.username}</span><b>{$vo.num}</b><b>{egt name="vo.min_num" value="100"}{$vo.min_num}~{$vo['num']-$vo['deal']}{else/}100~{$vo['num']-$vo['deal']}{/egt}</b><span class="typeshow">{$vo.paytype}</span><span class="typeshow"><a class="sd_trade" style="background: #fe334d" onclick="trade(1,{$vo['id']},'user')">买入</a></span></li>
+											{/volist}
+										</ul>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+
+						<div class="col-xs-6">
+							<div class="exchangetlist" id="usdtcnyselllist">
+								<div class="shd">
+									<span style="color: #F9505D">商户(买入委单)</span>
+									<b>买入数量</b>
+									<b>可交易数量</b>
+									<span class="typeshow">支付类型</span>
+									<span class="typeshow">操作</span>
+								</div>
+								<div class="bd">
+									<div class="tempWrap">
+										<ul>
+                                            {volist name="buy_sj" id="voo"}
+                                                <li class="clone" style="height: 32px;"><span><i class="fa fa-user fa-fw"></i>{$voo['username']}</span><b>{$voo.num}</b><b>{$voo['deal']}</b><span class="typeshow">{eq name="voo.paytype" value="0"}网银{else/}支付宝{/eq}</span><span class="typeshow"><a class="sd_trade" style="background: #1eae57" onclick="trade(2,{$voo['id']},'business')">卖出</a></span></li>
+                                            {/volist}
+											{volist name="buy" id="vo"}
+												<li class="clone" style="height: 32px;"><span><i class="fa fa-user fa-fw"></i>{$vo.username}</span><b>{$vo.num}</b><b>{$vo['num']-$vo['deal']}</b><span class="typeshow">{$vo.paytype}</span><span class="typeshow"><a class="sd_trade" style="background: #1eae57" onclick="trade(2,{$vo['id']},'user',{$vo['num']})">卖出</a></span></li>
+
+											{/volist}
+										</ul>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+					<!--手动撮合-->
+					<div class="sd_box">
+						<p style="display: none">已认证商家</p>
+						<div class="sd_sell" style="display: none">
+							<span>商家卖出订单</span>
+							<table>
+								<tr>
+									<th>商家</th>
+									<th>买入数量</th>
+									<th>可交易数量</th>
+									<th>支付类型</th>
+									<th>操作</th>
+								</tr>
+                                {neq name="sell_list" value="0"}
+                                    {volist name="sell_sj" id="vo"}
+                                        <tr>
+                                            <td style="width: 191px;height: 16px">{$vo['username']}</td>
+                                            <td>{$vo['num']}</td>
+                                            <td>{$vo['deal']}</td>
+                                            <td>{eq name="vo.paytype" value="0"}网银{else/}支付宝{/eq}</td>
+                                            <td>
+                                                <a onclick="trade(1, {$vo['id']},'business')">买入</a>
+                                            </td>
+                                        </tr>
+                                    {/volist}
+                                    {else/}
+                                    <tr>
+                                        <td colspan="5"><div style="text-align: center;color: #fe334d;font-size: 18px;margin-top: 30px">请从上方进行匹配交易</div></td>
+                                    </tr>
+                                {/neq}
+
+							</table>
+						</div>
+						<div class="sd_buy" style="display: none">
+							<span>商家买入订单</span>
+							<table>
+								<tr>
+									<th>商家</th>
+									<th>卖出数量</th>
+									<th>可交易数量</th>
+									<th>支付类型</th>
+									<th>操作</th>
+								</tr>
+								{neq name="buy_list" value="0"}
+									{volist name="buy_sj" id="voo"}
+										<tr>
+											<td style="width: 191px;height: 16px">{$voo['username']}</td>
+											<td>{$voo['num']}</td>
+											<td>{$voo['deal']}</td>
+											<td>{eq name="voo.paytype" value="0"}网银{else/}支付宝{/eq}</td>
+											<td><a onclick="trade(2, {$voo['id']},'business')">卖出</a></td>
+										</tr>
+									{/volist}
+									{else/}
+									<tr>
+										<td colspan="5"><div style="text-align: center;color: #1eae57;font-size: 18px;margin-top: 30px">请从上方进行匹配交易</div></td>
+									</tr>
+								{/neq}
+
+							</table>
+						</div>
+						<!--买卖弹出框-->
+						<div class="bs_but">
+							<div id="buy_box">
+								<b class="close">&times;</b>
+								<p style="display: none"><input type="hidden" name="sell_id" value=""></p>
+								<p style="display: none"><input type="hidden" name="buy_order" value=""></p>
+								<p style="margin-top: 27px;"><span>数量：</span><input type="text" name="buy_num" value=""></p>
+								<p>
+									<span>选择账号：</span><select class="form-select" name="buy_card">
+										<option value="0">请选择</option>
+										{volist name="bank" id="vo"}
+											<option value="{$vo.id}">{$vo.bank} - {$vo.bankcard}</option>
+										{/volist}
+									</select>
+								</p>
+								<p>
+									<span>选择支付方式：</span>
+									<label><input type="radio" class="radio_input" name="buy_paytype" value="支付宝" >支付宝</label>
+									<label><input type="radio" class="radio_input" name="buy_paytype" value="网银" checked>网银</label>
+								</p>
+								<p><span>交易密码：</span><input type="password" autocomplete="off" name="buy_paypwd" value=""></p>
+								<p><button id="buy">买入</button></p>
+							</div>
+							<div id="sell_box">
+								<b class="close">&times;</b>
+								<p style="display: none"><input type="hidden" name="buy_id" value=""></p>
+								<p style="display: none"><input type="hidden" name="sell_order" value=""></p>
+								<p style="margin: 5px 0 3px 105px;font-size: 14px;color: red;">请在账号里面预留对应的手续费</p>
+								<p><span>数量：</span><input type="text" id="deal" name="sell_num" value=""></p>
+								<p>
+									<span>选择账号：</span><select class="form-select" name="sell_card">
+										<option value="0">请选择</option>
+										{volist name="bank" id="vo"}
+											<option value="{$vo.id}">{$vo.bank} - {$vo.bankcard}</option>
+										{/volist}
+									</select>
+								</p>
+								<p>
+									<span>选择支付方式：</span>
+									<label><input type="radio" class="radio_input" name="sell_paytype" value="支付宝" >支付宝</label>
+									<label><input type="radio" class="radio_input" name="sell_paytype" value="网银" checked>网银</label>
+								</p>
+								<p><span>交易密码：</span><input type="password" autocomplete="off" name="sell_paypwd" value=""></p>
+								<p><button id="sell">卖出</button></p>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+
+
+
+
+
+				<div class="usdtnote">
+					<div class="notecont">
+						<p>1、商户卖出（提现）手续费0.5%，商家卖出（提现）手续费1%，请预留手续费在账户上；</p>
+						<p>2、订单匹配后，请买方及时打款给卖方，卖方收款后请及时“确认收款”，逾期多次将暂停两天交易；</p>
+						<p style="font-weight: bold;color: red;">3、卖出（提现）订单匹配区间为最低限额～订单数量，无法与低于最低限额的买入（充值）订单匹配，请注意调整最低限额；</p>
+						<p style="font-weight: bold;color: red;">4、卖单可分多次匹配，收款金额以“当前匹配数量”为准，收到款后请及时“确认收款”，否则剩余金额将持续锁定，直到“确认收款”后才能参与匹配；</p>
+						<p>5、交易时，务必保持电话通畅，关注短信提醒，有异议时如果对方申请仲裁，平台多次联系不到的，将根据对方提交的有利证据，判断将数字资产转给提供充份证据的一方。</p>
+						<!--<p>6、交易时，务必保持电话通畅，关注短信提醒，有异议时如果对方申请仲裁，平台多次联系不到的，将根据对方提交的有利证据，判断将 数字资产转给提供充份证据的一方；</p>-->
+					</div>
+				</div>
+				<div class=" autobox " style="border_bottom: 1px solid #D5D5D5; margin-top: 20px;">
+					<div class="clear">
+						<div class="TitleBox" style="border_top: 1px solid #D5D5D5;">
+							<h3 class="PlateTitle">交易记录</h3>
+						</div>
+						<div class=" over_hidden">
+							<div class="over_auto">
+								<table class="Transaction  no_border_right no_border_left_right">
+									<thead>
+									<tr>
+										<th width="11%">时间</th>
+										<th width="12%">类别</th>
+										<th width="7%">挂单数量</th>
+										<th width="7%">当前匹配数量</th>
+										<th width="7%">已成交数量</th>
+										<th width="9%">单价(￥)</th>
+										<th width="9%">总价(￥)</th>
+										<th width="5%">状态</th>
+										<th width="13%">操作</th>
+										<th width="10%">催单</th>
+										<th width="16%">查看订单</th>
+									</tr>
+									</thead>
+                                    {volist name="list" id="vo"}
+										<tr class="wait">
+											<td>{$vo.addtime|addtime}</td>
+											<td class="text-left in}">
+												<p class="text-muted">
+													{eq name="vo.type" value="1"}买入{/eq}
+													{eq name="vo.type" value="2"}卖出{/eq}
+													{$coin|strtoupper}/CNY
+												</p>
+												<p>流水号 : {$vo.tradeno}</p>
+											</td>
+											<td class="text-left">
+												<p>{$vo['num']*1}</p>
+											</td>
+											<td class="text-left">
+												<p>{$vo['log']*1}</p>
+											</td>
+											<td class="text-left">
+												<p>{$vo['deal']*1}</p>
+											</td>
+											<td class="text-left">
+												<p>{$vo['price']*1}</p>
+											</td>
+											<td class="text-left">
+												<p>{$vo['mum']*1}</p>
+											</td>
+											{eq name="vo.type" value="1"}
+												<td class="exlist-icon text-center">
+													<p class="infobtn-success">
+														<i class="icon"></i>
+                                                        {eq name="vo.order" value="0"}
+                                                            {eq name="vo.status" value="0"}
+                                                                {eq name="vo.businessid" value="0"}
+                                                                    等待匹配
+                                                                    {else/}
+                                                                    匹配成功
+                                                                {/eq}
+                                                            {/eq}
+                                                            {eq name="vo.status" value="3"}
+                                                                已付款
+                                                            {/eq}
+                                                            {eq name="vo.status" value="2"}
+                                                                已撤销
+                                                            {/eq}
+                                                            {eq name="vo.status" value="1"}
+                                                                已成交
+                                                            {/eq}
+                                                            {else/}
+															{eq name="vo.status" value="0"}
+																匹配成功
+															{/eq}
+															{eq name="vo.status" value="3"}
+																已付款
+															{/eq}
+															{eq name="vo.status" value="2"}
+																已撤销
+															{/eq}
+															{eq name="vo.status" value="1"}
+																已成交
+															{/eq}
+                                                        {/eq}
+													</p>
+												</td>
+												<td>
+													<p>
+														{eq name="vo.order" value="0"}
+															{eq name="vo.status" value="0"}
+																{eq name="vo.businessid" value="0"}
+																	<a style="color: red;" onclick="c2cchexiao({$vo['id']})">撤销</a>
+																	{else/}
+																	<a style="color: red;" onclick="pay({$vo['id']})">我已付款</a>
+																	<a style="color: red;" onclick="c2cchexiao({$vo['id']})">撤销</a>
+																{/eq}
+															{/eq}
+															{else/}
+															{eq name="vo.status" value="0"}
+																<a style="color: red;" onclick="pay({$vo['id']})">我已付款</a>
+																<a style="color: red;" onclick="c2cchexiao({$vo['id']})">撤销</a>
+															{/eq}
+														{/eq}
+													</p>
+												</td>
+												<td>
+													{eq name="vo.status" value="3"}
+														{eq name="vo.reminder_type" value="1"}
+															<a class="sell" onclick="reminder({$vo.id});">催单</a>
+														{/eq}
+													{/eq}
+												</td>
+											{/eq}
+											{eq name="vo.type" value="2"}
+												<td class="exlist-icon text-center">
+													<p class="infobtn-success">
+														<i class="icon"></i>
+                                                        {eq name="vo.order" value="0"}
+                                                            {eq name="vo.status" value="0"}
+                                                                {eq name="vo.businessid" value="0"}
+                                                                    等待匹配
+                                                                    {else/}
+                                                                    匹配成功
+                                                                {/eq}
+                                                            {/eq}
+                                                            {eq name="vo.status" value="1"}
+                                                                交易已完成
+                                                            {/eq}
+                                                            {eq name="vo.status" value="2"}
+                                                                已撤销
+                                                            {/eq}
+                                                            {eq name="vo.status" value="3"}
+                                                                已付款
+                                                            {/eq}
+                                                            {else/}
+															{eq name="vo.status" value="0"}
+																匹配成功
+															{/eq}
+															{eq name="vo.status" value="1"}
+																交易已完成
+															{/eq}
+															{eq name="vo.status" value="2"}
+																已撤销
+															{/eq}
+															{eq name="vo.status" value="3"}
+																已付款
+															{/eq}
+                                                        {/eq}
+													</p>
+												</td>
+												<td>
+													<p>
+														{eq name="vo.order" value="0"}
+															{eq name="vo.status" value="0"}
+																{eq name="vo.businessid" value="0"}
+																	<a style="color: red;" onclick="c2cchexiao({$vo['id']})">撤销</a>
+																	{else/}
+																	<a style="color: red;" onclick="confirm({$vo.id});">确认收款</a>
+																{/eq}
+															{/eq}
+															{eq name="vo.status" value="3"}
+																<a style="color: red;" onclick="confirm({$vo.id});">确认收款</a>
+															{/eq}
+															{else/}
+															{eq name="vo.status" value="0"}
+																<a style="color: red;" onclick="confirm({$vo.id});">确认收款</a>
+																{else/}
+															{/eq}
+														{/eq}
+													</p>
+												</td>
+												<td>
+													{eq name="vo.status" value="0"}
+														{neq name="vo.businessid" value="0"}
+															{eq name="vo.reminder_type" value="1"}
+																<a class="sell" onclick="reminder({$vo.id});">催单</a>
+															{/eq}
+														{/neq}
+													{/eq}
+												</td>
+											{/eq}
+											<td>
+												{eq name="vo.status" value="0"}
+													<a style="color: red;" onclick="show({$vo.id});">查看订单信息</a>
+												{/eq}
+												{eq name="vo.status" value="3"}
+													<a style="color: red;" onclick="show({$vo.id});">查看订单信息</a>
+												{/eq}
+											</td>
+										</tr>
+                                    {/volist}
+								</table>
+							</div>
+						</div>
+
+                        <div class="pages">{$page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="height: 0px; overflow: hidden;">
+	<div class="main-bd" id="main-bd" >
+		<div class="mention">
+			<div class="privilege">
+
+				<div class="mtitle" style="font-size: 16px;">
+					<h3 id="title">汇款订单</h3>
+				</div>
+
+				<h5>1.请仔细核对好对方收付款账号之后再进行收付款等操作；</h5>
+				<table id="table" width="100%" class="tb-list2">
+					<tbody><tr>
+						<th scope="row" id="name1">收款方户名</th>
+						<td><span id="name"></span></td>
+					</tr>
+					<tr>
+						<th scope="row" id="paytype"></th>
+						<td><span id="paytype2"></span></td>
+					</tr>
+					<tr id="bankadd">
+						<th scope="row" id="bankaddr1">收款方开户行</th>
+						<td><span id="bankaddr"></span></td>
+					</tr>
+					<tr>
+						<th scope="row" id="bankcard1">收款方账号</th>
+						<td><span id="bankcard"></span></td>
+					</tr>
+					<tr>
+						<th scope="row">转账金额</th>
+						<td><b id="num" class="red"></b></td>
+					</tr>
+
+					<tr>
+						<th scope="row">汇款时备注内容</th>
+						<td><b id="tradeno" class="red"></b> (请务必填写)</td>
+					</tr>
+					<tr>
+						<th scope="row">状态</th>
+						<td><span id="status"></span></td>
+					</tr>
+					<!--<tr id="qrcode">-->
+					<!--</tr>-->
+					<tr>
+						<th scope="row" id="store"></th>
+						<td id="moble"></td>
+					</tr>
+					</tbody></table>
+				<h5>2.买卖双方都已通过实名认证，可放心转账；</h5>
+				<h5 class="red">3.买家匹配后请及时付款；卖家收款后请及时“确认收款”；逾期多次将暂停交易；</h5>
+				<h5>4.汇款时请务必备注好订单号，否则将无法到账；</h5>
+				<h5>5.对订单有疑问可直接联系对方协商处理，协商无效可联系平台客服介入；</h5>
+				<div class="bk-divider"></div>
+
+				<div class="">
+					<p>温馨提示：如有任何疑问请联系在线客服或查看帮助中心。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{include file="public:footer"/}
+
+<script>
+	$('.bs_but b.close').click(function () {
+		$('.bs_but').hide();
+    })
+	var lock_c2c_buy = 0;
+    var lock_c2c_sell = 0;
+    var lock_confirm =0;
+    var lock_c2c_pay= 0;
+    var lock_reminder =0;
+    var lock_c2c_chexiao =0;
+    var lock_c2c_hand_buy = 0;
+    var lock_c2c_hand_sell =0;
+
+	//展示弹窗
+	function show(id) {
+        $.post("/C2c/alert_tip", {
+            id: id,
+        }, function (data) {
+            if (data.sts == 1) {
+                if (data.businessid == 0 && data.order == 0){
+                    $('#title').html('订单正在匹配，请耐心等待...');
+                    $('#title').css({'color':'red','font-weight':'bold'});
+					$('#table').hide();
+                }else{
+                    $('#name').html(data.name);
+                    $('#bankcard').html(data.bankcard);
+                    $('#num').html(data.num);
+                    $('#tradeno').html(data.tradeno);
+                    $('#status').html(data.status);
+                    if (data.image){
+                        $('#qrcode').html(
+                            '<th scope="row">二维码</th><td><img style="width: 200px;height: 200px;" src="__DOMAIN__/Upload/merchant/' + data.image + '"></td>'
+                        );
+                    }
+                    if(data.type == 2){
+                        $('#name1').html('付款方户名');
+                        $('#paytype').html('付款方式');
+                        $('#bankcard1').html('付款方账号');
+                        $('#store').html('付款方手机号');
+                        $('#moble').html(data.moble);
+                        if (data.paytype == '网银'){
+                            $('#bankaddr1').html('付款方开户行');
+                            $('#paytype2').html('网银');
+                            $('#bankaddr').html(data.bankaddr);
+                        }else{
+                            $('#bankadd').hide();
+                            $('#paytype2').html('支付宝');
+                        }
+                    }
+                    if(data.type == 1){
+                        $('#name1').html('收款方户名');
+                        $('#paytype').html('收款方式');
+                        $('#bankcard1').html('收款方账号');
+                        $('#store').html('收款方手机号');
+                        $('#moble').html(data.moble);
+                        if (data.paytype == '网银'){
+                            $('#bankaddr1').html('收款方开户行');
+                            $('#paytype2').html('网银');
+                            $('#bankaddr').html(data.bankaddr);
+                        }else{
+                            $('#bankadd').hide();
+                            $('#paytype2').html('支付宝');
+                        }
+                    }
+                }
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['640px', '600px'], //宽高
+                    content: $("#main-bd"),
+					end: function () {
+						location.reload()
+                    }
+                });
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        }, 'json');
+    }
+    //我已付款
+	function pay(id) {
+        if (lock_c2c_pay) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_c2c_pay = 1;
+        var tokenStr = get_token();
+        $.post("/C2c/pay/reqstamp/"+new Date().getTime(), {
+            id: id,
+            token_str:tokenStr,
+        }, function (data) {
+            lock_c2c_pay = 0;
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1});
+                location.reload()
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        }, 'json');
+    }
+    //催单
+    function reminder(id) {
+        if (lock_reminder) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_reminder = 1;
+        var tokenStr = get_token();
+        $.post("/C2c/reminder/reqstamp/"+new Date().getTime(), {
+            id: id,
+            token_str:tokenStr,
+        }, function (data) {
+            lock_reminder = 0;
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1});
+                location.reload()
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        }, 'json');
+    }
+    //确认收款
+	function confirm(id) {
+        if (lock_confirm) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_confirm = 1;
+
+        layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">请问您是否收到款项？</p><p style="color: red;">（若未收款，点击了“确认收款”平台概不负责）<br/>（若未收款请点击“未收款”，点击“确认收款”完成交易）</p>', {
+            btn: ['确认收款','未收款'] //按钮
+        }, function(){
+            var tokenStr = get_token();
+            $.post("/C2c/confirm/reqstamp/"+new Date().getTime(), {
+                id: id,
+                token_str:tokenStr,
+            }, function (data) {
+                lock_confirm=0;
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon: 1});
+                    location.reload()
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }, 'json');
+		})
+
+    }
+    //买家撤单
+	function c2cchexiao(id) {
+        if (lock_c2c_chexiao) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_c2c_chexiao = 1;
+        layer.confirm('<p style="font-weight: bold;text-align: center;font-size: 18px;">请问您是否需要撤销？</p><p style="color: red;">（每个用户一天只能撤销两次点对点交易，超过两次用户当天禁止点对点交易）</p>', {
+            btn: ['确认撤销','暂不撤销'] //按钮
+        }, function(){
+            var tokenStr = get_token();
+            $.post("/C2c/c2cchexiao/reqstamp/"+new Date().getTime(), {
+                id: id,
+                token_str:tokenStr
+            }, function (data) {
+                lock_c2c_chexiao = 0;
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon: 1});
+                    location.reload()
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }, 'json');
+		})
+    }
+	//买
+    function c2c_buy() {
+        if (lock_c2c_buy) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_c2c_buy = 1;
+
+        var buy_price = $('#buy_price').val();
+        var buy_num = $('#buy_num').val();
+        var buy_card  = $('#buy_card').val();
+        var buy_type  = $('#buy_type').val();
+        var buy_coin  = $('#buy_coin').val();
+        var paytype   = $("input[name = 'buypay']:checked").val();
+        var buy_paypassword   = $("#buy_paypassword").val();
+        $('#buy_but').attr('disabled',true);
+        if (buy_num == '' || buy_num == null) {
+            layer.msg("请输入买入数量");
+            return false;
+        }
+        if (buy_card == '0' || buy_num == '' || buy_num == null) {
+            layer.msg("请选择您的银行卡");
+            return false;
+        }
+        if (buy_paypassword == "" || buy_paypassword == null) {
+            layer.tips('{:lang(\'TRAN_PWD_ENTER\')}', '#buy_paypassword', {tips: 2});
+            return false;
+        }
+        var tokenStr = get_token();
+        $.post("/C2c/trade/reqstamp/"+new Date().getTime(), {
+            price: buy_price,
+            num: buy_num,
+            bankid:buy_card,
+            type:buy_type,
+            coin:buy_coin,
+			paytype:paytype,
+            buy_paypassword:buy_paypassword,
+            token_str:tokenStr
+        }, function (data) {
+            lock_c2c_buy = 0;
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                    location.reload();
+                });
+            } else {
+                layer.msg(data.msg, {icon: 2,time:1500},function () {
+                    location.reload();
+                });
+
+            }
+        }, 'json');
+    }
+	//卖
+    layer.config({
+        extend: 'extend/layer.ext.js'
+    });
+    function c2c_sell() {
+        if (lock_c2c_sell) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_c2c_sell = 1;
+        var addnum=0;
+        layer.prompt({title: '请输入最小匹配数量，并确认', formType: 2}, function(text, index) {
+            addnum++;
+            if(addnum != 1){return false;}
+            var sell_price = $('#sell_price').val();
+            var sell_num = $('#sell_num').val();
+            var sell_card = $('#sell_card').val();
+            var sell_type = $('#sell_type').val();
+            var sell_coin = $('#sell_coin').val();
+            var paytype = $("input[name = 'sellpay']:checked").val();
+            var sell_paypassword = $('#sell_paypassword').val();
+            $('#sell_but').attr('disabled',true);
+            if (sell_num == '' || sell_num == null) {
+                layer.msg("请输入卖出数量");
+                return false;
+            }
+            if (sell_card == '0' || sell_num == '' || sell_num == null) {
+                layer.msg("请选择您的银行卡");
+                return false;
+            }
+            if (sell_paypassword == "" || sell_paypassword == null) {
+                layer.tips('{:lang(\'TRAN_PWD_ENTER\')}', '#sell_paypassword', {tips: 2});
+                return false;
+            }
+            var tokenStr = get_token();
+            $.post("/C2c/trade/reqstamp/"+new Date().getTime(), {
+                price: sell_price,
+                num: sell_num,
+                bankid: sell_card,
+                type: sell_type,
+                coin: sell_coin,
+                paytype: paytype,
+                sell_paypassword: sell_paypassword,
+                min_num : text,
+                token_str:tokenStr
+            }, function (data) {
+                lock_c2c_sell = 0;
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 2, time: 1500},function () {
+                        location.reload();
+                    });
+                }
+            }, 'json');
+        })
+    }
+
+    //手动撮合买卖按钮
+	function trade(type,id,order,num) {
+        var id = id;
+		var type = type;
+		var ordre = order;
+		$('.bs_but').show();
+		if (type == 1){
+			$('#buy_box').show();
+            $('#sell_box').hide();
+            $('input[name = "sell_id"]').val(id);
+            $('input[name = "buy_order"]').val(order);
+		}else{
+            console.log(order);
+			$('#sell_box').show();
+            $('#buy_box').hide();
+            $('input[name = "buy_id"]').val(id);
+            $('input[name = "sell_order"]').val(order);
+            if (order == 'user'){
+                $('#deal').attr('readonly','readonly');
+                $('#deal').val(num);
+			}else{
+                $('#deal').removeAttr('readonly');
+                $('#deal').val('');
+			}
+		}
+	}
+    //手动撮合下单
+	$('#buy').click(function () {
+        // var buy_price = $("input[name = 'buy_num']").val();
+        if (lock_c2c_hand_buy) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_c2c_hand_buy = 1;
+        var buy_num   = $("#buy_box input[name = buy_num]").val();
+        var buy_card  = $("select[name = buy_card]").val();
+        var type      = 1;
+        var coin  = 'hkd';
+        var paytype   = $("input[name = buy_paytype]:checked").val();
+        var paypwd    = $("input[name = buy_paypwd]").val();
+        var id        = $("input[name =  sell_id]").val();
+        var order        = $("input[name =  buy_order]").val();
+        var tokenStr = get_token();
+        $.post('/C2c/hand_trade/reqstamp/'+new Date().getTime(),
+			{
+			    num      : buy_num,
+				card_id  : buy_card,
+				type     : type,
+				coin     : coin,
+				paytype  : paytype,
+				paypwd   : paypwd,
+				id       : id,
+				order    : order,
+                token_str:tokenStr
+			},
+			function (data) {
+                lock_c2c_hand_buy = 0;
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 2,time:1500});
+                }
+        },'json');
+    })
+    $('#sell').click(function () {
+        if (lock_c2c_hand_sell) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_c2c_hand_sell = 1;
+        // var buy_price = $("input[name = 'buy_num']").val();
+        var sell_num   = $("#sell_box input[name = 'sell_num']").val();
+        var sell_card  = $("select[name = 'sell_card']").val();
+        var type       = 2;
+        var coin       = 'hkd';
+        var paytype    = $("input[name = sell_paytype]:checked").val();
+        var paypwd     = $("input[name = sell_paypwd]").val();
+        var id         = $("input[name = buy_id]").val();
+        var order      = $("input[name =  sell_order]").val();
+        var tokenStr = get_token();
+        $.post('/C2c/hand_trade/reqstamp/'+new Date().getTime(),
+            {
+                num      : sell_num,
+                card_id  : sell_card,
+                type     : type,
+                coin     : coin,
+                paytype  : paytype,
+                paypwd   : paypwd,
+				id       : id,
+                order    : order,
+                token_str:tokenStr
+            },
+            function (data) {
+                lock_c2c_hand_sell = 0;
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon: 1, time: 2000}, function () {
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 2,time:1500});
+                }
+            },'json');
+    })
+</script>

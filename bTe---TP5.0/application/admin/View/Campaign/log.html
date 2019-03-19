@@ -1,0 +1,136 @@
+{include file="Public:header" /}
+<div id="main-content">
+ <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+  <button class="close fixed" style="margin-top: 4px;">&times;</button>
+  <div class="alert-content">警告内容</div>
+ </div>
+ <div id="main" class="main">
+  <div class="main-title-h">
+   <span class="h1-title">用户认证奖励</span>
+   <notempty name="name"> <span class="h2-title">>><a href="{:url('Campaign/log')}">用户认证</a></span> </notempty>
+  </div>
+  <div class="cf">
+   <div class="fl"><a class="btn btn-success " href="{:url('Campaign/add')}">新 增</a></div><!--/158dxycuyyvdsb8xs5kkywczxthsb8krmi/Finance/myshareEdit.html-->
+   <div class="search-form fr cf">
+    <div class="sleft">
+      <form name="formSearch" action="{:url('Campaign/log')}" id="formSearch" method="post" name="form1" >
+        <select style=" width: 160px; float: left; margin-right: 10px;" name="coin" class="form-control">
+          <?php
+            foreach($coins as $k => $v){
+              if(isset(session('search_data')['coin']) && session('search_data')['coin'] == $v['id'] ){
+                print('<option selected value="'.$v['id'].'">'.$v['title'].'</option>');
+              }else{
+                print('<option value="'.$v['id'].'">'.$v['title'].'</option>');
+              }
+            }
+          ?>
+        </select>
+        <select style=" width: 160px; float: left; margin-right: 10px;" name="type" class="form-control">
+          <option value = '1' <?php if(session('search_data')['type'] == 1 ) print('selected'); ?> >全部</option>
+          <option value = '2' <?php if(session('search_data')['type'] == 2 ) print('selected'); ?> >认证奖励</option>
+          <option value = '3' <?php if(session('search_data')['type'] == 3 ) print('selected'); ?> >充值奖励</option>
+          <option value = '4' <?php if(session('search_data')['type'] == 4 ) print('selected'); ?> >分享奖励</option>
+        </select>
+        <select style=" width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+          <option value = '1' <?php if(session('search_data')['status'] == 1 ) print('selected'); ?> >全部状态</option>
+          <option value = '2' <?php if(session('search_data')['status'] == 2 ) print('selected'); ?>  >未奖励</option>
+          <option value = '3' <?php if(session('search_data')['status'] == 3 ) print('selected'); ?> >已奖励</option>
+        </select>
+        <input type="text" name="name" class="search-input form-control" value="<?php print(isset(session('search_data')['name']) && session('search_data')['name'] ? session('search_data')['name'] : ''); ?>" placeholder="请输入查询用户" style=""><a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+      </form>
+    </div>
+   </div>
+  </div>
+  <div class="data-table table-striped">
+   <table class="">
+    <thead>
+      <tr>
+            <th colspan="2" style="background-color:#009200">
+              共{$count}条记录
+            </th>
+            <th colspan="2" style="background-color:#009200">
+              奖励总数量:{$nums ? $nums : 0}
+            </th>
+          </tr>
+     <tr>
+      <th class="row-selected row-selected"><input class="check-all" type="checkbox" /></th>
+      <th class="">ID</th>
+      <th class="">用户组</th>
+      <th class="">用户名</th>
+      <th class="">邀请人</th>
+      <th class="">奖励数量</th>
+      <th class="">币种名称</th>
+      <th class="">活动开始时间</th>
+      <th class="">策划人</th>
+      <th class="">活动次数</th>
+      <th class="">奖励状态</th>
+      <th class="">奖励类型</th>
+      <th class="">奖励时间</th>
+     </tr>
+    </thead>
+    <tbody>
+     {notempty name="data"} 
+     {volist name="data" id="vo"}
+      <!--[0] => Array ( [id] => 8 [users] => 9005,7646 [nums] => 0.1000 [title] => 华克金 [active_time] => 2018-04-24 16:20:00 [username] => Khz2muwrNPRkeQn [times] => 2 [add_time] => 2018-04-24 16:24:51 -->
+     <tr>
+      <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
+      <td>{$vo.id}</td>
+      <td>{$vo['users']}</td>
+      <td>{$vo['one']}</td>
+      <td>{$vo['two']}</td>
+      <td>{$vo.nums}</td>
+      <td>{$vo.title}</td>
+      <td>{$vo.active_time}</td>
+      <td>{$vo['username']}</td>
+      <td>{$vo['times']}</td>
+      <td><?php 
+        if($vo['type']==3 && $vo['status']==0){
+          print('<a class="btn btn-info " href="'.url("Campaign/edit_award",array('id'=>$vo['id'])).'">编辑</a><a class="btn btn-danger" href="'.url("Campaign/send_award",array('id'=>$vo['id'])).'">发送</a>');
+        }elseif($vo['type']==3 && $vo['status']==1){
+          print('<a class="btn btn-success " href="'.url("Campaign/edit_award",array('id'=>$vo['id'])).'">编辑</a>'.$vo['award_status']);
+        }else{
+          print($vo['award_status']);
+        }
+       ?></td>
+      <td>{$vo['award_type']}</td>
+      <td>{$vo['add_time']}</td>
+     </tr>
+     {/volist} 
+     {else /}
+     <td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+     {/notempty}
+    </tbody>
+   </table>
+   <div class="page">
+      <div>
+        {$page}
+      </div>
+   </div>
+  </div>
+ </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+      var forms = {};
+      //主导航高亮
+      $('.invit-box').addClass('current');
+      //边导航高亮
+      $('.invit-index').addClass('current');
+      forms.search=(function(){
+          $('#search').click(function(){
+            $('#formSearch').submit();
+          });
+      })();
+
+      forms.enter = (function(){
+        $(".search-input").keyup(function(e){
+          if(e.keyCode===13){
+            $("#search").click();
+            return false;
+           }
+        });
+      })();
+
+    })
+</script>
+{include file="Public:footer" /}

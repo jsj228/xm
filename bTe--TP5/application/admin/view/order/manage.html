@@ -1,0 +1,85 @@
+{include file="public:header" /}
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:url('Order/manage')}">工单管理</a></span>
+		</div>
+		<div class="cf">
+			<div class="fl">
+				<a class="btn btn-success  " href="{:url('Order/order_edit')}">新 增</a>
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<input type="text" name="type" id="type" class="search-input form-control  " value="{$Request.param.type}" placeholder="请输入工单类型查询" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="" id="table1">
+				<thead>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+					<th class="">订单类型</th>
+					<th class="">订单问题</th>
+					<th class="">订单回答</th>
+					<th class="">修改时间</th>
+					<th class="">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{notempty name="list"}
+					{volist name="list" id="vo"}
+						<tr>
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>{$vo.id}</td>
+							<td>{$vo.type}</td>
+							<td>{$vo.problem}</td>
+							<td>{$vo.answer}</td>
+							<td>{$vo.addtime|addtime}</td>
+							<td>
+								<a href="{:url('Order/order_edit', ['id' => $vo['id']])}" class="btn btn-primary btn-xs">修改</a>
+								<a href="{:url('Order/order_del', ['id' => $vo['id']])}" class="btn btn-primary btn-xs">删除</a>
+							</td>
+						</tr>
+					{/volist}
+					{else/}
+					<td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+				{/notempty}
+				</tbody>
+			</table>
+			<div class="page" id="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('Order/manage')}");
+	</script>
+</block>

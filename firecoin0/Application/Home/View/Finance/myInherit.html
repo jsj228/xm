@@ -1,0 +1,177 @@
+<include file="Public:header" />
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:L('ADDRESS')}</a> &gt;
+		<a href="/Finance/index.html" class="movesay">{:L('FINANCE')} </a> &gt; {:L('RECHARGE')}    </div>
+	<div class="main-content">
+		<include file="Finance:left" />
+		<div class="tag-list-content assets_content bg_w">
+            <h1 class="safe_center clear">
+                <span>继承权益 — 信息</span>
+            </h1>
+			<div class="mytable-body" style="margin:60px 0 30px;">
+                <div class="InheritText" style="display:none;border-bottom:1px solid #666;padding:30px 0 15px;">
+                    <h2 style="text-align:center;margin-bottom25px">尊敬的全球火网用户</h2>
+                    <p>因近期全球经济环境存在诸多不稳定因素，同时WCG等虚拟币种持续下探，造成部分M用户心理承受能力剧烈增加，造成<b class="red">高血压，脑血栓，心脏病，住院，跳楼</b>等人身意外风险。火网交易所郑重提醒全球伙伴区块链商品交易具有极高的风险（预挖、暴涨暴跌、庄家操控、团队解散、技术缺陷等），为了更加有效的规范区块链市场的长期稳定和用户权益，火网创始团队独创全球交易市场继承权益，全心全力保护区块链资产持有者的账户权益。
+                        现火网独创账户继承权，防止您的账户资产无法意外情况下继续使用且遗漏，现已开启财产继承模式，用户在财务中心处填写继承人信息，当我们联系不到账号本人时，会第一时间联系您的继承人，继承您的火网账户资产。新颖的继承模式可以让您的财产传承给下一代继续使用，用户的财产将一直在平台保留与存放。近期即将上线！上线时间敬请留意火网官方平台。
+                        继承的条件</p>
+                    <p>一、 继承应当在被继承人发生意外本人无法使用的情况下或者逝去后才能发生。这是继承的首要条件。</p>
+                    <p>二、 继承遗产的人应当是被继承人的合法继承人，就是依照法律的规定能作为继承人的继承人。</p>
+                    <p>三、遗产应当是被继承人生前属于个人所有的财产。</p>
+                    <p>继承第一顺序：配偶、子女、父母；第二顺序：兄弟姐妹、祖父母、外祖父母。</p>
+                    <p>可在火网交易所财务中心界面操作绑定继承人 ，需填写账户本人与继承人的关系，继承人的身份证及姓名和联系方式。</p>
+                </div>
+                <div class="show" style="margin-top:120px;text-align:center;">
+                    <p><a>继承关系：</a><span class="inherit">{$inherit.type}</span></p>    
+                    <p><a>继承者姓名：</a><span class="name">{$inherit.username}</span></p>
+                    <p><a>继承者手机号：</a><span class="phone">{$inherit.moble}</span></p>   
+                    <p><a>继承者身份证号：</a><span class="idCard">{$inherit.idcard}</span></p>
+                    <p><a>点击修改：</a><span><button onclick="$('.form').show(500);$('.show').hide(500);return false;" class="minBtn bg_red">修改</button></span></p>
+                </div>
+                <div class="form" style="margin-top:30px;">
+                    <p>
+                        <a>继承关系：</a><select id="relations">
+                        <option value="夫妻">夫妻</option>
+                        <option value="父子" selected>父子</option>
+                        <option value="母子">母子</option>
+                        <option value="兄长">兄弟</option>
+                        <option value="姐妹">姐妹</option>
+                        <option value="兄妹">兄妹</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label><a>继承者姓名：</a><input type="text" id="name" value="{$inherit.username}" placeholder="请输入您的姓名"></label>
+                    </p>
+                    <p>
+                        <label><a>继承者手机：</a><input type="text" id="phone" value="{$inherit.moble}" placeholder="请输入您的手机号"></label>
+                    </p>
+                    <p>
+                        <label><a>继承者身份证号：</a><input type="text" id="idCard" value="{$inherit.idcard}" placeholder="请输入您的身份证号"></label>
+                    </p>
+                    <p style="position: relative">
+                        <a>短信验证码：</a><input type="text" id="msgCode" placeholder="输入短信验证码">
+                        <button id="sendMsg" class="vifcode bg_red" style="right:calc(42% - 138px)"></button>
+                        <button class="vifcode bg_red" id="vifcode" onclick="send_moble(60)" style="right:calc(42% - 138px);width:auto;">获取</button>
+                    <p>
+                        <a class="red" onclick="$('.InheritText').toggle(500);" style="cursor: pointer;">查看继承权益：</a>
+                        <label class="mr10"><input type="radio" name="isAgree" status="1" > 同意 </label> 
+                        <label><input type="radio" name="isAgree" status="0" checked> 不同意</label>
+                    </p>
+                    <p style="padding-left:150px;"><input type="button" value="提交信息" name="{$inherit['id']}"></p>
+                </div>
+                <empty name="inherit">
+                    <script>
+                        $('.show').hide('500');
+                        $('.form').show('500');
+                    </script>
+                    <else/>
+                    <script>
+                        $('.show').show('500');
+                        $('.form').hide('500');
+                    </script>
+                </empty>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.finan_myInherit').addClass('active');
+    $('#finance_box').addClass('active');
+    //提交表单
+    $('[type="button"]').click(function(){
+        var relations=$('#relations option:selected').val(),
+            name=$('#name').val(),
+            idCard=$('#idCard').val(),
+            msgCode=$('#msgCode').val(),
+            isAgree=$('[name=isAgree]:checked').attr('status'),
+            isAdd=$(this).attr('name'),
+            phone=$('#phone').val();
+            if(phone.match(/^(86)/)){phone=phone.replace(/^(86)/,'')}
+            if(name.search(/^[\u4E00-\u9FA5A-Za-z]{2,20}$/g)){
+                layer.tips('请输入您的姓名','#name', {tips: 2});
+                return false;
+            }else if(!phone.match(/^[\d]{7,11}/g)){
+                layer.tips('请您输入正确的手机号!!!','#phone', {tips: 2});
+                return false;
+            }else if(phone.length >=11 &&!phone.match(/^(13[\d]|14[5|7]|15[\d]|18[\d])\d{8}$/)){
+                layer.tips('请您输入正确的手机号!','#phone', {tips: 2});
+                return false;
+            }
+            else if(idCard.search(/^([\d]){7,17}(x|X|\d)+$/g)){
+                layer.tips('请输入您的身份证号','#idCard', {tips: 2});
+                return false;
+            }else if(!msgCode){
+                layer.tips('请输入短信验证码','#msgCode', {tips: 2});
+                return false;
+            }else if(isAgree==0){
+                layer.tips('请选择同意','[status="1"]', {tips: 2});
+                return false;
+            }
+            // 发送AJax请求
+            $.post("{:U('finance/myInherit')}",{
+                relations:relations,
+                name:name,
+                phone:phone,
+                msgCode:msgCode,
+                idCard:idCard,
+                isAgree:isAgree,
+                isAdd:isAdd?isAdd:''
+            },function(data){
+                if(!data.status){
+                    layer.msg(data.msg,{icon:2});
+                }else{
+                    layer.msg(data.msg,{icon:1});
+                    $('.show').show(500);
+                    $('.form').hide(500);
+                    $('.InheritText').hide(500);
+                    $('.inherit').html(relations);
+                    $('.name').html(name);
+                    $('.phone').html(phone);
+                    $('.idCard').html(idCard);
+                    $('[type=button]').attr('name',data.userid);
+                }
+            });
+    });
+    var clickN=0;
+    function send_moble(wait) {
+        clickN++;
+        if(clickN!=1){setTimeout(function(){location.reload();},3000)}
+         var moble={$moble};
+         var obj  = $('#sendMsg');
+        $.post("{:U('Verify/bankseng')}", {
+            moble: moble,
+        }, function (data) {
+            if (data.status == 1) {
+                $("#vifcode").hide(500);
+                obj.show(500);
+                layer.msg(data.info, {icon: 1});
+                var interval = setInterval(function () {
+                    if (wait <0) {
+                        $("#vifcode").show(500);
+                        obj.hide(500);
+                        clickN=0;
+                        wait=60;
+                        clearInterval(interval);
+                    };
+                    obj.html(wait + "{:L('CODE_SEND_AGAIN')}");
+                    wait--;
+                }, 1000);
+            } else {
+                layer.msg(data.info, {icon: 2});
+                if (data.url) {
+                    window.location = data.url;
+                }
+            }
+        }, "json");
+    }
+</script>
+<include file="Public:footer"/>
+<style>
+    .mytable-body p{text-align:left;color:#eee;text-indent:32px;line-height:32px;}
+    .form>p{width:680px;margin:10px auto;}
+    .mytable-body a,.show span{width:150px;text-align:right;line-height:32px;display:inline-block;vertical-align:middle;}
+    .show p{text-align:center;}
+    .show a{border-right:1px solid #666;}
+    .show span,.show a{border-bottom:1px solid #666;height:32px;}
+    .show span{text-align:left;width:150px;}
+</style>

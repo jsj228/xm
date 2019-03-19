@@ -1,0 +1,260 @@
+{include file="public:header" /}
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title">提现记录</span>
+			{notempty name="name"}
+				<span class="h2-title">>><a href="{:url('Finance/mytx')}">提现列表</a></span>
+			{/notempty}
+		</div>
+		<div class="cf">
+			<div class="fl">
+				{eq name="group_id" value="3"}
+					<button class="btn ajax-post confirm btn-danger " url="{:url('Finance/mytxStatus',array('type'=>'del'))}" target-form="ids">删 除</button>{/eq}
+				<button class="btn btn-success" url="{:url('Finance/mytxExcel')}" target-form="ids" id="submit" type="submit">导出选中</button>
+			</div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<input type="text" class="search-input form-control  " name="addtime" value="{$Request.param.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+						<input type="text" class="search-input form-control  " name="endtime" value="{$Request.param.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+
+						<select style="width: 160px; float: left; margin-right: 10px;" name="mcid" id="mcid" class="form-control">
+							<option value="">请选择商户</option>
+							{volist name="merchants" id="vo"}
+							<option value="{$vo.id}" {eq name="$Request.param.merchant" value="$vo.id"}selected{/eq}>{$vo.name}</option>
+							{/volist}
+						</select>
+
+						<select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+							<option value="0" {empty name="$Request.param.status"}selected</empty>>全部</option>
+							<option value="1" {eq name="$Request.param.status" value="1"}selected{/eq}>未处理</option>
+							<option value="2" {eq name="$Request.param.status" value="2"}selected{/eq}>已提现</option>
+							<option value="3" {eq name="$Request.param.status" value="3"}selected{/eq}>已撤销</option>
+							<option value="4" {eq name="$Request.param.status" value="4"}selected{/eq}>正在处理</option>
+						</select>
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+							<option value="username" {eq name="$Request.param.field" value="username"}selected{/eq}>用户名</option>
+							<option value="tradeno" {eq name="$Request.param.field" value="tradeno"}selected{/eq}>订单号</option>
+							<option value="operator" {eq name="$Request.param.field" value="operator"}selected{/eq}>操作人</option>
+						</select>
+						<input type="text" name="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入查询内容" style="">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+						//搜索功能
+						$(function () {
+							$('#search').click(function () {
+								$('#formSearch').submit();
+							});
+						});
+						//回车搜索
+						$(".search-input").keyup(function (e) {
+							if (e.keyCode === 13) {
+								$("#search").click();
+								return false;
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<form id="form" action="{:url('Finance/mytxExcel')}" method="post" class="form-horizontal">
+				<table class="">
+					<thead>
+					<tr >
+						<th colspan="2" style="background-color:#009200">
+							共{$weike_count}条记录
+						</th>
+						<th colspan="2" style="background-color:#009200">
+							提现总金额{$weike_sum|default="0"}元
+						</th>
+						<th colspan="2" style="background-color:#009200">
+							到账总金额{$weike_num|default="0"}元
+						</th>
+					</tr>
+					<tr>
+						<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+						<th class="">ID</th>
+						<th class="">用户名</th>
+						<th class="">真实姓名</th>
+						<th class="">提现金额</th>
+						<th class="">提现手续费</th>
+						<th class="">到账金额</th>
+						<th class="">提现时间</th>
+						<th class="">确认时间</th>
+						<th class="">提现姓名</th>
+						<th class="">提现银行</th>
+						<!--<th class="">提现银行省份</th>
+						<th class="">提现银行城市</th>-->
+						<th class="">提现银行支行</th>
+						<th class="">提现银行账号</th>
+						<th class="">提现商户</th>
+						<th class="">状态</th>
+						<th class="">操作</th>
+						<th class="">操作人</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					{notempty name="list"}
+						{volist name="list" id="vo"}
+							<tr>
+								<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+								<td>{$vo.id}</td>
+								<td>{$vo['username']}</td>
+								<td>{$vo['truename']}</td>
+								<td>{$vo.num}</td>
+								<td>{$vo.fee}</td>
+								<td>{$vo.mum}</td>
+								<td>{$vo.addtime|addtime}</td>
+								<td>{$vo.endtime|addtime}</td>
+								<td>{$vo.truename}</td>
+								<td>{$vo.bank}</td>
+								<!--<td>{$vo.bankprov}</td>
+								<td>{$vo.bankcity}</td>-->
+								<td>{$vo.bankaddr}</td>
+								<td>{$vo.bankcard}</td>
+								<td>{$vo.merchant}</td>
+								<td>
+									{eq name="vo.status" value="0"}未处理{/eq}
+									{eq name="vo.status" value="1"}已提现{/eq}
+									{eq name="vo.status" value="2"}已撤销{/eq}
+									{eq name="vo.status" value="3"}正在处理{/eq}
+								</td>
+								<td>
+									{eq name="vo.status" value="0"}
+										<a onclick="chuli({$vo['id']})" href="#" class="ajax-get btn btn-primary btn-xs">处理 </a>
+										<a onclick="chexiao({$vo['id']})" href="#" class="ajax-get btn btn-info btn-xs">撤销 </a>
+									{/eq}
+									{eq name="vo.status" value="3"}
+										<a onclick="qrtx({$vo['id']})" href="#" class="ajax-get btn btn-success btn-xs">已提现 </a>
+										{eq name="group_id" value="3"}
+											<a onclick="chexiao({$vo['id']})" href="#" class="ajax-get btn btn-info btn-xs">撤销 </a>
+										{/eq}
+										{eq name="group_id" value="4"}
+											<a onclick="chexiao({$vo['id']})" href="#" class="ajax-get btn btn-info btn-xs">撤销 </a>
+										{/eq}
+									{/eq}
+								</td>
+								<td>{$vo.operator}</td>
+							</tr>
+						{/volist}
+						{else/}
+						<td colspan="17" class="text-center">暂时无数据!</td>
+					{/notempty}
+					</tbody>
+				</table>
+			</form>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	//提交表单
+	$('#submit').click(function () {
+		$('#form').submit();
+	});
+</script>
+{include file="public:footer" /}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:url('Finance/mytx')}");
+
+        //港币处理
+        function chuli(id) {
+            layer.confirm('是否成功操作处理？', {
+                btn: ['确定','还未处理'] //按钮
+            }, function(){
+                $.get("{:url('Finance/mytxChuli')}", {
+                    id: id,
+                }, function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                        if (data.url) {
+                            window.location.href = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('请处理后再确认处理', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        }
+
+        //港币撤销
+        function chexiao(id) {
+            layer.confirm('是否成功操作撤销？', {
+                btn: ['确定','还未撤销'] //按钮
+            }, function(){
+                $.get("{:url('Finance/mytxChexiao')}", {
+                    id: id,
+                }, function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                        if (data.url) {
+                            window.location = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('请撤销后再确认撤销', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        }
+
+        //港币提现
+        function qrtx(id) {
+            layer.confirm('是否成功操作提现？', {
+                btn: ['确定','还未提现'] //按钮
+            }, function(){
+                var mcid = $('#mcid').val();
+				if (mcid == '' || mcid == 0) {
+                    layer.msg('请选择提现商户', {
+                        time: 3000, //3s后自动关闭
+                    });
+                    return ;
+				}
+
+                $.get("{:url('Finance/mytxQueren')}", {
+                    id: id,
+                    mcid: mcid,
+                }, function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                        if (data.url) {
+                            window.location = data.url;
+                        }
+                    }
+                }, "json");
+
+            }, function(){
+                layer.msg('请提现后再确认提现', {
+                    time: 3000, //3s后自动关闭
+                });
+            });
+        }
+	</script>
+</block>

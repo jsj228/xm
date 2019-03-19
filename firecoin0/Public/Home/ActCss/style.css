@@ -1,0 +1,894 @@
+@charset "UTF-8";
+/* line 5, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, G:/sass/Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 4, ../sass/model/_indexStyle.scss */
+body {
+  background: #5E0001;
+}
+/* line 7, ../sass/model/_indexStyle.scss */
+body .loadingDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 111111;
+}
+/* line 16, ../sass/model/_indexStyle.scss */
+body .loadingDiv p {
+  color: #aaa;
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  height: 30px;
+  text-align: center;
+  font-family: "Microsoft YaHei";
+  font-size: 20px;
+  font-weight: bold;
+  -webkit-background-clip: text;
+  /*设置背景颜色应用于text的位版本上*/
+  -webkit-text-fill-color: transparent;
+  /*将文字的颜色设置为透明*/
+  background-color: #aaa;
+  /*设置文字的背景色*/
+  background-image: -webkit-linear-gradient(-45deg, rgba(55, 55, 55, 0.6) 30%, #ccc 50%, rgba(55, 55, 55, 0.6) 70%);
+  /*设置文字的线性渐变颜色分布*/
+  background-blend-mode: hard-light;
+  /*css混合模式中的强光模式*/
+  background-size: 200%;
+  -webkit-animation: shine 4s infinite;
+}
+@-webkit-keyframes shine {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: 600px;
+  }
+}
+@-moz-keyframes shine {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: 600px;
+  }
+}
+@keyframes shine {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: 600px;
+  }
+}
+/* line 59, ../sass/model/_indexStyle.scss */
+body .loadingDiv img {
+  bottom: 10%;
+  left: 51%;
+  -moz-transform: translate(-50%, 1em);
+  -ms-transform: translate(-50%, 1em);
+  -webkit-transform: translate(-50%, 1em);
+  transform: translate(-50%, 1em);
+  position: absolute;
+  width: 300px;
+}
+/* line 68, ../sass/model/_indexStyle.scss */
+body .goldContent {
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+/* line 73, ../sass/model/_indexStyle.scss */
+body .goldContent .headPage {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+/* line 78, ../sass/model/_indexStyle.scss */
+body .goldContent .headPage .headPage_Img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* line 85, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+/* line 90, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .tishiChouJiang {
+  position: absolute;
+  top: 25%;
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+  color: #FDFC80;
+  font-family: "Microsoft YaHei";
+}
+/* line 99, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .tishiChouJiang span {
+  padding-left: 3px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* line 106, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .centerPage_Img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* line 112, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .list_EggsDiv {
+  position: absolute;
+  overflow: hidden;
+  top: 30%;
+  left: 15%;
+  width: 70%;
+  height: 50%;
+}
+/* line 121, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .list_EggsDiv div ul {
+  position: absolute;
+  width: 100%;
+  float: left;
+}
+/* line 126, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .list_EggsDiv div ul.jinDanUl1 {
+  left: 100%;
+}
+/* line 130, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .list_EggsDiv div ul li {
+  -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+  float: left;
+  position: relative;
+  width: 33.3%;
+  height: 100%;
+  cursor: pointer;
+}
+/* line 138, ../sass/model/_indexStyle.scss */
+body .goldContent .goldEggsDiv .list_EggsDiv div ul li img {
+  width: 100%;
+  height: 100%;
+}
+/* line 149, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content {
+  width: 100%;
+  height: auto;
+  background: #CC1A1A;
+  width: 90%;
+  padding-bottom: 3%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+/* line 158, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content .titleDiv {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+}
+/* line 166, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content .titleDiv .title_Div {
+  width: 100px;
+  height: auto;
+  margin: 0 auto;
+  padding: 8px 0;
+  z-index: 2;
+  font-family: "Microsoft YaHei";
+  font-size: 22px;
+  position: absolute;
+  left: 50%;
+  color: #F9DBA1;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  text-align: center;
+  background: #CC1A1A;
+}
+/* line 181, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content .titleDiv .title_Div h3 {
+  height: 28px;
+  line-height: 26px;
+  background-image: -webkit-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* Opera 11.1 - 12.0 */
+  background: -o-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* Firefox 3.6 - 15 */
+  background: -moz-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* 标准的语法 */
+  background: linear-gradient(#f9dba1 50%, #d0ab71 100%);
+  -webkit-background-clip: text;
+  font-weight: bold;
+  -webkit-text-fill-color: transparent;
+}
+/* line 198, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content .titleDiv .line_1px {
+  display: block;
+  position: absolute;
+  height: 1px;
+  width: 94%;
+  background: #F83131;
+  z-index: 1;
+  top: 0;
+  margin: 0 auto;
+  left: 50%;
+  margin-top: 20px;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+/* line 213, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv {
+  position: relative;
+}
+/* line 216, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv {
+  width: 100%;
+  height: auto;
+}
+/* line 220, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .insert_Span {
+  width: 90%;
+  height: 6px;
+  background: #6F0D05;
+  -moz-box-shadow: 0 0 0 8px #9D130F;
+  -webkit-box-shadow: 0 0 0 8px #9D130F;
+  box-shadow: 0 0 0 8px #9D130F;
+  margin: 0 auto;
+  margin-top: 12px;
+}
+/* line 230, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing {
+  width: 82%;
+  margin: 0 auto;
+  /* background: -webkit-linear-gradient($listcontent_title_color_2 1%,$listcontent_title_color_1 50%); */
+  background: linear-gradient(to bottom, #d19d69 1%, #fff9d9 4%);
+  padding: 6% 4% 2% 4%;
+}
+/* line 237, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div {
+  position: relative;
+}
+/* line 240, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title {
+  width: 100%;
+  height: auto;
+  padding-bottom: 12px;
+  font-size: 18px;
+  font-family: "Microsoft YaHei";
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* line 250, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  font-size: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #170C0B;
+  font-family: "Microsoft YaHei";
+  text-align: center;
+}
+/* line 260, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span.list_Time {
+  width: 23%;
+  text-align: left;
+}
+/* line 265, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span.list_Name {
+  width: 33%;
+}
+/* line 269, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .list_Title span.list_Things {
+  width: 40%;
+}
+/* line 275, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .bg_Dashed {
+  width: 100%;
+  height: 4px;
+  background-image: url("../images/line-bg.jpg");
+  margin: 0 auto;
+  margin-bottom: 10px;
+  -moz-transform: scaleY(0.6);
+  -ms-transform: scaleY(0.6);
+  -webkit-transform: scaleY(0.6);
+  transform: scaleY(0.6);
+}
+/* line 284, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div {
+  height: 190px;
+  overflow: hidden;
+  position: relative;
+}
+/* line 289, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul {
+  width: 100%;
+  height: auto;
+}
+/* line 293, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li {
+  width: 100%;
+  height: auto;
+  padding-bottom: 5px;
+  font-size: 14px;
+  font-family: "Microsoft YaHei";
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* line 303, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #170C0B;
+  font-family: "Microsoft YaHei";
+  text-align: left;
+  color: #6A2422;
+}
+/* line 314, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span.span_dateTime {
+  width: 23%;
+}
+/* line 318, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span.span_userNme {
+  width: 33%;
+  text-align: center;
+}
+/* line 323, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.paiMingAllDiv .contentDiv .list_PaiMing .list_Div .all_List_Div ul li span.span_userWingName {
+  width: 40%;
+  text-align: center;
+  color: #CC1A1A;
+}
+/* line 337, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity {
+  position: relative;
+}
+/* line 340, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules {
+  width: 82%;
+  padding: 10% 4%;
+  margin: 0 auto;
+  background: #FFF9D9;
+  position: relative;
+  overflow: hidden;
+}
+/* line 349, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules i {
+  position: absolute;
+}
+/* line 352, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules i.right_img {
+  top: 0;
+  right: 0;
+  background: url("../images/mei11.png");
+  background-size: 100%;
+  width: 30%;
+  height: 20%;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+/* line 363, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules i.left_img {
+  bottom: 0;
+  left: 0;
+  background: url("../images/mei2.png");
+  background-size: 100%;
+  width: 20%;
+  height: 15%;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+/* line 376, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules ul {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+/* line 381, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules ul li {
+  font-family: "Microsoft YaHei";
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+}
+/* line 387, ../sass/model/_indexStyle.scss */
+body .goldContent .list_Content.rulesActivity .list_Rules ul li .color_red {
+  color: red;
+}
+/* line 396, ../sass/model/_indexStyle.scss */
+body .goldContent .footerImg {
+  margin-top: -30px;
+  z-index: 3333;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+/* line 403, ../sass/model/_indexStyle.scss */
+body .goldContent .footerImg img {
+  width: 100%;
+  height: auto;
+}
+
+/* line 4, ../sass/model/_alert.scss */
+.bg-mask {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+}
+
+/* line 12, ../sass/model/_alert.scss */
+.chouJiang {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+  width: 360px;
+  height: 300px;
+}
+/* line 24, ../sass/model/_alert.scss */
+.chouJiang .imgDan {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  width: 48%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+}
+/* line 33, ../sass/model/_alert.scss */
+.chouJiang .caiDai {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  width: 100px;
+  z-index: 10001;
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+/* line 42, ../sass/model/_alert.scss */
+.chouJiang .chouJiangTishi {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+  font-family: "Microsoft YaHei";
+  font-size: 16px;
+  background-image: -webkit-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* Opera 11.1 - 12.0 */
+  background: -o-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* Firefox 3.6 - 15 */
+  background: -moz-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* 标准的语法 */
+  background: linear-gradient(#f9dba1 50%, #d0ab71 100%);
+  -webkit-background-clip: text;
+  font-weight: bold;
+  -webkit-text-fill-color: transparent;
+}
+/* line 62, ../sass/model/_alert.scss */
+.chouJiang .imgChuiZi {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  width: 30%;
+  z-index: 10002;
+  -moz-transform-origin: bottom right;
+  -webkit-transform-origin: bottom right;
+  transform-origin: bottom 100%;
+  -moz-transform: rotate(15deg);
+  -ms-transform: rotate(15deg);
+  -webkit-transform: rotate(15deg);
+  transform: rotate(15deg);
+  -moz-animation: chuizi 1.5s ease 3;
+  -webkit-animation: chuizi 1.5s ease 3;
+  animation: chuizi 1.5s ease 3;
+}
+@keyframes chuizi {
+  0% {
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+  30% {
+    -moz-transform: rotate(-25deg);
+    -ms-transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+    transform: rotate(-25deg);
+  }
+  100% {
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+}
+@-webkit-keyframes chuizi {
+  0% {
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+  30% {
+    -moz-transform: rotate(-25deg);
+    -ms-transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+    transform: rotate(-25deg);
+  }
+  100% {
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+}
+@-moz-keyframes chuizi {
+  0% {
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+  30% {
+    -moz-transform: rotate(-25deg);
+    -ms-transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+    transform: rotate(-25deg);
+  }
+  100% {
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -webkit-transform: rotate(15deg);
+    transform: rotate(15deg);
+  }
+}
+/* line 119, ../sass/model/_alert.scss */
+.inputInfo {
+  visibility: hidden;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10003;
+  width: 360px;
+  height: 300px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+/* line 132, ../sass/model/_alert.scss */
+.inputInfo.active {
+  top: 50%;
+  visibility: visible;
+  width: 360px;
+  height: 300px;
+}
+/* line 139, ../sass/model/_alert.scss */
+.inputInfo .inputInfoTitle {
+  font-size: 24px;
+  line-height: 50px;
+  height: 50px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: "Microsoft YaHei";
+  background-image: -webkit-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* Opera 11.1 - 12.0 */
+  background: -o-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* Firefox 3.6 - 15 */
+  background: -moz-linear-gradient(#F9DBA1 50%, #D0AB71 100%);
+  /* 标准的语法 */
+  background: linear-gradient(#f9dba1 50%, #d0ab71 100%);
+  -webkit-background-clip: text;
+  font-weight: bold;
+  -webkit-text-fill-color: transparent;
+}
+/* line 160, ../sass/model/_alert.scss */
+.inputInfo .userNameDiv {
+  left: 50%;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  position: absolute;
+  top: 85px;
+  height: 40px;
+  line-height: 40px;
+  width: 84%;
+}
+/* line 169, ../sass/model/_alert.scss */
+.inputInfo .userNameDiv label {
+  width: 20%;
+  font-size: 14px;
+  font-family: "Microsoft YaHei";
+  padding-right: 4%;
+  color: #FCFDA0;
+}
+/* line 177, ../sass/model/_alert.scss */
+.inputInfo .userNameDiv .nameInput {
+  width: 76%;
+  height: 32px;
+  outline: none;
+  border: none;
+  font-family: "Microsoft YaHei";
+  text-indent: 5px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: transparent;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+}
+/* line 191, ../sass/model/_alert.scss */
+.inputInfo .phoneDiv {
+  left: 50%;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  position: absolute;
+  top: 145px;
+  height: 40px;
+  line-height: 40px;
+  width: 84%;
+}
+/* line 200, ../sass/model/_alert.scss */
+.inputInfo .phoneDiv label {
+  width: 20%;
+  font-size: 14px;
+  font-family: "Microsoft YaHei";
+  padding-right: 4%;
+  color: #FCFDA0;
+}
+/* line 208, ../sass/model/_alert.scss */
+.inputInfo .phoneDiv .phoneInput {
+  width: 76%;
+  height: 32px;
+  outline: none;
+  font-family: "Microsoft YaHei";
+  border: none;
+  text-indent: 5px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: transparent;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+}
+/* line 222, ../sass/model/_alert.scss */
+.inputInfo .colseLogin {
+  width: 28px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+/* line 230, ../sass/model/_alert.scss */
+.inputInfo .submitTijiao {
+  bottom: 32px;
+  position: absolute;
+  height: 36px;
+  width: 80%;
+  left: 50%;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border: none;
+  background: #33D92A;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Microsoft YaHei";
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+}
+/* line 246, ../sass/model/_alert.scss */
+.inputInfo .submitTijiao:hover {
+  background: #24A91D;
+}
+
+/* line 252, ../sass/model/_alert.scss */
+.jiangPinResult {
+  visibility: hidden;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 10003;
+  width: 360px;
+  height: 300px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+/* line 265, ../sass/model/_alert.scss */
+.jiangPinResult.active {
+  top: 50%;
+  visibility: visible;
+  width: 360px;
+  height: 300px;
+}
+/* line 272, ../sass/model/_alert.scss */
+.jiangPinResult .gongxi {
+  top: -30%;
+  height: 200px;
+  position: absolute;
+  left: 52%;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+/* line 280, ../sass/model/_alert.scss */
+.jiangPinResult p {
+  top: 18%;
+  width: 100%;
+  position: absolute;
+  font-size: 16px;
+  color: #fff;
+  font-family: "Microsoft YaHei";
+  text-align: center;
+}
+/* line 290, ../sass/model/_alert.scss */
+.jiangPinResult .imgJiangPin {
+  top: 20%;
+  position: absolute;
+  height: 180px;
+  left: 52%;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+/* line 298, ../sass/model/_alert.scss */
+.jiangPinResult .btn_Get {
+  bottom: 20px;
+  position: absolute;
+  height: 40px;
+  width: 80%;
+  left: 50%;
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border: none;
+  background: #33D92A;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Microsoft YaHei";
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+}
+/* line 314, ../sass/model/_alert.scss */
+.jiangPinResult .btn_Get:hover {
+  background: #24A91D;
+}
+/* line 319, ../sass/model/_alert.scss */
+.jiangPinResult .colseJiangPin {
+  width: 28px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}

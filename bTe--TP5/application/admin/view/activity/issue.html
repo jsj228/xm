@@ -1,0 +1,102 @@
+{include file="public:header" /}
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">认购释放</span>
+        </div>
+
+        <div class="cf">
+            <div class="fl">
+                <a class="btn btn-success " href="{:url('Activity/issueEdit')}">新 增</a>
+                <!--<button class="btn ajax-post btn-info" url="{:url('Activity/issueStatus',array('type'=>'resume'))}" target-form="ids">开 启</button>-->
+                <!--<button class="btn ajax-post btn-warning " url="{:url('Activity/issueStatus',array('type'=>'forbid'))}" target-form="ids">禁 用</button>-->
+            </div>
+            <div class="search-form fr cf">
+                <div class="sleft">
+                    <form name="formSearch" id="formSearch" method="get" name="form1" >
+                        <select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+                            <option value="username" {eq name="$Request.param.field" value="username"}selected{/eq}>用户名</option>
+                        </select>
+                        <input type="text" name="name" class="search-input form-control  " value="{$Request.param.name}" placeholder="请输入查询内容" style="">
+                        <a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+                    </form>
+                    <script>
+                        //搜索功能
+                        $(function () {
+                            $('#search').click(function () {
+                                $('#formSearch').submit();
+                            });
+                        });
+                        //回车搜索
+                        $(".search-input").keyup(function (e) {
+                            if (e.keyCode === 13) {
+                                $("#search").click();
+                                return false;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="data-table table-striped">
+            <table class="">
+                <thead>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">ID</th>
+                    <th class="">用户名</th>
+                    <th class="">认购名</th>
+                    <th class="">认购币</th>
+                    <th class="">认购数量</th>
+                    <th class="">解冻次数</th>
+                    <th class="">解冻间隔</th>
+                    <th class="">已解锁次数</th>
+                    <th class="">上次解冻时间</th>
+                    <th class="">开始解冻时间</th>
+                    <th class="">认购状态</th>
+                    <th class="">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {notempty name="list"}
+                    {volist name="list" id="vo"}
+                        <tr>
+                            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.username}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.coinname}</td>
+                            <td>{$vo.num}</td>
+                            <td>{$vo.ci}</td>
+                            <td>{$vo.jian}</td>
+                            <td>{$vo.unlock}</td>
+                            <td>{$vo.addtime|addtime}</td>
+                            <td>{$vo.endtime|addtime}</td>
+                            <td><?php if($vo['status'] == 1) { echo '认购已经结束'; } else { echo '认购进行中'; } ?></td>
+                            <td>
+                                <a href="{:url('Activity/issueEdit', ['id' => $vo['id']])}" class="btn btn-primary btn-xs">编辑</a>
+                            </td>
+                        </tr>
+                    {/volist}
+                    {else/}
+                    <td colspan="14" class="text-center">Oh! 暂时还没有内容!</td>
+                {/notempty}
+                </tbody>
+            </table>
+            <div class="page">
+                <div>{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public:footer" /}
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:url('Activity/issue')}");
+    </script>
+</block>

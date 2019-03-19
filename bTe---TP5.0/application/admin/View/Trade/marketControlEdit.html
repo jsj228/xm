@@ -1,0 +1,135 @@
+{include file="Public:header"/}
+<script type="text/javascript" src="/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:url('/admin/Trade/marketControl')}">市场列表</a> >></span>
+            <span class="h1-title"><empty name="data">添加市场 <else/>编辑市场 </empty></span>
+		</div>
+		<div class="tab-wrap">
+			<div class="tab-content">
+				<form id="form_form" action="{:url('/admin/Trade/marketControlEdit')}" method="post" class="form-horizontal" enctype="multipart/form-data">
+					<div id="tab" class="tab-pane in tab">
+						<div class="form-item cf">
+							<table>
+								{empty name="data['id']"}
+									<tr class="controls" >
+										<td class="item-label">买方币种 :</td>
+										<td>
+											<select name="buyname" class="form-control input-10x">
+											<option value="cny">CNY</option>
+											<option value="btc">比特币</option>
+											</select>
+										</td>
+										<td class="item-note">(*请只选择)</td>
+									</tr>
+									<tr class="controls">
+										<td class="item-label">出售币种 :</td>
+										<td><select name="sellname" class="form-control input-10x">
+											{volist name="C['coin']" id="v"}
+												{neq name="v['name']" value="cny"}
+													{neq name="v['name']" value="cny"}
+														<option value="{$v['name']}">{$v['title']}</option>
+													{/neq}
+												{/neq}
+											{/volist}
+										</select>
+										</td>
+										<td class="item-note"></td>
+									</tr>
+									{else/}
+									<tr class="controls">
+										<td class="item-label">市场名称 :</td>
+										<td>{$data.name}</td>
+										<td class="item-note"></td>
+									</tr>
+								{/empty}
+
+								<tr class="controls">
+									<td class="item-label">市场最低价 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="min_price" value="{$data['min_price']*1}">
+									</td>
+									<td class="item-note">市场控制交易的最低价，低于此价格的委单，将自动买入。请参考接口最低价，并转换后设置</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">市场最高价 :</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="max_price" value="{$data['max_price']*1}">
+									</td>
+									<td class="item-note">市场控制交易的最高价，高于此价格的委单，将自动卖出。请参考接口最高价，并转换后设置</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">接口地址:</td>
+									<td>
+										<input type="text" class="form-control input-10x" name="api_url" value="{$data.api_url}">
+									</td>
+									<td class="item-note" style="color: red;">请填写正确的 比特尔 接口地址，参考的最低价和最高价由地址生成</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">接口最低价:</td>
+									<td>
+										<label class="form-control input-10x">{$data.api_unit}: {$data['api_min_price']*1}</label>
+									</td>
+									<td class="item-note">接口的参考的最低价，由定时任务自动设置</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">接口最高价:</td>
+									<td>
+										<label class="form-control input-10x">{$data.api_unit}: {$data['api_max_price']*1}</label>
+									</td>
+									<td class="item-note">接口的参考的最高价，由定时任务自动设置</td>
+								</tr>
+								
+								<tr class="controls">
+									<td class="item-label">开启交易 :</td>
+									<td><select name="type" class="form-control input-10x">
+										<option value="0" {eq name="data.type" value="0"}selected{/eq} >手动交易</option>
+										<option value="1" {eq name="data.type" value="1"}selected{/eq} >自动交易</option>
+									</select></td>
+									<td class="item-note" style="color: red;">此操作无法撤回，请谨慎操作，</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label">BOSS 密码 :</td>
+									<td><input type="password" name="pass" class="search-input form-control" placeholder="请输入 BOSS 密码" style="margin-right: 10px;"></td>
+									<td class="item-note">没有 BOSS 密码不能操作市场，</td>
+								</tr>
+								<tr class="controls">
+									<td class="item-label"></td>
+									<td>
+										<div class="form-item cf">
+											<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+											<a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+											{notempty name="data.id"}
+												<input type="hidden" name="id" value="{$data.id}"/>
+											{/notempty}
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</form>
+				<script type="text/javascript">
+					//提交表单
+					
+					$('#submit').click(function () {
+						$('#form_form').submit();
+					});
+
+				</script>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="Public:footer"/}
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+		//导航高亮
+		highlight_subnav("{:url('Trade/marketControl')}");
+	</script>
+</block>

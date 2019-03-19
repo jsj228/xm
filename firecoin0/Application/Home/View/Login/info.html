@@ -1,0 +1,53 @@
+<include file="Public:header" />
+
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:L('ADDRESS')} </a>&gt; {:L('REGISTERED_ACCOUNT')}	</div>
+
+	<div class="reg_box">
+		<div class="reg_su">
+			<div class="reg_su_title"><i class="fa fa-check mr5"></i>{:L('REGISTRATION_SUCCESS')}</div>
+			<div class="reg_info">
+				<ul>
+					<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:L('MOBLE')}：<span>{$user.moble}</span></li>
+					<li>{:L('CERTIFICATE_TYPE')}：<span>{:L('ID_CARD')}</span></li>
+					<li>{:L('REAL_NAME')}：<span>{$user.truename}</span></li>
+					<li>{:L('IDENTIFICATION_NUM')}：<span>{$user.idcard}</span></li>
+				</ul>
+				<div class="mb35">
+					<a href="/Article/index/id/27.html"><input type="button" value="用户指南"></a>
+					<div class="right_side"></div>
+				</div>
+				<div class="reg_otherlink">
+					{:L('YOU_ALSO')}： <a href="{:U('Finance/myzr')}" target="_blank">{:L('DEPOSIT_COIN')}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+        // layer.open({
+        //     type: 1,
+        //     shade: false,
+        //     title: false, //不显示标题
+        //     area: ['1000px', '800px'],
+        //     skin: 'yqlayer',
+        //     content:"<div style='width:100%;height:100%;'><a href='../Finance/mytj.html' style='display: block; width: 100%;height: 100%;'><img style='width: 100%;height: 100%;' src='/comfile/images/yqlayer.png' /></a></div>", //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+        // });
+
+</script>
+
+<include file="Public:footer" />
+
+
+
+
+
+
+
+<script>
+	$('#index_box').addClass('active');
+</script>

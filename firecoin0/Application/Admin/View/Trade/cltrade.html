@@ -1,0 +1,157 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+		<button class="close fixed" style="margin-top: 4px;">&times;</button>
+		<div class="alert-content">警告内容</div>
+	</div>
+	<div id="main" class="main">
+		<div class="main-title-h">
+			<span class="h1-title"><a href="{:U('Trade/ranking')}">交易排名</a> </span>
+		</div>
+		<div class="cf">
+			<div class="fl"></div>
+			<div class="search-form fr cf">
+				<div class="sleft">
+					<form name="formSearch" id="formSearch" method="get" name="form1">
+						<input type="text" class="search-input form-control  " name="addtime" value="{$Think.get.addtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="开始时间">
+						<input type="text" class="search-input form-control  " name="endtime" value="{$Think.get.endtime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" placeholder="结束时间" style="margin-right: 10px;">
+						<select style="width: 160px; float: left; margin-right: 10px;" name="status" class="form-control">
+							<option value="" <empty name="Think.get.status">selected</empty>>全部状态</option>
+							<option value="0" <eq name="Think.get.status" value="0">selected</eq>>已匹配</option>
+							<option value="1" <eq name="Think.get.status" value="1">selected</eq>>已成交</option>
+							<option value="2" <eq name="Think.get.status" value="2">selected</eq>>已撤销</option>
+							<option value="3" <eq name="Think.get.status" value="3">selected</eq>>交易中</option>
+						</select>
+						<select style="width: 160px; float: left; margin-right: 10px;" name="type" class="form-control">
+							<option value=""
+							<empty name="Think.get.type">selected</empty>
+							>交易类型</option>
+							<option value="1" <eq name="Think.get.type" value="1">selected</eq>>买入</option>
+							<option value="2" <eq name="Think.get.type" value="2">selected</eq>>卖出</option>
+						</select>
+						
+						
+						<select style=" width: 160px; float: left; margin-right: 10px;" name="field" class="form-control">
+							<option value="username"
+							<eq name="Think.get.field" value="username">selected</eq>
+							>买家用户名</option>
+							<option value="peername"
+							<eq name="Think.get.field" value="peername">selected</eq>
+							>卖家用户名</option>
+						</select>
+						<input type="text" name="name" class="search-input form-control  " value="{$Think.get.name}" placeholder="请输入查询内容" style="">
+						<input type="text" name="tradeCode" class="search-input form-control  " value="{$Think.get.tradeCode}" placeholder="请输入订单号" style="margin-left: 10px;">
+						<a class="sch-btn" href="javascript:;" id="search"> <i class="btn-search"></i> </a>
+					</form>
+					<script>
+						//搜索功能
+						$(function () {
+							$('#search').click(function () {
+								$('#formSearch').submit();
+							});
+						});
+						//回车搜索
+						$(".search-input").keyup(function (e) {
+							if (e.keyCode === 13) {
+								$("#search").click();
+								return false;
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="data-table table-striped">
+			<table class="">
+				<thead>
+				<tr >
+					<th colspan="2" style="background-color:#009200">共{$weike_count}条记录</th>
+					<th colspan="2" style="background-color:#009200">总金额{$weike_getSum|default="0"}元</th>
+					<th colspan="2" style="background-color:#009200">已成交金额{$weike_onnum|default="0"}元</th>
+					<th colspan="2" style="background-color:#009200">已撤销金额{$weike_unnum|default="0"}元</th>
+				</tr>
+				<tr>
+					<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+					<th class="">ID</th>
+
+					<th class="">买家</th>
+					<th class="">买家交易号</th>
+					<th class="">卖家</th>
+					<th class="">卖家交易号</th>
+					<th class="">总额</th>
+					<th class="">交易类型</th>
+					<th class="">支付类型</th>
+					<th class="">交易状态</th>
+					<th class="">时间</th>
+				</tr>
+				</thead>
+				<tbody>
+				<notempty name="list">
+					<volist name="list" id="vo">
+						<tr class="list_tr">
+							<td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}"/></td>
+							<td>{$vo.id}</td>
+							<td class="usertype" style="display: none;">{$vo['usertype']}</td>
+							<td>{$vo['username']}</td>
+							<td>{$vo['buytradeno']}</td>
+							<td>{$vo['peername']}</td>
+							<td>{$vo['selltradeno']}</td>
+							<td>{$vo['price']|NumToStr}</td>
+
+							<td  class="sell_td"><eq name="vo.type" value="1">买入<else/>卖出</eq></td>
+							<td>
+								<if condition="$vo['buystatus'] eq 1 ">网银</if>
+								<if condition="$vo['buystatus'] eq 11 ">微信</if>
+								<if condition="$vo['buystatus'] eq 21 ">支付宝</if>
+							 </td>
+							<td><switch name="vo.status">
+								<case value="0">已匹配</case>
+								<case value="1">已成交</case>
+								<case value="2">已撤销</case>
+								<case value="3">交易中</case>
+							</switch></td>
+							<td>{$vo.addtime|addtime}</td>
+						</tr>
+					</volist>
+					<else/>
+					<td colspan="12" class="text-center">Oh! 暂时还没有内容!</td>
+				</notempty>
+				</tbody>
+			</table>
+			<div class="page">
+				<div>{$page}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+	<script type="text/javascript" charset="utf-8">
+
+        $(".sell_td").each(function () {
+            if($(this).html() == "买入"){
+                $(this).parent().css({"background":"rgba(46, 204, 113, 0.11)"});
+            }else{
+                $(this).parent().css({"background":"rgba(255, 2, 2, 0.11)"});
+            }
+        });
+
+        $(".usertype").each(function () {
+            if($(this).html() == "1" || $(this).html() == "3" ){
+                $(this).parent().css({"background":"white"});
+            }
+        });
+
+        $(".list_tr>td").each(function () {
+            $(this).mouseenter(function () {
+                $(this).parent().css({"border-bottom":"3px solid #ccc"});
+            }).mouseout(function () {
+                $(this).parent().css({"border-bottom":"none"});
+            })
+        });
+
+		//导航高亮
+		highlight_subnav("{:U('Trade/cltrade')}");
+	</script>
+</block>

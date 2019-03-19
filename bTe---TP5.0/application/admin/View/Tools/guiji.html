@@ -1,0 +1,54 @@
+{include file="Public:header"/}
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title">以太坊币种归集</span>
+        </div>
+
+        <form id="form_form" action="{:url('/admin/Tools/guiji')}" method="post" class="form-horizontal"
+              enctype="multipart/form-data">
+            <table>
+                <tr class="controls">
+                    <td class="item-label">币名 :</td>
+                    <td>
+                        <input type="text" class="form-control input-10x" name="coinname" value="{$data['coinname']}">
+                    </td>
+                    <td class="item-note">请输入币名简称( eth )</td>
+                </tr>
+                <tr class="controls">
+                    <td class="item-label">预留手续费 :</td>
+                    <td>
+                        <input type="text" class="form-control input-10x" name="fee" value="{$data['fee']}">
+                    </td>
+                    <td class="item-note">预留归集手续费不填默认0.006 (只有eth需要填) </td>
+                </tr>
+                <tr class="controls">
+                    <td class="item-label"></td>
+                    <td>
+                        <div class="form-item cf">
+                            <button class="btn submit-btn ajax-post" id="submit" type="submit"
+                                    target-form="form-horizontal">一键归集
+                            </button>
+                            <a class="btn btn-return" href="{$Think.server.HTTP_REFERER}">返 回</a>
+                            {notempty name="data.id"}
+                               <input type="hidden" name="id" value="{$data.id}"/>
+                            {/notempty}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <script type="text/javascript">
+            //提交表单
+
+            $('#submit').click(function () {
+                $('#form_form').submit();
+            });
+
+        </script>
+    </div>
+</div>

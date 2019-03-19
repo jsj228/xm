@@ -1,0 +1,67 @@
+<include file="Public:header" />
+
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:L('ADDRESS')}</a>{:L('FIND_TRAN_PWD')}</div>
+
+	<div class="reg_box">
+		<div class="reg_wrap pt47">
+			<div class="reg_input_box reg-fb">
+				<div class="mask_wrap_title">{:L('TRAN_PWD_NEW')}：</div>
+				<input type="password" id="password" />
+			</div>
+			<div class="reg_input_box reg-fb">
+				<div class="mask_wrap_title">{:L('TRAN_PWD_CONFIRM')}：</div>
+				<input type="password" id="repassword"/>
+			</div>
+			<!-- <br/> -->
+			<div class="login_button">
+				<input type="button" value="{:L('NEXT')}" onclick="password_up();"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function password_up() {
+		var password   = $("#password").val();
+		var repassword = $("#repassword").val();
+
+		if (password == "" || password == null) {
+			layer.tips("{:L('INPUT_PWD_NEW')}", '#password', {tips: 3});
+			return false;
+		}
+		if (repassword == "" || repassword == null) {
+			layer.tips("{:L('LOGIN_PWD_CONFIRM_INPUT')}", '#repassword', {tips: 3});
+			return false;
+		}
+		if (password != repassword) {
+			layer.tips("{:L('LOGIN_PWD_CONFIRM_WRONG')}", '#repassword', {tips: 3});
+			return false;
+		}
+
+		$.post("/Findpwd/password_up.html", {
+			password: password,
+			repassword:repassword,
+			token: ""
+		}, function (data) {
+			console.log(data);
+			if (data.status == 1) {
+				layer.msg(data.info, {icon: 1});
+				window.location = '/Findpwd/findpwdinfo';
+			} else {
+				layer.msg(data.info, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+</script>
+
+<script>
+	$('#index_box').addClass('active');
+</script>
+<include file="Public:footer" />
+

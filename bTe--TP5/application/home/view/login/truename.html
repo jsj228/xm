@@ -1,0 +1,96 @@
+{include file="public:header" /}
+
+<div class="autobox">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="">{:lang('ADDRESS')} </a> {:lang('REGISTERED_ACCOUNT')}	</div>
+	<div class="login_step">
+		<ul class="order clear">
+			<li><i class="fa fa-circle  fz_40"><span>1</span></i> {:lang('REGISTERED_ACCOUNT')}				<div class="order_line"></div>
+			</li>
+			<li><i class="fa fa-circle  fz_40"><span>2</span></i>{:lang('TRAN_PWD')}				<div class="order_line"></div>
+			</li>
+			<li><i class="fa fa-circle  fz_40 move"><span>3</span></i>{:lang('REAL_NAME_VERIFY')}				<div class="order_line"></div>
+			</li>
+			<li><i class="fa fa-circle  fz_40"><span>4</span></i>{:lang('SUCCESS')}</li>
+		</ul>
+	</div>
+	<div class="reg_box">
+		<div class="reg_wrap pt47">
+			<div class="reg_warning"><i class="fa fa-exclamation-sign mr5"></i>
+			<span>
+				{:lang('TRUE_NAME_INPUT')}
+			</span></div>
+			<div class="reg_input_box reg-fb">
+				<div class="reg_title">{:lang('REAL_NAME')}：</div>
+				<input type="text" id="truename" class="texts w300"/>
+			</div>
+			<div class="reg_input_box reg-fb" style="display:none;">
+				<div class="reg_title">{:lang('MODIFY_REAL_NAME_AUTH')}：</div>
+				<select id="idcardtype" class="select texts w300">
+					<option value="">{:lang('SELECT_PLZ')}</option>
+					<option value="1" selected>{:lang('ID_CARD')}</option>
+					<option value="2">{:lang('OFFICIAL_CARD')}</option>
+					<option value="3">{:lang('PASSPORT')}</option>
+					<option value="4">{:lang('TAIWAN')}</option>
+					<option value="5">{:lang('HK_MACCO')}</option>
+					<option value="9">{:lang('OTHER')}</option>
+				</select>
+			</div>
+
+			<div class="reg_input_box reg-fb">
+				<div class="reg_title">{:lang('ID_NUM')}：</div>
+				<input type="text" id="idcard" class="texts w300"/>
+			</div>
+			<div class="reg_button_box">
+				<input type="button" class="btns2 w300" value="{:lang('NEXT')}" onclick="truename_up();"/>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	function truename_up() {
+		var idcardtype = $('#idcardtype option:selected').html();
+		var truename   = $("#truename").val();
+		var idcard     = $("#idcard").val();
+
+		if (idcardtype == "" || idcardtype == null) {
+			layer.tips("{:lang('SELECT_DOC_TYPE')}", '#idcardtype', {tips: 2});
+			return false;
+		}
+		if (truename == "" || truename == null) {
+			layer.tips("{:lang('REAL_NAME_INPUT')}", '#truename', {tips: 2});
+			return false;
+		}
+		if (idcard == "" || idcard == null) {
+			layer.tips("{:lang('ID_NUM_INPUT')}", '#idcard', {tips: 2});
+			return false;
+		}
+		$.post("/Login/upregister3.html", {
+			idcardtype: idcardtype,
+			truename: truename,
+			idcard: idcard,
+			token: ""
+		}, function (data) {
+			if (data.code == 1) {
+				layer.msg(data.msg, {icon: 1});
+
+					window.location ='/Login/info';
+
+			} else {
+				layer.msg(data.msg, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+</script>
+
+
+<script>
+	$('#index_box').addClass('active');
+</script>
+
+{include file="public:footer" /}

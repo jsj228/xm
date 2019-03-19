@@ -1,0 +1,144 @@
+{include file="Public:header" /}
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('WITHDRAWAL')}	</div>
+	<div class="main-content">
+
+
+
+{include file="Finance:left" /}
+
+
+
+
+
+		<div class="tag-list-content assets_content bg_w">
+			<div class="safe_center clear">
+				<h1>
+					<span>
+						{:lang('WITHDRAWAL_RECORD')}
+					</span>
+					 <span>
+                        <a href="/finance/mytx"  class="step fz_12 ml50 pd6 ">{:lang('WITHDRAWAL')}</a>
+						    <a href="/finance/outlog" class="step fz_12 ml20 pd6 active">{:lang('WITHDRAWAL_RECORD')}</a>
+                        <a href="/finance/bank"  class="step fz_12 ml20 pd6">{:lang('WITHDRAWAL_ADD_MAN')}</a>
+                    </span>
+				</h1>
+			</div>
+			<div id="hints" class="mytips" style="display:none;">
+
+				<p>
+					{notempty name="prompt_text"}
+						{$prompt_text}
+					{/notempty>}
+				</p>			</div>
+			<div class="mytable-body ">
+				<div class="step2 f_body  ">
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:lang('WITHDRAWAL_TIME')}</th>
+							<th>{:lang('WITHDRAWAL_MONEY')}</th>
+							<th>{:lang('TRANSACTION_FEE')}</th>
+							<th>{:lang('ARRIVAL_AMOUNT_')}</th>
+							<th>{:lang('WITHDRAWAL_ADDREESS')}</th>
+							<th width="">
+								<span>
+									<select id="status-select" class="mW100">
+										<option value=""
+										{eq name="status" value=""}selected{/eq}
+										>{:lang('STATES_ALL')}</option>
+										<option value="1"
+										{eq name="status" value="1"}selected{/eq}
+										>{:lang('APPLIED')}</option>
+										<option value="2"
+										{eq name="status" value="2"}selected{/eq}
+										>{:lang('WITHDRAWAL_SUCCESS')}</option>
+										<option value="3"
+										{eq name="status" value="3"}selected{/eq}
+										>{:lang('RESCINDED')}</option>
+										<option value="4"
+										{eq name="status" value="4"}selected{/eq}
+										>{:lang('BEING_PROCESS')}</option>
+									</select>
+								</span>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+						
+						{volist name="list" id="vo"}
+							<tr>
+								<td>{$vo['addtime']|date='Y-m-d H:i:s',###}</td>
+								<td>￥{$vo['num']|default="0.00"}</td>
+								<td>￥{$vo['fee']|default="0.00"}</td>
+								<td>￥{$vo['mum']|default="0.00"}</td>
+								<td>{$vo['name']}</td>
+								<td>
+									{eq name="vo.status" value="0"}
+										{:lang('APPLIED')}
+										<a onclick="out_chexiao(this)" data="{$vo['id']}" href="javascript:void(0)" style="color:#2674FF!important;">撤销{:lang('WITHDRAWAL')}</a>
+									{/eq}
+									{eq name="vo.status" value="1"}
+										{:lang('WITHDRAWAL_SUCCESS')}
+									{/eq}
+									{eq name="vo.status" value="2"}
+										{:lang('RESCINDED')}
+									{/eq}
+									{eq name="vo.status" value="3"}
+										{:lang('BEING_PROCESS')}
+									{/eq}
+								</td>
+							</tr>
+						{/volist}
+						
+						
+						
+						</tbody>
+					</table>
+					<div class="pages">
+						{$page}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$("#status-select").val("{$status}");
+	$("#status-select").change(function () {
+		var status = $("#status-select option:selected").val();
+		var url    = '/finance/outlog';
+		if (status) {
+			url += '/status/' + status;
+		}
+		window.location = url;
+	});
+	function out_chexiao(_this) {
+		var id = $(_this).attr('data');
+		$.post("{:url('/Finance/mytxChexiao','','')}", {id: id}, function (data) {
+			if (data.code == 1) {
+				layer.msg(data.msg, {icon: 1});
+				window.location.reload();
+			} else {
+				layer.msg(data.msg, {icon: 2});
+			}
+		}, "json");
+	}
+</script>
+
+
+
+
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_out').addClass('active');
+</script>
+{include file="Public:footer" /}

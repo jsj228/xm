@@ -1,0 +1,68 @@
+{include file="Public:header" /}
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/Finance/index" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('REWARDS')}	</div>
+	<div class="main-content">
+{include file="Finance:left" /}
+		<div class="tag-list-content">
+			<div class="assets_content bg_w">
+				<div class="safe_center clear ">
+					<h1>{:lang('PUSHREWARDS')}
+						<!--<a class="right" onclick="$('#hints').slideToggle();"> <i class="fa fa-hand-o-right move fz_14 mr5"></i> <span class="fz_12 move">{:lang('DETAILED_INFO')}</span> </a> 		-->
+					</h1>
+				</div>
+				<div id="hints" class="mytips" style="display:none;">
+					
+					<p>
+					{notempty name="prompt_text"}
+						{$prompt_text}
+					{/notempty}
+					
+					</p>				</div>
+				<div class="mytable-body ">
+					<div class="f_body  step2">
+						<table class="f_table" id="investLog_content">
+							<thead>
+							<tr>
+								<th>{:lang('REFERRAL_ID')}</th>
+								<th>{:lang('REWARD_TYPE')}</th>
+								<th>{:lang('REWARD_DETAILS')}</th>
+								<th>{:lang('OPERATE_TIME')}</th>
+								<th>{:lang('OPERATE_QUANTITY')}</th>
+								<th>{:lang('REWARD_QUANTITY')}</th>
+								<th>{:lang('REWARD_STATE')}</th>
+							</tr>
+							</thead>
+							<tbody>
+								{foreach $list as $vo}										
+								 <tr>
+								  <td>{$vo.invit|substr_replace='****',3,4}</td>
+								  <td>{$vo.type}</td>
+								  <td>{$vo.name}</td>
+								  <td>{$vo.addtime|addtime}</td>
+								  <td>{$vo['num']|NumToStr}</td>
+								  <td>{$vo['fee']|NumToStr}</td>
+								  <td>{eq name="vo.status" value="0"} <font class="sell">{:lang('UNRECORDED')} </font>{/eq} {eq name="vo.status" value="1"} <font class="buy">{:lang('CREDITED')} </font>{/eq}</td>
+								 </tr>
+								{/foreach}				
+								
+							</tbody>
+						</table>
+						<div class="pages">{$list->render()}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	// $('#finance_box').addClass('active');
+	$('.finan_award').addClass('active');
+</script>
+{include file="Public:footer" /}

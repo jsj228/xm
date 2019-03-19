@@ -1,0 +1,41 @@
+<?php
+/**
+ * 入口的公共配置定义
+ */
+
+// [ 应用入口文件 ]
+
+// 定义系统编码
+header("Content-Type: text/html;charset=utf-8");
+
+//应用目录
+define('APP_PATH', __DIR__ . '/../application/');
+//框架根目录
+define('ROOT_PATH',dirname(realpath(APP_PATH)).'/');
+
+// 定义备份路径
+define('DATABASE_PATH', ROOT_PATH.'database/');
+
+define('UPLOAD_PATH', ROOT_PATH.'public/Upload/');
+
+// 定义计划锁路径
+define('CRONLOCK_PATH', ROOT_PATH.'public/cronlock/');
+
+// 定义数据库类型
+define('DB_TYPE', 'mysqli');
+
+$http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+define('SITE_URL',$http.'://'.$_SERVER['HTTP_HOST']); // 网站域名
+
+//定义授权码
+//define('MSCODE', '95D3A7E98EE9F913B462B87C73DS');
+define('MSCODE', ''); //暂不清作用
+
+// 是否开启 Socket
+define('APP_SOCKET', 0);
+
+// 定义时间
+define('NOW_TIME',$_SERVER['REQUEST_TIME']);
+
+// 短信模式 0是演示模式  1是正式模式
+define('MOBILE_CODE', 1);

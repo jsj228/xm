@@ -1,0 +1,163 @@
+<include file="Public:header"/>
+<script type="text/javascript" src="__PUBLIC__/layer/laydate/laydate.js"></script>
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">&times;</button>
+        <div class="alert-content">警告内容</div>
+    </div>
+    <div id="main" class="main">
+        <div class="main-title-h">
+            <span class="h1-title"><a href="{:U('Campaign/add')}">分享用户奖励</a> >></span>
+            <span class="h1-title"><empty name="data">添加分享奖励 <else/> 编辑分享奖励 </empty></span>
+        </div>
+        <div class="tab-wrap">
+            <div class="tab-content">
+                <form id="form_form" action="{:U('Campaign/do_add')}" onsubmit="javascript:return false;" method="post" class="form-horizontal" enctype="multipart/form-data">
+                    <div id="tab" class="tab-pane in tab">
+                        <div class="form-item cf">
+                            <table>
+
+                                <tr class="controls">
+                                    <td class="item-label">分享用户 :</td>
+                                    <td>
+                                        <input type="text" <?php if(!empty($data)){print('disabled');} ?> class="form-control input-10x" name="username" value="{$data['one']}">
+                                    </td>
+                                    <td class="item-note">分享用户</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label">奖励币种 :</td>
+                                    <td>
+                                        <select class="form-control input-10x" <?php if(!empty($data)){print('disabled');} ?> name='coin' id='coin'>
+                                        <?php foreach($coin as $k =>$v){
+                                            if($v[id] == $data['coin']){
+                                                print("<option selected value='".$v['id']."'>".$v['title']."&nbsp;&nbsp;|&nbsp;max&nbsp;|&nbsp;&nbsp;".$v['zc_min']."</option>");
+                                            }else{
+                                                print("<option value='".$v['id']."'>".$v['title']."&nbsp;&nbsp;|&nbsp;max&nbsp;|&nbsp;&nbsp;".$v['zc_min']."</option>");
+                                            }
+                                        } ?>
+                                        </select>
+                                    </td>
+                                    <td class="item-note">奖励币种</td>
+                                </tr>
+                                <tr class="controls">
+                                    <td class="item-label">奖励数量 :</td>
+                                    <td>
+                                        <input type="text" class="form-control input-10x" name="award_num" value="{$data['nums']}">
+                                    </td>
+                                    <td class="item-note">奖励数量</td>
+                                </tr>
+
+                                <tr class="controls">
+                                    <td class="item-label"></td>
+                                    <td>
+                                        <div class="form-item cf">
+                                            <empty name="data">
+                                                <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                                            <else/> 
+                                                <input type="hidden" name="id" value="{$data['id']}">
+                                                <button class="btn submit-btn ajax-post" id="subedit" type="submit" target-form="form-horizontal">确 定</button> 
+                                            </empty>
+                                            <a class="btn btn-return" id='go_backspace' href="{$Think.server.HTTP_REFERER}">返 回</a>
+                                            <notempty name="data.id"><input type="hidden" name="id" value="{$data.id}"/></notempty>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                    //提交表单
+                    $(function(){
+                        var forms = {};
+                        forms.submit= (function(){
+                                $('#submit').click(function () {
+                                    var p ={};
+                                    var tag = true;
+                                    var param = $($('#form_form').serializeArray()).each(function(){
+                                        if(!this.value){
+                                            tag = (tag && false);
+                                        }else{
+                                            p[this.name] = this.value;
+                                        }
+                                    })
+                                    if(!tag){
+                                        layer.msg('提交错误');
+                                    }else{
+                                        $.post('{:U("Campaign/do_add")}',p,function(data){
+                                            if(data.code != 200){
+                                                layer.msg(data.msg);
+                                            }else{
+                                                layer.msg(data.msg);
+                                                window.setTimeout(function(){
+                                                    window.location.href='{:U("Campaign/log")}';
+                                                },2000);
+                                            }
+                                        },'json');
+                                    }
+
+                                })
+                        })()
+
+
+                        forms.edits = (function(){
+                                $('#subedit').click(function () {
+                                    var p ={};
+                                    var tag = true;
+                                    var param = $($('#form_form').serializeArray()).each(function(){
+                                        if(!this.value){
+                                            tag = (tag && false);
+                                        }else{
+                                            p[this.name] = this.value;
+                                        }
+                                    })
+                                    if(!tag){
+                                        layer.msg('提交错误');
+                                    }else{
+                                        $.post('{:U("Campaign/do_edit")}',p,function(data){
+                                            if(data.code != 200){
+                                                layer.msg(data.msg);
+                                            }else{
+                                                layer.msg(data.msg);
+                                                window.setTimeout(function(){
+                                                    window.location.href='{:U("Campaign/log")}';
+                                                },2000);
+                                            }
+                                        },'json');
+                                    }
+
+                                })
+                        })()
+
+
+                    });
+                    
+
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<include file="Public:footer"/>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        highlight_subnav("{:U('Campaign/add')}");
+
+        /*$(document).ready(function () {
+            var amount = "<?php echo $data['id'];?>";
+            if(amount == '') {
+                var vNow = new Date();
+                var sNow = "";
+                sNow += String(vNow.getFullYear());
+                sNow += String(vNow.getMonth() + 1);
+                sNow += String(vNow.getDate());
+                sNow += String(vNow.getHours());
+                sNow += String(vNow.getMinutes());
+                sNow += String(vNow.getSeconds());
+                sNow += String(vNow.getMilliseconds());
+                document.getElementById("tradeno").value = sNow;
+            }
+        });*/
+    </script>
+</block>

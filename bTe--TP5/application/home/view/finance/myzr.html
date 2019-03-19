@@ -1,0 +1,443 @@
+{include file="public:header" /}
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/finance/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('DEPOSIT_COIN')}	</div>
+	<div class="main-content">
+		<style>
+	.nav-tab-list .nav-tab-hover{
+		width:100%;
+		top:60px;
+		height:50px;
+		line-height:50px;
+		background:#EAEDF4;
+		position:absolute;
+		box-sizing:content-box;
+		z-index:1;
+		transition:all 0.5s;
+		-webkit-transition:all 0.5s;
+		display:none;
+	}
+</style>
+<script type="text/javascript">
+	$(function () {
+		(function () {
+			var tab   = $('.nav-tab-list dd');
+			var hover = $('.nav-tab-hover');
+			var pos   = 0;
+			tab.each(function (index) {
+				var $this = $(this);
+				if ($this.hasClass('active')) {
+					pos = index;
+				}
+				$this.hover(function () {
+					_moveTo(index);
+				}, function () {
+					_moveTo(pos);
+				});
+			});
+			_moveTo(pos);
+			$('.nav-tab-hover').show();
+			function _moveTo(index) {
+				hover.css("top", 0 + 50 * index);
+				tab.removeClass('active');
+				tab.eq(index).addClass('active');
+			}
+		})();
+	});
+	$(window).on('scroll resize', function () {
+		if (document.body.scrollTop < 100) {
+			$('#left-nav-bar').css("top", 0);
+		} else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+			$('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+		} else {
+			$('#left-nav-bar').css("top", document.body.scrollTop - 100);
+		}
+	});
+</script>
+
+{include file="finance:left" /}
+		<div class="tag-list-content assets_content bg_w">
+			<div class="safe_center clear">
+				<h1>
+					<span>{:lang('DEPOSIT_COIN')}</span>
+					<span>
+						<a class="right" onclick="$('#hints').slideToggle();"><i class="fa fa-hand-o-right move fz_14 mr5"></i><span class="fz_12 move">{:lang('DETAILED_INFO')}</span></a>
+					</span>
+				</h1>
+			</div>
+			<div id="hints" class="mytips" style="display:none;">
+				<p>
+				
+				{notempty name="prompt_text"}
+					{$prompt_text}
+				{/notempty}
+				
+				</p>			
+			</div>
+
+			<div class="mytable-body">
+				<div class="step1 cny_record">
+					<div class="weituo_bizhong">
+						<div class="bizhong_select">
+							<div class="bz_btn">
+								<img src="__DOMAIN____UPLOAD__/coin/{$coin_list[$xnb]['img']}" alt="" style=" width: 22px;float: left;margin-top: 7px;margin-right: 5px;"/>
+								<span id="coin-default">
+									<select name="type" id="coin-select" style="margin-top: 6px;">
+										{volist name="coin_list" id="vo"}
+											{eq name="xnb" value="$key"}
+												<option value="{$vo['name']}" selected="selected">{$vo.title} ({$vo['name']|strtoupper})</option>
+											{else/}
+												<option value="{$vo['name']}">{$vo.title} ({$vo['name']|strtoupper})</option>
+											{/eq}
+										{/volist}
+									</select>
+								</span>
+							</div>
+						</div>
+						<div class="bizhong_type" >
+							<span>{:lang('TOTAL_COIN')}<em class="coin-name"></em>：<font class="coin-balance">{$user_coin[$xnb]}</font></span>
+						</div>
+					</div>
+					<br>
+					
+					{eq name="weike_opencoin" value="1"}
+						<div class="cnyin_record">
+							<div class="adr-zhuanru" style="position: relative;z-index:0;">
+								<div id="pt-qrcode" style="position:absolute;top:0;right:0;display: inline-block;;">
+									<div id="qrcode-wallet" style="display: inline-block;">
+										<saon id="codeaa"></saon>
+									</div>
+									<p id="qrcode-t" style="font-size:13px;text-align: center;">{$coin_list[$xnb]['title']}{:lang('WALLET_ADD')}</p>
+								</div>
+								<div class="qb_tishi">
+									{:lang('WALLET_ADD_TIP')} <b class="coin-name">{$coin_list[$xnb]['title']}</b>{:lang('WALLET_ADD_TIP_IN')}：
+									{notempty name="coin_list[$xnb]['zr_zs']"}
+										<span id="zengsong" style="color: red; font-size: 14px;">转入即赠{$coin_list[$xnb]['zr_zs']}%</span>
+									{/notempty}
+									{$tishi}
+								</div>
+								<div class="qb_dizhi ts mb20">
+									<p id="wallets">
+										{$qianbao}
+									</p>
+								</div>
+								{eq name="xnb" value="eos"}
+									<div class="qb_tishi">
+										<span id="eos" style="color: red; font-size: 14px;">{:lang('WALLET_ADD_TIP_EOS')}</span>
+									</div>
+									<div class="qb_dizhi ts mb20">
+										<p id="memo">
+											{$mome}
+										</p>
+									</div>
+								{/eq}
+							</div>
+						</div>
+					{else/}
+
+						<div class="pwtrade  pw  mt50">
+								<dl>
+									<dt>{:lang('TRANSFER_ADDRESS')}：</dt>
+									<dd>
+										<span>
+											{$qianbao}
+										</span>
+									</dd>
+								</dl>
+
+								<dl>
+									<dt>{:lang('ADD_FLAG')}：</dt>
+									<dd style="position: relative;">
+										<input type="text" class="texts" id="weike_dzbz" maxlength="100" value="">
+										(*{:lang('ADD_FLAG_ASK')})
+									</dd>
+								</dl>
+
+								<dl>
+									<dt>{:lang('TRAN_QUANTITY')}：</dt>
+									<dd style="position: relative;">
+										<input type="text" class="texts" id="cny_num" maxlength="12" value="">
+									</dd>
+								</dl>
+								<dl class="step5">
+									<dt>{:lang('CODE')}：</dt>
+									<dd class="yuyin">
+										<div class="clear">
+											<input type="button" value="{:lang('CODE_SEND')}" class="btns" onclick="send_moble_coinout('sms')" style="width: 100px;font-size: 12px;"/>
+											{$moble}({:lang('CODE_RECEIVE_USED')})
+										</div>
+									</dd>
+								</dl>
+								<dl class="step6" style="display:none;">
+									<dt>{:lang('CODE')}：</dt>
+									<dd>
+										<input type="text" id="cny_moble_verify" value="" class="texts" placeholder="{:lang('CODE_INPUT')}"/> <span id="reg_moble_new"></span>
+									</dd>
+								</dl>
+								<dl>
+									<dt>{:lang('TRAN_PWD')}：</dt>
+									<dd>
+										<input type="password" autocomplete="off" class="texts" id="cny_paypassword"  value=""><a href="/findpwd/findpwd" class="move ml5">{:lang('FORGET')}?</a>
+									</dd>
+								</dl>
+								<dl>
+									<dt></dt>
+									<dd>
+										{empty name="zc_jz"}
+											<input type="button" class="btns2" value="{:lang('TRANSFER_NOW')}" onclick="coinin_up()">
+										{else/}
+											<input type="button" class="btns2" value="{$zr_jz}" disabled>
+										{/empty}
+									</dd>
+								</dl>
+						</div>
+					{/eq}
+				</div>
+
+				<div class="step2 f_body">
+					{eq name="weike_opencoin" value="1"}
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:lang('TRANSFER_TIME')}</th>
+							<th>{:lang('TRANSFER_COIN_TYPE')}</th>
+							<th>{:lang('TRANSFER_QUANTITY')}</th>
+							<th>{:lang('TRANSFER_FEE')}</th>
+							<th>{:lang('ARRIVAL_AMOUNT')}</th>
+							<th>{:lang('STATE')}</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+                        {volist name="list" id="vo"}
+                            <tr>
+                                <td>{$vo.addtime|addtime}</td>
+                                <td>{$vo.coinname}</td>
+                                <td>{$vo['num']|NumToStr}</td>
+                                <td>{$vo['fee']|NumToStr}</td>
+                                <td>{$vo['mum']|NumToStr}</td>
+                                <td>
+									<?php if ($vo['status'] == 1) { ?>
+										<font color="#23a800">{:lang('SUCCESS_DEPOSIT')} </font>
+									<?php } elseif ($vo['status'] == 2) { ?>
+										<font color="#23a800">{:lang('CANCEL')}</font>
+									<?php } else { ?>
+										<font color="red">{:lang('WAIT')}</font>
+									<?php } ?>
+                                </td>
+                            </tr>
+                        {/volist}
+
+						</tbody>
+					</table>
+					{else/}
+					
+					<table class="f_table" id="investLog_content">
+						<thead>
+						<tr>
+							<th>{:lang('TRANSFER_TIME')}</th>
+							<th>{:lang('ADD_FLAG')}</th>
+							<th>{:lang('TRANSFER_COIN_TYPE')}</th>
+							<th>{:lang('TRANSFER_QUANTITY')}</th>
+							<th>{:lang('ARRIVAL_AMOUNT')}</th>
+							<th>{:lang('STATE')}</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+                        {volist name="list" id="vo"}
+                            <tr>
+                                <td>{$vo.addtime|addtime}</td>
+								<td>{$vo['txid']}</td>
+                                <td>{$vo.coinname}</td>
+                                <td>{$vo['num']|NumToStr}</td>
+                                <td>{$vo['mum']|NumToStr}</td>
+                                <td>
+                                    {eq name="vo.status" value="1"}
+                                        <font color="#23a800">{:lang('SUCCESS_DEPOSIT')} </font>
+                                        {else/}
+                                        <font color="red">{:lang('WAIT')}</font>
+                                    {/eq}
+                                </td>
+                            </tr>
+                        {/volist}
+
+						</tbody>
+					</table>
+					{/eq}
+
+					<div class="pages">{$page}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/comfile/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+	var lock_coinin=0;
+		$('#codeaa').qrcode({
+		render: "table", //table方式
+		width: 100, //宽度
+		height: 100, //高度
+		text: "{$qianbao}" //任意内容
+	});
+
+
+	$("#coin-select").change(function () {
+		var coin        = $("#coin-select option:selected").val();
+		if(['wcg','vbc','drt','mat'].indexOf(coin) !== -1){
+            window.location = '/Activity/wcgzr/coin/' + coin + '.html';
+        }else{
+            window.location = '/Finance/myzr/coin/' + coin + '.html';
+		}
+	});
+	
+	function send_new() {
+		$(".step6").hide();
+		$(".step5").show();
+	}
+	function send_moble_coinout(type) {
+		$.post("{:url('Verify/myzr')}", {
+			type: type,
+		}, function (data) {
+			if (data.code == 1) {
+				layer.msg(data.msg, {icon: 1});
+				$(".step5").hide();
+				$(".step6").show();
+				$("#cnyout_moble_verify").focus();
+				$('#moble_new').attr("disabled", "disabled");
+				var obj      = $('#reg_moble_new');
+				var wait     = 60;
+				var interval = setInterval(function () {
+					obj.html(wait + "{:lang('CODE_SEND_AGAIN')}");
+					wait--;
+					if (wait < 0) {
+						clearInterval(interval);
+						$(".reloadverify_new").click();
+						$("#verify_new").val('');
+						obj.html('<a class="move" onclick="send_new()">{:lang("CODE_SEND_NO_AGAIN")}</a>');
+					}
+					;
+				}, 1000);
+			} else {
+				layer.msg(data.msg, {icon: 2});
+				if (data.url) {
+					window.location = data.url;
+				}
+			}
+		}, "json");
+	}
+	
+	function coinin_up() {
+        if(lock_coinin) {
+            layer.msg('{:lang(\'NOT_SUBMIT_MORE\')}', {icon: 2});
+            return;
+        }
+        lock_coinin = 1;
+		var num          = $("#cny_num").val();
+		var paypassword  = $("#cny_paypassword").val();
+		var moble_verify = $("#cny_moble_verify").val();
+		var weike_dzbz = $("#weike_dzbz").val();
+		var coin         = $('#coin-select option:selected').val();
+		if (moble_verify == "" || moble_verify == null) {
+			layer.msg('{:lang("CODE_INPUT")}', {
+				icon: 2
+			});
+			return false;
+		}
+		if (num == "" || num == null) {
+			layer.tips('{:lang("TRAN_QUANTITY_INPUT")}', '#cnyout_num', {
+				tips: 2
+			});
+			return false;
+		}
+
+		if (paypassword == "" || paypassword == null) {
+			layer.tips('{:lang("TRAN_PWD_ENTER")}', '#cnyout_paypassword', {
+				tips: 2
+			});
+			return false;
+		}
+		if (coin == "" || coin == null) {
+			layer.tips('{:lang("COIN_TYPE_SELECT")}', '#coin-select', {
+				tips: 2
+			});
+			return false;
+		}
+		var goole ="0";
+		if(goole == 1){
+			layer.config({
+				extend: 'extend/layer.ext.js'
+			});
+			layer.ready(function () {
+				layer.prompt({
+					title: '{:lang("GOOGLE_CODE")}',
+					formType: 1
+				}, function (val) {
+					if (val) {
+						$.post("/finan/coinout_up", {
+							coin:coin,
+							num: num,
+							paypassword: paypassword,
+							moble_verify: moble_verify,
+							bank: bank,
+							goole:val,
+						}, function (data) {
+							if (data.code == 1) {
+								layer.msg(data.msg, {
+									icon: 1
+								});
+								window.location = "/finan/coinoutlog.html";
+							} else {
+								layer.msg(data.msg, {
+									icon: 2
+								});
+								if (data.url) {
+									window.location = data.url;
+								}
+							}
+						}, "json");
+					}
+					;
+				});
+			});
+		}else{
+            var tokenStr = get_token();
+			$.post("{:url('Finance/upmyzr',['reqstamp'=>'req_stamp'])}".replace("req_stamp",new Date().getTime()), {
+				coin:coin,
+				num: num,
+				paypassword: paypassword,
+				moble_verify: moble_verify,
+				weike_dzbz:weike_dzbz,
+                token_str:tokenStr,
+			}, function (data) {
+                lock_coinin = 0;
+				if (data.code == 1) {
+					layer.msg(data.msg, {
+						icon: 1
+					});
+					window.location = "/finance/myzr.html";
+				} else {
+					layer.msg(data.msg, {
+						icon: 2
+					});
+					if (data.url) {
+						window.location = data.url;
+					}
+				}
+			}, "json");
+		}
+	}
+</script>
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_coinin').addClass('active');
+</script>	
+	
+{include file="public:footer" /}

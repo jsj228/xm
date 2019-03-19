@@ -1,0 +1,135 @@
+{include file="public:header" /}
+		
+<div class="autobox ">
+	<div class="now">
+		<i class="fa fa-home fa-lg move mr5"></i><a href="/" class="movesay">{:lang('ADDRESS')}</a> &gt; <a href="/finance/index.html" class="movesay">{:lang('FINANCE')} </a> &gt; {:lang('REWARDS')}	</div>
+	<div class="main-content">
+		<style>
+	.nav-tab-list .nav-tab-hover{
+		width:100%;
+		top:60px;
+		height:50px;
+		line-height:50px;
+		background:#EAEDF4;
+		position:absolute;
+		box-sizing:content-box;
+		z-index:1;
+		transition:all 0.5s;
+		-webkit-transition:all 0.5s;
+		display:none;
+	}
+</style>
+<script type="text/javascript">
+	$(function () {
+		(function () {
+			var tab   = $('.nav-tab-list dd');
+			var hover = $('.nav-tab-hover');
+			var pos   = 0;
+			tab.each(function (index) {
+				var $this = $(this);
+				if ($this.hasClass('active')) {
+					pos = index;
+				}
+				$this.hover(function () {
+					_moveTo(index);
+				}, function () {
+					_moveTo(pos);
+				});
+			});
+			_moveTo(pos);
+			$('.nav-tab-hover').show();
+			function _moveTo(index) {
+				hover.css("top", 0 + 50 * index);
+				tab.removeClass('active');
+				tab.eq(index).addClass('active');
+			}
+		})();
+	});
+	$(window).on('scroll resize', function () {
+		if (document.body.scrollTop < 100) {
+			$('#left-nav-bar').css("top", 0);
+		} else if (document.body.scrollTop > ($('.tag-list-content').height() - $('#left-nav-bar').height() + 100)) {
+			$('#left-nav-bar').css("top", ($('.tag-list-content').height() - $('#left-nav-bar').height()));
+		} else {
+			$('#left-nav-bar').css("top", document.body.scrollTop - 100);
+		}
+	});
+</script>
+
+
+{include file="finance:left" /}
+
+
+
+		<div class="tag-list-content">
+			<div class="assets_content bg_w">
+				<div class="safe_center clear ">
+					<h1>
+						<span>{:lang('REWARDS')}</span>
+						<span>
+							<a href="/Finance/mywd" class="step fz_12 ml20 pd6 active">{:lang('RECOMMENDATION')}</a>
+					        <a href="/Finance/mytj" class="step fz_12 ml20 pd6 active">{:lang('INVITE_FRIENDS')}</a>
+						</span>
+					</h1>
+				</div>
+				<div id="hints" class="mytips" style="display:none;">
+					
+					<p>
+					{notempty name="prompt_text"}
+					{$prompt_text}
+					{/notempty}
+					
+					</p>				</div>
+				<div class="mytable-body ">
+					<div class="f_body  step2">
+						<table class="f_table" id="investLog_content">
+							<thead>
+							<tr>
+								<th>{:lang('REFERRAL_ID')}</th>
+								<th>{:lang('REWARD_TYPE')}</th>
+								<th>{:lang('REWARD_DETAILS')}</th>
+								<th>{:lang('OPERATE_TIME')}</th>
+								<th>{:lang('OPERATE_QUANTITY')}</th>
+								<th>{:lang('REWARD_QUANTITY')}</th>
+								<th>{:lang('REWARD_STATE')}</th>
+							</tr>
+							</thead>
+							<tbody>
+														
+								 {volist name="list" id="vo"}
+								 <tr>
+								  <td>{$vo.invit|substr_replace='****',3,4}</td>
+								  <td>{$vo.type}</td>
+								  <td>{$vo.name}</td>
+								  <td>{$vo.addtime|addtime}</td>
+								  <td>{$vo['num']|NumToStr}</td>
+								  <td>{$vo['fee']|NumToStr}</td>
+								  <td>{eq name="vo.status" value="0"} <font class="sell">{:lang('UNRECORDED')} </font>{/eq} {eq name="vo.status" value="1"} <font class="buy">{:lang('CREDITED')} </font>{/eq}</td>
+								 </tr>
+								 {/volist}
+								
+							</tbody>
+						</table>
+						<div class="pages">{$page}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+<script>
+	var hints = "0";
+	if(hints == 1){
+		$('#hints').show();
+	}
+	$('#finance_box').addClass('active');
+	$('.finan_award').addClass('active');
+</script>	
+	
+{include file="public:footer" /}

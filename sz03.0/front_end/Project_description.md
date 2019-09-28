@@ -1,5 +1,5 @@
 # 前端开发环境使用说明
-
+   项目说明：使用前需要在front_end 中安装webpack 和 vue2.0 
   ---
   - 开发环境启动命令
 
@@ -35,3 +35,7 @@
   在调试模式默认关闭 dll， 这意味着可以在开发模式直接修改
   【src/nComponents/register.js】 等公共文件，并且这些修改都是有效的。
   修改了dll配置的公共文件，必须要在执行 `npm run dll` ，否则直接执行 `npm run build` 那些修改过的公共模块不会起作用
+  
+  public/index.php这个文件为项目的入口文件，
+  config/application.ini 这个文件为项目的数据库配置文件
+  

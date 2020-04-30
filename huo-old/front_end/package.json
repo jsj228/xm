@@ -62,7 +62,7 @@
     "flatpickr": "^3.0.7",
     "flex.css": "^1.1.7",
     "fs-extra": "^5.0.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "jsencrypt": "^2.3.1",
     "lodash": "^4.17.4",
     "lrz": "^4.9.40",
